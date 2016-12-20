@@ -29,9 +29,5 @@
     "start": "dora --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js"
-  },
-  "theme": {
-  "@primary-color": "#6de910"
-}
-
+  }
 }

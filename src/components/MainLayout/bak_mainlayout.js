@@ -42,11 +42,9 @@ const Header=({children,location}) =>{
           <div className={styles.ant_layout_logo}>
             <p className={styles.ant_layout_logo_text}>绚丽之梦后台管理系统</p>
           </div>
-          <Menu mode="inline" theme="dark" >
+          <Menu mode="inline" theme="dark" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
             <SubMenu key="sub1" title={< span > <Icon type="user"/>店仓维护 < /span>}>
-              <Menu.Item key="1">
-               <Link to="/shopinfo"><Icon type="bars" />店仓信息</Link>
-              </Menu.Item>
+              <Menu.Item key="1">店仓信息</Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" title={< span > <Icon type="laptop"/>服装属性 < /span>}>
               <Menu.Item key="2">款号属性维护</Menu.Item>
@@ -82,9 +80,7 @@ const Header=({children,location}) =>{
            {/*上方导航栏*/}
             <Menu theme="dark" mode="horizontal"
             defaultSelectedKeys={['1']} style={{lineHeight: '64px',paddingLeft:'80px'}}>
-            <Menu.Item key="1">
-           	 <Link to="/basicplantform"><Icon type="bars" />基础平台</Link>
-            </Menu.Item>
+            <Menu.Item key="1">基础平台</Menu.Item>
             <Menu.Item key="2">会员子系统</Menu.Item>
             <Menu.Item key="3">策略子系统</Menu.Item>
             <Menu.Item key="4">销售收银子系统</Menu.Item>
@@ -95,20 +91,22 @@ const Header=({children,location}) =>{
       
 
           </div>
-          {/*<div className={styles.ant_layout_breadcrumb}>
+          <div className={styles.ant_layout_breadcrumb}>
             <Breadcrumb>
               <Breadcrumb.Item>首页</Breadcrumb.Item>
               <Breadcrumb.Item>应用列表</Breadcrumb.Item>
               <Breadcrumb.Item>表格查询</Breadcrumb.Item>
             </Breadcrumb>
-          </div>*/}
+          </div>
           <div className={styles.ant_layout_container}>
             <div className={styles.ant_layout_content}>
-              
+              <div style={{
+                height: 590
+              }}>
 
               	{children}
                  
-              
+              </div>
             </div>
           </div>
         </div>

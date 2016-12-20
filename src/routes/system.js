@@ -3,10 +3,11 @@ import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import Header from '../components/MainLayout/mainlayout';
 
-
-function System({}){
+function System({children,location,dispatch}){
 	return(
-			<Header />
+			<Header location={location}  children={children}>
+				
+			</Header>
 		);
 }
 
