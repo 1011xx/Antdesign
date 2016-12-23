@@ -1,7 +1,5 @@
-import { create, remove, update, query,querylocal } from '../services/users';
-import { parse } from 'qs';
 export default {
-    namespace: 'login',
+    namespace: 'drop',
     state: {
         username: '',
         password: '',
@@ -11,10 +9,9 @@ export default {
     effects: {
         *getlogin({ payload }, { call, put }){
              console.log(payload);
-            
-            const {data}= yield call(querylocal);
+            const { data } = yield call(query, parse(payload));
             if(data){
-            console.log(data);
+
                 yield put({ type: 'iferro' });
             }
         },

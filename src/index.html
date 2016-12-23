@@ -5,11 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dva Demo</title>
   <link rel="stylesheet" href="index.css" />
+  <style>
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    
+    background: #fff;
+    height:93px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.ant-menu-dark.ant-menu-horizontal {
+    border: none;
+    line-height: 38px !important;
+}
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item > a {
+    color:#333333;
+    font-size:16px;
+}
+.ant-menu-horizontal .ant-menu-item:hover {
+	border-radius: 6px;
+	color: #fff;
+  background:#60d295;
+	
+}
+.ant-menu-item{
+	height:38px;
+	margin-left: 26px;
+}
+.ant-menu{
+	background:#60d295;
+}
+.ant-menu-horizontal{
+  background:#fff;
+}
+.ant-menu-inline .ant-menu-item-selected {
+     color:#60d295;
+     border-right: none;
+}
+
+.ant-menu-horizontal>.ant-menu-item-selected{
+border-radius: 6px;
+  color: #fff;
+  background:#60d295;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background: none;
+}
+
+.ant-menu-item-selected > a, .ant-menu-item-selected > a:hover {
+    color: #60d295;
+  }
+  .ant-menu-item > a:hover{
+    color: #60d295;
+  }
+.ant-menu-submenu-inline > .ant-menu-submenu-title:after{
+	display:none;
+}
+.ant-menu-submenu-title{
+    font-family: "\5B8B\4F53";
+    
+    font-weight: bold;
+    color:#fff;
+
+}
+.ant-menu-submenu-active:hover .ant-menu-submenu-title{
+	color:#fff;
+}
+.ant-menu-sub.ant-menu-inline{
+  background:#f5f5f5;
+}
+.ant-menu-submenu-title >span{
+  font-size: 14px;
+  display:flex;
+  /*justify-content: center;*/
+}
+.ant-menu-inline, .ant-menu-vertical {
+    border: none;
+}
+.ant-menu-inline .ant-menu-item{
+     border-right: none; 
+     margin-left: 0; 
+     padding-left: 75px !important;
+     font-family: "\5B8B\4F53";
+     font-size:14px;
+   }
+.ant-menu-submenu-title{
+  padding: 0 !important;
+  width:100%;
+}
+.ant-menu-item-active:hover{
+  color:#60d295;
+}
+
+
+
+
+
+
+.ant-breadcrumb-link{
+  font-size:14px;
+}
+
+tr:nth-child(even){
+  background:#f7f7f7;
+}
+
+
+  </style>
+
 </head>
 <body>
-
 <div id="root" style="height: 100%"></div>
 <script src="index.js"></script>
-
 </body>
 </html>

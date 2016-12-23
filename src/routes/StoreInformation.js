@@ -3,12 +3,10 @@ import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 
 
-function Basicplantform({}){
+function StoreInformation({}){
 	return(
-
-		<p>【基础平台欢迎首页】</p>
-			
+			<p>店仓信息!</p>
 		);
 }
 
-export default Basicplantform;
+export default StoreInformation;
