@@ -1,12 +1,11 @@
 import { create, remove, update, query } from '../services/users';
-import { parse } from 'qs';
 export default {
-    namespace: 'login',
+    namespace: 'attrlist',
     state: {
-        username: '',
-        password: '',
-        flag:false,
-        showtext:'用戶名或密碼錯誤',
+      title:"",
+      currentItem:{},
+      modalVisible:false,
+      modalType: 'create',
     },
     effects: {
         *getlogin({ payload }, { call, put }){
@@ -20,18 +19,22 @@ export default {
         },
     },
     reducers: {
-        getValue(state, action) {
+        Changetitle(state, action) {
             // console.log(action.payload);
             return {...state,
                 ...action.payload
             };
         },
-        iferro(state){
-            return {...state,flag:true};
+        showEditModal(state,action) {
+            return {...state, ...action.payload,modalVisible:true,title:"修改" };
         },
-        ifok(state){
-            return {...state,flag:false};
+        showAddModal(state,action) {
+            return {...state,...action.payload, modalVisible:true,title:"增加" };
         },
+        hideModal(state) {
+            return {...state, modalVisible:false  };
+        },
+
     }
 
 };

@@ -1,12 +1,10 @@
 import { create, remove, update, query } from '../services/users';
-import { parse } from 'qs';
 export default {
-    namespace: 'login',
+    namespace: 'main',
     state: {
-        username: '',
-        password: '',
-        flag:false,
-        showtext:'用戶名或密碼錯誤',
+      currentopenkey:'sub1',
+      currentselectkey:'1',
+
     },
     effects: {
         *getlogin({ payload }, { call, put }){
@@ -20,18 +18,18 @@ export default {
         },
     },
     reducers: {
-        getValue(state, action) {
+        ChangeOpenkey(state, action) {
             // console.log(action.payload);
             return {...state,
                 ...action.payload
             };
         },
-        iferro(state){
-            return {...state,flag:true};
+        ChangeSelectkey(state, action) {
+            console.log('action.payload');
+            console.log(action.payload);
+            return {...state, currentselectkey:action.payload  };
         },
-        ifok(state){
-            return {...state,flag:false};
-        },
+
     }
 
 };

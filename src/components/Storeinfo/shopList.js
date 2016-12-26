@@ -4,7 +4,7 @@ import Plate from '../plate/plate';
 import styles from './shopList.less';
 
 function ShopList({
-  total, current, loading, 
+  total, current, loading,
   onPageChange,
   onDeleteItem,
   onEditItem,
@@ -15,7 +15,7 @@ function ShopList({
     title: '姓名',
     dataIndex: 'name',
     key: 'name',
-    
+
   }, {
     title: '年龄',
     dataIndex: 'age',
@@ -47,7 +47,7 @@ function ShopList({
 		  name: 'Jim Green',
 		  age: 42,
 		  address: 'London No. 1 Lake Park',
-		}, {
+		},{
 		  key: '3',
 		  name: 'Joe Black',
 		  age: 32,
@@ -62,18 +62,13 @@ function ShopList({
       name: 'Jim Green',
       age: 42,
       address: 'London No. 1 Lake Park',
-    }, {
-      key: '6',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
     }];
 
   return (
-  
+
     <Plate title="店仓列表">
             <div className={styles.add_plate}>
-              <a className={styles.add_btn}><Icon type="plus-circle-o" />&nbsp;新增</a>
+              <a className={styles.add_btn} ><Icon type="plus-circle-o" />&nbsp;新增</a>
             </div>
 				<Table
 		        columns={columns}
@@ -81,9 +76,9 @@ function ShopList({
 		        pagination={true}
 		        bordered
 		      />
-		      
+
     </Plate>
-      
+
   );
 }
 

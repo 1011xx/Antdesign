@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {Link} from 'dva/router';
 import {
   Button,
@@ -25,7 +25,14 @@ const menu = (
 
 
 
-const Header=({children,location}) =>{
+const Header=({
+  children,
+  location,
+  currentopenkey,
+  currentselectkey,
+  onOpenChange,
+  handleClick
+}) =>{
 	return(
  <div className={styles.ant_layout_wrap} >
       <div className={styles.ant_layout_header}>
@@ -44,7 +51,7 @@ const Header=({children,location}) =>{
           <div className={styles.user}>
             <img src="http://reactjs.cn/react/img/logo.svg" className={styles.who}/>
             <Dropdown overlay={menu}>
-            <a className={styles.ant_dropdown_link} >Oliver.quen
+            <a className={styles.ant_dropdown_link} >汤姆·马修
               <Icon type="down"/>
             </a>
         </Dropdown>
@@ -58,41 +65,43 @@ const Header=({children,location}) =>{
       {/*selectedKeys={[this.state.current]}*/}
       <Menu
         mode="inline"
-        defaultOpenKeys={['sub1']}
-        
+
+        selectedKeys={[currentselectkey]}
+        onOpenChange={onOpenChange}
+        onClick={handleClick}
         style={{ width: 180 }}
       >
         <SubMenu key="sub1" title={<span><Icon className={styles.iicon} /><span>店仓维护</span></span>}>
-          <Menu.Item key="1">新增店仓</Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item key="1">
             <Link to="/shopinfo">店仓信息</Link>
           </Menu.Item>
-         
+
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon className={styles.iicon1} /><span>服装属性</span></span>}>
-          <Menu.Item key="3">款号属性维护</Menu.Item>
-          <Menu.Item key="4">维护颜色</Menu.Item>
-           <Menu.Item key="5">维护尺寸</Menu.Item>
-          <Menu.Item key="6">维护尺寸组</Menu.Item>
+          <Menu.Item key="2">
+          <Link to="/styleattr">款号属性维护</Link>
+          </Menu.Item>
+          <Menu.Item key="3">维护颜色</Menu.Item>
+          <Menu.Item key="4">维护尺寸</Menu.Item>
+          <Menu.Item key="5">维护尺寸组</Menu.Item>
+          <Menu.Item key="6">款号维护</Menu.Item>
+
           {/*<SubMenu key="sub3" title="Submenu">
                       <Menu.Item key="7">Option 7</Menu.Item>
                       <Menu.Item key="8">Option 8</Menu.Item>
                     </SubMenu>*/}
         </SubMenu>
-        <SubMenu key="sub4" title={<span><Icon className={styles.iicon2} /><span>款号维护</span></span>}>
-          <Menu.Item key="9">新增款号</Menu.Item>
-          <Menu.Item key="10">款号信息</Menu.Item>
-        </SubMenu>
-         <SubMenu key="sub5" title={<span><Icon className={styles.iicon3} /><span>价格制定</span></span>}>
-          <Menu.Item key="11">新增调价单</Menu.Item>
-          <Menu.Item key="12">调整吊牌价</Menu.Item>
-           <Menu.Item key="13">审核吊牌价</Menu.Item>
+
+         <SubMenu key="sub3" title={<span><Icon className={styles.iicon3} /><span>价格制定</span></span>}>
+          <Menu.Item key="7">新增调价单</Menu.Item>
+          <Menu.Item key="8">调整吊牌价</Menu.Item>
+           <Menu.Item key="9">审核吊牌价</Menu.Item>
         </SubMenu>
       </Menu>
       </div>
-      <div className={styles.overflow}>
+
           {children}
-      </div>
+
     </div>
   </div>
 
@@ -105,8 +114,17 @@ const Header=({children,location}) =>{
 
 
 
-			
+
 		);
 }
+
+Header.propTypes={
+  onOpenChange: PropTypes.func,
+  handleClick: PropTypes.func,
+  currentopenkey: PropTypes.any,
+  currentselectkey: PropTypes.any,
+}
+
+
 
 export default Header;

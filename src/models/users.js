@@ -27,6 +27,7 @@ export default {
             payload: location.query,
           });
         }
+        }
       });
     },
   },
@@ -41,7 +42,7 @@ export default {
      // 还可以选择 takeLatest ，或者完全自定义 take 规则
      'hello':function *({ payload }, { call, put }){
       yield put({
-        type:'testquery',
+        type:'query',
         payload:{
           crrent:4,
         }
