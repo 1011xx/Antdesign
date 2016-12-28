@@ -8,10 +8,12 @@
     "babel-plugin-import": "^1.1.0",
     "classnames": "^2.2.5",
     "dva": "^1.1.0",
+    "iscroll": "^5.2.0",
     "object-assign": "^4.1.0",
     "rc-animate": "^2.3.1",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "reactjs-iscroll": "^0.3.2"
   },
   "devDependencies": {
     "atool-build": "^0.9.0",
@@ -34,5 +36,6 @@
     "start": "dora --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js"
-  }
+  },
+  "theme": "./src/theme.js"
 }

@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrapthree from '../components/wrap/wrapthree';
-// import Queryinfo from '../components/Storeinfo/Search';
-import AttrList from '../components/AttrList/attrlist';
+import Wrap from '../components/wrap/wrap';
+import ColorList from '../components/Color/colorList';
 import AttrModel from '../components/AttrList/attrmodel';
 //服装属性/款号属性维护/品牌
 
-function StyleAttr({dispatch,attrlist}){
+function MaintainColor({dispatch,attrlist}){
 
 	const {title,modalVisible,modalType,currentItem}=attrlist;
 	
@@ -89,13 +88,12 @@ function StyleAttr({dispatch,attrlist}){
 
 
 	return(
-		<Wrapthree
+		<Wrap
 		   last="服装属性"
-		   next="款号属性维护"
-		   afternext="品牌"
+		   next="维护颜色"
 		   >
 		  
-		  <AttrList {...attrListProps}/>
+		  <ColorList {...attrListProps}/>
 		  <UserModalGen />
 		  <p style={{color:'#333',fontSize:12,textAlign:'center'}}>
 		  <span style={{paddingRight:14}}>Copyright</span>
@@ -105,13 +103,13 @@ function StyleAttr({dispatch,attrlist}){
 		  <span style={{paddingRight:14}}>2016-12-13</span>
 		  <span style={{paddingRight:14}}>12:30</span>
 		  </p>
-		   </Wrapthree>
+		   </Wrap>
 
 		);
 }
 
 
-StyleAttr.propTypes = {
+MaintainColor.propTypes = {
   dispatch: PropTypes.func,
 };
 
@@ -119,4 +117,4 @@ function mapStateToProps({ attrlist }) {
   return { attrlist };
 }
 
-export default connect(mapStateToProps)(StyleAttr);
+export default connect(mapStateToProps)(MaintainColor);

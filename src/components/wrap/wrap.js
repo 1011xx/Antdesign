@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 // import { routerRedux } from 'dva/router';
 // import { connect } from 'dva';
+// import iScroll from 'iscroll/build/iscroll-probe';
+// import ReactIScroll from 'reactjs-iscroll';
 import {Breadcrumb,Icon} from 'antd';
 import styles from './wrap.less';
 
@@ -9,7 +11,7 @@ function Wrap({last,next,children}) {
 
 	return(
 
-		<div className={styles.main_content}>
+		<div className={styles.main_content} >
 		        <div className={styles.main_content_top}>
 		            <Breadcrumb className={styles.Breadcrumb}>
 		              <Breadcrumb.Item href="">
@@ -22,6 +24,7 @@ function Wrap({last,next,children}) {
 		        <div className={styles.main_content_btm}>
 		         {children}
 		        </div>
+		        
 			</div>
 			
 		);

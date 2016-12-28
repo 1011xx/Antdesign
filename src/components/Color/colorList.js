@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
-import Plate from '../plate/plate';
 import TablePlate from '../plate/tableplate';
-import styles from './attrlist.less';
-//服装属性/款号属性维护/品牌
+import styles from './colorList.less';
+//服装属性/颜色维护
 
-function AttrList({
+function ColorList({
   onDeleteItem,
   onEditItem,
   additem,
@@ -18,13 +17,13 @@ function AttrList({
     key: 'num',
 
   }, {
-    title: '属性代码',
-    dataIndex: 'code',
-    key: 'code',
+    title: '颜色',
+    dataIndex: 'color',
+    key: 'color',
   }, {
-    title: '属性描述',
-    dataIndex: 'expattr',
-    key: 'expattr',
+    title: '颜色名称',
+    dataIndex: 'colorname',
+    key: 'colorname',
   }, {
     title: '操作',
     key: 'operation',
@@ -39,39 +38,29 @@ function AttrList({
     ),
   }];
 		  const data = [{
-		  key: '1',
 		  num: '1',
-		  code: 'M',
-		  expattr: '马克张',
+		  color: '011',
+		  colorname: '黑色',
 		}, {
-		  key: '2',
 		  num: '2',
-		  code: 'O',
-		  expattr: '奥特莱斯',
+		  color: '012',
+		  colorname: '黄色',
 		},{
-		  key: '3',
 		  num: '3',
-		  code: 'R',
-		  expattr: 'ROYALRAYE',
+		  color: '013',
+		  colorname: '黑咖啡',
 		},{
-      key: '4',
       num: '4',
-      code: 'Y',
-      expattr: 'YUANLONG',
+      color: '014',
+      colorname: '白色',
     }];
 
   return (
 
 
-    <div>
-    <Plate title="属性类">
-      <p className={styles.p_padding}>
-      <span className={styles.attrpadding}>属性类名称：品牌</span>
-      <span className={styles.attrpadding}>代码长度：1</span>
-      <span className={styles.attrpadding}>顺序号：1</span>
-      </p>
-    </Plate>
-    <TablePlate title="属性">
+    
+   
+    <TablePlate title="维护颜色">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
       </div>
@@ -84,11 +73,11 @@ function AttrList({
 		      />
 
     </TablePlate>
-    </div>
+   
   );
 }
 
-AttrList.propTypes = {
+ColorList.propTypes = {
   onPageChange: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
@@ -98,4 +87,4 @@ AttrList.propTypes = {
   current: PropTypes.any,
 };
 
-export default AttrList;
+export default ColorList;

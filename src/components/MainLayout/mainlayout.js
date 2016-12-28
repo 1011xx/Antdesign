@@ -81,7 +81,11 @@ const Header=({
           <Menu.Item key="2">
           <Link to="/styleattr">款号属性维护</Link>
           </Menu.Item>
-          <Menu.Item key="3">维护颜色</Menu.Item>
+          <Menu.Item key="3">
+           <Link to="/maintaincolor">
+          维护颜色
+          </Link>
+          </Menu.Item>
           <Menu.Item key="4">维护尺寸</Menu.Item>
           <Menu.Item key="5">维护尺寸组</Menu.Item>
           <Menu.Item key="6">款号维护</Menu.Item>
@@ -99,9 +103,9 @@ const Header=({
         </SubMenu>
       </Menu>
       </div>
-
+       
           {children}
-
+       
     </div>
   </div>
 

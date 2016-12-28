@@ -125,6 +125,19 @@ module.exports = {
         page: tableListData.page
       });
     }, 500);
-  }
+  },
 
+  'POST /upload.do' (req,res){
+     setTimeout(function () {
+    const newData = qs.parse(req.body);
+    console.log(newData);
+    res.json({
+        uid: 2,
+        name: 'jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        status: 'done',
+        url:'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      });
+  
+ }, 800);
+     }
 };
