@@ -15,7 +15,6 @@ function ColorList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
-
   }, {
     title: '颜色',
     dataIndex: 'color',
@@ -65,7 +64,7 @@ function ColorList({
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
       </div>
 				<Table size="small"
-        className={styles.table}
+         className={styles.table}
 		        columns={columns}
 		        dataSource={data}
 		        pagination={true}

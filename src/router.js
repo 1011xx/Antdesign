@@ -19,6 +19,9 @@ import Text from './routes/upload';
 import AddShopinfo from './components/Storeinfo/addshopinfo';
 
 
+
+
+
 const handleEnter=()=>{
 	console.log('enter--IndexRoute');
 }
@@ -38,7 +41,8 @@ export default function({ history }) {
        <Route path="/styleattr" component={StyleAttr} />
        <Route path="/maintaincolor" component={MaintainColor} />
       <Route path="/upload" component={Text} />
-      </Route>
+       </Route>
+      <Route path="/login" component={Login} />
     </Router>
   );
-};
+}

@@ -5,8 +5,12 @@ import TablePlate from '../plate/tableplate';
 import styles from './shopList.less';
 
 function ShopList({
-  total, current, loading,
+  total, 
+  current, 
+  loading,
+  dataSource,
   onPageChange,
+  onShowSizeChange,
   onDeleteItem,
   onEditItem,
   }) {
@@ -15,37 +19,36 @@ function ShopList({
   const columns = [{
     title: '序号',
     dataIndex: 'num',
-    key: 'num',
-
+    key: 'num'
   }, {
     title: '店仓编号',
-    dataIndex: 'shopcode',
-    key: 'shopcode',
+    dataIndex: 'code',
+    key: 'code'
   }, {
     title: '店仓名称',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'fullName',
+    key: 'fullName'
   }, {
     title: '店仓简称',
-    dataIndex: 'shortname',
-    key: 'shortname',
+    dataIndex: 'shortName',
+    key: 'shortName',
   }, {
     title: '类别',
     dataIndex: 'class',
     key: 'class',
   },{
     title: '销售区域',
-    dataIndex: 'location',
-    key: 'location',
+    dataIndex: 'saleAreaName',
+    key: 'saleAreaName',
   }, {
     title: '所在城市',
-    dataIndex: 'city',
-    key: 'city',
+    dataIndex: 'cityName',
+    key: 'cityName',
   },
   {
     title: '仓店电话',
-    dataIndex: 'phone',
-    key: 'phone',
+    dataIndex: 'mobileNumber',
+    key: 'mobileNumber',
   },{
     title: '店长',
     dataIndex: 'shopkeeper',
@@ -57,8 +60,8 @@ function ShopList({
     key: 'manager',
   },{
     title: '仓店状态',
-    dataIndex: 'status',
-    key: 'status',
+    dataIndex: 'statusName',
+    key: 'statusName',
   },{
     title: '操作',
     key: 'operation',
@@ -73,32 +76,32 @@ function ShopList({
       </p>
     ),
   }];
-		  const data = [{
-		  key: '1',
-		  name: 'John Brown',
-		  age: 32,
-		  address: 'New York No. 1 Lake Park',
-		}, {
-		  key: '2',
-		  name: 'Jim Green',
-		  age: 42,
-		  address: 'London No. 1 Lake Park',
-		},{
-		  key: '3',
-		  name: 'Joe Black',
-		  age: 32,
-		  address: 'Sidney No. 1 Lake Park',
-		},{
-      key: '4',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    }, {
-      key: '5',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    }];
+		//   const data = [{
+		//   key: '1',
+		//   name: 'John Brown',
+		//   age: 32,
+		//   address: 'New York No. 1 Lake Park',
+		// }, {
+		//   key: '2',
+		//   name: 'Jim Green',
+		//   age: 42,
+		//   address: 'London No. 1 Lake Park',
+		// },{
+		//   key: '3',
+		//   name: 'Joe Black',
+		//   age: 32,
+		//   address: 'Sidney No. 1 Lake Park',
+		// },{
+  //     key: '4',
+  //     name: 'John Brown',
+  //     age: 32,
+  //     address: 'New York No. 1 Lake Park',
+  //   }, {
+  //     key: '5',
+  //     name: 'Jim Green',
+  //     age: 42,
+  //     address: 'London No. 1 Lake Park',
+  //   }];
 
   return (
 
@@ -109,12 +112,19 @@ function ShopList({
             </div>
 				<Table
             size="small"
-            className={styles.table}
 		        columns={columns}
-		        dataSource={data}
-		        pagination={true}
+		        dataSource={dataSource}
+		        pagination={false}
 		        bordered
 		      />
+           <Pagination  
+             className={styles.pagination}
+             total={50} 
+             showSizeChanger 
+             onShowSizeChange={onShowSizeChange}
+             onChange={onPageChange}
+             showQuickJumper 
+           />
 
     </TablePlate>
 
@@ -123,7 +133,7 @@ function ShopList({
 
 ShopList.propTypes = {
   onPageChange: PropTypes.func,
-  onDeleteItem: PropTypes.func,
+  onShowSizeChange: PropTypes.func,
   onEditItem: PropTypes.func,
   dataSource: PropTypes.array,
   loading: PropTypes.any,
