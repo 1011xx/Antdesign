@@ -8,6 +8,12 @@ export default {
   	status:[],
   	types:[],
   	dataSource:[],
+  	searchForm:{
+  		start:1,
+  		rows:10
+  	},
+  	query:'',
+  	loading:true,
   },
   reducers: {
   	// 获取省市数据并赋值
@@ -29,7 +35,7 @@ export default {
      //获取列表数据并赋值
     ShopList(state, action) {
 
-      return { ...state, ...action.payload};
+      return { ...state, ...action.payload,loading:false};
     }
 
   },
@@ -37,19 +43,13 @@ export default {
   	//当进入的时出发的事件
   	*enter({ payload}, { call, put }) {
   		
-  	  const shoplist=yield call(queryShop,{jsonparam:'{"start":1,"rows":10}'});
+  	  const shoplist=yield call(queryShop,{jsonparam:'{"start":"1","rows":"10"}'});
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
       if(shoplist.data){
-       	// console.log(shoplist.data.dataList.length);
-       	// let datalength=shoplist.data.dataList.length;
-       	// let tablebase=shoplist.data.dataList;
-       	// 	for (let i =1; i <=datalength; i++) {
-       	// 		tablebase[i-1].num=i;
-       	// 	}
-       	// 	console.log(tablebase);
+       		// console.log(shoplist);
 	      	yield put({type:'ShopList',
 	      	payload:{
 	      		dataSource:shoplist.data.dataList
@@ -85,7 +85,20 @@ export default {
 	      });
       };
        
-    }
+    },
+   *queryShop({payload},{call,put}){
+   	 console.log(payload);
+   	 const resultlist=yield call(queryShop,{jsonparam:payload});
+   	 if(resultlist.data){
+       		// console.log(shoplist);
+	      	yield put({type:'ShopList',
+	      	payload:{
+	      		dataSource:resultlist.data.dataList
+	      	}
+	      });
+      };
+   }
+
 },
   subscriptions: {
   	setup({ dispatch, history }){

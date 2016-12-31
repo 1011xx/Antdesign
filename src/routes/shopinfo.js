@@ -6,7 +6,7 @@ import Queryinfo from '../components/Storeinfo/Search';
 import ShopList from '../components/Storeinfo/shopList';
 
 function Shopinfo({dispatch,shopinfo}){
-	const { options,region,status,types,dataSource}=shopinfo;
+	const { options,region,status,types,dataSource,searchForm,loading}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -15,26 +15,42 @@ function Shopinfo({dispatch,shopinfo}){
 		passdata(data){
 			console.log(data);
 			//获取文本框
+			searchForm.fullName=data.shopname;
+			//将searchForm查询条件对象的值转换为字符串
+			let condit=JSON.stringify(searchForm); 
+			 dispatch({
+              type: 'shopinfo/queryShop',
+              payload: condit,
+            });
+			
 		},
 		selectCategory(value){
 			//获取类别
 			console.log(value);
+			searchForm.shopType=value[0];
+			console.log(searchForm);
 		},
 		selectRegion(value){
 			// 获取地区
 			console.log(value);
+			searchForm.saleAreaCode=value[0];
 		},
 		selectCity(value){
 			// 获取城市
  			console.log(value);
+ 			searchForm.provinceCode=value[0];
+ 			searchForm.cityCode=value[1];
 		},
 		selectShopststus(value){
 			// 获取店铺状态
 			console.log(value);
+			searchForm.shopStatus=value[0];
+			console.log(searchForm)
 		}
 	};
 	const listProps={
 		dataSource,
+		loading,
 		onEditItem(record){
 			console.log(record);
 		},

@@ -33,10 +33,17 @@ function handleSearch(){
         });
 }
 
+function test(){
 
+
+ var emails = region.map(function (item) { return item.label; });
+
+ console.log(emails.join(", ")); // zhang@email.com, jiang@email.com, li@email.com
+}
 
 return (
         <div>
+
         <Plate title="查询信息">
             <Form 
             inline
@@ -92,6 +99,10 @@ return (
               onChange={selectRegion} 
               placeholder="请选择销售区域" 
               />
+
+              
+
+
               {/*<Select 
               placeholder="请选择销售区域"
               style={{ width: 153 }}

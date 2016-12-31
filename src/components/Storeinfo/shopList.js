@@ -115,6 +115,7 @@ function ShopList({
 		        columns={columns}
 		        dataSource={dataSource}
 		        pagination={false}
+            loading={loading}
 		        bordered
 		      />
            <Pagination  
@@ -139,6 +140,7 @@ ShopList.propTypes = {
   loading: PropTypes.any,
   total: PropTypes.any,
   current: PropTypes.any,
+  loading: PropTypes.any,
 };
 
 export default ShopList;

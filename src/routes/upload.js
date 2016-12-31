@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Upload from 'rc-upload';
 
 const props = {
-  action: 'http://192.168.10.184:8084/fmss/shopController/newShop',
+  action: 'http://192.168.10.146:5001/fmss/shopController/newShop',
   multiple: true,
   onStart(file) {
     console.log('onStart', file, file.name);
