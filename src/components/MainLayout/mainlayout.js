@@ -40,23 +40,25 @@ const Header=({
           <div className={styles.ant_layout_logo}>
             <img src="./src/assets/logo.png" />
           </div>
+          <div className={styles.function_menu}>
+            <div className={styles.user}>
+              <img src="http://reactjs.cn/react/img/logo.svg" className={styles.who}/>
+              <Dropdown overlay={menu}>
+              <a className={styles.ant_dropdown_link} >汤姆·马修
+                <Icon type="down"/>
+              </a>
+              </Dropdown>
+            </div>
           <Menu theme="dark" mode="horizontal"
-            defaultSelectedKeys={['1']} style={{lineHeight: '64px',flex:1}}>
+            defaultSelectedKeys={['1']} style={{lineHeight: '64px',float:'right'}}>
             <Menu.Item key="1">基础平台</Menu.Item>
             <Menu.Item key="2">会员子系统</Menu.Item>
             <Menu.Item key="3">策略子系統</Menu.Item>
             <Menu.Item key="4">销售收银子系统</Menu.Item>
           </Menu>
             {/*上方用户栏*/}
-          <div className={styles.user}>
-            <img src="http://reactjs.cn/react/img/logo.svg" className={styles.who}/>
-            <Dropdown overlay={menu}>
-            <a className={styles.ant_dropdown_link} >汤姆·马修
-              <Icon type="down"/>
-            </a>
-        </Dropdown>
+          
       </div>
-
       {/*上方用户栏*/}
         </div>
       </div>
@@ -100,11 +102,27 @@ const Header=({
           <Menu.Item key="7">新增调价单</Menu.Item>
           <Menu.Item key="8">调整吊牌价</Menu.Item>
            <Menu.Item key="9">审核吊牌价</Menu.Item>
+            <Menu.Item key="10">新增调价单</Menu.Item>
+          <Menu.Item key="11">调整吊牌价</Menu.Item>
+           <Menu.Item key="12">审核吊牌价</Menu.Item>
+            <Menu.Item key="13">新增调价单</Menu.Item>
+          <Menu.Item key="14">调整吊牌价</Menu.Item>
+           <Menu.Item key="15">审核吊牌价</Menu.Item>
+            <Menu.Item key="16">新增调价单</Menu.Item>
+          <Menu.Item key="17">调整吊牌价</Menu.Item>
+           <Menu.Item key="18">审核吊牌价</Menu.Item>
+            <Menu.Item key="19">新增调价单</Menu.Item>
+          <Menu.Item key="20">调整吊牌价</Menu.Item>
+           <Menu.Item key="21">审核吊牌价</Menu.Item>
         </SubMenu>
       </Menu>
       </div>
-       
-          {children}
+       <div className={styles.Frameproduct}>
+         <div className={styles.product}>
+           {children}
+         </div> 
+       </div>
+          
        
     </div>
   </div>

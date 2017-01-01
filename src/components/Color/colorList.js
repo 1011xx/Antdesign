@@ -30,7 +30,7 @@ function ColorList({
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Popconfirm title="确定要删除吗？" onConfirm={() => onDeleteItem(record.key)}>
+        <Popconfirm title="删除后将不可恢复，确定要删除吗？" onConfirm={() => onDeleteItem(record.key)}>
           <a>删除</a>
         </Popconfirm>
       </p>
