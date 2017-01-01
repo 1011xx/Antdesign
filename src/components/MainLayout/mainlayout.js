@@ -33,6 +33,8 @@ const Header=({
   onOpenChange,
   handleClick
 }) =>{
+  
+
 	return(
  <div className={styles.ant_layout_wrap} >
       <div className={styles.ant_layout_header}>
@@ -56,10 +58,10 @@ const Header=({
             <Menu.Item key="3">策略子系統</Menu.Item>
             <Menu.Item key="4">销售收银子系统</Menu.Item>
           </Menu>
-            {/*上方用户栏*/}
+
           
       </div>
-      {/*上方用户栏*/}
+
         </div>
       </div>
       <div className={styles.content_wrap}>
@@ -67,7 +69,7 @@ const Header=({
       {/*selectedKeys={[this.state.current]}*/}
       <Menu
         mode="inline"
-
+        openKeys={currentopenkey}
         selectedKeys={[currentselectkey]}
         onOpenChange={onOpenChange}
         onClick={handleClick}
@@ -98,7 +100,7 @@ const Header=({
                     </SubMenu>*/}
         </SubMenu>
 
-         <SubMenu key="sub3" title={<span><Icon className={styles.iicon3} /><span>价格制定</span></span>}>
+         <SubMenu key="sub4" title={<span><Icon className={styles.iicon3} /><span>价格制定</span></span>}>
           <Menu.Item key="7">新增调价单</Menu.Item>
           <Menu.Item key="8">调整吊牌价</Menu.Item>
            <Menu.Item key="9">审核吊牌价</Menu.Item>

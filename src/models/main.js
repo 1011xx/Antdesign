@@ -2,7 +2,7 @@ import { create, remove, update, query } from '../services/users';
 export default {
     namespace: 'main',
     state: {
-      currentopenkey:'sub1',
+      currentopenkey:[],
       currentselectkey:'1',
 
     },
@@ -19,13 +19,13 @@ export default {
     },
     reducers: {
         ChangeOpenkey(state, action) {
-            // console.log(action.payload);
+            //更改左侧但航菜单的状态
             return {...state,
-                ...action.payload
+                currentopenkey:action.payload
             };
         },
         ChangeSelectkey(state, action) {
-            console.log('action.payload');
+
             console.log(action.payload);
             return {...state, currentselectkey:action.payload  };
         },
