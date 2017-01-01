@@ -104,18 +104,6 @@ const Header=({
           <Menu.Item key="7">新增调价单</Menu.Item>
           <Menu.Item key="8">调整吊牌价</Menu.Item>
            <Menu.Item key="9">审核吊牌价</Menu.Item>
-            <Menu.Item key="10">新增调价单</Menu.Item>
-          <Menu.Item key="11">调整吊牌价</Menu.Item>
-           <Menu.Item key="12">审核吊牌价</Menu.Item>
-            <Menu.Item key="13">新增调价单</Menu.Item>
-          <Menu.Item key="14">调整吊牌价</Menu.Item>
-           <Menu.Item key="15">审核吊牌价</Menu.Item>
-            <Menu.Item key="16">新增调价单</Menu.Item>
-          <Menu.Item key="17">调整吊牌价</Menu.Item>
-           <Menu.Item key="18">审核吊牌价</Menu.Item>
-            <Menu.Item key="19">新增调价单</Menu.Item>
-          <Menu.Item key="20">调整吊牌价</Menu.Item>
-           <Menu.Item key="21">审核吊牌价</Menu.Item>
         </SubMenu>
       </Menu>
       </div>

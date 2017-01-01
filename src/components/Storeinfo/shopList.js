@@ -158,6 +158,7 @@ function ShopList({
             loading={loading}
 		        bordered
 		      />
+          <div className={styles.Pagination_wrap}>
            <Pagination  
              className={styles.pagination}
              total={50} 
@@ -166,7 +167,7 @@ function ShopList({
              onChange={onPageChange}
              showQuickJumper 
            />
-
+           </div>
     </TablePlate>
 
   );

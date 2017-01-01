@@ -3,9 +3,82 @@ export default {
     namespace: 'main',
     state: {
       currentopenkey:[],
-      currentselectkey:'1',
+      currentselectkey:'',
 
     },
+    subscriptions: {
+    //输入对应的页面使得相应的导航栏显示高亮
+    setup({ dispatch, history }) {
+      history.listen(location => {
+        console.log(location.pathname);
+        // if (location.pathname === '/shopinfo'||location.pathname ==='/shopinfo/shopadd') {
+        //   dispatch({
+        //     type: 'ChangeOpenkey',
+        //     payload: ['sub1'],
+        //   });
+        // }else if(location.pathname ==='/styleattr'||location.pathname ==='/maintaincolor'){
+        //      dispatch({
+        //     type: 'ChangeOpenkey',
+        //     payload: ['sub2'],
+        //   });
+        // }
+        
+        switch(location.pathname)
+        {
+        case '/shopinfo':
+              dispatch({
+                type: 'ChangeOpenkey',
+                payload: ['sub1'],
+              });
+               dispatch({
+                type: 'ChangeSelectkey',
+                payload: '1',
+              });
+          break;
+        case '/shopinfo/shopadd':
+                dispatch({
+                type: 'ChangeOpenkey',
+                payload: ['sub1'],
+              });
+                dispatch({
+                type: 'ChangeSelectkey',
+                payload: '1',
+              });
+          break;
+            case '/styleattr':
+                    dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '2',
+                  });
+          break;
+          case '/maintaincolor':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '3',
+                  });
+          break;
+
+        
+          
+        }
+
+
+
+
+
+
+      });
+    }
+  },
+
     effects: {
         *getlogin({ payload }, { call, put }){
              console.log(payload);
@@ -25,8 +98,6 @@ export default {
             };
         },
         ChangeSelectkey(state, action) {
-
-            console.log(action.payload);
             return {...state, currentselectkey:action.payload  };
         },
 

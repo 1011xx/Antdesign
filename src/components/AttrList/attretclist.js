@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
-import Plate from '../plate/plate';
+import Nobtlplate from '../plate/nobtlplate';
 import styles from './attrlist.less';
 //服装属性/款号属性维护/品牌
 
@@ -46,21 +46,21 @@ function AttrEtcList({
   }];
 		  const data = [{
 		  num: 1,
-		  code: 'M',
+		  code: '品牌',
 		  length: 1,
       rulesnum:1,
       hand :'否',
       output:'是'
 		}, {
 		  num: 2,
-		  code: 'O',
+		  code: '年份',
 		  length: 2,
       rulesnum:2,
       hand :'否',
       output:'是'
 		},{
 		  num: 3,
-		  code: 'R',
+		  code: '季节',
 		  length: 4,
       rulesnum:3,
       hand :'是',
@@ -69,15 +69,16 @@ function AttrEtcList({
 
   return (
    
-    <Plate title="属性类列表">
+    <Nobtlplate title="属性类列表">
 				<Table
+            size="small"
 		        columns={columns}
 		        dataSource={data}
 		        pagination={false}
 		        bordered
 		      />
 
-    </Plate>
+    </Nobtlplate>
   
   );
 }
