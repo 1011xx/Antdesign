@@ -14,6 +14,14 @@ export default {
   	},
   	query:'',
   	loading:true,
+
+
+    //shopadd
+    previewVisible:false,
+    previewImage:true,
+    fileList: [],
+    fileListlength:1,
+    oFile:[]
   },
   reducers: {
   	// 获取省市数据并赋值
@@ -36,7 +44,27 @@ export default {
     ShopList(state, action) {
 
       return { ...state, ...action.payload,loading:false};
-    }
+    },
+    //显示预览
+    ShowPreview(state){
+      return {...state,previewVisible:true};
+    },
+    //关闭预览
+    HidePreview(state){
+      return {...state,previewVisible:false};
+    },
+    //
+    PreviewImage(state, action) {
+      return { ...state, ...action.payload};
+    },
+    //
+    FileListlength(state, action) {
+      return { ...state, ...action.payload};
+    },
+    //
+    FileList(state, action) {
+      return { ...state, ...action.payload};
+    },
 
   },
   effects: {

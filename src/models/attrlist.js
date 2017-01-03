@@ -20,7 +20,7 @@ export default {
     },
     reducers: {
         Changetitle(state, action) {
-            // console.log(action.payload);
+            console.log(action.payload);
             return {...state,
                 ...action.payload
             };

@@ -8,6 +8,7 @@ import Basicplantform from './routes/basicplantform';
 import StyleAttr from './routes/styleAttr';
 import MainAttrList from './routes/mainattrList';
 import MaintainColor from './routes/MaintainColor';
+import MaintainSize from './routes/MaintainSize';
 import Shopadd from './routes/shopadd';
 import Text from './routes/upload';
 
@@ -40,6 +41,7 @@ export default function({ history }) {
        <Route path="/mainattrlist" component={MainAttrList} />
        <Route path="/styleattr" component={StyleAttr} />
        <Route path="/maintaincolor" component={MaintainColor} />
+       <Route path="/maintainsize" component={MaintainSize} />
       <Route path="/upload" component={Text} />
        </Route>
       <Route path="/login" component={Login} />

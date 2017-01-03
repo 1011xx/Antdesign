@@ -8,7 +8,10 @@ function Plate({title,children}) {
 
 		<div className={styles.ant_plan}>
         	<div className={styles.ant_plan_top}>{title}</div>
+        	<div className={styles.ant_plan_btm}>
         	{children}
+        	</div>
+        	
         </div>
 			
 		);

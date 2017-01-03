@@ -30,11 +30,14 @@ function handleOk() {
 
 	return(
 
+		
+        
         <Modal title={title}
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
+
         >
         <Form  horizontal style={{ width: 240 ,margin:'0 auto'}}>
         <FormItem
@@ -75,7 +78,7 @@ function handleOk() {
 }
 
 AttrModel.propTypes = {
-  title: PropTypes.any,
+    title: PropTypes.any,
 	visible: PropTypes.any,
 	form: PropTypes.object,
 	onOk: PropTypes.func,

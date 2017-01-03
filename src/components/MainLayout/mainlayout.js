@@ -73,25 +73,25 @@ const Header=({
         selectedKeys={[currentselectkey]}
         onOpenChange={onOpenChange}
         onClick={handleClick}
-        style={{ width: 180 }}
+        style={{ width: 210 }}
       >
-        <SubMenu key="sub1" title={<span><Icon className={styles.iicon} /><span>店仓维护</span></span>}>
+        <SubMenu key="sub1" title={<span><Icon className={styles.iicon} /><span>店仓档案</span></span>}>
           <Menu.Item key="1">
-            <Link to="/shopinfo">店仓信息</Link>
+            <Link to="/shopinfo">店仓维护</Link>
           </Menu.Item>
 
         </SubMenu>
-        <SubMenu key="sub2" title={<span><Icon className={styles.iicon1} /><span>服装属性</span></span>}>
+        <SubMenu key="sub2" title={<span><Icon className={styles.iicon1} /><span>商品档案</span></span>}>
           <Menu.Item key="2">
-          <Link to="/styleattr">款号属性维护</Link>
+          <Link to="/styleattr">属性维护</Link>
           </Menu.Item>
           <Menu.Item key="3">
-           <Link to="/maintaincolor">
-          维护颜色
-          </Link>
+           <Link to="/maintaincolor">颜色维护</Link>
           </Menu.Item>
-          <Menu.Item key="4">维护尺寸</Menu.Item>
-          <Menu.Item key="5">维护尺寸组</Menu.Item>
+          <Menu.Item key="4">
+           <Link to="/maintainsize">尺寸维护</Link>
+          </Menu.Item>
+          <Menu.Item key="5">尺寸组维护</Menu.Item>
           <Menu.Item key="6">款号维护</Menu.Item>
 
           {/*<SubMenu key="sub3" title="Submenu">
@@ -100,10 +100,9 @@ const Header=({
                     </SubMenu>*/}
         </SubMenu>
 
-         <SubMenu key="sub4" title={<span><Icon className={styles.iicon3} /><span>价格制定</span></span>}>
-          <Menu.Item key="7">新增调价单</Menu.Item>
-          <Menu.Item key="8">调整吊牌价</Menu.Item>
-           <Menu.Item key="9">审核吊牌价</Menu.Item>
+         <SubMenu key="sub4" title={<span><Icon className={styles.iicon3} /><span>价格档案</span></span>}>
+          <Menu.Item key="7">价格维护</Menu.Item>
+          <Menu.Item key="8">价格审核</Menu.Item>
         </SubMenu>
       </Menu>
       </div>

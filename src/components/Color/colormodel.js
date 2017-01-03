@@ -41,44 +41,40 @@ function handleOk() {
         >
         <Form  horizontal style={{ width: 240 ,margin:'0 auto'}}>
         <FormItem
-          label="属性代码："
+          label="颜色："
           hasFeedback
 
         >
           {getFieldDecorator('code', {
            initialValue:item.code,
             rules: [
-              { required: true, message: '属性代码未填写' },
+              { required: true, message: '颜色未填写' },
             ],
           })(
             <Input type="text" />
           )}
         </FormItem>
         <FormItem
-          label="属性描述："
+          label="颜色名称："
           hasFeedback
          
         >
           {getFieldDecorator('exp', {
    			initialValue:item.expattr,
             rules: [
-              { required: true, message: '属性描述未填写' },
+              { required: true, message: '颜色名称未填写' },
             ],
           })(
             <Input type="text" />
           )}
         </FormItem>
-        
       </Form>
-
         </Modal>
-     
-			
 		);
 }
 
 AttrModel.propTypes = {
-    title: PropTypes.any,
+  title: PropTypes.any,
 	visible: PropTypes.any,
 	form: PropTypes.object,
 	onOk: PropTypes.func,

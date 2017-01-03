@@ -1,4 +1,4 @@
-import { create, remove, update, query } from '../services/users';
+ import { create, remove, update, query } from '../services/users';
 import { parse } from 'qs';
 export default {
     namespace: 'login',

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
 import Plate from '../plate/plate';
-import PicturesWall from './uploadimg';
+
 import styles from './addshopinfo.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -9,46 +9,50 @@ const Option = Select.Option;
 
 
 const AddShopinfo = ({
- passdata,
+  getadddata,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue
     },
+    children,
 }) =>{
 
-function handleSearch(){
-	validateFields((errors) => {
-          if (errors) {
-            return;
-          }
-          const data = { ...getFieldsValue() };
-          passdata(data);
-        });
-}
 
-function onChange(value){
-	console.log(value);
+function handleSubmit(e){
+ e.preventDefault();
+    validateFields((err, fieldsValue) => {
+
+      if (!err) {
+         const values = {
+        ...fieldsValue,
+        'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD')
+      };
+       // values.toString()
+       getadddata(values);
+      
+      }
+    });
 }
 
 return (
        
         <div>
-        	
-        <Plate title="基本信息">
-       
-            <Form 
+        	 <Form 
             inline
             className={styles.ant_advanced_search_form}
+            onSubmit={handleSubmit}
             >
+        <Plate title="基本信息">
+       
+           
              <Row  className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                   <FormItem
                   label="仓店名称"
-                  required
                   >
-                  {getFieldDecorator('userName', {
-                   
+                  {getFieldDecorator('fullName', {
+                   rules: [{required: true, message: '店仓名称不能为空!' }]
                   })(
                     <Input  placeholder="请输入电仓名称" />
                   )}
@@ -58,73 +62,82 @@ return (
                <Col span={8} className={styles.ant_col_center}>
                  <FormItem
                 label="简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称"
-                required
                 >
-                  <Select defaultValue="全部" style={{ width: 153 }} >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="disabled">Disabled</Option>
-                    <Option value="Yiminghe">yiminghe</Option>
-                  </Select>
+                {getFieldDecorator('shortName', {
+                rules: [{ required: true, message: 'Please select your gender!' }]
+                
+              })(
+                 <Input  placeholder="请输入电仓简称" />
+                  )}
                 </FormItem>
                </Col>
               
               <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
-                required
+               
                 >
-                  <Select defaultValue="全部" style={{ width: 153 }} >
+                {getFieldDecorator('typeCode', {
+                rules: [{ required: true, message: 'Please select your gender!' }]
+               
+              })(
+                  <Select  style={{ width: 153 }} >
                     <Option value="jack">Jack</Option>
                     <Option value="lucy">Lucy</Option>
                     <Option value="disabled">Disabled</Option>
                     <Option value="Yiminghe">yiminghe</Option>
                   </Select>
+                )}
                 </FormItem>
               </Col>
-             
             </Row>
-
+            
             <Row >
               <Col span={8} className={styles.ant_col_center}>
                 <FormItem
-                label="&nbsp;&nbsp;&nbsp;开店日期"
+                label="开店日期"
                 >
+                 {getFieldDecorator('establishDate', {
+                 rules: [{ required: true, message: 'Please select your gender!' }]
+              })(
                   <DatePicker  />
+                  )}
                 </FormItem>
               </Col>
                <Col span={8} className={styles.ant_col_center}>
               <FormItem
               label="销售区域"
-              required
+             
               >
-                 <Select defaultValue="全部" style={{ width: 153 }} >
+               {getFieldDecorator('provinceCode', {
+                rules: [{ required: true, message: 'Please select your gender!' }]
+               
+              })(
+                 <Select  style={{ width: 153 }} >
                   <Option value="010">北京</Option>
                   <Option value="012">上海</Option>
                   <Option value="011">天津</Option>
                   <Option value="013">河北</Option>
                 </Select>
+                )}
 
               </FormItem>
                </Col>
              
             </Row>
             
-          </Form>
+         
         </Plate>
 
         <Plate title="联系方式">
-            <Form 
-            inline
-            className={styles.ant_advanced_search_form}
-            >
+           
             <Row className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="所在城市"
-                required
                 >
-                  {getFieldDecorator('location', {
+                  {getFieldDecorator('cityCode', {
+                    rules: [{ required: true, message: 'Please select your gender!' }]
                    
                   })(
                     <Input size="large" placeholder="请输入所在城市" />
@@ -134,10 +147,9 @@ return (
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="店仓电话"
-                required
                 >
-                  {getFieldDecorator('phonenum', {
-                   
+                  {getFieldDecorator('telephoneNumber', {
+                  
                   })(
                     <Input size="large" placeholder="请输入店仓电话" />
                   )}
@@ -148,7 +160,7 @@ return (
                 label="联系人"
                 required
                 >
-                  {getFieldDecorator('person', {
+                  {getFieldDecorator('contracts', {
                    
                   })(
                     <Input size="large" placeholder="请输入联系人名" />
@@ -163,8 +175,8 @@ return (
                  <FormItem
                 label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
-                  {getFieldDecorator('mobile', {
-                   
+                  {getFieldDecorator('mobileNumber', {
+                  
                   })(
                     <Input size="large" placeholder="请输入手机号码" />
                   )}
@@ -172,10 +184,10 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
-                label="&nbsp;&nbsp;&nbsp;传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
+                label="传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
                 >
                   {getFieldDecorator('fax', {
-                   
+                  
                   })(
                     <Input size="large" placeholder="请输入传真号码" />
                   )}
@@ -186,34 +198,44 @@ return (
                 label="&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;址"
                 >
                   {getFieldDecorator('address', {
-                   
+                  
                   })(
-                    <Input size="large" placeholder="请输入店仓地址" />
+                    <Input size="large" placeholder="请输入店仓地址" style={{width:220}}/>
                   )}
                 </FormItem>
                 </Col>
-
-           </Row>         
-          </Form>
+             </Row>
+         
         </Plate>
 
-         <Plate title="照片">
-            <PicturesWall/>
+         <Plate title="照片(最多上传5张)">
+         {children}
+            {/*<PicturesWall/>*/}
          </Plate>
          <Plate title="其他信息">
-         <div className={styles.textarea_title_style}>
-           <p >备注：</p><Input type="textarea" autosize={false} rows={6} className={styles.textarea}/>
-         </div>
+         <FormItem
+                label="备注："
+                >
+                  {getFieldDecorator('beizhu', {
+                  
+                  })(
+                    <Input type="textarea" rows={6} style={{width:420}}/>
+                  )}
+                </FormItem>
+         
          </Plate>
         
           <div className={styles.btn_wrap}>
           
-            <Button type="primary" className={styles.padding}>保存</Button>
+            <FormItem>
+          <Button type="primary" htmlType="submit" size="large">Register</Button>
+        </FormItem>
          
              <Button type="ghost">取消</Button>
          
           
           </div>
+           </Form>
         </div>
        
   );
