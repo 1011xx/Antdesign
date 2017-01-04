@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react';
-import { routerRedux } from 'dva/router';
+import { routerRedux,browserHistory,History    } from 'dva/router';
 import { connect } from 'dva';
 import Wrap from '../components/wrap/wrap';
 import Queryinfo from '../components/Storeinfo/Search';
 import ShopList from '../components/Storeinfo/shopList';
 
 function Shopinfo({dispatch,shopinfo}){
-	const { options,region,status,types,dataSource,searchForm,loading}=shopinfo;
+	const { options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
 		status,
 		types,
 		passdata(data){
-			console.log(data);
+			// console.log(data);
 			//获取文本框
 			searchForm.fullName=data.shopname;
 			//将searchForm查询条件对象的值转换为字符串
@@ -22,43 +22,80 @@ function Shopinfo({dispatch,shopinfo}){
               type: 'shopinfo/queryShop',
               payload: condit,
             });
-			
+			 
 		},
 		selectCategory(value){
 			//获取类别
-			console.log(value);
+			// console.log(value);
 			searchForm.shopType=value[0];
-			console.log(searchForm);
+			// console.log(searchForm);
 		},
 		selectRegion(value){
 			// 获取地区
-			console.log(value);
+			// console.log(value);
 			searchForm.saleAreaCode=value[0];
 		},
 		selectCity(value){
 			// 获取城市
- 			console.log(value);
+ 			// console.log(value);
  			searchForm.provinceCode=value[0];
  			searchForm.cityCode=value[1];
 		},
 		selectShopststus(value){
 			// 获取店铺状态
-			console.log(value);
+			// console.log(value);
 			searchForm.shopStatus=value[0];
-			console.log(searchForm)
+			// console.log(searchForm)
 		}
 	};
 	const listProps={
 		dataSource,
 		loading,
-		onEditItem(record){
-			console.log(record);
+		total,
+	
+		onEditItem(item){
+			console.log(JSON.stringify(item));
+			 dispatch({
+		        type: 'shopinfo/updateinfo',
+		        payload:{
+		        	modalType:'update',
+		        	currentItem:item,
+		        }
+		      });
+			 // browserHistory.push('/#/shopinfo/shopadd');
+			// window.history.pushState(null, '/shopinfo/shopadd');
+			 
 		},
 		onPageChange(pageNumber){
-			console.log('Page: ', pageNumber);
+			// console.log('Page: ', pageNumber);
+			changePage.page=pageNumber;
+			//将查询条件对象的值转换为字符串
+			let condit=JSON.stringify(changePage); 
+			// console.log(condit);
+			 dispatch({
+              type: 'shopinfo/queryShop',
+              payload: condit,
+            });
 		},
 		onShowSizeChange(current, pageSize){
-			console.log(current, pageSize);
+			// console.log(current, pageSize);
+			changePage.page=current;
+			changePage.rows=pageSize;
+			let condit=JSON.stringify(changePage); 
+			// console.log(condit);
+		 dispatch({
+              type: 'shopinfo/queryShop',
+              payload: condit,
+            });
+		},
+		gotoclick(){
+			
+			 dispatch({
+		        type: 'shopinfo/updateinfo',
+		        payload:{
+		        	modalType:'create'
+		        }
+		      });
 		}
 	};
 	return(

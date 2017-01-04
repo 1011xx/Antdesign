@@ -13,6 +13,7 @@ function ShopList({
   onShowSizeChange,
   onDeleteItem,
   onEditItem,
+  gotoclick,
   }) {
 
 
@@ -67,7 +68,7 @@ function ShopList({
     key: 'operation',
     render: (text, record) => (
       <p>
-        <a onClick={() => onEditItem(record)}>修改</a>
+         <Link to="/shopinfo/shopadd"><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp; &nbsp; &nbsp; 
         <a>查看详情</a>
          &nbsp; &nbsp; &nbsp; 
@@ -141,13 +142,13 @@ function ShopList({
       name: 'Jim Green',
       age: 42,
       address: 'London No. 1 Lake Park',
-    }];
+    },{ key: '14',"num":1,"address":"121212","cityCode":"130900","cityName":"沧州市","code":"0713","contracts":"王大催","fullName":"翠微绿","id":"01083F4AB4374CED8885010B6D970290","images":"[]","mobileNumber":"110","provinceCode":"130000","provinceName":"河北省","saleAreaCode":"102","saleAreaName":"华北地区","shortName":"715","status":"1","statusName":"启用","telephoneNumber":"1212","typeCode":"1","typeName":"正价店","num":2}];
 
   return (
 
     <TablePlate title="店仓列表">
             <div className={styles.add_plate}>
-             <Link to="/shopinfo/shopadd"><Icon type="plus-circle-o" />&nbsp;新增</Link>
+             <Link to="/shopinfo/shopadd"><div onClick={()=>gotoclick()}><Icon type="plus-circle-o" />&nbsp;新增</div></Link>
               {/*<a className={styles.add_btn} ><Icon type="plus-circle-o" />&nbsp;新增</a>*/}
             </div>
 				<Table
@@ -155,13 +156,14 @@ function ShopList({
 		        columns={columns}
 		        dataSource={data}
 		        pagination={false}
-            loading={loading}
+          
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>
            <Pagination  
              className={styles.pagination}
-             total={50} 
+             size="small"
+             total={total} 
              showSizeChanger 
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
@@ -178,6 +180,7 @@ ShopList.propTypes = {
   onShowSizeChange: PropTypes.func,
   onShowQuickJumpe:PropTypes.func,
   onEditItem: PropTypes.func,
+  gotoclick:PropTypes.func,
   dataSource: PropTypes.array,
   loading: PropTypes.any,
   total: PropTypes.any,

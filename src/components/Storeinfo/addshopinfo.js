@@ -5,7 +5,13 @@ import Plate from '../plate/plate';
 import styles from './addshopinfo.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
-
+let provinceName='';
+let cityName='';
+let provinceCode='';
+let cityCode='';
+let saleAreaCode='';
+let saleAreaName='';
+let typeCode='';
 
 
 const AddShopinfo = ({
@@ -16,23 +22,70 @@ const AddShopinfo = ({
     getFieldsValue
     },
     children,
+    region,
+    types,
+    options,
+    item={},
+
 }) =>{
 
 
 function handleSubmit(e){
  e.preventDefault();
+ console.log(item);
+ // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
 
       if (!err) {
          const values = {
         ...fieldsValue,
-        'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD')
+        'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+        'provinceCode':provinceCode,
+        'cityCode':cityCode,
+        'cityName':cityName,
+        'provinceName':provinceName,
+        'provinceCode':provinceCode,
+        'typeCode':typeCode,
+        'saleAreaCode':saleAreaCode,
+        'saleAreaName':saleAreaName
+
       };
        // values.toString()
        getadddata(values);
       
       }
     });
+}
+function citychange(citycode){
+  // 遍历options获取citycode和cityname
+  for(let i=0;i<options.length;i++){
+    if(options[i].value==citycode[0]){
+       provinceName=options[i].label;
+       for(let j=0;j<options[i].children.length;j++){
+      if(options[i].children[j].value==citycode[1])
+       cityName=options[i].children[j].label;
+      }
+    };
+
+  }
+  provinceCode=citycode[0];
+  cityCode=citycode[1];
+
+}
+
+function getSalesarea(area){
+// console.log(area[0]);
+for(let k=0;k<region.length;k++){
+  if(region[k].value==area[0]){
+     saleAreaName=region[k].label;
+  }
+}
+  saleAreaCode=area[0];
+ 
+}
+
+function typecode(code){
+ typeCode=code[0];
 }
 
 return (
@@ -52,7 +105,8 @@ return (
                   label="仓店名称"
                   >
                   {getFieldDecorator('fullName', {
-                   rules: [{required: true, message: '店仓名称不能为空!' }]
+                     initialValue:item.fullName,
+                   rules: [{required: true, message: '请输入店仓名称!' }]
                   })(
                     <Input  placeholder="请输入电仓名称" />
                   )}
@@ -64,7 +118,8 @@ return (
                 label="简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称"
                 >
                 {getFieldDecorator('shortName', {
-                rules: [{ required: true, message: 'Please select your gender!' }]
+                   initialValue:item.shortName,
+                rules: [{ required: true, message: '请输入店仓简称!' }]
                 
               })(
                  <Input  placeholder="请输入电仓简称" />
@@ -75,19 +130,17 @@ return (
               <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
-               
                 >
-                {getFieldDecorator('typeCode', {
-                rules: [{ required: true, message: 'Please select your gender!' }]
-               
+                 {getFieldDecorator('typeCode', {
+                   initialValue:item.typeCode,
+                
               })(
-                  <Select  style={{ width: 153 }} >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="disabled">Disabled</Option>
-                    <Option value="Yiminghe">yiminghe</Option>
-                  </Select>
-                )}
+                 <Cascader 
+              options={types} 
+              onChange={typecode}
+              placeholder="请选择类别" 
+              />
+              )}
                 </FormItem>
               </Col>
             </Row>
@@ -98,6 +151,7 @@ return (
                 label="开店日期"
                 >
                  {getFieldDecorator('establishDate', {
+                   initialValue:item.establishDate,
                  rules: [{ required: true, message: 'Please select your gender!' }]
               })(
                   <DatePicker  />
@@ -107,19 +161,16 @@ return (
                <Col span={8} className={styles.ant_col_center}>
               <FormItem
               label="销售区域"
-             
               >
-               {getFieldDecorator('provinceCode', {
-                rules: [{ required: true, message: 'Please select your gender!' }]
-               
+              {getFieldDecorator('saleAreaCode', {
+                   initialValue:item.saleAreaCode,
               })(
-                 <Select  style={{ width: 153 }} >
-                  <Option value="010">北京</Option>
-                  <Option value="012">上海</Option>
-                  <Option value="011">天津</Option>
-                  <Option value="013">河北</Option>
-                </Select>
-                )}
+                  <Cascader 
+              options={region} 
+              onChange={getSalesarea}
+              placeholder="请选择销售区域" 
+              />
+               )}
 
               </FormItem>
                </Col>
@@ -134,14 +185,15 @@ return (
             <Row className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
-                label="所在城市"
+                label="&nbsp;&nbsp;所在城市"
                 >
-                  {getFieldDecorator('cityCode', {
-                    rules: [{ required: true, message: 'Please select your gender!' }]
-                   
-                  })(
-                    <Input size="large" placeholder="请输入所在城市" />
-                  )}
+                  
+                   <Cascader 
+                  options={options} 
+                  onChange={citychange}
+                  placeholder="请选择所在城市" 
+                  />
+                 
                 </FormItem>
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
@@ -149,7 +201,7 @@ return (
                 label="店仓电话"
                 >
                   {getFieldDecorator('telephoneNumber', {
-                  
+                    initialValue:item.telephoneNumber,
                   })(
                     <Input size="large" placeholder="请输入店仓电话" />
                   )}
@@ -161,7 +213,7 @@ return (
                 required
                 >
                   {getFieldDecorator('contracts', {
-                   
+                   initialValue:item.contracts,
                   })(
                     <Input size="large" placeholder="请输入联系人名" />
                   )}
@@ -176,7 +228,7 @@ return (
                 label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
                   {getFieldDecorator('mobileNumber', {
-                  
+                  initialValue:item.mobileNumber,
                   })(
                     <Input size="large" placeholder="请输入手机号码" />
                   )}
@@ -186,8 +238,8 @@ return (
                 <FormItem
                 label="传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
                 >
-                  {getFieldDecorator('fax', {
-                  
+                  {getFieldDecorator('faxNumber', {
+                  initialValue:item.faxNumber,
                   })(
                     <Input size="large" placeholder="请输入传真号码" />
                   )}
@@ -198,7 +250,7 @@ return (
                 label="&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;址"
                 >
                   {getFieldDecorator('address', {
-                  
+                  initialValue:item.address,
                   })(
                     <Input size="large" placeholder="请输入店仓地址" style={{width:220}}/>
                   )}
@@ -217,7 +269,7 @@ return (
                 label="备注："
                 >
                   {getFieldDecorator('beizhu', {
-                  
+                  initialValue:item.beizhu,
                   })(
                     <Input type="textarea" rows={6} style={{width:420}}/>
                   )}
@@ -228,10 +280,10 @@ return (
           <div className={styles.btn_wrap}>
           
             <FormItem>
-          <Button type="primary" htmlType="submit" size="large">Register</Button>
+          <Button type="primary" htmlType="submit" size="large">保存</Button>
         </FormItem>
          
-             <Button type="ghost">取消</Button>
+             <Button type="ghost" size="large">取消</Button>
          
           
           </div>

@@ -4,6 +4,8 @@ import { connect } from 'dva';
 import Wrap from '../components/wrap/wrap';
 import PicturesWall from '../components/Storeinfo/uploadimg';
 import AddShopinfo from '../components/Storeinfo/addshopinfo';
+// let num=86;
+// let numm=86;
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
     for (var p in obj) {
@@ -24,33 +26,49 @@ const {   previewVisible,
 		  previewImage,
 		  fileList,
 		  fileListlength,
-		  oFile
+		  oFile,
+		  options,
+		  region,
+		  types,
+		  currentItem,
+		  modalType
 	}=shopinfo;
 
 	const addInfoProps={
 		 oFile,
+		 options,
+		  region,
+		  types,
+		  item:modalType==='create'?{}:currentItem,
 		getadddata(data){
-		console.log(data);
+	// 		setInterval(function(){
+	// data.fullName=num++;
+	// data.shortName=numm++;
+		// console.log(data);
 		 let upinfo=JSON.stringify(setProp(data)); 
 		 console.log(upinfo);
-		 console.log( oFile);
+		 // console.log( oFile);
 		 //创建form对象
 		  var oMyForm = new FormData();
 		  oMyForm.append("jsonparam", upinfo);
-		   //遍历oFile中的img对象，添加到form对象中
 		  for (var i=0;i<oFile.length;i++) {
-		    // console.log(oFile[i]);
 		    oMyForm.append("userfile", oFile[i]);
 		  }
 		  //将form表单发送出去
-		  var oReq = new XMLHttpRequest();
-		  oReq.open("POST", "/upload.do");
-		  oReq.send(oMyForm);
-		}
+		  // var oReq = new XMLHttpRequest();
+		  // oReq.open("POST", "http://192.168.43.29:8084/fmss/shopController/newShop");
+		  // oReq.send(oMyForm);
+		   dispatch({
+              type: 'shopinfo/upload',
+              payload:oMyForm
+            });
+		
+// },50);
+		
         
 	}
 
-
+}
 
 	const uploadProps={
 		  previewVisible,
