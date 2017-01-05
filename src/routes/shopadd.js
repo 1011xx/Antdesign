@@ -1,11 +1,20 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
+import {  Spin ,message} from 'antd';
 import Wrap from '../components/wrap/wrap';
 import PicturesWall from '../components/Storeinfo/uploadimg';
 import AddShopinfo from '../components/Storeinfo/addshopinfo';
 // let num=86;
 // let numm=86;
+
+const success = function () {
+  message.success('信息保存成功！');
+};
+
+const error = function () {
+  message.error('保存失败请重试！');
+};
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
     for (var p in obj) {
@@ -31,7 +40,8 @@ const {   previewVisible,
 		  region,
 		  types,
 		  currentItem,
-		  modalType
+		  modalType,
+		  behavier
 	}=shopinfo;
 
 	const addInfoProps={
@@ -39,11 +49,12 @@ const {   previewVisible,
 		 options,
 		  region,
 		  types,
+		  behavier,
 		  item:modalType==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
-	// data.fullName=num++;
-	// data.shortName=numm++;
+		// data.fullName=num++;
+		// data.shortName=numm++;
 		// console.log(data);
 		 let upinfo=JSON.stringify(setProp(data)); 
 		 console.log(upinfo);
@@ -52,7 +63,7 @@ const {   previewVisible,
 		  var oMyForm = new FormData();
 		  oMyForm.append("jsonparam", upinfo);
 		  for (var i=0;i<oFile.length;i++) {
-		    oMyForm.append("userfile", oFile[i]);
+		    oMyForm.append("userfile"+i, oFile[i]);
 		  }
 		  //将form表单发送出去
 		  // var oReq = new XMLHttpRequest();
@@ -164,6 +175,7 @@ const {   previewVisible,
 	};
 
 	return(
+	<Spin size="large" tip="保存信息中..." spinning={false}>
 		<Wrap
 		   last="店仓维护"
 		   next="新增店仓"
@@ -181,7 +193,7 @@ const {   previewVisible,
 		  <span style={{paddingRight:14}}>12:30</span>
 		  </p>
 		   </Wrap>
-
+	</Spin>
 		);
 }
 

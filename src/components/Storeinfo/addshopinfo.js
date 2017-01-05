@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
 import Plate from '../plate/plate';
-
+import moment from 'moment';
 import styles from './addshopinfo.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -14,8 +14,25 @@ let saleAreaName='';
 let typeCode='';
 
 
+function parseArray(arrStr) {
+  var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
+  var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
+  var arrayJson;
+  if (JSON && JSON.parse) {
+    arrayJson = JSON.parse(arrayJsonStr);
+  } else {
+    arrayJson = eval('(' + arrayJsonStr + ')');
+  }
+  return arrayJson[tempKey];
+};
+
+
+
+
+
 const AddShopinfo = ({
   getadddata,
+  behavier,
   form: {
     getFieldDecorator,
     validateFields,
@@ -50,7 +67,11 @@ function handleSubmit(e){
         'saleAreaName':saleAreaName
 
       };
-       // values.toString()
+      // console.log('fieldsValue:');
+      //  console.log(fieldsValue);
+      //  console.log('values');
+      //  console.log(values);
+      console.log(behavier);
        getadddata(values);
       
       }
@@ -88,8 +109,11 @@ function typecode(code){
  typeCode=code[0];
 }
 
+
+
+
 return (
-       
+      
         <div>
         	 <Form 
             inline
@@ -132,7 +156,7 @@ return (
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
                 >
                  {getFieldDecorator('typeCode', {
-                   initialValue:item.typeCode,
+                   initialValue:parseArray(item.typeCode)
                 
               })(
                  <Cascader 
@@ -151,7 +175,7 @@ return (
                 label="开店日期"
                 >
                  {getFieldDecorator('establishDate', {
-                   initialValue:item.establishDate,
+                    initialValue:moment(item.establishDate, 'YYYY-MM-DD'),
                  rules: [{ required: true, message: 'Please select your gender!' }]
               })(
                   <DatePicker  />
@@ -160,10 +184,10 @@ return (
               </Col>
                <Col span={8} className={styles.ant_col_center}>
               <FormItem
-              label="销售区域"
+              label="&nbsp;&nbsp;销售区域"
               >
               {getFieldDecorator('saleAreaCode', {
-                   initialValue:item.saleAreaCode,
+                    initialValue:parseArray(item.saleAreaCode)
               })(
                   <Cascader 
               options={region} 
@@ -187,13 +211,15 @@ return (
                 <FormItem
                 label="&nbsp;&nbsp;所在城市"
                 >
-                  
+                  {getFieldDecorator('cityCode', {
+                    initialValue:parseArray(item.cityCode)
+              })(
                    <Cascader 
                   options={options} 
                   onChange={citychange}
                   placeholder="请选择所在城市" 
                   />
-                 
+                 )}
                 </FormItem>
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>

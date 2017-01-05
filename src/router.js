@@ -23,6 +23,12 @@ import AddShopinfo from './components/Storeinfo/addshopinfo';
 
 
 
+import Shopdetail from "./routes/Shopdetail.js";
+
+
+
+
+
 const handleEnter=()=>{
 	console.log('enter--IndexRoute');
 }
@@ -36,15 +42,16 @@ export default function({ history }) {
      	 <Route path="/basicplantform" component={Basicplantform} />
      	 <Route path="/shopinfo" component={Shopinfo} />
          
-       
+       <Route path="/shopinfo/shopdetail" component={Shopdetail} />
        <Route path="/shopinfo/shopadd" component={Shopadd} />
        <Route path="/mainattrlist" component={MainAttrList} />
        <Route path="/styleattr" component={StyleAttr} />
        <Route path="/maintaincolor" component={MaintainColor} />
        <Route path="/maintainsize" component={MaintainSize} />
-      <Route path="/upload" component={Text} />
+       <Route path="/upload" component={Text} />
        </Route>
       <Route path="/login" component={Login} />
+      
     </Router>
   );
 }

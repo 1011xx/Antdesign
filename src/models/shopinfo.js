@@ -28,6 +28,7 @@ export default {
     behavier:'create',//是否为新增
     //update
     currentItem:{},
+    detailItem:{},
 
 
   },
@@ -89,7 +90,7 @@ export default {
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
       if(shoplist.data){
-       		// console.log(shoplist.data);
+       		console.log(shoplist.data);
           for(let i=1;i<=shoplist.data.dataList.length;i++){
             shoplist.data.dataList[i-1].num=i;
           }

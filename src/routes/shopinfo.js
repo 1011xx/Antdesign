@@ -4,6 +4,19 @@ import { connect } from 'dva';
 import Wrap from '../components/wrap/wrap';
 import Queryinfo from '../components/Storeinfo/Search';
 import ShopList from '../components/Storeinfo/shopList';
+//将字符串数组转换为数组
+// function parseArray(arrStr) {
+// 	var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
+// 	var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
+// 	var arrayJson;
+// 	if (JSON && JSON.parse) {
+// 		arrayJson = JSON.parse(arrayJsonStr);
+// 	} else {
+// 		arrayJson = eval('(' + arrayJsonStr + ')');
+// 	}
+// 	return arrayJson[tempKey];
+// };
+
 
 function Shopinfo({dispatch,shopinfo}){
 	const { options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
@@ -52,19 +65,30 @@ function Shopinfo({dispatch,shopinfo}){
 		dataSource,
 		loading,
 		total,
-	
+	//点击修改的时候
 		onEditItem(item){
-			console.log(JSON.stringify(item));
+
+			// console.log(item.typeCode);
+			// console.log(parseArray(item.typeCode));
+
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
-		        	modalType:'update',
+		        	behavier:'update',
 		        	currentItem:item,
 		        }
 		      });
-			 // browserHistory.push('/#/shopinfo/shopadd');
-			// window.history.pushState(null, '/shopinfo/shopadd');
-			 
+		
+		},
+		//当跳转到详情的时候
+		onEditDetail(record){
+			console.log(record);
+			 dispatch({
+		        type: 'shopinfo/updateinfo',
+		        payload:{
+		        	detailItem:record,
+		        }
+		      });
 		},
 		onPageChange(pageNumber){
 			// console.log('Page: ', pageNumber);
