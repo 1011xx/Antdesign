@@ -13,7 +13,7 @@ function Wrap({last,next,children}) {
 
 		<div className={styles.main_content} >
 		        <div className={styles.main_content_top}>
-		            <Breadcrumb className={styles.Breadcrumb}>
+		            <Breadcrumb className={styles.Breadcrumb} separator=">">
 		              <Breadcrumb.Item href="">
 		                <Icon type="home" />
 		                <span>{last}</span>

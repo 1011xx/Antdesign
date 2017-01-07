@@ -14,7 +14,23 @@ let saleAreaName='';
 let typeCode='';
 
 
-const AddShopinfo = ({
+function parseArray(arrStr) {
+  var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
+  var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
+  var arrayJson;
+  if (JSON && JSON.parse) {
+    arrayJson = JSON.parse(arrayJsonStr);
+  } else {
+    arrayJson = eval('(' + arrayJsonStr + ')');
+  }
+  return arrayJson[tempKey];
+};
+
+
+
+
+
+const EditShopinfo = ({
   getadddata,
   behavier,
   form: {
@@ -49,7 +65,12 @@ function handleSubmit(e){
         'provinceCode':provinceCode,
         'typeCode':typeCode,
         'saleAreaCode':saleAreaCode,
-        'saleAreaName':saleAreaName
+        'saleAreaName':saleAreaName,
+        'id':item.id,
+        'code':item.code,
+        'status':item.status,
+        'images':item.images,
+        'deleteImages':[{"imageName":"2179a09bc43f4da0ae2d3ecec57eb21a.jpg"},{"imageName":"c0d99616c53841b09f85a6978dd50fa4.jpg"}]
 
       };
       // console.log('fieldsValue:');
@@ -99,6 +120,7 @@ function typecode(code){
 return (
       
         <div>
+        {console.log(item.id)}
         	 <Form 
             inline
             className={styles.ant_advanced_search_form}
@@ -139,13 +161,16 @@ return (
                 <FormItem
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
                 >
+                 {getFieldDecorator('typeCode', {
+                   initialValue:parseArray(item.typeCode)
                 
+              })(
                  <Cascader 
               options={types} 
               onChange={typecode}
               placeholder="请选择类别" 
               />
-             
+              )}
                 </FormItem>
               </Col>
             </Row>
@@ -155,25 +180,27 @@ return (
                 <FormItem
                 label="开店日期"
                 >
-                {getFieldDecorator('establishDate', {
-                rules: [{ required: true, message: '请选择开店时间!' }]
-                
+                 {getFieldDecorator('establishDate', {
+                    initialValue:moment(item.establishDate, 'YYYY-MM-DD'),
+                 rules: [{ required: true, message: 'Please select your gender!' }]
               })(
                   <DatePicker  />
-              )}
+                  )}
                 </FormItem>
               </Col>
                <Col span={8} className={styles.ant_col_center}>
               <FormItem
               label="&nbsp;&nbsp;销售区域"
               >
-             
+              {getFieldDecorator('saleAreaCode', {
+                    initialValue:parseArray(item.saleAreaCode)
+              })(
                   <Cascader 
               options={region} 
               onChange={getSalesarea}
               placeholder="请选择销售区域" 
               />
-               
+               )}
 
               </FormItem>
                </Col>
@@ -190,13 +217,15 @@ return (
                 <FormItem
                 label="&nbsp;&nbsp;所在城市"
                 >
-                 
+                  {getFieldDecorator('cityCode', {
+                    initialValue:parseArray(item.cityCode)
+              })(
                    <Cascader 
                   options={options} 
                   onChange={citychange}
                   placeholder="请选择所在城市" 
                   />
-                
+                 )}
                 </FormItem>
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
@@ -296,10 +325,10 @@ return (
   );
 };
 
-AddShopinfo.propTypes = {
+EditShopinfo.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func
 };
 
 
-export default Form.create()(AddShopinfo);
+export default Form.create()(EditShopinfo);

@@ -10,6 +10,7 @@ import MainAttrList from './routes/mainattrList';
 import MaintainColor from './routes/MaintainColor';
 import MaintainSize from './routes/MaintainSize';
 import Shopadd from './routes/shopadd';
+import Shopedit from './routes/shopedit';
 import Text from './routes/upload';
 
 
@@ -44,6 +45,7 @@ export default function({ history }) {
          
        <Route path="/shopinfo/shopdetail" component={Shopdetail} />
        <Route path="/shopinfo/shopadd" component={Shopadd} />
+       <Route path="/shopinfo/shopedit" component={Shopedit} />
        <Route path="/mainattrlist" component={MainAttrList} />
        <Route path="/styleattr" component={StyleAttr} />
        <Route path="/maintaincolor" component={MaintainColor} />

@@ -66,17 +66,26 @@ function Shopinfo({dispatch,shopinfo}){
 		loading,
 		total,
 	//点击修改的时候
-		onEditItem(item){
-
-			// console.log(item.typeCode);
-			// console.log(parseArray(item.typeCode));
+		onEditItem( record){
+			console.log('record:');
+			console.log(record.id);
+			// console.log(text);
+				let temp={};
+				temp.id=record.id;
+				let obj=JSON.stringify(temp);
+			// console.log(parseArray(record.typeCode));
 
 			 dispatch({
-		        type: 'shopinfo/updateinfo',
+		        type: 'shopinfo/publicdate',
 		        payload:{
 		        	behavier:'update',
-		        	currentItem:item,
+		        	currentItem:record,
 		        }
+		      });
+			  dispatch({
+		        type: 'shopinfo/queryinfo',
+		        payload:obj
+		        
 		      });
 		
 		},

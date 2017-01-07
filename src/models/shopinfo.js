@@ -1,5 +1,6 @@
-import { addShop,queryProvicneAndCity,querySaleArea,queryShopStatus,queryShopType ,queryShop} from '../services/shopinfo';
+import { queryShopInfo,updateShop,addShop,queryProvicneAndCity,querySaleArea,queryShopStatus,queryShopType ,queryShop} from '../services/shopinfo';
 import { parse } from 'qs';
+import {message} from 'antd';
 export default {
   namespace: 'shopinfo',
   state: {
@@ -23,12 +24,15 @@ export default {
     previewVisible:false,
     previewImage:true,
     fileList: [],
-    fileListlength:1,
+    fileListlength:0,
     oFile:[],
     behavier:'create',//是否为新增
     //update
     currentItem:{},
     detailItem:{},
+    saving:false,
+    updating:false
+
 
 
   },
@@ -76,8 +80,10 @@ export default {
     },
     updateinfo(state,action){
        return { ...state, ...action.payload};
+    },
+    publicdate(state,action){
+      return {...state,...action.payload};
     }
-
   },
   effects: {
 
@@ -102,37 +108,86 @@ export default {
 	      });
       };
       if(province.data){
+        
 	      	yield put({type:'ProvicneAndCity',
 	      	payload:{
-	      		options:province.data
+	      		options:province.data.provincecity
 	      	}
 	      });
       };
        if(salesarea.data){
+       
 	       	 yield put({type:'SaleArea',
 	      	payload:{
-	      		region:salesarea.data
+	      		region:salesarea.data.salesArea
 	      	}
 	      });
        };
        if(shopstatus.data){
+       
 	      	yield put({type:'ShopStatus',
 	      	payload:{
-	      		status:shopstatus.data
+	      		status:shopstatus.data.shopStatus
 	      	}
 	      });
       };
       if(shoptype.data){
+        
 	      	yield put({type:'ShopType',
 	      	payload:{
-	      		types:shoptype.data
+	      		types:shoptype.data.shopType
 	      	}
 	      });
       };
        //enteraddpage
       
     },
-   *queryShop({payload},{select,call,put}){
+    *enteraddpage({ payload}, { call, put }) {
+      
+      const province=yield call(queryProvicneAndCity);
+      const salesarea=yield call(querySaleArea);
+      const shoptype=yield call(queryShopType);
+      
+      if(province.data){
+          yield put({type:'ProvicneAndCity',
+          payload:{
+            options:province.data.provincecity
+          }
+        });
+      };
+       if(salesarea.data){
+           yield put({type:'SaleArea',
+          payload:{
+            region:salesarea.data.salesArea
+          }
+        });
+       };
+       if(shoptype.data){
+          yield put({type:'ShopType',
+          payload:{
+            types:shoptype.data.shopType
+          }
+        });
+      };
+      
+    },
+    *entershopedit({ payload}, { call, put }){
+      //查看修改页面的
+       // const resultlist=yield call(queryShop,{jsonparam:payload});
+    },
+    *queryinfo({ payload}, { call, put }){
+      const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
+      if(resultinfo.data){
+          console.log(resultinfo.data);
+            yield put({type:'publicdate',
+          payload:{
+            currentItem:resultinfo.data.shopInfo
+          }
+        });
+      }
+  
+    },
+    *queryShop({payload},{select,call,put}){
    	 // console.log(payload);
     const currentpage = yield select(({ shopinfo }) => shopinfo.changePage.page);
     const pagesize = yield select(({ shopinfo }) => shopinfo.changePage.rows);
@@ -163,9 +218,47 @@ export default {
       };
    },
    *upload({payload},{call,put}){
-    const resultlist=yield call(addShop,payload);
-   }
- 
+    const resultupload=yield call(addShop,payload);
+    if(resultupload.data){
+      // console.info(resultupload.data.msg);
+      yield put({type:'publicdate',
+          payload:{
+            saving:false
+          }
+        });
+      if(resultupload.data.code==0){
+       message.success(resultupload.data.msg); 
+       
+       }else if(resultupload.data.code==4){
+       message.error(resultupload.data.msg); 
+       
+       }else{
+       message.warning(resultupload.data.msg);
+
+       };
+    }
+    
+   },
+   *update({payload},{call,put}){
+    const resultupdate=yield call(updateShop,payload);
+    if(resultupdate.data){
+     console.log(resultupdate.data.msg);
+      yield put({type:'publicdate',
+          payload:{
+            updating:false
+          }
+        });
+        if(resultupdate.data.code==0){
+       message.success(resultupdate.data.msg); 
+       
+       }else if(resultupdate.data.code==4){
+       message.error(resultupdate.data.msg); 
+       
+       }else{
+       message.warning(resultupdate.data.msg);
+       };
+    }
+ }
 
 },
   subscriptions: {
@@ -175,6 +268,23 @@ export default {
         	// console.log(location.pathname);
           dispatch({type: 'enter'});
            
+        }else if (location.pathname === '/shopinfo/shopadd') {
+          // console.log(location.pathname);
+          dispatch({type: 'enteraddpage'});
+          //新增完成后将图片上传列表删除
+          dispatch({type: 'publicdate',
+                      payload:{
+                      fileList:[],
+                      fileListlength:0,
+                      oFile:[]
+                    }
+                  });
+          
+           
+        }else if(location.pathname === '/shopinfo/shopedit'){
+          console.log('go in');
+           dispatch({type: 'enteraddpage'});
+           dispatch({type: 'queryinfo'});
         }
   		 });
   	}

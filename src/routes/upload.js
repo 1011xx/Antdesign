@@ -1,54 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Upload, Icon, message } from 'antd';
+import { Upload, Icon, Modal } from 'antd';
 import styles from './upload.less';
 
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
 
-function beforeUpload(file) {
-  const isJPG = file.type === 'image/jpeg';
-  if (!isJPG) {
-    message.error('You can only upload JPG file!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJPG && isLt2M;
-}
 
 class Test extends React.Component {
-  state = {};
+  state = {
+    previewVisible: false,
+    previewImage: '',
+    fileList: [{
+      uid: -1,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    },{
+      uid: -2,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    }],
+  };
 
-  handleChange = (info) => {
-    console.log(info.file.status);
-    // if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => this.setState({ imageUrl }));
-    // }
+  handleCancel = () => this.setState({ previewVisible: false })
+
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
   }
 
+  handleChange = ({ fileList }) => this.setState({ fileList })
+
   render() {
-    const imageUrl = this.state.imageUrl;
+    const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return (
-      <Upload
-        className={styles.avatar_uploader}
-        name="avatar"
-        showUploadList={false}
-        action="/upload.do"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
-        {
-          imageUrl ?
-            <img src={imageUrl} role="presentation" className={styles.avatar} /> :
-            <Icon type="plus" className={styles.avatar_uploader_trigger} />
-        }
-      </Upload>
+      <div className="clearfix">
+        <Upload
+          action="/upload.do"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={this.handlePreview}
+          onChange={this.handleChange}
+        >
+          {fileList.length >= 3 ? null : uploadButton}
+        </Upload>
+        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
+      </div>
     );
   }
 }

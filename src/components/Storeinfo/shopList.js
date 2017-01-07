@@ -69,7 +69,7 @@ function ShopList({
     key: 'operation',
     render: (text, record) => (
       <p>
-         <Link to="/shopinfo/shopadd"><span onClick={() => onEditItem(record)}>修改</span></Link>
+         <Link to="/shopinfo/shopedit"><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp; &nbsp; &nbsp; 
         <Link to="/shopinfo/shopdetail"><span onClick={() => onEditDetail(record)}>查看</span></Link>
          &nbsp; &nbsp; &nbsp; 
