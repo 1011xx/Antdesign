@@ -83,7 +83,7 @@ const Header=({
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon className={styles.iicon1} /><span>商品档案</span></span>}>
           <Menu.Item key="2">
-          <Link to="/styleattr">属性维护</Link>
+          <Link to="/mainattrlist">属性维护</Link>
           </Menu.Item>
           <Menu.Item key="3">
            <Link to="/maintaincolor">颜色维护</Link>

@@ -9,15 +9,17 @@ function Shopdetail({shopinfo}) {
   const { detailItem }=shopinfo;
 
   const image=function(){
+    // console.log(location.host);
+    let imgurl='http://'+location.host+'/fmss';
+    console.log(imgurl);
     if(detailItem.images){
         let imgsource=JSON.parse(detailItem.images);
       if(imgsource.length>0){
         let source='';
        for(let i=0;i<imgsource.length;i++){
-        source+='<img style="width: 180px;height: 180px;display: block;margin-right: 15px; float: left;" src="http://192.168.10.146:5001/fmss'+imgsource[i].imageDirectory+'"></img>'
+        source+='<img style="width: 180px;height: 180px;display: block;margin-right: 15px; float: left;" src="'+imgurl+imgsource[i].imageDirectory+'"></img>';
        }
         return source;
-       
       }else{
         return false;
       }
@@ -33,26 +35,26 @@ function Shopdetail({shopinfo}) {
         <Plate title="基本信息">
        
              <Row  className={styles.ant_row_style}>
-                <Col span={4} className={styles.ant_col_right}>
-                  <span>店仓名称：</span>
-                </Col>
-                <Col span={4} className={styles.ant_col_left}>
-                  <span>{detailItem.fullName}</span>
-                </Col>
+                  <Col span={4} className={styles.ant_col_right}>
+                    <span>店仓名称：</span>
+                  </Col>
+                  <Col span={4} className={styles.ant_col_left}>
+                    <span>{detailItem.fullName}</span>
+                  </Col>
               
-               <Col span={4} className={styles.ant_col_right}>
-                 <span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
-               </Col>
-               <Col span={4} className={styles.ant_col_left}>
-                 <span>{detailItem.shortName}</span>
-               </Col>
+                 <Col span={4} className={styles.ant_col_right}>
+                   <span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
+                 </Col>
+                 <Col span={4} className={styles.ant_col_left}>
+                   <span>{detailItem.shortName}</span>
+                 </Col>
               
-              <Col span={4} className={styles.ant_col_right}>
-               <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
-              </Col>
-              <Col span={4} className={styles.ant_col_left}>
-                 <span>{detailItem.typeName}</span>
-               </Col>
+                  <Col span={4} className={styles.ant_col_right}>
+                   <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+                  </Col>
+                  <Col span={4} className={styles.ant_col_left}>
+                   <span>{detailItem.typeName}</span>
+                  </Col>
             </Row>
             
             <Row >

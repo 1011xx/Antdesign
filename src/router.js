@@ -41,13 +41,15 @@ export default function({ history }) {
       <Route path="/" component={System} >
      	 <IndexRoute onEnter={handleEnter} component={Basicplantform}></IndexRoute>
      	 <Route path="/basicplantform" component={Basicplantform} />
+
      	 <Route path="/shopinfo" component={Shopinfo} />
-         
        <Route path="/shopinfo/shopdetail" component={Shopdetail} />
        <Route path="/shopinfo/shopadd" component={Shopadd} />
        <Route path="/shopinfo/shopedit" component={Shopedit} />
+
        <Route path="/mainattrlist" component={MainAttrList} />
-       <Route path="/styleattr" component={StyleAttr} />
+       <Route path="/mainattrlist/styleattr" component={StyleAttr} />
+       
        <Route path="/maintaincolor" component={MaintainColor} />
        <Route path="/maintainsize" component={MaintainSize} />
        <Route path="/upload" component={Text} />

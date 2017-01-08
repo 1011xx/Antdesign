@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
+import {Link} from 'dva/router';
 import Nobtlplate from '../plate/nobtlplate';
 import styles from './attrlist.less';
 //服装属性/款号属性维护/品牌
@@ -40,7 +41,7 @@ function AttrEtcList({
     key: 'operation',
     render: (text, record) => (
       <p>
-        <a onClick={() => onEditItem(record)}>编辑属性</a>
+      <Link to="/mainattrlist/styleattr"><span onClick={() => onEditItem(record)}>修改</span></Link>
       </p>
     ),
   }];

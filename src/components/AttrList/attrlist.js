@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
+import {Link} from 'dva/router';
 import Plate from '../plate/plate';
 import TablePlate from '../plate/tableplate';
 import styles from './attrlist.less';

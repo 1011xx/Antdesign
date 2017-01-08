@@ -158,4 +158,136 @@ background: url(../../assets/jgdz.png) no-repeat left 7px;
     border-bottom: 2px solid #fff;
     }
 
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    
+    background: #fff;
+    height:93px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.ant-menu-dark.ant-menu-horizontal {
+    border: none;
+    line-height: 38px !important;
+}
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item > a {
+    color:#333333;
+    font-size:16px;
+}
+.ant-menu-item{
+  height:38px;
+  margin-left: 26px;
+}
+.ant-menu-submenu {
+     background: #f5f5f5;
+    padding-bottom: 10px;
+}
+.ant-menu-horizontal{
+  background:#fff;
+}
+.ant-menu-inline .ant-menu-item-selected {
+     color:#48b34b;
+     border-right: none;
+}
+
+.ant-menu-dark.ant-menu-horizontal>.ant-menu-item-selected{
+ border-bottom:2px solid #48b34b;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+   background:#ebebeb;
+}
+
+.ant-menu-item-selected > a, .ant-menu-item-selected > a:hover {
+    color: #48b34b;
+  }
+  .ant-menu-item > a:hover{
+    color: #48b34b;
+  }
+.ant-menu-submenu-inline > .ant-menu-submenu-title:after{
+  display:none;
+}
+.ant-menu-submenu-title{
+    font-family: "\5B8B\4F53";
+    
+    font-weight: bold;
+    color:#fff;
+
+}
+.ant-menu-submenu-active:hover .ant-menu-submenu-title{
+  color:#fff;
+}
+.ant-menu-sub.ant-menu-inline{
+  background:#f5f5f5;
+  max-height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width:228px;
+
+}
+.ant-menu-submenu-title >span{
+  font-size: 14px;
+  display:flex;
+  /*justify-content: center;*/
+}
+.ant-menu-inline, .ant-menu-vertical {
+    border: none;
+}
+.ant-menu-inline .ant-menu-item{
+     border-right: none; 
+     margin-left: 0; 
+     padding-left: 54px !important;
+     font-family: "\5B8B\4F53";
+     font-size:14px;
+   }
+.ant-menu-submenu-title{
+  padding: 0 !important;
+  width:100%;
+}
+.ant-menu-item-active:hover{
+  color:#48b34b;
+  background:#ebebeb;
+}
+
+.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title{
+  line-height: 34px;
+    height: 34px;
+    background: #48b34b;
+}
+
+.ant-menu-sub.ant-menu-inline > .ant-menu-item{
+  line-height: 34px;
+    height: 34px;
+}
+
+
+
+
+.ant-breadcrumb-link{
+  font-size:14px;
+}
+
+.ant-table-tbody > tr:nth-child(odd){
+  background:#f7f7f7;
+}
+
+.ant-table-tbody > tr:hover {
+    background: #e7f4fd;
+}
+.ant-modal-title{
+  text-align: center;
+}
+.ant-table {
+    
+     border-radius: 0; 
+}
+.ant-table table {
+    
+     border-radius: 0; 
+     overflow: auto; 
+}
+.ant-table-pagination {
+    margin: 16px 16px 0 0;
+   
+}
 }
