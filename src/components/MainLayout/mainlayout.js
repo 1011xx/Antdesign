@@ -95,7 +95,7 @@ const Header=({
           <Menu.Item key="6">款号维护</Menu.Item>
 
           {/*<SubMenu key="sub3" title="Submenu">
-                      <Menu.Item key="7">Option 7</Menu.Item>
+                      <Menu.Item key="7">Option 7</Menu.Item>ss
                       <Menu.Item key="8">Option 8</Menu.Item>
                     </SubMenu>*/}
         </SubMenu>
@@ -109,6 +109,9 @@ const Header=({
        <div className={styles.Frameproduct}>
          <div className={styles.product}>
            {children}
+          <div className={styles.footer}>
+              <div className={styles.innerfooter}>北京智慧境界科技发展有限公司 版权所有 © 2016</div>
+           </div>
          </div> 
        </div>
           
