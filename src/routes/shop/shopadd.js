@@ -2,9 +2,12 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import {  Spin ,message} from 'antd';
-import Wrap from '../components/wrap/wrap';
-import PicturesWall from '../components/Storeinfo/uploadimg';
-import EditShopinfo from '../components/Storeinfo/editshopinfo';
+import Wrap from '../../components/wrap/wrap';
+import PicturesWall from '../../components/Storeinfo/uploadimg';
+import AddShopinfo from '../../components/Storeinfo/addshopinfo';
+// let num=86;
+// let numm=86;
+
 
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
@@ -21,7 +24,7 @@ function setProp(obj) {
     return obj;
 }
 
-function Shopedit({dispatch,shopinfo}){
+function Shopadd({dispatch,shopinfo}){
 const {   previewVisible,
 		  previewImage,
 		  fileList,
@@ -33,10 +36,11 @@ const {   previewVisible,
 		  currentItem,
 		  modalType,
 		  behavier,
-		  updating
+		  saving,
+		  
 	}=shopinfo;
 
-	const editInfoProps={
+	const addInfoProps={
 		 oFile,
 		 options,
 		  region,
@@ -62,17 +66,35 @@ const {   previewVisible,
 		  // oReq.open("POST", "http://192.168.43.29:8084/fmss/shopController/newShop");
 		  // oReq.send(oMyForm);
 		   dispatch({
-              type: 'shopinfo/update',
-              payload:oMyForm
+              type: 'shopinfo/upload',
+              payload:oMyForm,
             });
-		dispatch({
+			 dispatch({
 	          type: 'shopinfo/publicdate',
 	          payload:{
-	              updating:true
+	              	saving:true
 	           }  
 	        });
 // },50);
-		
+
+		// const timer=setInterval(function(){
+		// 	if(saving==false){
+
+		// 			if(code==0){
+		// 		message.success('门店添加成功1'); 
+		// 		clearInterval(timer);
+		// 		}else if(code==4){
+		// 		message.error('门店添加失败！请重试'); 
+		// 		clearInterval(timer);
+		// 		}else{
+		// 		message.warning('填写的某些规则不满足');
+		// 		clearInterval(timer);
+		// 		}
+
+		// 	}
+			
+			
+		// },1500);
         
 	}
 
@@ -169,33 +191,42 @@ const {   previewVisible,
 			// console.log(oFile);
 		  // console.log(file);
 		}
+		
 	};
+	// const tips=()=>{
+	// 		console.log('code:',code);
+	// 		// switch(code){
+	// 		// 	case 0:
+	// 		// 	 message.success(msg); break;
+	// 		// 	 case 4:
+	// 		// 	 message.error(msg); break;
+	// 		// 	 default:
+	// 		// 	 message.warning(msg); break;
+	// 		// }
+	// 		if(code!==5){
+	// 			message.warning(msg); 
+	// 		}
+	// 	};
 
 	return(
-	<Spin size="large" tip="修改信息中，请稍后..." spinning={updating}>
+	<Spin size="large" tip="保存信息中,请稍后..." spinning={saving}>
+		
 		<Wrap
 		   last="店仓维护"
-		   next="修改店仓"
+		   next="新增店仓"
 		   >
 		  
-		  <EditShopinfo {...editInfoProps}>
+		  <AddShopinfo {...addInfoProps}>
 		  <PicturesWall  {...uploadProps}/>
-		  </EditShopinfo>
-		  <p style={{color:'#333',fontSize:12,textAlign:'center'}}>
-		  <span style={{paddingRight:14}}>Copyright</span>
-		  <span style={{paddingRight:14}}>2016</span>
-		  <span style={{paddingRight:14}}>版权所有</span>
-		  <span style={{paddingRight:14}}>北京智慧境界科技发展有限公司</span>
-		  <span style={{paddingRight:14}}>2016-12-13</span>
-		  <span style={{paddingRight:14}}>12:30</span>
-		  </p>
+		  </AddShopinfo>
+		 
 		   </Wrap>
 	</Spin>
 		);
 }
 
 
-Shopedit.propTypes = {
+Shopadd.propTypes = {
   shopinfo: PropTypes.object,
   uploadProps: PropTypes.object,
   dispatch: PropTypes.func,
@@ -204,4 +235,4 @@ Shopedit.propTypes = {
 function mapStateToProps({ shopinfo }) {
   return { shopinfo };
 }
-export default connect(mapStateToProps)(Shopedit);
+export default connect(mapStateToProps)(Shopadd);

@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { routerRedux,browserHistory,History    } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../components/wrap/wrap';
-import Queryinfo from '../components/Storeinfo/Search';
-import ShopList from '../components/Storeinfo/shopList';
+import Wrap from '../../components/wrap/wrap';
+import Queryinfo from '../../components/Storeinfo/Search';
+import ShopList from '../../components/Storeinfo/shopList';
 //将字符串数组转换为数组
 // function parseArray(arrStr) {
 // 	var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
@@ -17,9 +17,8 @@ import ShopList from '../components/Storeinfo/shopList';
 // 	return arrayJson[tempKey];
 // };
 
-
 function Shopinfo({dispatch,shopinfo}){
-	const { options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -65,6 +64,8 @@ function Shopinfo({dispatch,shopinfo}){
 		dataSource,
 		loading,
 		total,
+		changePage,
+		defaultPageSize,
 	//点击修改的时候
 		onEditItem( record){
 			console.log('record:');
@@ -111,7 +112,14 @@ function Shopinfo({dispatch,shopinfo}){
             });
 		},
 		onShowSizeChange(current, pageSize){
-			// console.log(current, pageSize);
+			// 保留上次修改后的每页显示数量
+			dispatch({
+              type: 'shopinfo/publicdate',
+              payload: {
+              	defaultPageSize:pageSize
+              }
+            });
+			
 			changePage.page=current;
 			changePage.rows=pageSize;
 			let condit=JSON.stringify(changePage); 

@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrapthree from '../components/wrap/wrapthree';
-// import Queryinfo from '../components/Storeinfo/Search';
-import AttrList from '../components/AttrList/attrlist';
-import AttrModel from '../components/AttrList/attrmodel';
+import Wrap from '../../components/wrap/wrap';
+import SizeList from '../../components/Size/sizeList';
+import AttrModel from '../../components/Size/sizemodel';
 //服装属性/款号属性维护/品牌
 
-function StyleAttr({dispatch,attrlist}){
+function MaintainSize({dispatch,attrlist}){
 
 	const {title,modalVisible,modalType,currentItem}=attrlist;
 	
@@ -56,6 +55,7 @@ function StyleAttr({dispatch,attrlist}){
       //     currentItem: item,
       //   },
       // });
+      console.log('item');
       console.log(item);
       console.log(modalType);
       // console.log(modalVisible);
@@ -89,21 +89,20 @@ function StyleAttr({dispatch,attrlist}){
 
 
 	return(
-		<Wrapthree
+		<Wrap
 		   last="服装属性"
-		   next="款号属性维护"
-		   afternext="品牌"
+		   next="维护尺寸"
 		   >
 		  
-		  <AttrList {...attrListProps}/>
+		  <SizeList {...attrListProps}/>
 		  <UserModalGen />
-		   </Wrapthree>
+		   </Wrap>
 
 		);
 }
 
 
-StyleAttr.propTypes = {
+MaintainSize.propTypes = {
   dispatch: PropTypes.func,
 };
 
@@ -111,4 +110,4 @@ function mapStateToProps({ attrlist }) {
   return { attrlist };
 }
 
-export default connect(mapStateToProps)(StyleAttr);
+export default connect(mapStateToProps)(MaintainSize);

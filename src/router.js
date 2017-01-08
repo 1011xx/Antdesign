@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link } from 'dva/router';
 
-import Login from './routes/login';
+import Login from './routes/login/login';
 import System from './routes/system';
-import Shopinfo from './routes/shopinfo';
+import Shopinfo from './routes/shop/shopinfo';
 import Basicplantform from './routes/basicplantform';
-import StyleAttr from './routes/styleAttr';
-import MainAttrList from './routes/mainattrList';
-import MaintainColor from './routes/MaintainColor';
-import MaintainSize from './routes/MaintainSize';
-import Shopadd from './routes/shopadd';
-import Shopedit from './routes/shopedit';
+import StyleAttr from './routes/goods/styleAttr';
+import MainAttrList from './routes/goods/mainattrList';
+import MaintainColor from './routes/goods/MaintainColor';
+import MaintainSize from './routes/goods/MaintainSize';
+import Shopadd from './routes/shop/shopadd';
+import Shopedit from './routes/shop/shopedit';
 import Text from './routes/upload';
 
 
@@ -24,7 +24,7 @@ import AddShopinfo from './components/Storeinfo/addshopinfo';
 
 
 
-import Shopdetail from "./routes/Shopdetail.js";
+import Shopdetail from "./routes/shop/Shopdetail.js";
 
 
 

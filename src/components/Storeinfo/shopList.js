@@ -9,6 +9,7 @@ function ShopList({
   current, 
   loading,
   dataSource,
+  defaultPageSize,
   onPageChange,
   onShowSizeChange,
   onDeleteItem,
@@ -165,10 +166,11 @@ function ShopList({
              className={styles.pagination}
              size="small"
              total={total} 
-             showSizeChanger 
+             defaultPageSize={defaultPageSize}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
              showQuickJumper 
+             showSizeChanger 
            />
            </div>
     </TablePlate>
@@ -188,6 +190,7 @@ ShopList.propTypes = {
   total: PropTypes.any,
   current: PropTypes.any,
   loading: PropTypes.any,
+  defaultPageSize:PropTypes.any,
 };
 
 export default ShopList;

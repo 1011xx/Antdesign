@@ -20,6 +20,7 @@ export default {
       page:1,
       rows:10
     },
+    defaultPageSize:10,
     //shopadd
     previewVisible:false,
     previewImage:true,
@@ -89,7 +90,11 @@ export default {
 
   	//当进入的时出发的事件
   	*enter({ payload}, { call, put }) {
-  		
+  		yield put({type:'publicdate',
+          payload:{
+            loading:true
+          }
+        });
   	  const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"10"}'});
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../components/wrap/wrap';
-import AttrEtcList from '../components/AttrList/attretclist';
+import Wrap from '../../components/wrap/wrap';
+import AttrEtcList from '../../components/AttrList/attretclist';
 
 //服装属性/款号属性维护
 

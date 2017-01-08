@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import styles from './login.less';
-import Logincpt from '../components/Login/login';
+import Logincpt from '../../components/Login/login';
 
 function Login({dispatch,login}){
   const {flag,showtext}=login;

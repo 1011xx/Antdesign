@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import {  Icon, Button, Row, Col } from 'antd';
-import Plate from '../components/plate/plate';
+import Plate from '../../components/plate/plate';
 import styles from './Shopdetail.less';
-import Wrap from '../components/wrap/wrap';
+import Wrap from '../../components/wrap/wrap';
 
 function Shopdetail({shopinfo}) {
   const { detailItem }=shopinfo;
@@ -95,14 +95,7 @@ function Shopdetail({shopinfo}) {
          
          </Plate>
 
-     <p style={{color:'#333',fontSize:12,textAlign:'center'}}>
-      <span style={{paddingRight:14}}>Copyright</span>
-      <span style={{paddingRight:14}}>2016</span>
-      <span style={{paddingRight:14}}>版权所有</span>
-      <span style={{paddingRight:14}}>北京智慧境界科技发展有限公司</span>
-      <span style={{paddingRight:14}}>2016-12-13</span>
-      <span style={{paddingRight:14}}>12:30</span>
-      </p>
+     
        </Wrap>
   );
 }

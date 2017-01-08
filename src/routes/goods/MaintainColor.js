@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../components/wrap/wrap';
-import SizeList from '../components/Size/sizeList';
-import AttrModel from '../components/Size/sizemodel';
-//服装属性/款号属性维护/品牌
+import Wrap from '../../components/wrap/wrap';
+import ColorList from '../../components/Color/colorList';
+import AttrModel from '../../components/Color/colormodel';
+//服装属性/维护
 
-function MaintainSize({dispatch,attrlist}){
+function MaintainColor({dispatch,attrlist}){
 
 	const {title,modalVisible,modalType,currentItem}=attrlist;
 	
@@ -55,7 +55,6 @@ function MaintainSize({dispatch,attrlist}){
       //     currentItem: item,
       //   },
       // });
-      console.log('item');
       console.log(item);
       console.log(modalType);
       // console.log(modalVisible);
@@ -91,10 +90,10 @@ function MaintainSize({dispatch,attrlist}){
 	return(
 		<Wrap
 		   last="服装属性"
-		   next="维护尺寸"
+		   next="维护颜色"
 		   >
 		  
-		  <SizeList {...attrListProps}/>
+		  <ColorList {...attrListProps}/>
 		  <UserModalGen />
 		   </Wrap>
 
@@ -102,7 +101,7 @@ function MaintainSize({dispatch,attrlist}){
 }
 
 
-MaintainSize.propTypes = {
+MaintainColor.propTypes = {
   dispatch: PropTypes.func,
 };
 
@@ -110,4 +109,4 @@ function mapStateToProps({ attrlist }) {
   return { attrlist };
 }
 
-export default connect(mapStateToProps)(MaintainSize);
+export default connect(mapStateToProps)(MaintainColor);
