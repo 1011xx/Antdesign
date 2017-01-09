@@ -6,6 +6,8 @@ import Wrap from '../../components/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import EditShopinfo from '../../components/Storeinfo/editshopinfo';
 
+
+
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
     for (var p in obj) {
@@ -33,7 +35,8 @@ const {   previewVisible,
 		  currentItem,
 		  modalType,
 		  behavier,
-		  updating
+		  updating,
+		  deleteImg
 	}=shopinfo;
 
 	const editInfoProps={
@@ -42,6 +45,7 @@ const {   previewVisible,
 		  region,
 		  types,
 		  behavier,
+		  deleteImg,
 		  item:modalType==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
@@ -160,14 +164,24 @@ const {   previewVisible,
 
 		},
 		onRemove(file){
-			for (let i = 0; i < fileListlength; i++) {
+			//遍历oFile，将取消上传的图片从上传数据中删除
+			if(file.name){
+				for (let i = 0; i < fileListlength; i++) {
 				if(oFile[i].name==file.name){
 					oFile.splice(i,1);
+					}
 				}
-
 			}
-			// console.log(oFile);
-		  // console.log(file);
+			
+			console.log(file);
+			//首先组装filelist对象，如果页面进入修改页面，则需要从onremove中读取要删除的文件，保存到新对象中
+			if(file.imageName){
+				let delimg={};
+				delimg.imageName=file.imageName;
+				deleteImg.push(delimg);
+				//打印要删除的对象
+				console.log(deleteImg);
+			}
 		}
 	};
 

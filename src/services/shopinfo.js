@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import qs from 'qs';
 
-const ipaddress="http://192.168.10.146:5001";
+const ipaddress="";
 
 // 获取省和市
 export async function queryProvicneAndCity(params) {

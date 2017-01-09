@@ -15,6 +15,7 @@ let typeCode='';
 
 
 function parseArray(arrStr) {
+  console.log(arrStr);
   var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
   var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
   var arrayJson;
@@ -43,6 +44,7 @@ const EditShopinfo = ({
     types,
     options,
     item={},
+    deleteImg,
 
 }) =>{
 
@@ -70,13 +72,13 @@ function handleSubmit(e){
         'code':item.code,
         'status':item.status,
         'images':item.images,
-        'deleteImages':[{"imageName":"2179a09bc43f4da0ae2d3ecec57eb21a.jpg"},{"imageName":"c0d99616c53841b09f85a6978dd50fa4.jpg"}]
+        'deleteImages':deleteImg,
 
       };
       // console.log('fieldsValue:');
       //  console.log(fieldsValue);
       //  console.log('values');
-      //  console.log(values);
+       console.log(values);
        getadddata(values);
       
       }

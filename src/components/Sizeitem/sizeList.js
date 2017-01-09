@@ -25,6 +25,10 @@ function SizeList({
     key: 'colorname',
   }, {
     title: '尺寸',
+    dataIndex: 'size',
+    key: 'size',
+  }, {
+    title: '操作',
     key: 'operation',
     render: (text, record) => (
       <p>
@@ -36,30 +40,35 @@ function SizeList({
       </p>
     ),
   }];
-		  const data = [{
-		  num: '1',
-		  color: '011',
-		  colorname: '黑色',
-		}, {
-		  num: '2',
-		  color: '012',
-		  colorname: '黄色',
-		},{
-		  num: '3',
-		  color: '013',
-		  colorname: '黑咖啡',
-		},{
+      const data = [{
+      num: '1',
+      color: '02',
+      colorname: '马克张',
+      size:'02 04 06 08 10 12 14 16 '
+    }, {
+      num: '2',
+      color: '04',
+      colorname: 'RR',
+      size:'XXS XS S M L XL XXL XXXL XXXL'
+    },{
+      num: '3',
+      color: '02',
+      colorname: '马克张',
+      size:'02 04 06 08 10 12 14 16 '
+    },{
       num: '4',
-      color: '014',
-      colorname: '白色',
+      color: '03',
+      colorname: 'RR',
+      size:'XXS XS S M L XL XXL XXXL XXXL'
     }];
+
 
   return (
 
 
     
    
-    <TablePlate title="维护颜色">
+    <TablePlate title="维护尺寸组">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
       </div>

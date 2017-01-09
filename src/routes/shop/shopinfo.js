@@ -4,6 +4,9 @@ import { connect } from 'dva';
 import Wrap from '../../components/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
+
+
+
 //将字符串数组转换为数组
 // function parseArray(arrStr) {
 // 	var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
@@ -18,7 +21,7 @@ import ShopList from '../../components/Storeinfo/shopList';
 // };
 
 function Shopinfo({dispatch,shopinfo}){
-	const {defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -68,9 +71,34 @@ function Shopinfo({dispatch,shopinfo}){
 		defaultPageSize,
 	//点击修改的时候
 		onEditItem( record){
-			console.log('record:');
-			console.log(record.id);
-			// console.log(text);
+			let fileList=[];
+			let imgobj={};
+			console.log('点击了修改:');
+			//如果需要进入修改页面或者详情页面你点击刷新的话，需要吧ID存到cookies，点击刷新后通过读取cookie。
+			// console.log(record.id);
+			if(record.images){
+				console.log('record.images',record.images);
+				let imagearr=JSON.parse(record.images);
+				// console.log('imageobj',imagearr);
+				// images=[{"imageDirectory":"\\images\\shop\\d17446cb5afe45f692def5ebfdcb7473.png","imageName":"12ebb50ce49a485882b316351c75ca01.png","imageOrginalName":"i6pg.png","imageType":"png"}]
+				for(let i=0;i<imagearr.length;i++){
+					imagearr[i].uid=-i;
+					imagearr[i].url='/proxyDir/fmss'+imagearr[i].imageDirectory;
+				}
+				// console.log('imagearr',imagearr);
+				//将组装后的json赋值给updateFileList；
+				 dispatch({
+		        type: 'shopinfo/publicdate',
+		        payload:{
+		        	fileList:imagearr,
+		        	fileListlength:imagearr.length
+		        }
+		      });
+			}
+			
+
+
+
 				let temp={};
 				temp.id=record.id;
 				let obj=JSON.stringify(temp);

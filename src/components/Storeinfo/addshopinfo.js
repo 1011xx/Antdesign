@@ -57,6 +57,7 @@ function handleSubmit(e){
       //  console.log('values');
       //  console.log(values);
        getadddata(values);
+        // xhr.abort();
       
       }
     });

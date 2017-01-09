@@ -25,6 +25,7 @@ export default {
     previewVisible:false,
     previewImage:true,
     fileList: [],
+    deleteImg:[],
     fileListlength:0,
     oFile:[],
     behavier:'create',//是否为新增
@@ -287,9 +288,8 @@ export default {
           
            
         }else if(location.pathname === '/shopinfo/shopedit'){
-          console.log('go in');
            dispatch({type: 'enteraddpage'});
-           dispatch({type: 'queryinfo'});
+           // dispatch({type: 'queryinfo'});
         }
   		 });
   	}

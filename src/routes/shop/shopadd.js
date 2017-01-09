@@ -95,6 +95,7 @@ const {   previewVisible,
 			
 			
 		// },1500);
+		
         
 	}
 

@@ -59,7 +59,7 @@ function SizeList({
 
     
    
-    <TablePlate title="维护颜色">
+    <TablePlate title="维护尺寸">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
       </div>
