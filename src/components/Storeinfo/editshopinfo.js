@@ -28,9 +28,6 @@ function parseArray(arrStr) {
 };
 
 
-
-
-
 const EditShopinfo = ({
   getadddata,
   behavier,
@@ -48,19 +45,49 @@ const EditShopinfo = ({
 
 }) =>{
 
+//获取citycode和cityname
+function getcpCodeName(arr){
+  // 遍历options获取citycode和cityname
+  for(let i=0;i<options.length;i++){
+    if(options[i].value==arr[0]){
+       provinceName=options[i].label;
+       for(let j=0;j<options[i].children.length;j++){
+      if(options[i].children[j].value==arr[1])
+       cityName=options[i].children[j].label;
+      }
+    };
+  }
+  provinceCode=arr[0];
+  cityCode=arr[1];
+}
+//获取saleAreaName和saleAreaCode
+function getgetSalesarea(arr){
+  for(let k=0;k<region.length;k++){
+  if(region[k].value==arr[0]){
+     saleAreaName=region[k].label;
+  }
+}
+  saleAreaCode=arr[0];
+}
+//获取typeCode
+function gettypecode(arr){
+  typeCode=arr[0];
+}
+
 
 function handleSubmit(e){
  e.preventDefault();
  console.log(item);
  // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
-
       if (!err) {
-        
+        //格式转换
+        getcpCodeName(fieldsValue.cityCode);
+        getgetSalesarea(fieldsValue.saleAreaCode);
+        gettypecode(fieldsValue.typeCode);
          const values = {
         ...fieldsValue,
         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-        'provinceCode':provinceCode,
         'cityCode':cityCode,
         'cityName':cityName,
         'provinceName':provinceName,
@@ -86,34 +113,17 @@ function handleSubmit(e){
 }
 function citychange(citycode){
   // 遍历options获取citycode和cityname
-  for(let i=0;i<options.length;i++){
-    if(options[i].value==citycode[0]){
-       provinceName=options[i].label;
-       for(let j=0;j<options[i].children.length;j++){
-      if(options[i].children[j].value==citycode[1])
-       cityName=options[i].children[j].label;
-      }
-    };
-
-  }
-  provinceCode=citycode[0];
-  cityCode=citycode[1];
+  getcpCodeName(citycode);
 
 }
 
 function getSalesarea(area){
-// console.log(area[0]);
-for(let k=0;k<region.length;k++){
-  if(region[k].value==area[0]){
-     saleAreaName=region[k].label;
-  }
-}
-  saleAreaCode=area[0];
+  getgetSalesarea(area);
  
 }
 
 function typecode(code){
- typeCode=code[0];
+  gettypecode(code);
 }
 
 

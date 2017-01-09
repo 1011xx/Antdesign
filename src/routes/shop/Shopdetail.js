@@ -118,7 +118,7 @@ function Shopdetail({shopinfo}) {
                 <span>传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真：</span>
                 </Col>
                  <Col span={4} className={styles.ant_col_left}>
-                <span>{'保留'}</span>
+                <span>{detailItem.faxNumber}</span>
                 </Col>
              </Row>
          
@@ -130,7 +130,7 @@ function Shopdetail({shopinfo}) {
          }
          </Plate>
           <Plate title="其他信息" style={{'margin-bottom':0}}>
-         <span>备注：{'保留'}</span>
+         <span>备注：{detailItem.remarks}</span>
          
          </Plate>
          <div style={{'clear':'both','height':1}}></div>
