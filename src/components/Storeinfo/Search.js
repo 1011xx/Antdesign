@@ -33,13 +33,12 @@ function handleSearch(){
         });
 }
 
-function test(){
+// function test(){
 
+//  var emails = region.map(function (item) { return item.label; });
 
- var emails = region.map(function (item) { return item.label; });
-
- console.log(emails.join(", ")); // zhang@email.com, jiang@email.com, li@email.com
-}
+//  console.log(emails.join(", ")); // zhang@email.com, jiang@email.com, li@email.com
+// }
 
 return (
         <div>

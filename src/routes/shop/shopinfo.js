@@ -21,7 +21,7 @@ import ShopList from '../../components/Storeinfo/shopList';
 // };
 
 function Shopinfo({dispatch,shopinfo}){
-	const {updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {editid,detailid,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -32,6 +32,7 @@ function Shopinfo({dispatch,shopinfo}){
 			//获取文本框
 			searchForm.fullName=data.shopname;
 			//将searchForm查询条件对象的值转换为字符串
+			console.log(searchForm);
 			let condit=JSON.stringify(searchForm); 
 			 dispatch({
               type: 'shopinfo/queryShop',
@@ -69,11 +70,10 @@ function Shopinfo({dispatch,shopinfo}){
 		total,
 		changePage,
 		defaultPageSize,
+		
 	//点击修改的时候
 		onEditItem( record){
-			let fileList=[];
-			let imgobj={};
-			console.log('点击了修改:');
+			
 			//如果需要进入修改页面或者详情页面你点击刷新的话，需要吧ID存到cookies，点击刷新后通过读取cookie。
 			// console.log(record.id);
 			if(record.images){
@@ -91,12 +91,13 @@ function Shopinfo({dispatch,shopinfo}){
 		        type: 'shopinfo/publicdate',
 		        payload:{
 		        	fileList:imagearr,
-		        	fileListlength:imagearr.length
+		        	fileListlength:imagearr.length,
+		        	editid:record.id
 		        }
 		      });
 			}
 			
-
+				// console.log('record.id:'+record.id);
 
 
 				let temp={};
@@ -120,13 +121,21 @@ function Shopinfo({dispatch,shopinfo}){
 		},
 		//当跳转到详情的时候
 		onEditDetail(record){
-			console.log(record);
+			// console.log('record.id:'+record.id);
+			// dispatch({
+		 //        type: 'shopinfo/publicdate',
+		 //        payload:{
+		 //        	detailid:record.id
+		 //        }
+		 //      });
+
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
 		        	detailItem:record,
 		        }
 		      });
+			 
 		},
 		onPageChange(pageNumber){
 			// console.log('Page: ', pageNumber);
@@ -165,7 +174,9 @@ function Shopinfo({dispatch,shopinfo}){
 		        	modalType:'create'
 		        }
 		      });
-		}
+		},
+		editid,
+        detailid
 	};
 	return(
 		<Wrap

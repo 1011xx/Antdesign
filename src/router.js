@@ -31,8 +31,8 @@ import Shopdetail from "./routes/shop/Shopdetail.js";
 
 
 
-const handleEnter=()=>{
-	console.log('enter--IndexRoute');
+const handleEnter=({params})=>{
+	// console.log(params);
 }
 
 export default function({ history }) {
@@ -40,13 +40,13 @@ export default function({ history }) {
   return (
     <Router history={history}>
       <Route path="/" component={System} >
-     	 <IndexRoute onEnter={handleEnter} component={Basicplantform}></IndexRoute>
+     	 <IndexRoute  component={Basicplantform}></IndexRoute>
      	 <Route path="/basicplantform" component={Basicplantform} />
 
      	 <Route path="/shopinfo" component={Shopinfo} />
-       <Route path="/shopinfo/shopdetail" component={Shopdetail} />
+       <Route path="/shopinfo/shopdetail/:id" onEnter={handleEnter} component={Shopdetail} />
        <Route path="/shopinfo/shopadd" component={Shopadd} />
-       <Route path="/shopinfo/shopedit" component={Shopedit} />
+       <Route path="/shopinfo/shopedit/:id" component={Shopedit} />
 
        <Route path="/mainattrlist" component={MainAttrList} />
        <Route path="/mainattrlist/styleattr" component={StyleAttr} />

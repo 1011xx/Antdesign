@@ -16,6 +16,8 @@ function ShopList({
   onEditItem,
   onEditDetail,
   gotoclick,
+  editid,
+  detailid
   }) {
 
 
@@ -70,9 +72,9 @@ function ShopList({
     key: 'operation',
     render: (text, record) => (
       <p>
-         <Link to="/shopinfo/shopedit"><span onClick={() => onEditItem(record)}>修改</span></Link>
+         <Link to={`/shopinfo/shopedit/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp; &nbsp; &nbsp; 
-        <Link to="/shopinfo/shopdetail"><span onClick={() => onEditDetail(record)}>查看</span></Link>
+        <Link to={`/shopinfo/shopdetail/${record.id}`}><span onClick={() => onEditDetail(record)}>查看</span></Link>
          &nbsp; &nbsp; &nbsp; 
         <a>人员</a>
         
@@ -190,7 +192,9 @@ ShopList.propTypes = {
   total: PropTypes.any,
   current: PropTypes.any,
   loading: PropTypes.any,
-  defaultPageSize:PropTypes.any,
+  defaultPageSize: PropTypes.any,
+  editid: PropTypes.any,
+  detailid: PropTypes.any
 };
 
 export default ShopList;

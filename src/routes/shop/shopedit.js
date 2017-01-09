@@ -36,7 +36,8 @@ const {   previewVisible,
 		  modalType,
 		  behavier,
 		  updating,
-		  deleteImg
+		  deleteImg,
+		  editloading,
 	}=shopinfo;
 
 	const editInfoProps={
@@ -46,6 +47,7 @@ const {   previewVisible,
 		  types,
 		  behavier,
 		  deleteImg,
+		  editloading,
 		  item:modalType==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
@@ -53,7 +55,7 @@ const {   previewVisible,
 		// data.shortName=numm++;
 		// console.log(data);
 		 let upinfo=JSON.stringify(setProp(data)); 
-		 console.log(upinfo);
+		 // console.log(upinfo);
 		 // console.log( oFile);
 		 //创建form对象
 		  var oMyForm = new FormData();
@@ -69,12 +71,12 @@ const {   previewVisible,
               type: 'shopinfo/update',
               payload:oMyForm
             });
-		dispatch({
-	          type: 'shopinfo/publicdate',
-	          payload:{
-	              updating:true
-	           }  
-	        });
+			dispatch({
+		          type: 'shopinfo/publicdate',
+		          payload:{
+		              updating:true
+		           }  
+		        });
 // },50);
 		
         
@@ -111,8 +113,8 @@ const {   previewVisible,
 
 		 handleChange ( {fileList,file} ) {
 		 	let filelength=fileList.length;
-		 	console.log(filelength);
-		    file.status = 'done';
+		 	// console.log(filelength);
+		    file.status = 'done';//选择图片后，让图片显示出来
 		     dispatch({
               type: 'shopinfo/FileListlength',
               payload:{
@@ -126,22 +128,12 @@ const {   previewVisible,
               }
             });
 
-		    // info.file.status='done';
-		    // console.log(info);
-		    // this.setState({ fileList });
-		    // console.log(fileList);
-		     // oFile.push(file.file);
-		     // console.log(oFile);
-		    // console.log(file.thumbUrl);
-		    // console.log(file.url);
 		},
 
 		customRequest(file){
-		  // console.log(file.file);
-		// console.log(123);
 
 		  oFile.push(file.file);
-		  console.log(oFile);
+		  // console.log(oFile);
 		  // var oMyForm = new FormData();
 		  // oMyForm.append("username", "Groucho");
 		  // oMyForm.append("accountnum", 123456); // 数字123456被立即转换成字符串"123456"
@@ -173,14 +165,14 @@ const {   previewVisible,
 				}
 			}
 			
-			console.log(file);
+			// console.log(file);
 			//首先组装filelist对象，如果页面进入修改页面，则需要从onremove中读取要删除的文件，保存到新对象中
 			if(file.imageName){
 				let delimg={};
 				delimg.imageName=file.imageName;
 				deleteImg.push(delimg);
 				//打印要删除的对象
-				console.log(deleteImg);
+				// console.log(deleteImg);
 			}
 		}
 	};

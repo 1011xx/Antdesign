@@ -72,8 +72,6 @@ function Shopdetail({shopinfo}) {
                 <Col span={4} className={styles.ant_col_left}>
                 <span>{detailItem.saleAreaName}</span>
               </Col>
-             
-             
             </Row>
             
          

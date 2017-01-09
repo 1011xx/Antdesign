@@ -16,6 +16,7 @@ export default {
   	},
   	query:'',
   	loading:true,
+    editloading:true,
     changePage:{
       page:1,
       rows:10
@@ -33,7 +34,9 @@ export default {
     currentItem:{},
     detailItem:{},
     saving:false,
-    updating:false
+    updating:false,
+    editid:'',
+    detailid:''
 
 
 
@@ -90,19 +93,20 @@ export default {
   effects: {
 
   	//当进入的时出发的事件
-  	*enter({ payload}, { call, put }) {
+  	*enter({ payload}, { call, put ,select}) {
+      const PageSize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
   		yield put({type:'publicdate',
           payload:{
             loading:true
           }
         });
-  	  const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"10"}'});
+  	  const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"'+PageSize+'"}'});
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
       if(shoplist.data){
-       		console.log(shoplist.data);
+       		// console.log(shoplist.data);
           for(let i=1;i<=shoplist.data.dataList.length;i++){
             shoplist.data.dataList[i-1].num=i;
           }
@@ -177,18 +181,35 @@ export default {
       };
       
     },
-    *entershopedit({ payload}, { call, put }){
-      //查看修改页面的
-       // const resultlist=yield call(queryShop,{jsonparam:payload});
-    },
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
-      if(resultinfo.data){
-          console.log(resultinfo.data);
-            yield put({type:'publicdate',
-          payload:{
-            currentItem:resultinfo.data.shopInfo
+          if(resultinfo.data){
+              if(resultinfo.data.shopInfo.images){
+            let imagearr=JSON.parse(resultinfo.data.shopInfo.images);
+            // console.log('imageobj',imagearr);
+            // images=[{"imageDirectory":"\\images\\shop\\d17446cb5afe45f692def5ebfdcb7473.png","imageName":"12ebb50ce49a485882b316351c75ca01.png","imageOrginalName":"i6pg.png","imageType":"png"}]
+            for(let i=0;i<imagearr.length;i++){
+              imagearr[i].uid=-i;
+              imagearr[i].url='/proxyDir/fmss'+imagearr[i].imageDirectory;
+            }
+            //将组装后的json赋值给updateFileList；
+               yield put({
+                type: 'publicdate',
+                payload:{
+                  fileList:imagearr,
+                  fileListlength:imagearr.length
+                }
+              });
           }
+          //将请求的数据赋值给currentItem和detailItem
+            yield put({type:'publicdate',
+            payload:{
+              currentItem:resultinfo.data.shopInfo,
+              detailItem:resultinfo.data.shopInfo,
+              editloading:false,
+
+
+            }
         });
       }
   
@@ -287,9 +308,29 @@ export default {
                   });
           
            
-        }else if(location.pathname === '/shopinfo/shopedit'){
-           dispatch({type: 'enteraddpage'});
-           // dispatch({type: 'queryinfo'});
+        }else{
+          let str=location.pathname;
+           let queryobj={};
+          let strs = str.split("/"); 
+          strs.shift(); 
+          queryobj.id=strs[2];
+          let querystr=JSON.stringify(queryobj);
+          if(strs[1]==='shopdetail'){
+            //当进入shopdetail页面时候要执行的请求
+             dispatch({
+              type: 'queryinfo',
+              payload:querystr
+            });
+             //详情页是不需要请求下拉框数据源的
+          }else if(strs[1]==='shopedit'){
+             //当进入shopedit页面时候要执行的请求
+             dispatch({
+              type: 'queryinfo',
+              payload:querystr
+            });
+             //请求下拉框数据源
+              dispatch({type: 'enteraddpage'});
+          }
         }
   		 });
   	}

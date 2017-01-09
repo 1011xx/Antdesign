@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
+import { Spin,Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
 import Plate from '../plate/plate';
 import moment from 'moment';
 import styles from './addshopinfo.less';
@@ -15,7 +15,7 @@ let typeCode='';
 
 
 function parseArray(arrStr) {
-  console.log(arrStr);
+  // console.log(arrStr);
   var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
   var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
   var arrayJson;
@@ -42,7 +42,7 @@ const EditShopinfo = ({
     options,
     item={},
     deleteImg,
-
+    editloading,
 }) =>{
 
 //获取citycode和cityname
@@ -77,7 +77,7 @@ function gettypecode(arr){
 
 function handleSubmit(e){
  e.preventDefault();
- console.log(item);
+ // console.log(item);
  // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
       if (!err) {
@@ -102,10 +102,7 @@ function handleSubmit(e){
         'deleteImages':deleteImg,
 
       };
-      // console.log('fieldsValue:');
-      //  console.log(fieldsValue);
-      //  console.log('values');
-       console.log(values);
+
        getadddata(values);
       
       }
@@ -126,13 +123,18 @@ function typecode(code){
   gettypecode(code);
 }
 
-
+if(editloading){
+  return(
+      <Spin spinning={editloading} tip="页面加载中，请稍后...">
+        <div className={styles.loading}></div>
+      </Spin>
+    )
+}
 
 
 return (
       
         <div>
-        {console.log(item.id)}
         	 <Form 
             inline
             className={styles.ant_advanced_search_form}
@@ -333,7 +335,7 @@ return (
           </div>
            </Form>
         </div>
-       
+     
   );
 };
 
