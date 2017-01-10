@@ -8,7 +8,7 @@ import AttrModel from '../../components/Color/colormodel';
 
 function MaintainColor({dispatch,attrlist}){
 
-	const {title,modalVisible,modalType,currentItem}=attrlist;
+	const {dataSource,title,modalVisible,modalType,currentItem}=attrlist;
 	
 	const attrModalProps = {
 
@@ -39,7 +39,7 @@ function MaintainColor({dispatch,attrlist}){
 
 
   const attrListProps = {
-    modalVisible,
+    dataSource,
     onDeleteItem(id) {
       // dispatch({
       //   type: 'users/delete',

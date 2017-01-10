@@ -19,7 +19,7 @@ function Shopdetail({shopinfo}) {
       if(imgsource.length>0){
         let source='';
        for(let i=0;i<imgsource.length;i++){
-        source+='<img style="width: 180px;height: 180px;display: block;margin-right: 15px; float: left;" src="'+imgurl+imgsource[i].imageDirectory+'"></img>';
+        source+='<img style="width: 96px;height: 96px;display: block;margin-right: 15px; float: left; border-radius: 4px;border: 1px solid #d9d9d9;" src="'+imgurl+imgsource[i].imageDirectory+'"></img>';
        }
         return source;
       }else{

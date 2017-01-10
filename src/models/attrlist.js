@@ -1,4 +1,4 @@
-import { create, remove, update, query } from '../services/users';
+import { queryColor } from '../services/attribute';
 export default {
     namespace: 'attrlist',
     state: {
@@ -6,21 +6,32 @@ export default {
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
+      dataSource:[],
     },
     effects: {
-        *getlogin({ payload }, { call, put }){
-             console.log(payload);
-
-            const {data}= yield call(query);
+        *enter({ payload }, { call, put }){
+            const {data}= yield call(queryColor);
             if(data){
             console.log(data);
-                yield put({ type: 'iferro' });
+             for(let i=1;i<=data.dataList.length;i++){
+                    data.dataList[i-1].num=i;
+                  }
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList
+                      }
+                    });
             }
         },
     },
     reducers: {
         Changetitle(state, action) {
             console.log(action.payload);
+            return {...state,
+                ...action.payload
+            };
+        },
+         publicDate(state, action) {
             return {...state,
                 ...action.payload
             };
@@ -35,6 +46,16 @@ export default {
             return {...state, modalVisible:false  };
         },
 
-    }
+    },
+     subscriptions: {
+        setup({ dispatch, history }){
+         history.listen(location => {
+        if (location.pathname === '/maintaincolor') {
+            // console.log(location.pathname);
+          dispatch({type: 'enter'});
+           }
+         });
+       }
+     }
 
 };

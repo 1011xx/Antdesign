@@ -15,9 +15,7 @@ function ShopList({
   onDeleteItem,
   onEditItem,
   onEditDetail,
-  gotoclick,
-  editid,
-  detailid
+  gotoclick
   }) {
 
 
@@ -168,6 +166,7 @@ function ShopList({
              className={styles.pagination}
              size="small"
              total={total} 
+             current={current}
              defaultPageSize={defaultPageSize}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}

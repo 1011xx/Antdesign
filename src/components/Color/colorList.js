@@ -8,6 +8,7 @@ function ColorList({
   onDeleteItem,
   onEditItem,
   additem,
+  dataSource,
   }) {
 
 
@@ -17,12 +18,12 @@ function ColorList({
     key: 'num',
   }, {
     title: '颜色',
-    dataIndex: 'color',
-    key: 'color',
+    dataIndex: 'colorCode',
+    key: 'colorCode',
   }, {
     title: '颜色名称',
-    dataIndex: 'colorname',
-    key: 'colorname',
+    dataIndex: 'colorName',
+    key: 'colorName',
   }, {
     title: '操作',
     key: 'operation',
@@ -36,23 +37,23 @@ function ColorList({
       </p>
     ),
   }];
-		  const data = [{
-		  num: '1',
-		  color: '011',
-		  colorname: '黑色',
-		}, {
-		  num: '2',
-		  color: '012',
-		  colorname: '黄色',
-		},{
-		  num: '3',
-		  color: '013',
-		  colorname: '黑咖啡',
-		},{
-      num: '4',
-      color: '014',
-      colorname: '白色',
-    }];
+		//   const data = [{
+		//   num: '1',
+		//   colorCode: '011',
+		//   colorName: '黑色',
+		// }, {
+		//   num: '2',
+		//   colorCode: '012',
+		//   colorName: '黄色',
+		// },{
+		//   num: '3',
+		//   colorCode: '013',
+		//   colorName: '黑咖啡',
+		// },{
+  //     num: '4',
+  //     colorCode: '014',
+  //     colorName: '白色',
+  //   }];
 
   return (
 
@@ -66,7 +67,7 @@ function ColorList({
 				<Table size="small"
          className={styles.table}
 		        columns={columns}
-		        dataSource={data}
+		        dataSource={dataSource}
 		        pagination={true}
 		        bordered
 		      />
@@ -77,13 +78,11 @@ function ColorList({
 }
 
 ColorList.propTypes = {
-  onPageChange: PropTypes.func,
+  additem: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   dataSource: PropTypes.array,
-  loading: PropTypes.any,
-  total: PropTypes.any,
-  current: PropTypes.any,
+  
 };
 
 export default ColorList;

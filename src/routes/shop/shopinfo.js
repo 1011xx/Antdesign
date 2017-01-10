@@ -5,7 +5,12 @@ import Wrap from '../../components/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
 
-
+var shopType='';
+var saleAreaCode='';
+var provinceCode='';
+var cityCode='';
+var shopStatus='';
+var fullName='';
 
 //将字符串数组转换为数组
 // function parseArray(arrStr) {
@@ -21,7 +26,7 @@ import ShopList from '../../components/Storeinfo/shopList';
 // };
 
 function Shopinfo({dispatch,shopinfo}){
-	const {editid,detailid,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {current,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -31,6 +36,7 @@ function Shopinfo({dispatch,shopinfo}){
 			// console.log(data);
 			//获取文本框
 			searchForm.fullName=data.shopname;
+			fullName=data.shopname;
 			//将searchForm查询条件对象的值转换为字符串
 			console.log(searchForm);
 			let condit=JSON.stringify(searchForm); 
@@ -44,23 +50,29 @@ function Shopinfo({dispatch,shopinfo}){
 			//获取类别
 			// console.log(value);
 			searchForm.shopType=value[0];
+			shopType=value[0];
+
 			// console.log(searchForm);
 		},
 		selectRegion(value){
 			// 获取地区
 			// console.log(value);
 			searchForm.saleAreaCode=value[0];
+			saleAreaCode=value[0];
 		},
 		selectCity(value){
 			// 获取城市
  			// console.log(value);
  			searchForm.provinceCode=value[0];
  			searchForm.cityCode=value[1];
+ 			provinceCode=value[0];
+ 			cityCode=value[1];
 		},
 		selectShopststus(value){
 			// 获取店铺状态
 			// console.log(value);
 			searchForm.shopStatus=value[0];
+			shopStatus=value[0];
 			// console.log(searchForm)
 		}
 	};
@@ -69,6 +81,7 @@ function Shopinfo({dispatch,shopinfo}){
 		loading,
 		total,
 		changePage,
+		current,
 		defaultPageSize,
 		
 	//点击修改的时候
@@ -121,14 +134,7 @@ function Shopinfo({dispatch,shopinfo}){
 		},
 		//当跳转到详情的时候
 		onEditDetail(record){
-			// console.log('record.id:'+record.id);
-			// dispatch({
-		 //        type: 'shopinfo/publicdate',
-		 //        payload:{
-		 //        	detailid:record.id
-		 //        }
-		 //      });
-
+			
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
@@ -139,13 +145,43 @@ function Shopinfo({dispatch,shopinfo}){
 		},
 		onPageChange(pageNumber){
 			// console.log('Page: ', pageNumber);
+			if(shopType!==""){
+
+				changePage.shopType=shopType;
+			}
+			if(saleAreaCode!==""){
+				changePage.saleAreaCode=saleAreaCode;
+			}
+			if(provinceCode!==""){
+				changePage.provinceCode=provinceCode;
+			}
+			if(cityCode!==""){
+				changePage.cityCode=cityCode;
+			}
+			if(shopStatus!==""){
+				changePage.shopStatus=shopStatus;
+			}
+			if(fullName!==""){
+				changePage.fullName=fullName;
+			}
+			console.log(changePage);
+			// console.log(typeof(shopType));
 			changePage.page=pageNumber;
+			console.log('pageNumber:',pageNumber);
 			//将查询条件对象的值转换为字符串
 			let condit=JSON.stringify(changePage); 
 			// console.log(condit);
+			
+			 dispatch({
+              type: 'shopinfo/publicdate',
+              payload: {
+              	current:pageNumber
+              }
+            });
+
 			 dispatch({
               type: 'shopinfo/queryShop',
-              payload: condit,
+              payload: condit
             });
 		},
 		onShowSizeChange(current, pageSize){
@@ -161,22 +197,25 @@ function Shopinfo({dispatch,shopinfo}){
 			changePage.rows=pageSize;
 			let condit=JSON.stringify(changePage); 
 			// console.log(condit);
+			 dispatch({
+              type: 'shopinfo/publicdate',
+              payload: {
+              	current:current
+              }
+            });
 		 dispatch({
               type: 'shopinfo/queryShop',
               payload: condit,
             });
 		},
 		gotoclick(){
-			
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
 		        	modalType:'create'
 		        }
 		      });
-		},
-		editid,
-        detailid
+		}
 	};
 	return(
 		<Wrap

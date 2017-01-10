@@ -9,12 +9,14 @@ export default {
   	status:[],
   	types:[],
     total:0,
+    current:1,
   	dataSource:[],
   	searchForm:{
   		page:1,
   		rows:10
   	},
   	query:'',
+    queryStatus:'AllShop',
   	loading:true,
     editloading:true,
     changePage:{
@@ -35,8 +37,7 @@ export default {
     detailItem:{},
     saving:false,
     updating:false,
-    editid:'',
-    detailid:''
+
 
 
 
@@ -239,7 +240,8 @@ export default {
        		
 	      	yield put({type:'ShopList',
 	      	payload:{
-	      		dataSource:resultlist.data.dataList
+	      		dataSource:resultlist.data.dataList,
+            total:resultlist.data.total
 	      	}
 	      });
       };

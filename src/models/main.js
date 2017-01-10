@@ -10,7 +10,7 @@ export default {
     //输入对应的页面使得相应的导航栏显示高亮
     setup({ dispatch, history }) {
       history.listen(location => {
-        console.log(location.pathname);
+        // console.log(location.pathname);
         // if (location.pathname === '/shopinfo'||location.pathname ==='/shopinfo/shopadd') {
         //   dispatch({
         //     type: 'ChangeOpenkey',
