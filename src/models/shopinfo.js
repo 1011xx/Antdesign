@@ -231,10 +231,10 @@ export default {
         }else{
            // console.log(currentpage);
           // console.log(currentpage*10);
-          let size=currentpage*10;
+          let size=(currentpage-1)*10;
           for(let j=size;j<long+size;j++){
             // console.log(j-size);
-            resultlist.data.dataList[j-size].num=j;
+            resultlist.data.dataList[j-size].num=j+1;
           }
         }
        		

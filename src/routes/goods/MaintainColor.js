@@ -4,30 +4,47 @@ import { connect } from 'dva';
 import Wrap from '../../components/wrap/wrap';
 import ColorList from '../../components/Color/colorList';
 import AttrModel from '../../components/Color/colormodel';
+import SureModel from '../../commonComponents/SureModal/SureModal';
+import Paginations from '../../commonComponents/Pagination/Paginations';
 //服装属性/维护
+var deleteid=null;//转存删除ID号码
 
 function MaintainColor({dispatch,attrlist}){
 
-	const {dataSource,title,modalVisible,modalType,currentItem}=attrlist;
+	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
 	
 	const attrModalProps = {
-
-	item:modalType==='create'?{}:currentItem,
+	  item:modalType==='create'?{}:currentItem,
     title,
     visible:modalVisible,
     onOk(data) {
+      dispatch({
+          type:'attrlist/tableLoading'
+        });
+      if(modalType==='create'){
+        //如果是创建
+        console.log('创建');
+       
+        //这里与后台数据交流
+        dispatch({
+        type: 'attrlist/create',
+        payload: data,
+      });
+        dispatch({type:'attrlist/hideModal'});
+      }else{
+        //如果是修改
+        console.log('修改');
 
-    // 这里对数据做更新，更新远端服务器
-    //   dispatch({
-    //     type: `users/${modalType}`,
-    //     payload: data,
-    //   });
-    // },
-    // onCancel() {
-    //   dispatch({
-    //     type: 'users/hideModal',
-    //   });
-    console.log(data);
+        //这里与后台数据交流
+        dispatch({
+        type: 'attrlist/edit',
+        payload: data,
+      });
+        dispatch({
+          type:'attrlist/hideModal'
+        });
+      }
+
     },
     handleCancel() {
       dispatch({
@@ -36,49 +53,91 @@ function MaintainColor({dispatch,attrlist}){
     },
   };
 
-
+  const sureModalProps = {
+    visibleSure,
+    makeSure(){
+      //点击确认删除后
+      dispatch({type:'attrlist/tableLoading'});
+      //显示删除提示
+      dispatch({type:'attrlist/sureModalhide'});
+      //执行删除操作
+      dispatch({
+        type:'attrlist/delete',
+        payload:deleteid
+      });
+    },
+    handleCancel(){
+      //点击取消删除后
+      dispatch({type:'attrlist/sureModalhide'});
+    }
+  };
 
   const attrListProps = {
     dataSource,
-    onDeleteItem(id) {
-      // dispatch({
-      //   type: 'users/delete',
-      //   payload: id,
-      // });
-      console.log(id);
+    loading,
+    onDeleteItem(item) {
+     dispatch({type:'attrlist/sureModalshow'});
+     console.log(item.id);
+     deleteid=item.id;
     },
     onEditItem(item) {
-      // dispatch({
-      //   type: 'users/showModal',
-      //   payload: {
-      //     modalType: 'update',
-      //     currentItem: item,
-      //   },
-      // });
-      console.log(item);
-      console.log(modalType);
-      // console.log(modalVisible);
-    //   dispatch({
-    //     type: 'attrlist/Changetitle',
-    //     payload: {title:'修改'},
-    //   });
-    // },
-      dispatch({
+    dispatch({
         type: 'attrlist/showEditModal',
         payload:{
-        	modalType:'update',
-        	currentItem:item,
+          modalType:'update',
+          currentItem:item,
         }
       });
-      console.log(modalType);
+
     },
     additem(){
-    	console.log('增加条目');
     	dispatch({
         type: 'attrlist/showAddModal',
         payload:{
         	  modalType: 'create',
         }
+      });
+    }
+  };
+
+  const pageProps={
+    total,
+    current,
+    defaultPageSize,
+    onShowSizeChange(currentpage,pagesize){
+      // console.log(currentpage,pagesize);
+       let tempobj={};
+      tempobj.start=currentpage;
+      tempobj.rows=pagesize;
+      dispatch({
+        type:'attrlist/publicDate',
+        payload:{
+          current:currentpage,
+          defaultPageSize:pagesize
+        }
+      });
+
+       dispatch({
+        type: 'attrlist/querypage',
+        payload:tempobj
+      });
+
+    },
+    onPageChange(currentpage){
+      // console.log(currentpage);
+      let tempobj={};
+      tempobj.start=currentpage;
+      tempobj.rows=defaultPageSize;
+      console.log(tempobj);
+      dispatch({
+        type:'attrlist/publicDate',
+        payload:{
+          current:currentpage
+        }
+      });
+      dispatch({
+        type: 'attrlist/querypage',
+        payload:tempobj
       });
     }
   };
@@ -94,7 +153,9 @@ function MaintainColor({dispatch,attrlist}){
 		   >
 		  
 		  <ColorList {...attrListProps}/>
+      <Paginations {...pageProps}/>
 		  <UserModalGen />
+      <SureModel {...sureModalProps}/>
 		   </Wrap>
 
 		);

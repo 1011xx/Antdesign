@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import {  Form, Input,Modal,Col} from 'antd';
-// import styles from './plate.less';
+import {  Form, Input,Modal,Col,Row} from 'antd';
+import styles from './colormodel.less';
 const FormItem = Form.Item;
 
 const AttrModel = ({
@@ -13,7 +13,7 @@ const AttrModel = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
-    },
+    }
 }) => {
 function handleOk() {
     validateFields((errors) => {
@@ -37,16 +37,16 @@ function handleOk() {
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
-
         >
-        <Form  horizontal style={{ width: 240 ,margin:'0 auto'}}>
+        <Form  inline style={{ width: 264 ,margin:'0 auto'}}>
+        <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
         <FormItem
-          label="颜色："
+          label="颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色："
           hasFeedback
-
+          className={styles.formitem}
         >
-          {getFieldDecorator('code', {
-           initialValue:item.code,
+          {getFieldDecorator('colorCode', {
+           initialValue:item.colorCode,
             rules: [
               { required: true, message: '颜色未填写' },
             ],
@@ -54,13 +54,15 @@ function handleOk() {
             <Input type="text" />
           )}
         </FormItem>
+        </Row>
+
+        <Row style={{'textAlign':'right'}}>
         <FormItem
           label="颜色名称："
           hasFeedback
-         
         >
-          {getFieldDecorator('exp', {
-   			initialValue:item.expattr,
+          {getFieldDecorator('colorName', {
+   			   initialValue:item.colorName,
             rules: [
               { required: true, message: '颜色名称未填写' },
             ],
@@ -68,6 +70,7 @@ function handleOk() {
             <Input type="text" />
           )}
         </FormItem>
+         </Row>
       </Form>
         </Modal>
 		);

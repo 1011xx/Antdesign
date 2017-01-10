@@ -182,7 +182,6 @@ function ShopList({
 ShopList.propTypes = {
   onPageChange: PropTypes.func,
   onShowSizeChange: PropTypes.func,
-  onShowQuickJumpe:PropTypes.func,
   onEditItem: PropTypes.func,
   onEditDetail: PropTypes.func,
   gotoclick:PropTypes.func,

@@ -14,7 +14,8 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-fileupload": "^2.4.0",
-    "reactjs-iscroll": "^0.3.2"
+    "reactjs-iscroll": "^0.3.2",
+    "src": "^1.1.2"
   },
   "devDependencies": {
     "atool-build": "^0.9.0",
