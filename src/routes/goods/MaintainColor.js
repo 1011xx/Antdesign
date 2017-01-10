@@ -6,14 +6,14 @@ import ColorList from '../../components/Color/colorList';
 import AttrModel from '../../components/Color/colormodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
-//服装属性/维护
+//服装属性/维护颜色
 var deleteid=null;//转存删除ID号码
 
 function MaintainColor({dispatch,attrlist}){
 
 	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
 	
-	const attrModalProps = {
+	const colorModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
     visible:modalVisible,
@@ -72,7 +72,7 @@ function MaintainColor({dispatch,attrlist}){
     }
   };
 
-  const attrListProps = {
+  const colorListProps = {
     dataSource,
     loading,
     onDeleteItem(item) {
@@ -143,7 +143,7 @@ function MaintainColor({dispatch,attrlist}){
   };
 
   const UserModalGen = () =>
-    <AttrModel {...attrModalProps} />;
+    <AttrModel {...colorModalProps} />;
 
 
 	return(
@@ -152,7 +152,7 @@ function MaintainColor({dispatch,attrlist}){
 		   next="维护颜色"
 		   >
 		  
-		  <ColorList {...attrListProps}/>
+		  <ColorList {...colorListProps}/>
       <Paginations {...pageProps}/>
 		  <UserModalGen />
       <SureModel {...sureModalProps}/>

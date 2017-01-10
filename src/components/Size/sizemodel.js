@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
-import {  Form, Input,Modal,Col} from 'antd';
-// import styles from './plate.less';
+import {  Form, Input,Modal,Col,Row} from 'antd';
+import styles from './sizemodel.less';
 const FormItem = Form.Item;
 
-const AttrModel = ({
+const SizeModel = ({
 	title,
 	visible,
 	onOk,
@@ -32,57 +32,58 @@ function handleOk() {
 
 		
         
-        <Modal title={title}
+         <Modal title={title}
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
-
         >
-        <Form  horizontal style={{ width: 240 ,margin:'0 auto'}}>
+        <Form  inline style={{ width: 264 ,margin:'0 auto'}}>
+        <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
         <FormItem
-          label="属性代码："
+          label="尺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;寸："
           hasFeedback
-
+          className={styles.formitem}
         >
-          {getFieldDecorator('code', {
-           initialValue:item.code,
+          {getFieldDecorator('sizeCode', {
+           initialValue:item.sizeCode,
             rules: [
-              { required: true, message: '属性代码未填写' },
+              { required: true, message: '尺寸未填写' },
             ],
           })(
             <Input type="text" />
           )}
         </FormItem>
+        </Row>
+
+        <Row style={{'textAlign':'right'}}>
         <FormItem
-          label="属性描述："
+          label="尺寸名称："
           hasFeedback
-         
         >
-          {getFieldDecorator('exp', {
-   			initialValue:item.expattr,
+          {getFieldDecorator('sizeName', {
+           initialValue:item.sizeName,
             rules: [
-              { required: true, message: '属性描述未填写' },
+              { required: true, message: '尺寸名称未填写' },
             ],
           })(
             <Input type="text" />
           )}
         </FormItem>
-        
+         </Row>
       </Form>
-
         </Modal>
      
 			
 		);
 }
 
-AttrModel.propTypes = {
-    title: PropTypes.any,
+SizeModel.propTypes = {
+  title: PropTypes.any,
 	visible: PropTypes.any,
 	form: PropTypes.object,
 	onOk: PropTypes.func,
 	handleCancel: PropTypes.func,
 };
 
-export default Form.create()(AttrModel);
+export default Form.create()(SizeModel);

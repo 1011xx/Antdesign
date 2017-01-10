@@ -8,6 +8,8 @@ function SizeList({
   onDeleteItem,
   onEditItem,
   additem,
+  dataSource,
+  loading
   }) {
 
 
@@ -17,12 +19,12 @@ function SizeList({
     key: 'num',
   }, {
     title: '尺寸',
-    dataIndex: 'color',
-    key: 'color',
+    dataIndex: 'sizeCode',
+    key: 'sizeCode',
   }, {
     title: '尺寸名称',
-    dataIndex: 'colorname',
-    key: 'colorname',
+    dataIndex: 'sizeName',
+    key: 'sizeName',
   }, {
     title: '操作',
     key: 'operation',
@@ -30,28 +32,30 @@ function SizeList({
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Popconfirm title="删除后将不可恢复，确定要删除吗？" onConfirm={() => onDeleteItem(record.key)}>
-          <a>删除</a>
-        </Popconfirm>
+          <a onClick={() => onDeleteItem(record)}>删除</a>
       </p>
     ),
   }];
 		  const data = [{
 		  num: '1',
-		  color: '011',
-		  colorname: '黑色',
+      id:'rwdferwerfwerfwer',
+		  sizeCode: '011',
+		  sizeName: '黑色',
 		}, {
 		  num: '2',
-		  color: '012',
-		  colorname: '黄色',
+      id:'rwerwdferfwerfwer',
+		  sizeCode: '012',
+		  sizeName: '黄色',
 		},{
 		  num: '3',
-		  color: '013',
-		  colorname: '黑咖啡',
+      id:'rwerwerfdfwerfwer',
+		  sizeCode: '013',
+		  sizeName: '黑咖啡',
 		},{
       num: '4',
-      color: '014',
-      colorname: '白色',
+      id:'rwerwerfwedfrfwer',
+      sizeCode: '014',
+      sizeName: '白色',
     }];
 
   return (
@@ -66,8 +70,9 @@ function SizeList({
 				<Table size="small"
          className={styles.table}
 		        columns={columns}
-		        dataSource={data}
-		        pagination={true}
+		        dataSource={dataSource}
+		        pagination={false}
+            loading={loading}
 		        bordered
 		      />
 
@@ -77,13 +82,11 @@ function SizeList({
 }
 
 SizeList.propTypes = {
-  onPageChange: PropTypes.func,
+    additem: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   dataSource: PropTypes.array,
-  loading: PropTypes.any,
-  total: PropTypes.any,
-  current: PropTypes.any,
+  loading: PropTypes.bool
 };
 
 export default SizeList;

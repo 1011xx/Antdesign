@@ -65,6 +65,26 @@ export default {
                     payload: '3',
                   });
           break;
+          case '/maintainsize':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '4',
+                  });
+          break;
+          case '/maintainsizeitem':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '5',
+                  });
+          break;
 
         
           

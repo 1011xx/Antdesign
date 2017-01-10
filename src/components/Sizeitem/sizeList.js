@@ -8,6 +8,8 @@ function SizeList({
   onDeleteItem,
   onEditItem,
   additem,
+  dataSource,
+  loading
   }) {
 
 
@@ -17,16 +19,16 @@ function SizeList({
     key: 'num',
   }, {
     title: '尺寸组号',
-    dataIndex: 'color',
-    key: 'color',
+    dataIndex: 'code',
+    key: 'code',
   }, {
     title: '尺寸组名称',
-    dataIndex: 'colorname',
-    key: 'colorname',
+    dataIndex: 'name',
+    key: 'name',
   }, {
     title: '尺寸',
-    dataIndex: 'size',
-    key: 'size',
+    dataIndex: 'sizes',
+    key: 'sizes',
   }, {
     title: '操作',
     key: 'operation',
@@ -34,32 +36,34 @@ function SizeList({
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Popconfirm title="删除后将不可恢复，确定要删除吗？" onConfirm={() => onDeleteItem(record.key)}>
-          <a>删除</a>
-        </Popconfirm>
+          <a onClick={() => onDeleteItem(record)}>删除</a>
       </p>
     ),
   }];
       const data = [{
       num: '1',
-      color: '02',
-      colorname: '马克张',
-      size:'02 04 06 08 10 12 14 16 '
+      id:'qwqwqwqwqw',
+      code: '02',
+      name: '马克张',
+      sizes:'02 04 06 08 10 12 14 16 '
     }, {
       num: '2',
-      color: '04',
-      colorname: 'RR',
-      size:'XXS XS S M L XL XXL XXXL XXXL'
+      id:'qwqwqwrqwqw',
+      code: '04',
+      name: 'RR',
+      sizes:'XXS XS S M L XL XXL XXXL XXXL'
     },{
       num: '3',
-      color: '02',
-      colorname: '马克张',
-      size:'02 04 06 08 10 12 14 16 '
+      id:'qwqwqwqwtytyqw',
+      code: '02',
+      name: '马克张',
+      sizes:'02 04 06 08 10 12 14 16 '
     },{
       num: '4',
-      color: '03',
-      colorname: 'RR',
-      size:'XXS XS S M L XL XXL XXXL XXXL'
+      id:'qwqwqwqfgfgwqw',
+      code: '03',
+      name: 'RR',
+      sizes:'XXS XS S M L XL XXL XXXL XXXL'
     }];
 
 
@@ -76,23 +80,21 @@ function SizeList({
          className={styles.table}
 		        columns={columns}
 		        dataSource={data}
-		        pagination={true}
+		        pagination={false}
 		        bordered
 		      />
-
+      {/*ajax加载的时候需要进行的loading={loading}*/}
     </TablePlate>
    
   );
 }
 
 SizeList.propTypes = {
-  onPageChange: PropTypes.func,
+  additem: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   dataSource: PropTypes.array,
-  loading: PropTypes.any,
-  total: PropTypes.any,
-  current: PropTypes.any,
+  loading: PropTypes.bool
 };
 
 export default SizeList;
