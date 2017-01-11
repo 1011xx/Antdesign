@@ -1,5 +1,6 @@
 import { queryColor,newColor,updateColor,removeColor } from '../services/attribute';
 export default {
+  //颜色属性维护
     namespace: 'attrlist',
     state: {
       title:"",
@@ -30,15 +31,32 @@ export default {
                     });
             }
         },
-        *querypage({ payload }, { call, put }){
+        *querypage({ payload }, { call, put, select }){
+          const currentpage = yield select(({ attrlist }) => attrlist.current);
+          const pagesize = yield select(({ attrlist }) => attrlist.defaultPageSize);
+          console.log(payload);
+          //使用传递过来的参数
+          // const currentpage = payload.page;
+          // const pagesize = payload.rows;
             let strarr=JSON.stringify(payload);
-            console.log(strarr)
+            // console.log(strarr)
             const {data}= yield call(queryColor,{jsonParam:strarr});
+            
             if(data){
-            console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                  }
+              console.log(data);
+               // 开始添加页面序号
+                 let long=data.dataList.length;
+                  if(currentpage<2){
+                    for(let i=1;i<=long;i++){
+                        data.dataList[i-1].num=i;
+                      }
+                    }else{
+                      let size=(currentpage-1)*10;
+                      for(let j=size;j<long+size;j++){
+                        data.dataList[j-size].num=j+1;
+                      }
+                    }
+                    //添加页面序号结束
             yield put({type:'publicDate',
                       payload:{
                         dataSource:data.dataList,
@@ -128,8 +146,14 @@ export default {
         setup({ dispatch, history }){
          history.listen(location => {
         if (location.pathname === '/maintaincolor') {
-            // console.log(location.pathname);
           dispatch({type: 'enter'});
+           dispatch({
+            type: 'publicDate',
+            payload:{
+               current:1,
+               defaultPageSize:10
+            }
+          });
            }
          });
        }

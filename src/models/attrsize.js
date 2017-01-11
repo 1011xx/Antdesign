@@ -1,5 +1,6 @@
 import { querySize,newSize,updateSize,removeSize } from '../services/attribute';
 export default {
+  //尺寸属性维护
     namespace: 'attrsize',
     state: {
       title:"",
@@ -14,7 +15,14 @@ export default {
       defaultPageSize:10,
     },
     effects: {
-        *enter({ payload }, { call, put }){
+        *enter({ payload }, { call, put, select }){
+          //若后期保留停留的页面，开启注释
+           // const currentpage = yield select(({ attrsize }) => attrsize.current);
+           // const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
+           // let tempobj={};
+           // tempobj.page=currentpage;
+           // tempobj.rows=pagesize;
+           // let strarr=JSON.stringify(tempobj);
             const {data}= yield call(querySize);
             if(data){
             console.log(data);
@@ -30,15 +38,31 @@ export default {
                     });
             }
         },
-        *querypage({ payload }, { call, put }){
+        *querypage({ payload }, { call, put, select }){
+          const currentpage = yield select(({ attrsize }) => attrsize.current);
+          const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
+          //使用传递过来的参数
+          // const currentpage = payload.page;
+          // const pagesize = payload.rows;
             let strarr=JSON.stringify(payload);
             console.log(strarr)
             const {data}= yield call(querySize,{jsonParam:strarr});
             if(data){
             console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                  }
+              // 开始添加页面序号
+                 let long=data.dataList.length;
+                 console.log(currentpage);
+                  if(currentpage<2){
+                    for(let i=1;i<=long;i++){
+                        data.dataList[i-1].num=i;
+                      }
+                    }else{
+                      let size=(currentpage-1)*10;
+                      for(let j=size;j<long+size;j++){
+                        data.dataList[j-size].num=j+1;
+                      }
+                    }
+                    //添加页面序号结束
             yield put({type:'publicDate',
                       payload:{
                         dataSource:data.dataList,
@@ -128,8 +152,14 @@ export default {
         setup({ dispatch, history }){
          history.listen(location => {
         if (location.pathname === '/maintainsize') {
-            // console.log(location.pathname);
           dispatch({type: 'enter'});
+          dispatch({
+            type: 'publicDate',
+            payload:{
+               current:1,
+               defaultPageSize:10
+            }
+          });
            }
          });
        }

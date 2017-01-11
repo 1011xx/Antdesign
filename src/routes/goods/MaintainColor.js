@@ -107,8 +107,9 @@ function MaintainColor({dispatch,attrlist}){
     onShowSizeChange(currentpage,pagesize){
       // console.log(currentpage,pagesize);
        let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=pagesize;
+      dispatch({type:'attrlist/tableLoading'});
       dispatch({
         type:'attrlist/publicDate',
         payload:{
@@ -126,9 +127,10 @@ function MaintainColor({dispatch,attrlist}){
     onPageChange(currentpage){
       // console.log(currentpage);
       let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=defaultPageSize;
-      console.log(tempobj);
+      // console.log(tempobj);
+       dispatch({type:'attrlist/tableLoading'});
       dispatch({
         type:'attrlist/publicDate',
         payload:{

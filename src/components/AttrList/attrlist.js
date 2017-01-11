@@ -4,7 +4,7 @@ import {Link} from 'dva/router';
 import Plate from '../plate/plate';
 import TablePlate from '../plate/tableplate';
 import styles from './attrlist.less';
-//服装属性/款号属性维护/品牌
+//服装属性/属性维护/品牌等
 
 function AttrList({
   onDeleteItem,

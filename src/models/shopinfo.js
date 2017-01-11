@@ -222,22 +222,19 @@ export default {
    
    	 const resultlist=yield call(queryShop,{jsonparam:payload});
    	 if(resultlist.data){
-      // console.log(resultlist.data);
+      // 开始添加页面序号
       let long=resultlist.data.dataList.length;
       if(currentpage<2){
         for(let i=1;i<=long;i++){
             resultlist.data.dataList[i-1].num=i;
           }
         }else{
-           // console.log(currentpage);
-          // console.log(currentpage*10);
           let size=(currentpage-1)*10;
           for(let j=size;j<long+size;j++){
-            // console.log(j-size);
             resultlist.data.dataList[j-size].num=j+1;
           }
         }
-       		
+       		//添加页面序号结束
 	      	yield put({type:'ShopList',
 	      	payload:{
 	      		dataSource:resultlist.data.dataList,

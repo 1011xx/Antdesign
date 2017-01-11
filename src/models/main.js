@@ -10,19 +10,7 @@ export default {
     //输入对应的页面使得相应的导航栏显示高亮
     setup({ dispatch, history }) {
       history.listen(location => {
-        // console.log(location.pathname);
-        // if (location.pathname === '/shopinfo'||location.pathname ==='/shopinfo/shopadd') {
-        //   dispatch({
-        //     type: 'ChangeOpenkey',
-        //     payload: ['sub1'],
-        //   });
-        // }else if(location.pathname ==='/styleattr'||location.pathname ==='/maintaincolor'){
-        //      dispatch({
-        //     type: 'ChangeOpenkey',
-        //     payload: ['sub2'],
-        //   });
-        // }
-        
+       
         switch(location.pathname)
         {
         case '/shopinfo':
@@ -35,17 +23,7 @@ export default {
                 payload: '1',
               });
           break;
-        case '/shopinfo/shopadd':
-                dispatch({
-                type: 'ChangeOpenkey',
-                payload: ['sub1'],
-              });
-                dispatch({
-                type: 'ChangeSelectkey',
-                payload: '1',
-              });
-          break;
-            case '/styleattr':
+          case '/mainattrlist':
                     dispatch({
                     type: 'ChangeOpenkey',
                     payload: ['sub2'],
@@ -54,7 +32,7 @@ export default {
                     type: 'ChangeSelectkey',
                     payload: '2',
                   });
-          break;
+          break;  
           case '/maintaincolor':
                   dispatch({
                     type: 'ChangeOpenkey',
@@ -84,14 +62,57 @@ export default {
                     type: 'ChangeSelectkey',
                     payload: '5',
                   });
-          break;
-
-        
-          
+          break; 
         }
 
-
-
+//针对浏览器地址栏里面有ID的页面进行处理,使得对应的页面使得相应的导航栏显示高亮
+             let str=location.pathname;
+             let queryobj={};
+             let strs = str.split("/"); 
+             strs.shift(); 
+             console.log(strs);
+             switch(strs[1]){
+                case 'styleattr':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '2',
+                  });
+                break;
+                case 'shopadd':
+                dispatch({
+                  type: 'ChangeOpenkey',
+                  payload: ['sub1'],
+                });
+                  dispatch({
+                  type: 'ChangeSelectkey',
+                  payload: '1',
+                });
+                 break;
+                case 'shopedit':
+                dispatch({
+                  type: 'ChangeOpenkey',
+                  payload: ['sub1'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '1',
+                  });
+                   break;
+                case 'shopdetail':
+                dispatch({
+                  type: 'ChangeOpenkey',
+                  payload: ['sub1'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '1',
+                  });
+                   break;
+             }
 
 
 

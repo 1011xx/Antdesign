@@ -81,7 +81,7 @@ function handleOk() {
           {getFieldDecorator('sizes', {
            initialValue:item.sizes,
             rules: [
-              { required: true, message: '请选择尺寸' },
+              { required: true, message: '点击输入框选择尺寸' },
             ],
           })(
             

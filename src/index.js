@@ -16,6 +16,7 @@ app.model(require('./models/main'));
 app.model(require('./models/attrlist'));
 app.model(require('./models/attrsize'));
 app.model(require('./models/attrsizeItem'));
+app.model(require('./models/attributeClass'));
 
 // 4. Router
 app.router(require('./router'));

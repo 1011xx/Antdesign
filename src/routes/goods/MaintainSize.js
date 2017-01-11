@@ -106,10 +106,11 @@ const sureModalProps = {
     onShowSizeChange(currentpage,pagesize){
       // console.log(currentpage,pagesize);
        let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=pagesize;
+      dispatch({type:'attrsize/tableLoading'});
       dispatch({
-        type:'attrlist/publicDate',
+        type:'attrsize/publicDate',
         payload:{
           current:currentpage,
           defaultPageSize:pagesize
@@ -117,25 +118,26 @@ const sureModalProps = {
       });
 
        dispatch({
-        type: 'attrlist/querypage',
+        type: 'attrsize/querypage',
         payload:tempobj
       });
 
     },
     onPageChange(currentpage){
-      // console.log(currentpage);
+      // console.log('currentpage:'+currentpage);
       let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=defaultPageSize;
+      dispatch({type:'attrsize/tableLoading'});
       console.log(tempobj);
       dispatch({
-        type:'attrlist/publicDate',
+        type:'attrsize/publicDate',
         payload:{
           current:currentpage
         }
       });
       dispatch({
-        type: 'attrlist/querypage',
+        type: 'attrsize/querypage',
         payload:tempobj
       });
     }

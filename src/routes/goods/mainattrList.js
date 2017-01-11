@@ -6,13 +6,14 @@ import AttrEtcList from '../../components/AttrList/attretclist';
 
 //服装属性/款号属性维护
 
-function MainAttrList({dispatch,attrlist}){
+function MainAttrList({dispatch,attributeClass}){
 
-	const {title}=attrlist;
+	const {title,dataSource,loading}=attributeClass;
 	
   const attrListProps = {
     title,
-   
+    dataSource,
+    loading,
     onEditItem(item) {
       console.log(title);
       console.log(item);
@@ -46,8 +47,8 @@ MainAttrList.propTypes = {
   dispatch: PropTypes.func,
 };
 
-function mapStateToProps({ attrlist }) {
-  return { attrlist };
+function mapStateToProps({ attributeClass }) {
+  return { attributeClass };
 }
 
 export default connect(mapStateToProps)(MainAttrList);

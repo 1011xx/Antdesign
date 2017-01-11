@@ -49,7 +49,7 @@ export default function({ history }) {
        <Route path="/shopinfo/shopedit/:id" component={Shopedit} />
 
        <Route path="/mainattrlist" component={MainAttrList} />
-       <Route path="/mainattrlist/styleattr" component={StyleAttr} />
+       <Route path="/mainattrlist/styleattr/:id" component={StyleAttr} />
 
        <Route path="/maintaincolor" component={MaintainColor} />
        <Route path="/maintainsize" component={MaintainSize} />

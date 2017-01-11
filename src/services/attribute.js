@@ -1,13 +1,16 @@
 import request from '../utils/request';
 import qs from 'qs';
 
-const ipaddress="http://dz14571854.imwork.net:23196";
-// const ipaddress="";
+// const ipaddress="http://dz14571854.imwork.net:23196";
+const ipaddress="";
 
 // 获取颜色
 export async function queryColor(params) {
   return request(`${ipaddress}/fmss/colorController/queryColor`, {
     method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
     body: qs.stringify(params),
   });
 }
@@ -46,6 +49,9 @@ export async function removeColor(params) {
 export async function querySize(params) {
   return request(`${ipaddress}/fmss/sizeController/querySize`, {
     method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
     body: qs.stringify(params),
   });
 }
@@ -115,6 +121,27 @@ export async function removeSizeGroup(params) {
   return request(`${ipaddress}/fmss/sizeGroupController/removeSizeGroup`, {
     method: 'post',
      headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//属性维护相关接口
+// 获取属性类
+export async function queryAttributeClass(params) {
+  return request(`${ipaddress}/fmss/attributeController/queryAttributeClass`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//更具属性类的ID获取属性的数据
+export async function queryAttributeByAttributeClassId(params) {
+  return request(`${ipaddress}/fmss/attributeController/queryAttributeByAttributeClassId`, {
+    method: 'post',
+    headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
     body: qs.stringify(params),
