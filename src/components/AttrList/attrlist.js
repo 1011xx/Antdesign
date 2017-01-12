@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table, Popconfirm, Pagination,Icon } from 'antd';
+import { Table, Popconfirm, Pagination,Icon, Spin } from 'antd';
 import {Link} from 'dva/router';
 import Plate from '../plate/plate';
 import TablePlate from '../plate/tableplate';
@@ -10,6 +10,10 @@ function AttrList({
   onDeleteItem,
   onEditItem,
   additem,
+  dataSources,
+  loadings,
+  details,
+  spinloading,
   }) {
 
 
@@ -24,8 +28,8 @@ function AttrList({
     key: 'code',
   }, {
     title: '属性描述',
-    dataIndex: 'expattr',
-    key: 'expattr',
+    dataIndex: 'name',
+    key: 'name',
   }, {
     title: '操作',
     key: 'operation',
@@ -33,45 +37,45 @@ function AttrList({
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Popconfirm title="确定要删除吗？" onConfirm={() => onDeleteItem(record.key)}>
-          <a>删除</a>
-        </Popconfirm>
+        <a onClick={() => onDeleteItem(record)}>删除</a>
       </p>
     ),
   }];
-		  const data = [{
-		  key: '1',
-		  num: '1',
-		  code: 'M',
-		  expattr: '马克张',
-		}, {
-		  key: '2',
-		  num: '2',
-		  code: 'O',
-		  expattr: '奥特莱斯',
-		},{
-		  key: '3',
-		  num: '3',
-		  code: 'R',
-		  expattr: 'ROYALRAYE',
-		},{
-      key: '4',
-      num: '4',
-      code: 'Y',
-      expattr: 'YUANLONG',
-    }];
+		//   const data = [{
+		//   key: '1',
+		//   num: '1',
+		//   code: 'M',
+		//   name: '马克张',
+		// }, {
+		//   key: '2',
+		//   num: '2',
+		//   code: 'O',
+		//   name: '奥特莱斯',
+		// },{
+		//   key: '3',
+		//   num: '3',
+		//   code: 'R',
+		//   name: 'ROYALRAYE',
+		// },{
+  //     key: '4',
+  //     num: '4',
+  //     code: 'Y',
+  //     name: 'YUANLONG',
+  //   }];
 
   return (
 
 
     <div>
+    <Spin spinning={spinloading}  >
     <Plate title="属性类">
       <p className={styles.p_padding}>
-      <span className={styles.attrpadding}>属性类名称：品牌</span>
-      <span className={styles.attrpadding}>代码长度：1</span>
-      <span className={styles.attrpadding}>顺序号：1</span>
+      <span className={styles.attrpadding}>属性类名称：{details.name}</span>
+      <span className={styles.attrpadding}>代码长度：{details.codeLength}</span>
+      <span className={styles.attrpadding}>顺序号：{details.seqno}</span>
       </p>
     </Plate>
+    </Spin>
     <TablePlate title="属性">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
@@ -79,8 +83,9 @@ function AttrList({
 				<Table size="small"
         className={styles.table}
 		        columns={columns}
-		        dataSource={data}
-		        pagination={true}
+		        dataSource={dataSources}
+		        pagination={false}
+            loading={loadings}
 		        bordered
 		      />
 
@@ -90,13 +95,13 @@ function AttrList({
 }
 
 AttrList.propTypes = {
-  onPageChange: PropTypes.func,
+  additem: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
-  dataSource: PropTypes.array,
-  loading: PropTypes.any,
-  total: PropTypes.any,
-  current: PropTypes.any,
+  dataSources: PropTypes.array,
+  details: PropTypes.object,
+  loadings: PropTypes.bool,
+  spinloading:PropTypes.bool,
 };
 
 export default AttrList;

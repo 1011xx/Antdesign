@@ -8,7 +8,7 @@ import AttrEtcList from '../../components/AttrList/attretclist';
 
 function MainAttrList({dispatch,attributeClass}){
 
-	const {title,dataSource,loading}=attributeClass;
+	const {spinloading,title,dataSource,loading}=attributeClass;
 	
   const attrListProps = {
     title,
@@ -18,10 +18,13 @@ function MainAttrList({dispatch,attributeClass}){
       console.log(title);
       console.log(item);
      
- 
-      // dispatch({
-      //   type: 'attrlist/showEditModal',
-      // });
+
+      dispatch({
+        type: 'attributeClass/publicDate',
+        payload:{
+          spinloading:true
+        }
+      });
       // console.log(modalVisible);
     },
     

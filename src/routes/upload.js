@@ -1,60 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Upload, Icon, Modal } from 'antd';
-import styles from './upload.less';
+// import { Upload, Icon, Modal } from 'antd';
+// import styles from './upload.less';
 
+import { Transfer } from 'antd';
 
+const Test = React.createClass({
+  getInitialState() {
+    return {
+      mockData: [],
+      targetKeys: [],
+    };
+  },
+  componentDidMount() {
+    this.getMock();
+  },
 
-class Test extends React.Component {
-  state = {
-    previewVisible: false,
-    previewImage: '',
-    fileList: [{
-      uid: -1,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },{
-      uid: -2,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }],
-  };
-
-  handleCancel = () => this.setState({ previewVisible: false })
-
-  handlePreview = (file) => {
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
-
-  handleChange = ({ fileList }) => this.setState({ fileList })
-
+  getMock() {
+    const targetKeys = [];
+    const mockData = [];
+    for (let i = 0; i < 20; i++) {
+      const data = {
+        key: i.toString(),
+        title: `${i + 100}`,
+        description: `蓝色${i + 1}`,
+      
+      };
+      if (data.chosen) {
+        targetKeys.push(data.key);
+      }
+      mockData.push(data);
+    }
+    this.setState({ mockData, targetKeys });
+  },
+  filterOption(inputValue, option) {
+    return option.description.indexOf(inputValue) > -1;
+  },
+  handleChange(targetKeys) {
+    console.log(targetKeys);
+    this.setState({ targetKeys });
+  },
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
     return (
-      <div className="clearfix">
-        <Upload
-          action="/upload.do"
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={this.handlePreview}
-          onChange={this.handleChange}
-        >
-          {fileList.length >= 3 ? null : uploadButton}
-        </Upload>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal>
-      </div>
+      <Transfer
+        dataSource={this.state.mockData}
+        showSearch
+        filterOption={this.filterOption}
+        targetKeys={this.state.targetKeys}
+        onChange={this.handleChange}
+       
+        render={item => `${item.title}--${item.description}`}
+      />
     );
-  }
-}
+  },
+});
 
 
 export default Test;

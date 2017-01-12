@@ -70,7 +70,6 @@ export default {
              let queryobj={};
              let strs = str.split("/"); 
              strs.shift(); 
-             console.log(strs);
              switch(strs[1]){
                 case 'styleattr':
                  dispatch({

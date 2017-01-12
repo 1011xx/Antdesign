@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import {  Form, Input,Modal,Col} from 'antd';
-// import styles from './plate.less';
+import {  Form, Input,Modal,Col,Row} from 'antd';
+import styles from './attrmodel.less';
 const FormItem = Form.Item;
 
 const AttrModel = ({
@@ -36,11 +36,12 @@ function handleOk() {
           onCancel={handleCancel}
           closable={false}
         >
-        <Form  horizontal style={{ width: 240 ,margin:'0 auto'}}>
+        <Form  inline style={{ width: 244 ,margin:'0 auto'}}>
+        <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
         <FormItem
           label="属性代码："
           hasFeedback
-
+          className={styles.formitem}
         >
           {getFieldDecorator('code', {
            initialValue:item.code,
@@ -51,13 +52,15 @@ function handleOk() {
             <Input type="text" />
           )}
         </FormItem>
+        </Row>
+
+        <Row style={{'textAlign':'right'}}>
         <FormItem
           label="属性描述："
           hasFeedback
-         
         >
-          {getFieldDecorator('exp', {
-   			initialValue:item.expattr,
+          {getFieldDecorator('name', {
+           initialValue:item.name,
             rules: [
               { required: true, message: '属性描述未填写' },
             ],
@@ -65,9 +68,8 @@ function handleOk() {
             <Input type="text" />
           )}
         </FormItem>
-        
+         </Row>
       </Form>
-
         </Modal>
      
 			

@@ -137,9 +137,49 @@ export async function queryAttributeClass(params) {
     body: qs.stringify(params),
   });
 }
-//更具属性类的ID获取属性的数据
+//更据属性类的ID获取属性的数据
 export async function queryAttributeByAttributeClassId(params) {
   return request(`${ipaddress}/fmss/attributeController/queryAttributeByAttributeClassId`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取属性类名称：品牌代码长度：顺序号：
+export async function queryAttributeClassById(params) {
+  return request(`${ipaddress}/fmss/attributeController/queryAttributeClassById`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//修改属性类
+export async function updateAttribute(params) {
+  return request(`${ipaddress}/fmss/attributeController/updateAttribute`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//新增属性类
+export async function newAttribute(params) {
+  return request(`${ipaddress}/fmss/attributeController/newAttribute`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//删除属性类
+export async function removeAttribute(params) {
+  return request(`${ipaddress}/fmss/attributeController/removeAttribute`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
