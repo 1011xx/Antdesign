@@ -4,6 +4,8 @@ import styles from './sizeItemmodel.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+
+
 const ItemModel = ({
 	title,
 	visible,
@@ -24,9 +26,10 @@ function handleOk() {
       const data = { ...getFieldsValue() };
       onOk(data);
     });
-
   }
-
+ function genoption(){
+  console.log(111111111111111);
+ }
 
 
 	return(
@@ -94,6 +97,7 @@ function handleOk() {
                 <Option value="lucy1">Lucy1</Option>
                 <Option value="jack2">Jack2</Option>
                 <Option value="lucy2">Lucy2</Option>
+                {genoption()}
               </Select>
           )}
         </FormItem>

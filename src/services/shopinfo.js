@@ -1,12 +1,14 @@
 import request from '../utils/request';
 import qs from 'qs';
 
+// const ipaddress="http://192.168.10.146:5001";
 const ipaddress="";
 
 // 获取省和市
 export async function queryProvicneAndCity(params) {
   return request(`${ipaddress}/fmss/shopController/queryProvicneAndCity`, {
     method: 'post',
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -14,6 +16,7 @@ export async function queryProvicneAndCity(params) {
 export async function querySaleArea(params) {
   return request(`${ipaddress}/fmss/shopController/querySaleArea`, {
     method: 'post',
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -21,6 +24,7 @@ export async function querySaleArea(params) {
 export async function queryShopStatus(params) {
   return request(`${ipaddress}/fmss/shopController/queryShopStatus`, {
     method: 'post',
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -28,6 +32,7 @@ export async function queryShopStatus(params) {
 export async function queryShopType(params) {
   return request(`${ipaddress}/fmss/shopController/queryShopType`, {
     method: 'post',
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -38,6 +43,7 @@ export async function queryShop(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
   	},
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -45,6 +51,7 @@ export async function queryShop(params) {
 export async function addShop(params) {
   return request(`${ipaddress}/fmss/shopController/newShop`, {
     method: 'post',
+    mode:'no-cors',
     body: params,
   });
 }
@@ -52,6 +59,7 @@ export async function addShop(params) {
 export async function updateShop(params) {
   return request(`${ipaddress}/fmss/shopController/updateShop`, {
     method: 'post',
+    mode:'no-cors',
     body: params,
   });
 }
@@ -62,6 +70,7 @@ export async function queryShopInfo(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }

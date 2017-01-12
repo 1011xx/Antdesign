@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
+import Searchinfo from '../../components/ModelNumber/Searchinfo';
 
-function Moudelnumber(props) {
+function Moudelnumber({dispatch,moudelnum}) {
+	const {}=moudelnum;
   return (
     <Wrap
-    num="1"
+     num="1"
 	 last="款号维护"
-
 	 >
-		  
-		 
-		   </Wrap>
+		  <Searchinfo/>
+	</Wrap>
 
   );
 }
 
-function mapStateToProps(state) {
-  return {};
+function mapStateToProps({moudelnum}) {
+  return {moudelnum};
 }
 
 export default connect(mapStateToProps)(Moudelnumber);

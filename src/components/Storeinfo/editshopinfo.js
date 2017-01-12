@@ -135,7 +135,6 @@ if(editloading){
 return (
       
         <div>
-        {console.log(item)}
         	 <Form 
             inline
             className={styles.ant_advanced_search_form}

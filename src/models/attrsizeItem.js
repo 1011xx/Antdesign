@@ -22,7 +22,7 @@ export default {
         	// tempobj.start=currentpage;
         	// tempobj.rows=pagesize;
         	let tempobj={};
-        	tempobj.start=1;
+        	tempobj.page=1;
         	tempobj.rows=10;
         	let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});

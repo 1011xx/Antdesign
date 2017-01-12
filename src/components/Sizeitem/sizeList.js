@@ -79,7 +79,7 @@ function SizeList({
 				<Table size="small"
          className={styles.table}
 		        columns={columns}
-		        dataSource={data}
+		        dataSource={dataSource}
 		        pagination={false}
 		        bordered
 		      />

@@ -155,6 +155,7 @@ function ShopList({
             </div>
 				<Table
             size="small"
+            className={styles.table}
 		        columns={columns}
 		        dataSource={dataSource}
 		        pagination={false}

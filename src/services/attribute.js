@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import qs from 'qs';
 
-// const ipaddress="http://dz14571854.imwork.net:23196";
+// const ipaddress="http://192.168.10.146:5001";
 const ipaddress="";
 
 // 获取颜色
@@ -11,6 +11,7 @@ export async function queryColor(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -21,6 +22,7 @@ export async function newColor(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
   	},
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -31,6 +33,7 @@ export async function updateColor(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -41,6 +44,7 @@ export async function removeColor(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -52,6 +56,7 @@ export async function querySize(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -62,6 +67,7 @@ export async function newSize(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -72,6 +78,7 @@ export async function updateSize(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });Size
 }
@@ -82,10 +89,12 @@ export async function removeSize(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
 //尺寸组接口
+//
 // 获取尺寸组
 export async function queryAllSizeGroup(params) {
   return request(`${ipaddress}/fmss/sizeGroupController/queryAllSizeGroup`, {
@@ -93,6 +102,7 @@ export async function queryAllSizeGroup(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -103,6 +113,7 @@ export async function newSizeGroup(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -113,6 +124,7 @@ export async function updateSizeGroup(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });Size
 }
@@ -123,6 +135,7 @@ export async function removeSizeGroup(params) {
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -134,6 +147,7 @@ export async function queryAttributeClass(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -144,6 +158,7 @@ export async function queryAttributeByAttributeClassId(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -154,6 +169,7 @@ export async function queryAttributeClassById(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -164,6 +180,7 @@ export async function updateAttribute(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
@@ -174,12 +191,55 @@ export async function newAttribute(params) {
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
     },
+    mode:'no-cors',
     body: qs.stringify(params),
   });
 }
 //删除属性类
 export async function removeAttribute(params) {
   return request(`${ipaddress}/fmss/attributeController/removeAttribute`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    mode:'no-cors',
+    body: qs.stringify(params),
+  });
+}
+//款号维护接口
+//获取款号类别属性
+export async function queryStyleCategoryProperty(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleCategoryProperty`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取款号年份属性
+export async function queryStyleYearProperty(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleYearProperty`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取款号第一页列表
+export async function queryStyle(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyle`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//删除款号
+export async function deleteStyleById(params) {
+  return request(`${ipaddress}/fmss/styleController/deleteStyleById`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"

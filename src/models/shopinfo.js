@@ -185,6 +185,7 @@ export default {
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
           if(resultinfo.data){
+            console.log(resultinfo.data);
               if(resultinfo.data.shopInfo.images){
             let imagearr=JSON.parse(resultinfo.data.shopInfo.images);
             // console.log('imageobj',imagearr);
@@ -192,6 +193,7 @@ export default {
             for(let i=0;i<imagearr.length;i++){
               imagearr[i].uid=-i;
               imagearr[i].url='/proxyDir/fmss'+imagearr[i].imageDirectory;
+              // imagearr[i].url='http://'+location.host+'/fmss'+imagearr[i].imageDirectory;
             }
             //将组装后的json赋值给updateFileList；
                yield put({
@@ -208,8 +210,6 @@ export default {
               currentItem:resultinfo.data.shopInfo,
               detailItem:resultinfo.data.shopInfo,
               editloading:false,
-
-
             }
         });
       }
@@ -315,6 +315,7 @@ export default {
           queryobj.id=strs[2];
           let querystr=JSON.stringify(queryobj);
           if(strs[1]==='shopdetail'){
+            
             //当进入shopdetail页面时候要执行的请求
              dispatch({
               type: 'queryinfo',
@@ -322,13 +323,21 @@ export default {
             });
              //详情页是不需要请求下拉框数据源的
           }else if(strs[1]==='shopedit'){
+             dispatch({type: 'publicdate',
+                      payload:{
+                     behavier:'update'
+                    }
+                  });
+          
+            
+            //请求下拉框数据源
+              dispatch({type: 'enteraddpage'});
              //当进入shopedit页面时候要执行的请求
              dispatch({
               type: 'queryinfo',
               payload:querystr
             });
-             //请求下拉框数据源
-              dispatch({type: 'enteraddpage'});
+             
           }
         }
   		 });
