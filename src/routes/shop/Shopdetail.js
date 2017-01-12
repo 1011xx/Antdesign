@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import {  Icon, Button, Row, Col } from 'antd';
-import Plate from '../../components/plate/plate';
+import Plate from '../../commonComponents/plate/plate';
 import styles from './Shopdetail.less';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 
 function Shopdetail({shopinfo}) {
   const { detailItem }=shopinfo;
@@ -30,8 +30,11 @@ function Shopdetail({shopinfo}) {
   };
   return (
     <Wrap
+       num="2"
+       url="/shopinfo"
        last="店仓维护"
        next="查看详情"
+       
        >
 
         <Plate title="基本信息">

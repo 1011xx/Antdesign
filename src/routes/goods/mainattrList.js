@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import AttrEtcList from '../../components/AttrList/attretclist';
 
 //服装属性/款号属性维护
 
 function MainAttrList({dispatch,attributeClass}){
 
-	const {spinloading,title,dataSource,loading}=attributeClass;
+	const {name,spinloading,title,dataSource,loading}=attributeClass;
 	
   const attrListProps = {
     title,
@@ -22,7 +22,8 @@ function MainAttrList({dispatch,attributeClass}){
       dispatch({
         type: 'attributeClass/publicDate',
         payload:{
-          spinloading:true
+          spinloading:true,
+          name:item.name
         }
       });
       // console.log(modalVisible);
@@ -35,8 +36,8 @@ function MainAttrList({dispatch,attributeClass}){
 
 	return(
 		<Wrap
-		   last="服装属性"
-		   next="款号属性维护"
+       num="1"
+		   last="属性维护"
 		   >
 		  
 		  <AttrEtcList {...attrListProps}/>

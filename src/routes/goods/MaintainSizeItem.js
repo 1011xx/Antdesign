@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import SizeList from '../../components/Sizeitem/sizeList';
 import ItemModel from '../../components/Sizeitem/sizeItemmodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
@@ -151,8 +151,8 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
 
 	return(
 		<Wrap
-		   last="服装属性"
-		   next="维护尺寸组"
+      num="1"
+      last="尺寸组维护"
 		   >
 		  
 		  <SizeList {...itemListProps}/>

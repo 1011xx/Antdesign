@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Spin,Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
-import Plate from '../plate/plate';
+import Plate from '../../commonComponents/plate/plate';
 import moment from 'moment';
 import styles from './addshopinfo.less';
 const FormItem = Form.Item;
@@ -135,6 +135,7 @@ if(editloading){
 return (
       
         <div>
+        {console.log(item)}
         	 <Form 
             inline
             className={styles.ant_advanced_search_form}

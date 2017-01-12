@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import {  Spin ,message} from 'antd';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import AddShopinfo from '../../components/Storeinfo/addshopinfo';
 // let num=86;
@@ -34,7 +34,6 @@ const {   previewVisible,
 		  region,
 		  types,
 		  currentItem,
-		  modalType,
 		  behavier,
 		  saving,
 		  
@@ -45,8 +44,7 @@ const {   previewVisible,
 		 options,
 		  region,
 		  types,
-		  behavier,
-		  item:modalType==='create'?{}:currentItem,
+		  item:behavier==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
 		// data.fullName=num++;
@@ -213,8 +211,11 @@ const {   previewVisible,
 	<Spin size="large" tip="保存信息中,请稍后..." spinning={saving}>
 		
 		<Wrap
+		   num="2"
+		   url="/shopinfo"
 		   last="店仓维护"
 		   next="新增店仓"
+
 		   >
 		  
 		  <AddShopinfo {...addInfoProps}>

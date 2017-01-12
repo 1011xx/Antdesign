@@ -1,4 +1,5 @@
 import { queryAllSizeGroup,newSizeGroup,updateSizeGroup,removeSizeGroup } from '../services/attribute';
+import {message} from 'antd';
 export default {
     namespace: 'attrsizeItem',
     state: {
@@ -65,6 +66,7 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
+              message.success(data.msg); 
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
@@ -73,7 +75,14 @@ export default {
                 //方案二：再次请求数据
                  yield put({type:'enter'});
 
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}}); 
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
             }
+        
         },
         *edit({ payload }, { call, put,select }){
             const id = yield select(({ attrsizeItem }) => attrsizeItem.currentItem.id);
@@ -82,10 +91,18 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
+              message.success(data.msg); 
                 console.log(data);
                  //方案二：再次请求数据
                  yield put({type:'enter'});
-            } 
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}}); 
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
+            }
+         
         },
         *delete({ payload }, { call, put,select }){
             console.log('payload:'+payload);
@@ -94,10 +111,18 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
+              message.success(data.msg); 
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'enter'});
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}}); 
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
             }
+        
         }
     },
     reducers: {

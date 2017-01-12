@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
 import {Link} from 'dva/router';
-import Nobtlplate from '../plate/nobtlplate';
+import Nobtlplate from '../../commonComponents/plate/nobtlplate';
 import styles from './attrlist.less';
 //服装属性/款号属性维护/品牌
 

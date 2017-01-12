@@ -63,6 +63,16 @@ export default {
                     payload: '5',
                   });
           break; 
+           case '/modelnumber':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+          break; 
         }
 
 //针对浏览器地址栏里面有ID的页面进行处理,使得对应的页面使得相应的导航栏显示高亮

@@ -94,7 +94,9 @@ const Header=({
           <Menu.Item key="5">
            <Link to="/maintainsizeitem">尺寸组维护</Link>
            </Menu.Item>
-          <Menu.Item key="6">款号维护</Menu.Item>
+          <Menu.Item key="6">
+          <Link to="/modelnumber">款号维护</Link>
+          </Menu.Item>
 
           {/*<SubMenu key="sub3" title="Submenu">
                       <Menu.Item key="7">Option 7</Menu.Item>ss

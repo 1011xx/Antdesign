@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon, Spin } from 'antd';
 import {Link} from 'dva/router';
-import Plate from '../plate/plate';
-import TablePlate from '../plate/tableplate';
+import Plate from '../../commonComponents/plate/plate';
+import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './attrlist.less';
 //服装属性/属性维护/品牌等
 

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrapthree from '../../components/wrap/wrapthree';
+import Wrap from '../../commonComponents/wrap/wrap';
 // import Queryinfo from '../components/Storeinfo/Search';
 import AttrList from '../../components/AttrList/attrlist';
 import AttrModel from '../../components/AttrList/attrmodel';
@@ -12,7 +12,7 @@ var locationid=null;
 var deleteid=null;
 function StyleAttr({dispatch,attributeClass}){
 
-	const {spinloading,total,current,defaultPageSize,visibleSure,details,title,dataSources,loadings,modalVisible,modalType,currentItem}=attributeClass;
+	const {name,spinloading,total,current,defaultPageSize,visibleSure,details,title,dataSources,loadings,modalVisible,modalType,currentItem}=attributeClass;
 	
 	const attrModalProps = {
 
@@ -176,17 +176,18 @@ function StyleAttr({dispatch,attributeClass}){
 
 
 	return(
-		<Wrapthree
-		   last="服装属性"
-		   next="款号属性维护"
-		   afternext="品牌"
+		<Wrap
+       num="2"
+       url="/mainattrlist"
+       last="属性维护"
+		   next={`编辑${name}`}
 		   >
 		  
 		  <AttrList {...attrListProps}/>
       <Paginations {...pageProps}/>
 		  <UserModalGen />
       <SureModel {...sureModalProps}/>
-	  </Wrapthree>
+	  </Wrap>
 
 		);
 }

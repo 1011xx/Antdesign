@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
 import {Link} from 'dva/router';
-import TablePlate from '../plate/tableplate';
+import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './shopList.less';
 
 function ShopList({

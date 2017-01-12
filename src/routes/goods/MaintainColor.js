@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import ColorList from '../../components/Color/colorList';
 import AttrModel from '../../components/Color/colormodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
@@ -150,8 +150,8 @@ function MaintainColor({dispatch,attrlist}){
 
 	return(
 		<Wrap
-		   last="服装属性"
-		   next="维护颜色"
+       num="1"
+		   last="颜色维护"
 		   >
 		  
 		  <ColorList {...colorListProps}/>

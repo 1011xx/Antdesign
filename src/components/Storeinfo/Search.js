@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Form, Icon, Input, Button, Select,Cascader,Row,Col } from 'antd';
-import Plate from '../plate/plate';
+import Plate from '../../commonComponents/plate/plate';
 import styles from './Search.less';
 const FormItem = Form.Item;
 const Option = Select.Option;

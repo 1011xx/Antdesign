@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux,browserHistory,History    } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
 
@@ -26,7 +26,7 @@ var fullName='';
 // };
 
 function Shopinfo({dispatch,shopinfo}){
-	const {current,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {behavier,current,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -117,7 +117,7 @@ function Shopinfo({dispatch,shopinfo}){
 				temp.id=record.id;
 				let obj=JSON.stringify(temp);
 			// console.log(parseArray(record.typeCode));
-
+			// console.info('当点击修改的时候-behavier：',behavier);
 			 dispatch({
 		        type: 'shopinfo/publicdate',
 		        payload:{
@@ -209,18 +209,21 @@ function Shopinfo({dispatch,shopinfo}){
             });
 		},
 		gotoclick(){
+			//点击新增后的事件
+			// console.info('当点击新增的时候-behavier：',behavier);
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
-		        	modalType:'create'
+		        	behavier:'create'
 		        }
 		      });
 		}
 	};
 	return(
 		<Wrap
+		   num="1"
 		   last="店仓维护"
-		   next="店仓信息"
+		   
 		   >
 		  <Queryinfo {...queryProps}/>
 		  <ShopList {...listProps}></ShopList>

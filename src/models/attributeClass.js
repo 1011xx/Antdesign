@@ -1,4 +1,5 @@
 import {updateAttribute,newAttribute,removeAttribute,queryAttributeClass,queryAttributeByAttributeClassId,queryAttributeClassById } from '../services/attribute';
+import {message} from 'antd';
 export default {
   //颜色属性维护
     namespace: 'attributeClass',
@@ -16,7 +17,7 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
-
+      name:'',
 
 
 
@@ -40,7 +41,7 @@ export default {
                     });
             }
         },
-        //重新请求整个页面的数据
+        //重新请求/mainattrlist/styleattr整个页面的数据
         *enterstyleattr({ payload }, { call, put }){
             let quest1={};
             let quest2={};
@@ -68,7 +69,8 @@ export default {
                 yield put({type:'publicDate',
                       payload:{
                         details:attrdetails.data.data,
-                        spinloading:false
+                        spinloading:false,
+                        name:attrdetails.data.data.name
                       }
                     });
             }
@@ -137,11 +139,17 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
+               message.success(data.msg); 
                 //再次请求数据
                  yield put({
                   type:'queryAttributeClassId'
                 });
-
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loadings:false}}); 
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loadings:false}});
             }
         },
         //修改数据
@@ -152,9 +160,16 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateAttribute,{jsonParam:strarr});
             if(data.code=="0"){
+               message.success(data.msg); 
                 console.log(data);
-                 //方案二：再次请求数据
+                 //再次请求数据
                  yield put({type:'queryAttributeClassId'});
+            }else if(data.code=="4"){
+                message.error(data.msg); 
+                yield put({type:'publicDate',payload:{loadings:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loadings:false}});
             } 
         },
         *delete({ payload }, { call, put,select }){
@@ -164,10 +179,17 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeAttribute,{jsonParam:strarr});
             if(data.code=="0"){
+               message.success(data.msg); 
                 console.log(data);
                 //再次请求数据
                 yield put({type:'queryAttributeClassId'});
-            }
+            }else if(data.code=="4"){
+                message.error(data.msg); 
+                yield put({type:'publicDate',payload:{loadings:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loadings:false}});
+            } 
         }
     },
     reducers: {
@@ -245,7 +267,7 @@ export default {
                   //   type: 'enterstyleattr',
                   //   payload:querystr
                   // });
-                  console.log('当进入styleattr页面时候要执行的请求,feifei is writing...');
+                  // console.log('当进入styleattr页面时候要执行的请求,feifei is writing...');
                    //详情页是不需要请求下拉框数据源的
                 }
            }

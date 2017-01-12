@@ -31,6 +31,12 @@ import Shopdetail from "./routes/shop/Shopdetail.js";
 
 
 
+import Moudelnumber from "./routes/goods/Moudelnumber.js";
+
+
+
+
+
 const handleEnter=({params})=>{
 	// console.log(params);
 }
@@ -54,10 +60,11 @@ export default function({ history }) {
        <Route path="/maintaincolor" component={MaintainColor} />
        <Route path="/maintainsize" component={MaintainSize} />
        <Route path="/maintainsizeitem" component={MaintainSizeItem} />
+       <Route path="/modelnumber" component={Moudelnumber} />
        <Route path="/upload" component={Text} />
        </Route>
       <Route path="/login" component={Login} />
-      
+      <Route path="/Moudelnumber" component={Moudelnumber} />
     </Router>
   );
 }

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import {  Spin ,message} from 'antd';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import EditShopinfo from '../../components/Storeinfo/editshopinfo';
 
@@ -33,7 +33,6 @@ const {   previewVisible,
 		  region,
 		  types,
 		  currentItem,
-		  modalType,
 		  behavier,
 		  updating,
 		  deleteImg,
@@ -48,7 +47,7 @@ const {   previewVisible,
 		  behavier,
 		  deleteImg,
 		  editloading,
-		  item:modalType==='create'?{}:currentItem,
+		  item:behavier==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
 		// data.fullName=num++;
@@ -177,11 +176,17 @@ const {   previewVisible,
 		}
 	};
 
+	
+
 	return(
+
 	<Spin size="large" tip="修改信息中，请稍后..." spinning={updating}>
 		<Wrap
+		   num="2"
+		   url="/shopinfo"
 		   last="店仓维护"
 		   next="修改店仓"
+		   
 		   >
 		  
 		  <EditShopinfo {...editInfoProps}>

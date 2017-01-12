@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table, Popconfirm, Pagination,Icon } from 'antd';
-import TablePlate from '../plate/tableplate';
+import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './sizeList.less';
 //服装属性/尺寸维护
 

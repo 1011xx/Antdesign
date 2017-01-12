@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import Wrap from '../../components/wrap/wrap';
+import Wrap from '../../commonComponents/wrap/wrap';
 import SizeList from '../../components/Size/sizeList';
 import SizeModel from '../../components/Size/sizemodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
@@ -149,8 +149,8 @@ const sureModalProps = {
 
 	return(
 		<Wrap
-		   last="服装属性"
-		   next="维护尺寸"
+       num="1"
+		   last="尺寸维护"
 		   >
 		  
 		  <SizeList {...sizeListProps}/>
