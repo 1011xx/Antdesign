@@ -28,7 +28,7 @@ export default {
         	let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
             const sizeList= yield call(querySizeList);
-            
+
             if(data){
               //将数据源改变成
              let long=data.dataList.length;
@@ -63,7 +63,7 @@ export default {
           tempobj.rows=10;
           let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
-            
+
             if(data){
                let long=data.dataList.length;
              for(let i=0;i<long;i++){
@@ -82,7 +82,7 @@ export default {
                       }
                     });
             }
-        
+
         },
         *querypage({ payload }, { call, put,select }){
           const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
@@ -91,9 +91,14 @@ export default {
             console.log(strarr)
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
             if(data){
+              let long=data.dataList.length;
+              for(let i=0;i<long;i++){
+               let tempsizes=data.dataList[i].sizes.split(",").join(" ");
+               data.dataList[i].sizes=tempsizes;
+              }
             console.log(data);
              // 开始添加页面序号
-                 let long=data.dataList.length;
+
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
@@ -109,9 +114,7 @@ export default {
                       payload:{
                         dataSource:data.dataList,
                         total:data.total,
-                        loading:false,
-                        current:1,
-                        defaultPageSize:10
+                        loading:false
                       }
                     });
             }
@@ -124,7 +127,7 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-              message.success(data.msg); 
+              message.success(data.msg);
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
@@ -132,15 +135,22 @@ export default {
                     // console.log(tabledata);
                 //方案二：再次请求数据
                  yield put({type:'gettablelist'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
 
             }else if(data.code=="4"){
                 message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
+                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loading:false}});
             }
-        
+
         },
         *edit({ payload }, { call, put,select }){
             const id = yield select(({ attrsizeItem }) => attrsizeItem.currentItem.id);
@@ -149,18 +159,25 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
-              message.success(data.msg); 
+              message.success(data.msg);
                 console.log(data);
                  //方案二：再次请求数据
                  yield put({type:'gettablelist'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
+                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loading:false}});
             }
-         
+
         },
         *delete({ payload }, { call, put,select }){
             console.log('payload:'+payload);
@@ -169,18 +186,25 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
-              message.success(data.msg); 
+              message.success(data.msg);
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'gettablelist'});
+                 //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
+                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loading:false}});
             }
-        
+
         }
     },
     reducers: {

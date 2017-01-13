@@ -6,10 +6,8 @@ const FormItem = Form.Item;
 
 
 const Searchinfo = ({
-  options,
-  region,
-  status,
-  types,
+  styleCategory,
+  styleYear,
   passdata,
   selectCategory,
   selectRegion,
@@ -32,18 +30,12 @@ function handleSearch(){
         });
 }
 
-// function test(){
-
-//  var emails = region.map(function (item) { return item.label; });
-
-//  console.log(emails.join(", ")); // zhang@email.com, jiang@email.com, li@email.com
-// }
 
 return (
         <div>
 
         <Plate title="查询信息">
-            <Form 
+            <Form
             inline
             className={styles.ant_advanced_search_form}
             >
@@ -52,8 +44,8 @@ return (
             <FormItem
             label="款号"
             >
-              {getFieldDecorator('shopname', {
-               
+              {getFieldDecorator('styleCode', {
+
               })(
                 <Input size="large" placeholder="请输入" />
               )}
@@ -63,12 +55,15 @@ return (
             <FormItem
             label="类别"
             >
-             <Cascader 
-              options={types} 
-              onChange={selectCategory} 
-              placeholder="请选择类别" 
-              />
+            {getFieldDecorator('categoryCode', {
 
+            })(
+             <Cascader
+              options={styleCategory}
+              onChange={selectCategory}
+              placeholder="请选择类别"
+              />
+            )}
             </FormItem>
            </Col>
            <Col  span={6} className={styles.ant_col_center}>
@@ -76,11 +71,15 @@ return (
              <FormItem
             label="年份"
             >
-            <Cascader 
-              options={region} 
-              onChange={selectRegion} 
-              placeholder="请选择销售区域" 
+            {getFieldDecorator('yearCode', {
+
+            })(
+            <Cascader
+              options={styleYear}
+              onChange={selectRegion}
+              placeholder="请选择销售区域"
               />
+            )}
             </FormItem>
             </Col>
              <Col  span={6} className={styles.ant_col_center}>
@@ -89,16 +88,16 @@ return (
             </FormItem>
             </Col>
             </Row>
-       
-                    
+
+
           </Form>
         </Plate>
 
-        
 
- 
+
+
         </div>
-       
+
   );
 };
 
@@ -109,8 +108,8 @@ Searchinfo.propTypes = {
   selectRegion: PropTypes.func,
   selectCity: PropTypes.func,
   selectShopststus: PropTypes.func,
-  options:PropTypes.array,
-  region:PropTypes.array,
+  styleCategory:PropTypes.array,
+  styleYear:PropTypes.array,
 
 };
 

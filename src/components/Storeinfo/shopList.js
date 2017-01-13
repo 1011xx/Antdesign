@@ -5,8 +5,8 @@ import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './shopList.less';
 
 function ShopList({
-  total, 
-  current, 
+  total,
+  current,
   loading,
   dataSource,
   defaultPageSize,
@@ -37,8 +37,8 @@ function ShopList({
     key: 'shortName',
   }, {
     title: '类别',
-    dataIndex: 'class',
-    key: 'class',
+    dataIndex: 'typeName',
+    key: 'typeName',
   },{
     title: '销售区域',
     dataIndex: 'saleAreaName',
@@ -49,7 +49,7 @@ function ShopList({
     key: 'cityName',
   },
   {
-    title: '仓店电话',
+    title: '店仓电话',
     dataIndex: 'mobileNumber',
     key: 'mobileNumber',
   },{
@@ -71,11 +71,11 @@ function ShopList({
     render: (text, record) => (
       <p>
          <Link to={`/shopinfo/shopedit/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
-        &nbsp; &nbsp; &nbsp; 
+        &nbsp; &nbsp; &nbsp;
         <Link to={`/shopinfo/shopdetail/${record.id}`}><span onClick={() => onEditDetail(record)}>查看</span></Link>
-         &nbsp; &nbsp; &nbsp; 
+         &nbsp; &nbsp; &nbsp;
         <a>人员</a>
-        
+
       </p>
     ),
   }];
@@ -163,16 +163,16 @@ function ShopList({
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>
-           <Pagination  
+           <Pagination
              className={styles.pagination}
              size="small"
-             total={total} 
+             total={total}
              current={current}
              defaultPageSize={defaultPageSize}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
-             showQuickJumper 
-             showSizeChanger 
+             showQuickJumper
+             showSizeChanger
            />
            </div>
     </TablePlate>

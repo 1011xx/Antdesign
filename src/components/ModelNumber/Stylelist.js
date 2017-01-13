@@ -4,25 +4,28 @@ import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './Stylelist.less';
 
 function Stylelist({
-  onDeleteItem,
+  onConfig,
   onEditItem,
+  onDeleteItem,
+  onDetails,
+  onBarcode,
   additem,
   dataSource,
   loading
 	}) {
- 
+
   const columns = [{
     title: '序号',
     dataIndex: 'num',
     key: 'num',
   }, {
     title: '款号',
-    dataIndex: 'styleCode',
-    key: 'styleCode',
+    dataIndex: 'code',
+    key: 'code',
   }, {
     title: '品名',
-    dataIndex: 'styleName',
-    key: 'styleName',
+    dataIndex: 'name',
+    key: 'name',
   }, {
     title: '品牌',
     dataIndex: 'brandName',
@@ -37,56 +40,56 @@ function Stylelist({
     key: 'seasonName',
   }, {
     title: '序号',
-    dataIndex: 'colorode',
-    key: 'colorode',
+    dataIndex: 'seriesName',
+    key: 'seriesName',
   }, {
     title: '类别',
-    dataIndex: 'clorCode',
-    key: 'clorCode',
+    dataIndex: 'categoryName',
+    key: 'categoryName',
   }, {
     title: '是否唯一码管理',
-    dataIndex: 'colorCode',
-    key: 'colorCode',
+    dataIndex: 'isUniqCodemanagementName',
+    key: 'isUniqCodemanagementName',
   },{
     title: '操作',
     key: 'operation',
     render: (text, record) => (
       <p>
-        <a onClick={() => onEditItem(record)}>修改</a>
+        <a  onClick={() => onEditItem(record)}>修改</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a onClick={() => onDeleteItem(record)}>配置</a>
+        <a  onClick={() => onConfig(record)}>配置</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a onClick={() => onDeleteItem(record)}>删除</a>
+        <a  onClick={() => onDeleteItem(record)}>删除</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a onClick={() => onDeleteItem(record)}>查看</a>
+        <a onClick={() => onDetails(record)}>查看</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a onClick={() => onDeleteItem(record)}>条码</a>
+        <a  onClick={() => onBarcode(record)}>条码</a>
 
 
       </p>
     ),
   }];
-		  const data = [{
-		  num: '1',
-      id:'sddfdfdrtf',
-		  colorCode: '011',
-		  colorName: '黑色',
-		}, {
-		  num: '2',
-      id:'sddfdfdsdff',
-		  colorCode: '012',
-		  colorName: '黄色',
-		},{
-		  num: '3',
-      id:'sdsdfdfdfdf',
-		  colorCode: '013',
-		  colorName: '黑咖啡',
-		},{
-      num: '4',
-      id:'sddfdsdffdf',
-      colorCode: '014',
-      colorName: '白色',
-    }];
+		//   const data = [{
+		//   num: '1',
+    //   id:'sddfdfdrtf',
+		//   colorCode: '011',
+		//   colorName: '黑色',
+		// }, {
+		//   num: '2',
+    //   id:'sddfdfdsdff',
+		//   colorCode: '012',
+		//   colorName: '黄色',
+		// },{
+		//   num: '3',
+    //   id:'sdsdfdfdfdf',
+		//   colorCode: '013',
+		//   colorName: '黑咖啡',
+		// },{
+    //   num: '4',
+    //   id:'sddfdsdffdf',
+    //   colorCode: '014',
+    //   colorName: '白色',
+    // }];
 
   return (
 
@@ -97,14 +100,14 @@ function Stylelist({
 				<Table size="small"
          		className={styles.table}
 		        columns={columns}
-                loading={false}
-		        dataSource={data}
+            loading={false}
+		        dataSource={dataSource}
 		        pagination={false}
 		        bordered
 		      />
 
     </TablePlate>
-   
+
   );
 }
 

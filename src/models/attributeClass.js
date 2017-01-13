@@ -123,9 +123,8 @@ export default {
                       payload:{
                         dataSources:data.dataList,
                         total:data.total,
-                        loadings:false, 
-                        current:1,
-                        defaultPageSize:10
+                        loadings:false
+                        
                       }
                     });
             }
@@ -143,9 +142,14 @@ export default {
             if(data.code=="0"){
                message.success(data.msg); 
                 //再次请求数据
-                 yield put({
-                  type:'queryAttributeClassId'
-                });
+                 yield put({type:'queryAttributeClassId'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg);
                  yield put({type:'publicDate',payload:{loadings:false}}); 
@@ -166,6 +170,13 @@ export default {
                 console.log(data);
                  //再次请求数据
                  yield put({type:'queryAttributeClassId'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg); 
                 yield put({type:'publicDate',payload:{loadings:false}});
@@ -185,6 +196,13 @@ export default {
                 console.log(data);
                 //再次请求数据
                 yield put({type:'queryAttributeClassId'});
+                 //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg); 
                 yield put({type:'publicDate',payload:{loadings:false}});
