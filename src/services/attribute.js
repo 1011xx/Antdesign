@@ -218,8 +218,8 @@ export async function removeAttribute(params) {
 }
 //款号维护接口
 //获取款号类别属性
-export async function queryStyleCategoryProperty(params) {
-  return request(`${ipaddress}/fmss/styleController/queryStyleCategoryProperty`, {
+export async function queryStyleCategory(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleCategory`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
@@ -228,8 +228,8 @@ export async function queryStyleCategoryProperty(params) {
   });
 }
 //获取款号年份属性
-export async function queryStyleYearProperty(params) {
-  return request(`${ipaddress}/fmss/styleController/queryStyleYearProperty`, {
+export async function queryStyleYear(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleYear`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"

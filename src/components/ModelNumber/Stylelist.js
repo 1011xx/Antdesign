@@ -17,12 +17,12 @@ function Stylelist({
     key: 'num',
   }, {
     title: '款号',
-    dataIndex: 'styleCode',
-    key: 'styleCode',
+    dataIndex: 'code',
+    key: 'code',
   }, {
     title: '品名',
-    dataIndex: 'styleName',
-    key: 'styleName',
+    dataIndex: 'name',
+    key: 'name',
   }, {
     title: '品牌',
     dataIndex: 'brandName',
@@ -37,16 +37,16 @@ function Stylelist({
     key: 'seasonName',
   }, {
     title: '序号',
-    dataIndex: 'colorode',
-    key: 'colorode',
+    dataIndex: 'seriesName',
+    key: 'seriesName',
   }, {
     title: '类别',
-    dataIndex: 'clorCode',
-    key: 'clorCode',
+    dataIndex: 'categoryName',
+    key: 'categoryName',
   }, {
     title: '是否唯一码管理',
-    dataIndex: 'colorCode',
-    key: 'colorCode',
+    dataIndex: 'isUniqCodemanagementName',
+    key: 'isUniqCodemanagementName',
   },{
     title: '操作',
     key: 'operation',

@@ -1,25 +1,92 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { Table,Row,Col } from 'antd';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
-import Barcode from '../../components/ModelNumber/Barcode';
+import Plate from '../../commonComponents/plate/plate';
+import TablePlate from '../../commonComponents/plate/tableplate';
+import styles from './Barcode.less';
 
 
-function BarCode({dispatch,moudelnum}) {
-	const {}=moudelnum;
+function BarCode({moudelnum}) {
+   const {  dataSource,loading }=moudelnum;
+  	 const columns = [{
+    title: '序号',
+    dataIndex: 'num',
+    key: 'num',
+  }, {
+    title: '颜色',
+    dataIndex: 'colorCode',
+    key: 'colorCode',
+  }, {
+    title: '颜色名称',
+    dataIndex: 'colorName',
+    key: 'colorName',
+  }, {
+    title: '操作',
+     dataIndex: 'operation',
+    key: 'operation',
+  }];
+		  const data = [{
+		  num: '1',
+      id:'sddfdfdrtf',
+		  colorCode: '011',
+		  colorName: '黑色',
+      operation: '黑色',
+		}, {
+		  num: '2',
+      id:'sddfdfdsdff',
+		  colorCode: '012',
+		  colorName: '黄色',
+      operation: '黑色',
+		},{
+		  num: '3',
+      id:'sdsdfdfdfdf',
+		  colorCode: '013',
+		  colorName: '黑咖啡',
+      operation: '黑色',
+		},{
+      num: '4',
+      id:'sddfdsdffdf',
+      colorCode: '014',
+      colorName: '白色',
+      operation: '黑色',
+    }];
+
+
+
+ 
   return (
-    <Wrap
-     num="1"
-	 last="款号维护"
-	 >
-		  <Barcode />
+ 
+      <Wrap
+       num="2"
+       last="款号维护"
+       next="查看条码"
+       >
+     <Plate title="款号信息">
+     	款号：M160342K12322
+     </Plate>
+     <TablePlate title="条码列表">
+     <Table size="small"
+    className={styles.table}
+		 columns={columns}
+         loading={loading}
+		 dataSource={data}
+		 pagination={false}
+		 bordered
+		/>
 
-	</Wrap>
+    </TablePlate>
+ 
+ </Wrap>
 
   );
 }
 
-function mapStateToProps({moudelnum}) {
-  return {moudelnum};
+
+function mapStateToProps({ moudelnum }) {
+  return { moudelnum };
 }
 
 export default connect(mapStateToProps)(BarCode);
+
+

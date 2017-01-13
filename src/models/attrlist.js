@@ -62,9 +62,7 @@ export default {
                       payload:{
                         dataSource:data.dataList,
                         total:data.total,
-                        loading:false,
-                         current:1,
-                        defaultPageSize:10
+                        loading:false
                       }
                     });
             }
@@ -85,6 +83,13 @@ export default {
                     // console.log(tabledata);
                 //方案二：再次请求数据
                  yield put({type:'enter'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
 
             }else if(data.code=="4"){
                 message.error(data.msg);
@@ -105,6 +110,13 @@ export default {
                 console.log(data);
                  //方案二：再次请求数据
                  yield put({type:'enter'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg);
                  yield put({type:'publicDate',payload:{loading:false}}); 
@@ -124,6 +136,13 @@ export default {
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'enter'});
+                 //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
             }else if(data.code=="4"){
                 message.error(data.msg); 
                 yield put({type:'publicDate',payload:{loadings:false}});

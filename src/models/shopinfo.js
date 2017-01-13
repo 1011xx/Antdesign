@@ -209,9 +209,7 @@ export default {
             payload:{
               currentItem:resultinfo.data.shopInfo,
               detailItem:resultinfo.data.shopInfo,
-              editloading:false,
-               current:1,
-               defaultPageSize:10
+              editloading:false10
             }
         });
       }
