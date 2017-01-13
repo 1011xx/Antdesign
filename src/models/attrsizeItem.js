@@ -1,4 +1,4 @@
-import { queryAllSizeGroup,newSizeGroup,updateSizeGroup,removeSizeGroup } from '../services/attribute';
+import { querySizeList,queryAllSizeGroup,newSizeGroup,updateSizeGroup,removeSizeGroup } from '../services/attribute';
 import {message} from 'antd';
 export default {
     namespace: 'attrsizeItem',
@@ -8,6 +8,7 @@ export default {
       modalVisible:false,
       modalType: 'create',
       dataSource:[],
+      selectSource:[],
       visibleSure:false,
       loading:true,
       total:0,
@@ -26,7 +27,15 @@ export default {
         	tempobj.rows=10;
         	let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
+            const sizeList= yield call(querySizeList);
+            
             if(data){
+              //将数据源改变成
+             let long=data.dataList.length;
+             for(let i=0;i<long;i++){
+              let tempsizes=data.dataList[i].sizes.split(",").join(" ");
+              data.dataList[i].sizes=tempsizes;
+             }
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
@@ -39,12 +48,28 @@ export default {
                       }
                     });
             }
+            if(sizeList.data){
+              console.log(sizeList.data);
+               yield put({type:'publicDate',
+                      payload:{
+                        selectSource:sizeList.data.dataList,
+                      }
+                    });
+            }
         },
-        *querypage({ payload }, { call, put }){
-            let strarr=JSON.stringify(payload);
-            console.log(strarr)
+        *gettablelist({ payload }, { call, put, select }){
+          let tempobj={};
+          tempobj.page=1;
+          tempobj.rows=10;
+          let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
+            
             if(data){
+               let long=data.dataList.length;
+             for(let i=0;i<long;i++){
+              let tempsizes=data.dataList[i].sizes.split(",").join(" ");
+              data.dataList[i].sizes=tempsizes;
+             }
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
@@ -54,6 +79,39 @@ export default {
                         dataSource:data.dataList,
                         total:data.total,
                         loading:false
+                      }
+                    });
+            }
+        
+        },
+        *querypage({ payload }, { call, put,select }){
+          const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
+          const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
+            let strarr=JSON.stringify(payload);
+            console.log(strarr)
+            const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
+            if(data){
+            console.log(data);
+             // 开始添加页面序号
+                 let long=data.dataList.length;
+                  if(currentpage<2){
+                    for(let i=1;i<=long;i++){
+                        data.dataList[i-1].num=i;
+                      }
+                    }else{
+                      let size=(currentpage-1)*10;
+                      for(let j=size;j<long+size;j++){
+                        data.dataList[j-size].num=j+1;
+                      }
+                    }
+                    //添加页面序号结束
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        total:data.total,
+                        loading:false,
+                        current:1,
+                        defaultPageSize:10
                       }
                     });
             }
@@ -73,7 +131,7 @@ export default {
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
                 //方案二：再次请求数据
-                 yield put({type:'enter'});
+                 yield put({type:'gettablelist'});
 
             }else if(data.code=="4"){
                 message.error(data.msg);
@@ -94,7 +152,7 @@ export default {
               message.success(data.msg); 
                 console.log(data);
                  //方案二：再次请求数据
-                 yield put({type:'enter'});
+                 yield put({type:'gettablelist'});
             }else if(data.code=="4"){
                 message.error(data.msg);
                  yield put({type:'publicDate',payload:{loading:false}}); 
@@ -114,7 +172,7 @@ export default {
               message.success(data.msg); 
                 console.log(data);
                 //方案二：再次请求数据
-                yield put({type:'enter'});
+                yield put({type:'gettablelist'});
             }else if(data.code=="4"){
                 message.error(data.msg);
                  yield put({type:'publicDate',payload:{loading:false}}); 
@@ -164,6 +222,14 @@ export default {
         if (location.pathname === '/maintainsizeitem') {
             // console.log(location.pathname);
           dispatch({type: 'enter'});
+          //刷新页面使得页码恢复到默认值
+           dispatch({
+            type: 'publicDate',
+            payload:{
+               current:1,
+               defaultPageSize:10
+            }
+          });
            }
          });
        }

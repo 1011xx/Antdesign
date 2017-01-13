@@ -123,7 +123,9 @@ export default {
                       payload:{
                         dataSources:data.dataList,
                         total:data.total,
-                        loadings:false
+                        loadings:false, 
+                        current:1,
+                        defaultPageSize:10
                       }
                     });
             }

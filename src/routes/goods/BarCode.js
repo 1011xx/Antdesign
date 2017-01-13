@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
-import Searchinfo from '../../components/ModelNumber/Searchinfo';
-import Stylelist from '../../components/ModelNumber/Stylelist';
+import Barcode from '../../components/ModelNumber/Barcode';
 
-function Moudelnumber({dispatch,moudelnum}) {
+
+function BarCode({dispatch,moudelnum}) {
 	const {}=moudelnum;
   return (
     <Wrap
      num="1"
 	 last="款号维护"
 	 >
-		  <Searchinfo />
-		  <Stylelist />
+		  <Barcode />
+
 	</Wrap>
 
   );
@@ -22,4 +22,4 @@ function mapStateToProps({moudelnum}) {
   return {moudelnum};
 }
 
-export default connect(mapStateToProps)(Moudelnumber);
+export default connect(mapStateToProps)(BarCode);

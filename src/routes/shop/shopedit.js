@@ -186,7 +186,7 @@ const {   previewVisible,
 		   url="/shopinfo"
 		   last="店仓维护"
 		   next="修改店仓"
-		   
+
 		   >
 		  
 		  <EditShopinfo {...editInfoProps}>

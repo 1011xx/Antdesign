@@ -81,6 +81,7 @@ function SizeList({
 		        columns={columns}
 		        dataSource={dataSource}
 		        pagination={false}
+            loading={loading}
 		        bordered
 		      />
       {/*ajax加载的时候需要进行的loading={loading}*/}

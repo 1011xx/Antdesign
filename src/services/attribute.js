@@ -94,7 +94,17 @@ export async function removeSize(params) {
   });
 }
 //尺寸组接口
-//
+//获取新增尺寸组徐泽尺寸下拉框数据
+export async function querySizeList(params) {
+  return request(`${ipaddress}/fmss/sizeController/querySizeList`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    mode:'no-cors',
+    body: qs.stringify(params),
+  });
+}
 // 获取尺寸组
 export async function queryAllSizeGroup(params) {
   return request(`${ipaddress}/fmss/sizeGroupController/queryAllSizeGroup`, {

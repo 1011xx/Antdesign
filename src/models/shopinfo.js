@@ -192,8 +192,8 @@ export default {
             // images=[{"imageDirectory":"\\images\\shop\\d17446cb5afe45f692def5ebfdcb7473.png","imageName":"12ebb50ce49a485882b316351c75ca01.png","imageOrginalName":"i6pg.png","imageType":"png"}]
             for(let i=0;i<imagearr.length;i++){
               imagearr[i].uid=-i;
-              imagearr[i].url='/proxyDir/fmss'+imagearr[i].imageDirectory;
-              // imagearr[i].url='http://'+location.host+'/fmss'+imagearr[i].imageDirectory;
+              // imagearr[i].url='/proxyDir/fmss'+imagearr[i].imageDirectory;
+              imagearr[i].url='http://'+location.host+'/fmss'+imagearr[i].imageDirectory;
             }
             //将组装后的json赋值给updateFileList；
                yield put({
@@ -210,6 +210,8 @@ export default {
               currentItem:resultinfo.data.shopInfo,
               detailItem:resultinfo.data.shopInfo,
               editloading:false,
+               current:1,
+               defaultPageSize:10
             }
         });
       }

@@ -11,6 +11,7 @@ const ItemModel = ({
 	visible,
 	onOk,
 	handleCancel,
+  selectSource,
 	item={},
 	form: {
     getFieldDecorator,
@@ -27,9 +28,16 @@ function handleOk() {
       onOk(data);
     });
   }
- function genoption(){
-  console.log(111111111111111);
- }
+
+
+const selectopt=selectSource.map((item, key) => {
+
+    return(
+      <Option key={key} value={item.sizeCode}>{item.sizeName}</Option>
+      );
+  });
+
+
 
 
 	return(
@@ -48,7 +56,7 @@ function handleOk() {
           hasFeedback
           className={styles.formitem}
         >
-          {getFieldDecorator('code', {
+          {getFieldDecorator('sizeGroupCode', {
            initialValue:item.code,
             rules: [
               { required: true, message: '尺寸未填写' },
@@ -64,7 +72,7 @@ function handleOk() {
           label="尺寸组名称："
           hasFeedback
         >
-          {getFieldDecorator('name', {
+          {getFieldDecorator('sizeGroupName', {
            initialValue:item.name,
             rules: [
               { required: true, message: '尺寸组名称未填写' },
@@ -82,7 +90,7 @@ function handleOk() {
           className={styles.feedback}
         >
           {getFieldDecorator('sizes', {
-           initialValue:item.sizes,
+           initialValue:item.sizearrs,
             rules: [
               { required: true, message: '点击输入框选择尺寸' },
             ],
@@ -91,13 +99,7 @@ function handleOk() {
              <Select tags style={{ width: 240 }}
                 tokenSeparators={[',']}
               >
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="jack1">Jack1</Option>
-                <Option value="lucy1">Lucy1</Option>
-                <Option value="jack2">Jack2</Option>
-                <Option value="lucy2">Lucy2</Option>
-                {genoption()}
+                  {selectopt}
               </Select>
           )}
         </FormItem>
@@ -115,6 +117,7 @@ ItemModel.propTypes = {
 	form: PropTypes.object,
 	onOk: PropTypes.func,
 	handleCancel: PropTypes.func,
+  selectSource: PropTypes.array
 };
 
 export default Form.create()(ItemModel);

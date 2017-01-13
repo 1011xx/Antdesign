@@ -10,14 +10,19 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 var deleteid=null;//转存删除ID号码
 function MaintainSizeItem({dispatch,attrsizeItem}){
 
-	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrsizeItem;
+	const {total,current,defaultPageSize,loading,visibleSure,dataSource,selectSource,title,modalVisible,modalType,currentItem}=attrsizeItem;
 	
 	const itemModalProps = {
 
 	item:modalType==='create'?{}:currentItem,
     title,
     visible:modalVisible,
+    selectSource,
     onOk(data) {
+      let tempstr=data.sizes.join(",");
+      let newarr={...data,'sizes':tempstr};
+      console.log(newarr);
+      console.log(data);
     dispatch({
           type:'attrsizeItem/tableLoading'
         });
@@ -28,7 +33,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
         //这里与后台数据交流
         dispatch({
         type: 'attrsizeItem/create',
-        payload: data,
+        payload: newarr,
       });
         dispatch({type:'attrsizeItem/hideModal'});
       }else{
@@ -38,7 +43,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
         //这里与后台数据交流
         dispatch({
         type: 'attrsizeItem/edit',
-        payload: data,
+        payload: newarr,
       });
         dispatch({
           type:'attrsizeItem/hideModal'
@@ -64,6 +69,12 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
      deleteid=item.id;
     },
     onEditItem(item) {
+    console.log(item.sizes);
+    //以空格分割，转换成需要的数据格式
+    var str=item.sizes.split(" ");
+    item.sizearrs=str;
+    console.log(item);
+
     dispatch({
         type: 'attrsizeItem/showEditModal',
         payload:{
@@ -110,11 +121,12 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
     onShowSizeChange(currentpage,pagesize){
       // console.log(currentpage,pagesize);
        let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=pagesize;
       dispatch({
         type:'attrsizeItem/publicDate',
         payload:{
+          loading:true,
           current:currentpage,
           defaultPageSize:pagesize
         }
@@ -129,12 +141,13 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
     onPageChange(currentpage){
       // console.log(currentpage);
       let tempobj={};
-      tempobj.start=currentpage;
+      tempobj.page=currentpage;
       tempobj.rows=defaultPageSize;
       console.log(tempobj);
       dispatch({
         type:'attrsizeItem/publicDate',
         payload:{
+          loading:true,
           current:currentpage
         }
       });

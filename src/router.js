@@ -32,6 +32,7 @@ import Shopdetail from "./routes/shop/Shopdetail.js";
 
 
 import Moudelnumber from "./routes/goods/Moudelnumber.js";
+import BarCode from "./routes/goods/BarCode.js";
 
 
 
@@ -61,6 +62,7 @@ export default function({ history }) {
        <Route path="/maintainsize" component={MaintainSize} />
        <Route path="/maintainsizeitem" component={MaintainSizeItem} />
        <Route path="/modelnumber" component={Moudelnumber} />
+       <Route path="/barcode" component={BarCode} />
        <Route path="/upload" component={Text} />
        </Route>
       <Route path="/login" component={Login} />
