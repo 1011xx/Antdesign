@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=1600, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./src/assets/icon.png" />
   <title>绚丽之梦后台管理系统</title>
   <link rel="stylesheet" href="index.css" />
@@ -26,6 +26,31 @@
 </head>
 <body>
 <div id="root" style="height: 100%"></div>
+<script type="text/javascript">
+if (!Array.prototype.find) {
+Array.prototype.find = function(predicate) {
+  'use strict';
+  if (this == null) {
+    throw new TypeError('Array.prototype.find called on null or undefined');
+  }
+  if (typeof predicate !== 'function') {
+    throw new TypeError('predicate must be a function');
+  }
+  var list = Object(this);
+  var length = list.length >>> 0;
+  var thisArg = arguments[1];
+  var value;
+
+  for (var i = 0; i < length; i++) {
+    value = list[i];
+    if (predicate.call(thisArg, value, i, list)) {
+      return value;
+    }
+  }
+  return undefined;
+};
+}
+</script>
 <script src="index.js"></script>
 </body>
 </html>

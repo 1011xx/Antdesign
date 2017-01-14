@@ -33,7 +33,8 @@ import Shopdetail from "./routes/shop/Shopdetail.js";
 
 import Moudelnumber from "./routes/goods/Moudelnumber.js";
 import BarCode from "./routes/goods/BarCode.js";
-
+import Addstyleroute from "./routes/goods/Addstyle.js";
+import Editstyleroute from "./routes/goods/Editstyle.js";
 
 
 
@@ -59,11 +60,16 @@ export default function({ history }) {
        <Route path="/mainattrlist/styleattr/:id" component={StyleAttr} />
 
        <Route path="/maintaincolor" component={MaintainColor} />
+
        <Route path="/maintainsize" component={MaintainSize} />
+
        <Route path="/maintainsizeitem" component={MaintainSizeItem} />
+
        <Route path="/modelnumber" component={Moudelnumber} />
        <Route path="/barcode" component={BarCode} />
        <Route path="/upload" component={Text} />
+			 <Route path="/addstyle" component={Addstyleroute} />
+			 <Route path="/editstyle" component={Editstyleroute} />
        </Route>
       <Route path="/login" component={Login} />
       <Route path="/Moudelnumber" component={Moudelnumber} />

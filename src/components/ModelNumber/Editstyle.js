@@ -6,7 +6,7 @@ import styles from './Addstyle.less';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
-const Addstyle=({
+const Editstyle=({
   form: {
     getFieldDecorator,
     validateFields,
@@ -84,7 +84,7 @@ const Addstyle=({
 
      <Plate title="商品属性">
        <Row type="flex" justify="space-between">
-
+      {/*<Col span={4}>*/}
           <FormItem
             label="品&nbsp;&nbsp;&nbsp;&nbsp;牌"
 
@@ -100,7 +100,8 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+          {/*  </Col>
+          <Col span={4}>*/}
           <FormItem
             label="年&nbsp;&nbsp;&nbsp;&nbsp;份"
             >
@@ -115,7 +116,8 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+          {/*  </Col>
+          <Col span={4}>*/}
           <FormItem
             label="季&nbsp;&nbsp;&nbsp;&nbsp;节"
             >
@@ -130,7 +132,8 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+          {/*  </Col>
+          <Col span={4}>*/}
           <FormItem
             label="序&nbsp;&nbsp;&nbsp;&nbsp;号"
             >
@@ -138,10 +141,11 @@ const Addstyle=({
                initialValue:item.brandName,
                rules: [{required: true, message: '请选择序号!' }]
           })(
-            <Input  placeholder="请输入序号" className={styles.inputwidth}/>
+          <Input  placeholder="请输入序号" className={styles.inputwidth}/>
           )}
           </FormItem>
-
+          {/*  </Col>
+          <Col span={4}>*/}
           <FormItem
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
@@ -156,10 +160,10 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+          {/*  </Col>*/}
        </Row>
        <Row type="flex" justify="space-between" className={styles.paddingtop}>
-
+        {/*  <Col span={4} >*/}
           <FormItem
             label="面&nbsp;&nbsp;&nbsp;&nbsp;料"
             >
@@ -174,7 +178,8 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+        {/*  </Col>
+        <Col span={4} >*/}
           <FormItem
             label="&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;&nbsp;列"
             >
@@ -188,7 +193,7 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+        {/*  </Col><Col span={4} >*/}
           <FormItem
             label="&nbsp;大&nbsp;类&nbsp;别"
             >
@@ -202,7 +207,7 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+        {/*  </Col><Col span={4} >*/}
           <FormItem
             label="&nbsp;小&nbsp;类&nbsp;别"
             >
@@ -216,7 +221,7 @@ const Addstyle=({
           />
           )}
           </FormItem>
-
+        {/*  </Col><Col span={4} >*/}
           <FormItem
             label="&nbsp;&nbsp;销售类型"
             >
@@ -230,7 +235,7 @@ const Addstyle=({
           />
           )}
           </FormItem>
-      
+      {/*    </Col>*/}
        </Row>
      </Plate>
 
@@ -251,12 +256,10 @@ const Addstyle=({
         />
         )}
         </FormItem>
-        <span className={styles.lineheight}>注意：一旦修改尺寸组，所有的颜色和尺寸都会被清空，需要重新配置颜色尺寸和图片</span>
-    </Row>
-    <Row className={styles.paddingtop}>
 
         <FormItem
           label="单&nbsp;&nbsp;&nbsp;&nbsp;位"
+          style={{marginLeft:30}}
           >
            {getFieldDecorator('brandName', {
              initialValue:item.brandName,
@@ -272,7 +275,7 @@ const Addstyle=({
 
         <FormItem
           label="是否唯一码管理"
-          style={{marginLeft:50}}
+          style={{marginLeft:30}}
           >
            {getFieldDecorator('isUniqCodeManagement', {
              initialValue:item.isUniqCodeManagement,
@@ -311,9 +314,9 @@ const Addstyle=({
   );
 }
 
-Addstyle.propTypes = {
+Editstyle.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func
 };
 
-export default Form.create()(Addstyle);
+export default Form.create()(Editstyle);

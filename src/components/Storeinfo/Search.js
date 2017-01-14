@@ -33,18 +33,12 @@ function handleSearch(){
         });
 }
 
-// function test(){
-
-//  var emails = region.map(function (item) { return item.label; });
-
-//  console.log(emails.join(", ")); // zhang@email.com, jiang@email.com, li@email.com
-// }
 
 return (
         <div>
 
         <Plate title="查询信息">
-            <Form 
+            <Form
             inline
             className={styles.ant_advanced_search_form}
             >
@@ -54,7 +48,7 @@ return (
             label="仓店名称"
             >
               {getFieldDecorator('shopname', {
-               
+
               })(
                 <Input size="large" placeholder="请输入" />
               )}
@@ -64,15 +58,15 @@ return (
             <FormItem
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
-             <Cascader 
-              options={types} 
-              onChange={selectCategory} 
-              placeholder="请选择类别" 
+             <Cascader
+              options={types}
+              onChange={selectCategory}
+              placeholder="请选择类别"
               />
 
                           {/*<Select
                             placeholder="请选择类别"
-                            style={{ width: 153 }} 
+                            style={{ width: 153 }}
                             onSelect={selectCategory}
                             >
                               <Option value="1">全部</Option>
@@ -82,27 +76,27 @@ return (
             </FormItem>
            </Col>
            <Col  span={8} className={styles.ant_col_center}>
-            {/*1、华东地区（包括山东、江苏、安徽、浙江、福建、上海）； 
-            2、华南地区（包括广东、广西、海南）； 
-            3、华中地区（包括湖北、湖南、河南、江西）； 
-            4、华北地区（包括北京、天津、河北、山西、内蒙古）； 
-            5、西北地区（包括宁夏、新疆、青海、陕西、甘肃）； 
-            6、西南地区（包括四川、云南、贵州、西藏、重庆）； 
-            7、东北地区（包括辽宁、吉林、黑龙江）； 
+            {/*1、华东地区（包括山东、江苏、安徽、浙江、福建、上海）；
+            2、华南地区（包括广东、广西、海南）；
+            3、华中地区（包括湖北、湖南、河南、江西）；
+            4、华北地区（包括北京、天津、河北、山西、内蒙古）；
+            5、西北地区（包括宁夏、新疆、青海、陕西、甘肃）；
+            6、西南地区（包括四川、云南、贵州、西藏、重庆）；
+            7、东北地区（包括辽宁、吉林、黑龙江）；
             8、台港澳地区（包括台湾、香港、澳门）。*/}
              <FormItem
             label="销售区域"
             >
-            <Cascader 
-              options={region} 
-              onChange={selectRegion} 
-              placeholder="请选择销售区域" 
+            <Cascader
+              options={region}
+              onChange={selectRegion}
+              placeholder="请选择销售区域"
               />
 
-              
 
 
-              {/*<Select 
+
+              {/*<Select
               placeholder="请选择销售区域"
               style={{ width: 153 }}
               onSelect={selectRegion}
@@ -125,10 +119,10 @@ return (
             <FormItem
             label="所在城市"
             >
-              <Cascader 
-              options={options} 
-              onChange={selectCity} 
-              placeholder="请选择所在城市" 
+              <Cascader
+              options={options}
+              onChange={selectCity}
+              placeholder="请选择所在城市"
               />
 
             </FormItem>
@@ -137,14 +131,14 @@ return (
              <FormItem
             label="店仓状态"
             >
-            <Cascader 
-              options={status} 
-              onChange={selectShopststus} 
-              placeholder="请选择店仓状态" 
-              />
-              {/*<Select 
+            <Cascader
+              options={status}
+              onChange={selectShopststus}
               placeholder="请选择店仓状态"
-              style={{ width: 153 }} 
+              />
+              {/*<Select
+              placeholder="请选择店仓状态"
+              style={{ width: 153 }}
               onSelect={selectShopststus}
               >
                 <Option value="open">开启</Option>
@@ -158,15 +152,15 @@ return (
             </FormItem>
             </Col>
         </Row>
-                    
+
           </Form>
         </Plate>
 
-        
 
- 
+
+
         </div>
-       
+
   );
 };
 
