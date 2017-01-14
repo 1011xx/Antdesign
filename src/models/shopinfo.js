@@ -119,7 +119,7 @@ export default {
 	      });
       };
       if(province.data){
-        
+
 	      	yield put({type:'ProvicneAndCity',
 	      	payload:{
 	      		options:province.data.provincecity
@@ -127,7 +127,7 @@ export default {
 	      });
       };
        if(salesarea.data){
-       
+
 	       	 yield put({type:'SaleArea',
 	      	payload:{
 	      		region:salesarea.data.salesArea
@@ -135,7 +135,7 @@ export default {
 	      });
        };
        if(shopstatus.data){
-       
+
 	      	yield put({type:'ShopStatus',
 	      	payload:{
 	      		status:shopstatus.data.shopStatus
@@ -143,7 +143,7 @@ export default {
 	      });
       };
       if(shoptype.data){
-        
+
 	      	yield put({type:'ShopType',
 	      	payload:{
 	      		types:shoptype.data.shopType
@@ -151,14 +151,14 @@ export default {
 	      });
       };
        //enteraddpage
-      
+
     },
     *enteraddpage({ payload}, { call, put }) {
-      
+
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shoptype=yield call(queryShopType);
-      
+
       if(province.data){
           yield put({type:'ProvicneAndCity',
           payload:{
@@ -180,7 +180,7 @@ export default {
           }
         });
       };
-      
+
     },
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
@@ -209,17 +209,17 @@ export default {
             payload:{
               currentItem:resultinfo.data.shopInfo,
               detailItem:resultinfo.data.shopInfo,
-              editloading:false10
+              editloading:false
             }
         });
       }
-  
+
     },
     *queryShop({payload},{select,call,put}){
    	 // console.log(payload);
     const currentpage = yield select(({ shopinfo }) => shopinfo.changePage.page);
     const pagesize = yield select(({ shopinfo }) => shopinfo.changePage.rows);
-   
+
    	 const resultlist=yield call(queryShop,{jsonparam:payload});
    	 if(resultlist.data){
       // 开始添加页面序号
@@ -253,17 +253,17 @@ export default {
           }
         });
       if(resultupload.data.code==0){
-       message.success(resultupload.data.msg); 
-       
+       message.success(resultupload.data.msg);
+
        }else if(resultupload.data.code==4){
-       message.error(resultupload.data.msg); 
-       
+       message.error(resultupload.data.msg);
+
        }else{
        message.warning(resultupload.data.msg);
 
        };
     }
-    
+
    },
    *update({payload},{call,put}){
     const resultupdate=yield call(updateShop,payload);
@@ -275,11 +275,11 @@ export default {
           }
         });
         if(resultupdate.data.code==0){
-       message.success(resultupdate.data.msg); 
-       
+       message.success(resultupdate.data.msg);
+
        }else if(resultupdate.data.code==4){
-       message.error(resultupdate.data.msg); 
-       
+       message.error(resultupdate.data.msg);
+
        }else{
        message.warning(resultupdate.data.msg);
        };
@@ -293,7 +293,7 @@ export default {
         if (location.pathname === '/shopinfo') {
         	// console.log(location.pathname);
           dispatch({type: 'enter'});
-           
+
         }else if (location.pathname === '/shopinfo/shopadd') {
           // console.log(location.pathname);
           dispatch({type: 'enteraddpage'});
@@ -305,17 +305,17 @@ export default {
                       oFile:[]
                     }
                   });
-          
-           
+
+
         }else{
           let str=location.pathname;
            let queryobj={};
-          let strs = str.split("/"); 
-          strs.shift(); 
+          let strs = str.split("/");
+          strs.shift();
           queryobj.id=strs[2];
           let querystr=JSON.stringify(queryobj);
           if(strs[1]==='shopdetail'){
-            
+
             //当进入shopdetail页面时候要执行的请求
              dispatch({
               type: 'queryinfo',
@@ -328,8 +328,8 @@ export default {
                      behavier:'update'
                     }
                   });
-          
-            
+
+
             //请求下拉框数据源
               dispatch({type: 'enteraddpage'});
              //当进入shopedit页面时候要执行的请求
@@ -337,7 +337,7 @@ export default {
               type: 'queryinfo',
               payload:querystr
             });
-             
+
           }
         }
   		 });

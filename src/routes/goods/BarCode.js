@@ -54,29 +54,33 @@ function BarCode({moudelnum}) {
 
 
 
- 
+
   return (
- 
+
       <Wrap
        num="2"
+       url="/modelnumber"
        last="款号维护"
        next="查看条码"
        >
      <Plate title="款号信息">
-     	款号：M160342K12322
+     <Row>
+      <Col span={8}>款号：M160342K12322</Col>
+      <Col span={8} >品名：Mark Cheng2016初夏0379连衣裙</Col>
+    </Row>
      </Plate>
      <TablePlate title="条码列表">
      <Table size="small"
-    className={styles.table}
+     className={styles.table}
 		 columns={columns}
-         loading={loading}
+     loading={loading}
 		 dataSource={data}
 		 pagination={false}
 		 bordered
 		/>
 
     </TablePlate>
- 
+
  </Wrap>
 
   );
@@ -88,5 +92,3 @@ function mapStateToProps({ moudelnum }) {
 }
 
 export default connect(mapStateToProps)(BarCode);
-
-

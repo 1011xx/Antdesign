@@ -31,7 +31,7 @@ export default {
             const {data}= yield call(queryStyle,{jsonparam:strarr});
             const stylecategory= yield call(queryStyleCategory);
             const styleyear= yield call(queryStyleYear);
-            
+
             if(data){
               //将数据源改变成
             console.log(data);
@@ -64,31 +64,29 @@ export default {
             };
         },
         *gettablelist({ payload }, { call, put, select }){
-          // let tempobj={};
-          // tempobj.page=1;
-          // tempobj.rows=10;
-          // let strarr=JSON.stringify(tempobj);
-          //   const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
-            
-          //   if(data){
-          //      let long=data.dataList.length;
-          //    for(let i=0;i<long;i++){
-          //     let tempsizes=data.dataList[i].sizes.split(",").join(" ");
-          //     data.dataList[i].sizes=tempsizes;
-          //    }
-          //   console.log(data);
-          //    for(let i=1;i<=data.dataList.length;i++){
-          //           data.dataList[i-1].num=i;
-          //         }
-          //   yield put({type:'publicDate',
-          //             payload:{
-          //               dataSource:data.dataList,
-          //               total:data.total,
-          //               loading:false
-          //             }
-          //           });
-          //   }
-        
+          const currentpage = yield select(({ moudelnum }) => moudelnum.current);
+          const pagesize = yield select(({ moudelnum }) => moudelnum.defaultPageSize);
+          payload.page=currentpage;
+          payload.rows=pagesize;
+          let strarr=JSON.stringify(payload);
+          console.info(strarr);
+            const {data}= yield call(queryStyle,{jsonparam:strarr});
+
+            if(data){
+               let long=data.dataList.length;
+            console.log(data);
+             for(let i=1;i<=data.dataList.length;i++){
+                    data.dataList[i-1].num=i;
+                  }
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        total:data.total,
+                        loading:false
+                      }
+                    });
+            }
+
         },
         *querypage({ payload }, { call, put,select }){
           // const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
@@ -128,7 +126,7 @@ export default {
             // console.log(data);
             // //data.code=="0"是成功时要执行的回调
             // if(data.code=="0"){
-            //   message.success(data.msg); 
+            //   message.success(data.msg);
             //      //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
             //         // payload.num=tabledata.length+1;
             //         // console.log(payload);
@@ -146,12 +144,12 @@ export default {
 
             // }else if(data.code=="4"){
             //     message.error(data.msg);
-            //      yield put({type:'publicDate',payload:{loading:false}}); 
+            //      yield put({type:'publicDate',payload:{loading:false}});
             // }else{
             //   message.warning(data.msg);
             //    yield put({type:'publicDate',payload:{loading:false}});
             // }
-        
+
         },
         *edit({ payload }, { call, put,select }){
             // const id = yield select(({ attrsizeItem }) => attrsizeItem.currentItem.id);
@@ -160,7 +158,7 @@ export default {
             // console.log(strarr);
             // const {data}= yield call(updateSizeGroup,{jsonParam:strarr});
             // if(data.code=="0"){
-            //   message.success(data.msg); 
+            //   message.success(data.msg);
             //     console.log(data);
             //      //方案二：再次请求数据
             //      yield put({type:'gettablelist'});
@@ -173,12 +171,12 @@ export default {
             //         });
             // }else if(data.code=="4"){
             //     message.error(data.msg);
-            //      yield put({type:'publicDate',payload:{loading:false}}); 
+            //      yield put({type:'publicDate',payload:{loading:false}});
             // }else{
             //   message.warning(data.msg);
             //    yield put({type:'publicDate',payload:{loading:false}});
             // }
-         
+
         },
         *delete({ payload }, { call, put,select }){
         //     console.log('payload:'+payload);
@@ -187,7 +185,7 @@ export default {
         //     let strarr=JSON.stringify(newId);
         //     const {data}= yield call(removeSizeGroup,{jsonParam:strarr});
         //     if(data.code=="0"){
-        //       message.success(data.msg); 
+        //       message.success(data.msg);
         //         console.log(data);
         //         //方案二：再次请求数据
         //         yield put({type:'gettablelist'});
@@ -200,12 +198,12 @@ export default {
         //             });
         //     }else if(data.code=="4"){
         //         message.error(data.msg);
-        //          yield put({type:'publicDate',payload:{loading:false}}); 
+        //          yield put({type:'publicDate',payload:{loading:false}});
         //     }else{
         //       message.warning(data.msg);
         //        yield put({type:'publicDate',payload:{loading:false}});
         //     }
-        
+
         }
     },
     reducers: {
