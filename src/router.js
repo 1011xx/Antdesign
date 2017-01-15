@@ -35,6 +35,15 @@ import Moudelnumber from "./routes/goods/Moudelnumber.js";
 import BarCode from "./routes/goods/BarCode.js";
 import Addstyleroute from "./routes/goods/Addstyle.js";
 import Editstyleroute from "./routes/goods/Editstyle.js";
+import Styledetails from "./routes/goods/Styledetails.js";
+import ConfigColorSize from "./routes/goods/ConfigColorSize.js";
+import Modalchosecolor from "./components/ModelNumber/Modalchosecolor.js";
+
+
+
+
+
+import Audit from "./routes/price/Audit.js";
 
 
 
@@ -70,7 +79,20 @@ export default function({ history }) {
        <Route path="/upload" component={Text} />
 			 <Route path="/addstyle" component={Addstyleroute} />
 			 <Route path="/editstyle" component={Editstyleroute} />
+			 <Route path="/styledetails" component={Styledetails} />
+			  <Route path="/configcolorsize" component={ConfigColorSize} />
+			  <Route path="/test" component={Modalchosecolor} />
+
+
+
+
+				 <Route path="/audit" component={Audit} />
        </Route>
+
+
+
+
+
       <Route path="/login" component={Login} />
       <Route path="/Moudelnumber" component={Moudelnumber} />
     </Router>
