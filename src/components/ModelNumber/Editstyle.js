@@ -13,45 +13,113 @@ const Editstyle=({
     getFieldsValue
     },
     item={},
-    brandName,
+    brand ,//品牌
+    year ,//年份
+    season ,//季节
+    seriesnum ,//序号
+    category ,//类别
+    materials ,//面料
+    series ,//"系列"
+    bigCategory ,//"大类别"
+    smallCategory ,//"小类别"
+    saleType ,//"销售类型"
+    sizeItem,//尺寸组
+    styleUnit,//单位
+
+
+    passdata,
+    styleNumbrules,
+    styleNamerules,
+    stylename,
+    stylenum,
+    onChange1,
+    onChange2,
+    onChange3,
+    onChange4,
+    onChange5,
+    onChange6,
+    onChange7,
+    onChange8,
+    onChange9,
+    onChange10,
 })=> {
+
+  //获取styleName和styleCode
+function getName(arr,source){
+  // 遍历options获取citycode和cityname
+  let temp;
+  if(arr){
+  for(let i=0;i<source.length;i++){
+    if(source[i].value===arr[0]){
+       temp=source[i].label;
+    };
+   }
+   return temp;
+  }else{
+   return undefined;
+  }
+
+}
+
+function getCode(arr){
+  if(arr){
+    return arr[0];
+  }else{
+    return undefined;
+  }
+}
+
   function handleSubmit(e){
    e.preventDefault();
       validateFields((err, fieldsValue) => {
         if (!err) {
-          //格式转换
-          // getcpCodeName(fieldsValue.cityCode);
-          // getgetSalesarea(fieldsValue.saleAreaCode);
-          // gettypecode(fieldsValue.typeCode);
-          //  const values = {
-          // ...fieldsValue,
-          // 'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-          // 'cityCode':cityCode,
-          // 'cityName':cityName,
-          // 'provinceName':provinceName,
-          // 'provinceCode':provinceCode,
-          // 'typeCode':typeCode,
-          // 'saleAreaCode':saleAreaCode,
-          // 'saleAreaName':saleAreaName,
-          // 'id':item.id,
-          // 'code':item.code,
-          // 'status':item.status,
-          // 'images':item.images,
-          // 'deleteImages':deleteImg,
-  console.log(fieldsValue);
+          //格式化上传数据
+          console.log(fieldsValue);
+           const values = {
+          ...fieldsValue,
+         brandCode:getCode(fieldsValue.brandCode),
+
+         seriesCode:getCode(fieldsValue.seriesCode),
+         saleTypeCode:getCode(fieldsValue.saleTypeCode),
+         yearCode:getCode(fieldsValue.yearCode),
+         categoryCode:getCode(fieldsValue.categoryCode),
+         bigCategoryCode:getCode(fieldsValue.bigCategoryCode),
+         seasonCode:getCode(fieldsValue.seasonCode),
+         materialsCode:getCode(fieldsValue.materialsCode),
+         smallCategoryCode:getCode(fieldsValue.smallCategoryCode),
+         sizeGroupCode:getCode(fieldsValue.sizeGroupCode),
+         unitCode:getCode(fieldsValue.unitCode),
+         brandName:getName(fieldsValue.brandCode,brand),
+         SerialNoName:fieldsValue.serialNoCode,
+         seriesName:getName(fieldsValue.seriesCode,series),
+         saleTypeName:getName(fieldsValue.saleTypeCode,saleType),
+         yearName:getName(fieldsValue.yearCode,year),
+         categoryName:getName(fieldsValue.categoryCode,category),
+         bigCategoryName:getName(fieldsValue.bigCategoryCode,bigCategory),
+         seasonName:getName(fieldsValue.seasonCode,season),
+         materialsName:getName(fieldsValue.materialsCode,materials),
+         smallCategoryName:getName(fieldsValue.smallCategoryCode,smallCategory),
+         SizeGroupName:getName(fieldsValue.sizeGroupCode,sizeItem),
+         unitName:getName(fieldsValue.unitCode,styleUnit),
+
+        }
+        console.log('values:',values);
+            passdata(values);
         };
 
-        //  getadddata(values);
+
 
 
       });
   }
   return (
+
      <Form
      inline
      onSubmit={handleSubmit}
      className={styles.ant_advanced_search_form}
      >
+
      <Plate title="基本信息">
 
        <Row>
@@ -59,11 +127,11 @@ const Editstyle=({
             <FormItem
             label="款&nbsp;&nbsp;&nbsp;&nbsp;号"
             >
-            {getFieldDecorator('styleCode', {
-               initialValue:item.styleCode,
+            {getFieldDecorator('code', {
+               initialValue:stylenum,
              rules: [{required: true, message: '请输入款号!' }]
             })(
-              <Input  placeholder="请输入款号"/>
+              <Input disabled style={{width:230}}/>
             )}
             </FormItem>
 
@@ -71,11 +139,11 @@ const Editstyle=({
             label="品&nbsp;&nbsp;&nbsp;&nbsp;名"
             style={{marginLeft:100}}
             >
-            {getFieldDecorator('styleName', {
-               initialValue:item.styleName,
+            {getFieldDecorator('name', {
+               initialValue:stylename,
              rules: [{required: true, message: '请输入品名!' }]
             })(
-              <Input  placeholder="请输入品名" />
+              <Input disabled style={{width:240}}/>
             )}
             </FormItem>
 
@@ -89,13 +157,14 @@ const Editstyle=({
             label="品&nbsp;&nbsp;&nbsp;&nbsp;牌"
 
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('brandCode', {
+
                rules: [{required: true, message: '请选择品牌!' }]
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange1}
+          options={brand}
           placeholder="请选择品牌"
           />
           )}
@@ -105,13 +174,14 @@ const Editstyle=({
           <FormItem
             label="年&nbsp;&nbsp;&nbsp;&nbsp;份"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('yearCode', {
+
                rules: [{required: true, message: '请选择年份!' }]
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange2}
+          options={year}
           placeholder="请选择年份"
           />
           )}
@@ -121,13 +191,14 @@ const Editstyle=({
           <FormItem
             label="季&nbsp;&nbsp;&nbsp;&nbsp;节"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('seasonCode', {
+
                rules: [{required: true, message: '请选择季节!' }]
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange3}
+          options={season}
           placeholder="请选择季节"
           />
           )}
@@ -137,11 +208,12 @@ const Editstyle=({
           <FormItem
             label="序&nbsp;&nbsp;&nbsp;&nbsp;号"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('serialNoCode', {
+
                rules: [{required: true, message: '请选择序号!' }]
           })(
-          <Input  placeholder="请输入序号" className={styles.inputwidth}/>
+            <Input  placeholder="请输入序号" className={styles.inputwidth} onChange={onChange4}/>
+
           )}
           </FormItem>
           {/*  </Col>
@@ -149,13 +221,14 @@ const Editstyle=({
           <FormItem
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('categoryCode', {
+
                rules: [{required: true, message: '请选择类别!' }]
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange5}
+          options={category}
           placeholder="请选择类别"
           />
           )}
@@ -167,13 +240,14 @@ const Editstyle=({
           <FormItem
             label="面&nbsp;&nbsp;&nbsp;&nbsp;料"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName,
+             {getFieldDecorator('materialsCode', {
+
                rules: [{required: true, message: '请选择面料!' }]
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange6}
+          options={materials}
           placeholder="请选择面料"
           />
           )}
@@ -183,12 +257,13 @@ const Editstyle=({
           <FormItem
             label="&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;&nbsp;列"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName
+             {getFieldDecorator('seriesCode', {
+
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange7}
+          options={series}
           placeholder="请选择系列"
           />
           )}
@@ -197,12 +272,13 @@ const Editstyle=({
           <FormItem
             label="&nbsp;大&nbsp;类&nbsp;别"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName
+             {getFieldDecorator('bigCategoryCode', {
+
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange8}
+          options={bigCategory}
           placeholder="请选择大类别"
           />
           )}
@@ -211,12 +287,13 @@ const Editstyle=({
           <FormItem
             label="&nbsp;小&nbsp;类&nbsp;别"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName
+             {getFieldDecorator('smallCategoryCode', {
+
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange9}
+          options={smallCategory}
           placeholder="请选择小类别"
           />
           )}
@@ -225,12 +302,13 @@ const Editstyle=({
           <FormItem
             label="&nbsp;&nbsp;销售类型"
             >
-             {getFieldDecorator('brandName', {
-               initialValue:item.brandName
+             {getFieldDecorator('saleTypeCode', {
+
           })(
           <Cascader
           className={styles.inputwidth}
-          options={brandName}
+          onChange={onChange10}
+          options={saleType}
           placeholder="请选择销售类型"
           />
           )}
@@ -245,13 +323,13 @@ const Editstyle=({
         <FormItem
           label="尺寸组"
           >
-           {getFieldDecorator('brandName', {
-             initialValue:item.brandName,
+           {getFieldDecorator('sizeGroupCode', {
+
              rules: [{required: true, message: '请选择尺寸组!' }]
         })(
         <Cascader
         className={styles.inputwidth}
-        options={brandName}
+        options={sizeItem}
         placeholder="请选择尺寸组"
         />
         )}
@@ -261,13 +339,13 @@ const Editstyle=({
           label="单&nbsp;&nbsp;&nbsp;&nbsp;位"
           style={{marginLeft:30}}
           >
-           {getFieldDecorator('brandName', {
-             initialValue:item.brandName,
+           {getFieldDecorator('unitCode', {
+
              rules: [{required: true, message: '请选择单位!' }]
         })(
         <Cascader
         className={styles.inputwidth}
-        options={brandName}
+        options={styleUnit}
         placeholder="请选择单位"
         />
         )}
@@ -277,13 +355,13 @@ const Editstyle=({
           label="是否唯一码管理"
           style={{marginLeft:30}}
           >
-           {getFieldDecorator('isUniqCodeManagement', {
-             initialValue:item.isUniqCodeManagement,
+           {getFieldDecorator('isUniqueCodeManagement', {
+
              rules: [{required: true, message: '请选择!' }]
         })(
         <RadioGroup  >
-         <Radio value={0}>是</Radio>
-         <Radio value={1}>否</Radio>
+         <Radio value={'1'}>是</Radio>
+         <Radio value={'0'}>否</Radio>
        </RadioGroup>
         )}
         </FormItem>
@@ -294,7 +372,6 @@ const Editstyle=({
          label="&nbsp;&nbsp;&nbsp;备&nbsp;&nbsp;&nbsp;&nbsp;注"
          >
           {getFieldDecorator('remark', {
-            initialValue:item.remark
        })(
        <Input type="textarea" rows={4} style={{width:500}}/>
        )}
@@ -316,7 +393,30 @@ const Editstyle=({
 
 Editstyle.propTypes = {
   form: PropTypes.object,
-  passdata: PropTypes.func
+  passdata: PropTypes.func,
+  brand: PropTypes.array ,//品牌
+  year: PropTypes.array ,//年份
+  season: PropTypes.array ,//季节
+  seriesnum : PropTypes.array,//序号
+  category: PropTypes.array ,//类别
+  materials: PropTypes.array ,//面料
+  series : PropTypes.array,//"系列"
+  bigCategory: PropTypes.array ,//"大类别"
+  smallCategory: PropTypes.array ,//"小类别"
+  saleType: PropTypes.array ,//"销售类型"
+  sizeItem: PropTypes.array ,//尺寸组
+  styleUnit: PropTypes.array ,//单位
+  //手动维护
+  brandManualMaintain: PropTypes.any ,//品牌
+  yearManualMaintain: PropTypes.any ,//年份
+  seasonManualMaintain: PropTypes.any ,//季节
+  seriesnumManualMaintain: PropTypes.any ,//序号
+  categoryManualMaintain: PropTypes.any ,//类别
+  materialsManualMaintain: PropTypes.any ,//面料
+  seriesManualMaintain: PropTypes.any ,//"系列"
+  bigCategoryManualMaintain: PropTypes.any ,//"大类别"
+  smallCategoryManualMaintain: PropTypes.any ,//"小类别"
+  saleTypeManualMaintain: PropTypes.any ,//"销售类型"
 };
 
 export default Form.create()(Editstyle);

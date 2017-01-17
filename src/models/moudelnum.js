@@ -1,4 +1,16 @@
-import { queryStyleCategory,queryStyleYear,queryStyle,deleteStyleById } from '../services/attribute';
+import {
+  queryStyleAttribute,
+  queryStyleSizeGroup,
+  queryStyleUnit,
+  queryStyle,
+  deleteStyleById,
+  newStyle ,
+  queryStyleRule,
+  getStyleInfoById,
+  queryStyleCategory,
+  queryStyleYear,
+  updateStyle
+} from '../services/attribute';
 import {message} from 'antd';
 export default {
   namespace: 'moudelnum',
@@ -15,6 +27,35 @@ export default {
       defaultPageSize:10,
       styleCategory:[],
       styleYear:[],
+      deleteid:'',
+
+
+      currentpage:1,
+      pagesize:10,
+
+      brand:[],//品牌
+      year:[],//年份
+      season:[],//季节
+      seriesnum:[],//序号
+      category:[],//类别
+      materials:[],//面料
+      series:[],//"系列"
+      bigCategory:[],//"大类别"
+      smallCategory:[],//"小类别"
+      saleType:[],//"销售类型"
+
+      sizeItem:[],//尺寸组
+      styleUnit:[],//单位
+      styleNumbrules:[],
+      styleNamerules:[],
+      stylename:'',
+      stylenum:'',
+
+
+      arr:[],
+      arrlabel:[],
+
+
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -34,7 +75,7 @@ export default {
 
             if(data){
               //将数据源改变成
-            console.log(data);
+            // console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
                   }
@@ -46,16 +87,16 @@ export default {
                       }
                     });
             };
-            if(stylecategory.data){
-              console.log(stylecategory.data);
+            if(stylecategory.data.code==0){
+              // console.log(stylecategory.data);
                yield put({type:'publicDate',
                       payload:{
                         styleCategory:stylecategory.data.dataList,
                       }
                     });
             };
-            if(styleyear.data){
-              console.log(styleyear.data);
+            if(styleyear.data.code==0){
+              // console.log(styleyear.data);
                yield put({type:'publicDate',
                       payload:{
                         styleYear:styleyear.data.dataList,
@@ -88,6 +129,114 @@ export default {
             }
 
         },
+        *styleAttribute({ payload }, { call, put,select }){
+            const {data}= yield call(queryStyleAttribute);
+            const size= yield call(queryStyleSizeGroup);
+            const unit= yield call(queryStyleUnit);
+            const rules=yield call(queryStyleRule);
+
+            if(data.code){
+              console.log(data);
+              yield put({
+                type:'publicDate',
+                payload:{
+                  brand:data.dataList[0].propertyValueList,
+                  year:data.dataList[1].propertyValueList,
+                  season:data.dataList[2].propertyValueList,
+                  seriesnum:data.dataList[3].propertyValueList,
+                  category:data.dataList[4].propertyValueList,
+                  materials:data.dataList[5].propertyValueList,
+                  series:data.dataList[6].propertyValueList,
+                  bigCategory:data.dataList[7].propertyValueList,
+                  smallCategory:data.dataList[8].propertyValueList,
+                  saleType:data.dataList[9].propertyValueList,
+
+                }
+              });
+            };
+            if(size.data){
+               yield put({
+                type:'publicDate',
+                payload:{
+                  sizeItem:size.data.dataList
+                }
+              });
+            };
+            if(unit.data){
+               yield put({
+                type:'publicDate',
+                payload:{
+                  styleUnit:unit.data.dataList
+                }
+              });
+            };
+            if(rules.data){
+                  rules.data.dataList[0].arrrules=rules.data.dataList[0].ruleName.split(":"),
+                  rules.data.dataList[1].arrrules=rules.data.dataList[1].ruleName.split(":"),
+                  // console.log(rules.data.dataList[0].arrrules);
+              yield put({
+                type:'publicDate',
+                payload:{
+                  styleNumbrules:rules.data.dataList[0].arrrules,
+                  styleNamerules:rules.data.dataList[1].arrrules,
+                }
+              });
+            }
+        },
+        *queryinfo({ payload}, { call, put }){
+          const resultinfo=yield call(getStyleInfoById,{jsonparam:payload});
+          const rules=yield call(queryStyleRule);
+          if(resultinfo.data){
+            console.log(resultinfo.data.styleInfo);
+      
+          //将请求的数据赋值给currentItem和detailItem
+            yield put({type:'publicDate',
+            payload:{
+              currentItem:resultinfo.data.styleInfo,
+                stylename: resultinfo.data.styleInfo.name,//品名
+                stylenum: resultinfo.data.styleInfo.code,//款号
+              arr:[
+                    undefined,
+                    resultinfo.data.styleInfo.brandCode,
+                    resultinfo.data.styleInfo.yearCode,
+                    resultinfo.data.styleInfo.seasonCode,
+                    resultinfo.data.styleInfo.serialnoCode,
+                    resultinfo.data.styleInfo.categoryCode,
+                    resultinfo.data.styleInfo.materialsCode,
+                    resultinfo.data.styleInfo.seriesCode,
+                    resultinfo.data.styleInfo.bigcategoryCode,
+                    resultinfo.data.styleInfo.smallcategoryCode,
+                    resultinfo.data.styleInfo.saletypeCode
+              ],
+              arrlabel:[
+                  undefined,
+                  resultinfo.data.styleInfo.brandName,
+                  resultinfo.data.styleInfo.yearName,
+                  resultinfo.data.styleInfo.seasonName,
+                  resultinfo.data.styleInfo.serialnoName,
+                  resultinfo.data.styleInfo.categoryName,
+                  resultinfo.data.styleInfo.materialsName,
+                  resultinfo.data.styleInfo.seriesName,
+                  resultinfo.data.styleInfo.bigcategoryName,
+                  resultinfo.data.styleInfo.smallcategoryName,
+                  resultinfo.data.styleInfo.saletypeName
+              ]
+            }
+          });
+        };
+          if(rules.data){
+            rules.data.dataList[0].arrrules=rules.data.dataList[0].ruleName.split(":"),
+            rules.data.dataList[1].arrrules=rules.data.dataList[1].ruleName.split(":"),
+                  console.log(rules.data);
+              yield put({
+                type:'publicDate',
+                payload:{
+                  styleNumbrules:rules.data.dataList[0].arrrules,
+                  styleNamerules:rules.data.dataList[1].arrrules,
+                }
+              });
+            }
+    },
         *querypage({ payload }, { call, put,select }){
           // const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
           // const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
@@ -120,89 +269,79 @@ export default {
         },
         *create({ payload }, { call, put,select }){
             // const tabledata = yield select(({ attrsizeItem }) => attrsizeItem.dataSource);
-            // let strarr=JSON.stringify(payload);
-            // console.log(strarr);
-            // const {data}= yield call(newSizeGroup,{jsonParam:strarr});
-            // console.log(data);
-            // //data.code=="0"是成功时要执行的回调
-            // if(data.code=="0"){
-            //   message.success(data.msg);
-            //      //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
-            //         // payload.num=tabledata.length+1;
-            //         // console.log(payload);
-            //         // const newtabledata=tabledata.push(payload);
-            //         // console.log(tabledata);
-            //     //方案二：再次请求数据
-            //      yield put({type:'gettablelist'});
-            //       //将页码设为默认
-            //       yield put({type:'publicDate',
-            //           payload:{
-            //              current:1,
-            //              defaultPageSize:10
-            //           }
-            //         });
+            let strarr=JSON.stringify(payload);
+            console.log(strarr);
+            const {data}= yield call(newStyle,{jsonparam:strarr});
+            console.log(data);
+            //data.code=="0"是成功时要执行的回调
+            if(data.code=="0"){
+              message.success(data.msg);
+                 //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
+                    // payload.num=tabledata.length+1;
+                    // console.log(payload);
+                    // const newtabledata=tabledata.push(payload);
+                    // console.log(tabledata);
+                //方案二：再次请求数据
+                 yield put({type:'gettablelist'});
+                  //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
 
-            // }else if(data.code=="4"){
-            //     message.error(data.msg);
-            //      yield put({type:'publicDate',payload:{loading:false}});
-            // }else{
-            //   message.warning(data.msg);
-            //    yield put({type:'publicDate',payload:{loading:false}});
-            // }
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
+            }
 
         },
-        *edit({ payload }, { call, put,select }){
-            // const id = yield select(({ attrsizeItem }) => attrsizeItem.currentItem.id);
-            // const newpayload = { ...payload, id }; // 等价于payload.id=id;
-            // let strarr=JSON.stringify(newpayload);
-            // console.log(strarr);
-            // const {data}= yield call(updateSizeGroup,{jsonParam:strarr});
-            // if(data.code=="0"){
-            //   message.success(data.msg);
-            //     console.log(data);
-            //      //方案二：再次请求数据
-            //      yield put({type:'gettablelist'});
-            //       //将页码设为默认
-            //       yield put({type:'publicDate',
-            //           payload:{
-            //              current:1,
-            //              defaultPageSize:10
-            //           }
-            //         });
-            // }else if(data.code=="4"){
-            //     message.error(data.msg);
-            //      yield put({type:'publicDate',payload:{loading:false}});
-            // }else{
-            //   message.warning(data.msg);
-            //    yield put({type:'publicDate',payload:{loading:false}});
-            // }
+        *update({ payload }, { call, put,select }){
+            const id = yield select(({ moudelnum }) => moudelnum.currentItem.id);
+            payload.id=id;
+            let strarr=JSON.stringify(payload);
+            console.log(strarr);
+            const {data}= yield call(updateStyle,{jsonparam:strarr});
+            if(data.code=="0"){
+              message.success(data.msg);
+                console.log(data);
+                
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
+            }
 
         },
         *delete({ payload }, { call, put,select }){
-        //     console.log('payload:'+payload);
-        //     let newId={};
-        //     newId.id=payload;
-        //     let strarr=JSON.stringify(newId);
-        //     const {data}= yield call(removeSizeGroup,{jsonParam:strarr});
-        //     if(data.code=="0"){
-        //       message.success(data.msg);
-        //         console.log(data);
-        //         //方案二：再次请求数据
-        //         yield put({type:'gettablelist'});
-        //          //将页码设为默认
-        //           yield put({type:'publicDate',
-        //               payload:{
-        //                  current:1,
-        //                  defaultPageSize:10
-        //               }
-        //             });
-        //     }else if(data.code=="4"){
-        //         message.error(data.msg);
-        //          yield put({type:'publicDate',payload:{loading:false}});
-        //     }else{
-        //       message.warning(data.msg);
-        //        yield put({type:'publicDate',payload:{loading:false}});
-        //     }
+            console.log('payload:'+payload);
+            let strarr=JSON.stringify(payload);
+            const {data}= yield call(deleteStyleById,{jsonparam:strarr});
+            if(data.code=="0"){
+              message.success(data.msg);
+                console.log(data);
+                //方案二：再次请求数据
+                yield put({type:'enter'});
+                 //将页码设为默认
+                  yield put({type:'publicDate',
+                      payload:{
+                         current:1,
+                         defaultPageSize:10
+                      }
+                    });
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
+            }
 
         }
     },
@@ -253,7 +392,39 @@ export default {
                defaultPageSize:10
             }
           });
-           }
+        }else{
+          let str=location.pathname;
+          let strs = str.split("/");
+          strs.shift();
+          let tempobj={};
+          tempobj.id=strs[2];
+          let querystr=JSON.stringify(tempobj);
+          if(strs[1]==='editstyle'){
+            //当进入新增款号页面时候请求下拉框数据
+            dispatch({type:'styleAttribute'});
+            dispatch({
+              type: 'publicDate',
+              payload:{
+                stylename:'',
+                stylenum:''
+              }
+            });
+            // //请求表格数据和款号类数据
+            //  dispatch({
+            //   type: 'enterstyleattr',
+            //   payload:strs[2]
+            // });
+
+          }else if(strs[1]==='addstyle'){
+            //当进入新增款号页面时候请求下拉框数据
+            dispatch({type:'styleAttribute'});
+            dispatch({
+              type:'queryinfo',
+              payload:querystr
+            });
+            //根据获得的id来请求每条数据
+          }
+        }
          });
        }
      }

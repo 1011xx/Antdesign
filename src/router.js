@@ -76,22 +76,18 @@ export default function({ history }) {
 
        <Route path="/modelnumber" component={Moudelnumber} />
        <Route path="/barcode" component={BarCode} />
-       <Route path="/upload" component={Text} />
-			 <Route path="/addstyle" component={Addstyleroute} />
-			 <Route path="/editstyle" component={Editstyleroute} />
+
+			 <Route path="/modelnumber/addstyle/:id" component={Addstyleroute} /> //修改款号
+			 <Route path="/modelnumber/editstyle" component={Editstyleroute} /> //新增款号
 			 <Route path="/styledetails" component={Styledetails} />
 			  <Route path="/configcolorsize" component={ConfigColorSize} />
 			  <Route path="/test" component={Modalchosecolor} />
-
-
-
-
 				 <Route path="/audit" component={Audit} />
        </Route>
 
 
 
-
+ <Route path="/upload" component={Text} />
 
       <Route path="/login" component={Login} />
       <Route path="/Moudelnumber" component={Moudelnumber} />

@@ -4,16 +4,19 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Searchinfo from '../../components/ModelNumber/Searchinfo';
 import Stylelist from '../../components/ModelNumber/Stylelist';
 import Paginations from '../../commonComponents/Pagination/Paginations';
+import SureModel from '../../commonComponents/SureModal/SureModal';
+
 var styleCode='';
 var categoryCode='';
 var yearCode='';
 
 function Moudelnumber({dispatch,moudelnum}) {
-	const {total,current,defaultPageSize,dataSource,styleCategory,styleYear,loading}=moudelnum;
+	const {total,current,defaultPageSize,dataSource,styleCategory,styleYear,visibleSure,loading}=moudelnum;
 	//搜索框相应的
 	const searchProps={
 		styleCategory,
 		styleYear,
+		loading,
 		passdata(data){
 			console.log(data);
 			//分别赋值，保存状态
@@ -51,18 +54,23 @@ function Moudelnumber({dispatch,moudelnum}) {
 
 		},
 	  onEditItem(item){
-
+	  	console.log(item.id);
 		},
 	  onDeleteItem(item){
-
+	  	console.log(item);
+			//显示删除弹框，并传递要删除的ID
+			dispatch({
+				type:'moudelnum/publicDate',
+				payload:{
+				visibleSure:true,
+				deleteid:item.id
+				}
+			});
 		},
 	  onDetails(item){
 
 		},
 	  onBarcode(item){
-
-		},
-	  additem(item){
 
 		}
 	}
@@ -104,12 +112,26 @@ function Moudelnumber({dispatch,moudelnum}) {
 					current:currentpage
 				}
 			});
-			dispatch({
-				type: 'moudelnum/querypage',
-				payload:tempobj
-			});
 		}
 	};
+
+	const modalProps={
+		visibleSure,
+	 makeSure(){
+		 //点击确认删除后
+		 dispatch({type:'moudelnum/tableLoading'});
+		 //显示删除提示
+		 dispatch({type:'moudelnum/sureModalhide'});
+		 //执行删除操作
+		 dispatch({
+			 type:'moudelnum/delete',
+		 });
+	 },
+	 handleCancel(){
+		 //点击取消删除后
+		 dispatch({type:'moudelnum/sureModalhide'});
+	 }
+	}
   return (
     <Wrap
      num="1"
@@ -118,6 +140,7 @@ function Moudelnumber({dispatch,moudelnum}) {
 		  <Searchinfo {...searchProps}/>
 		  <Stylelist {...listProps}/>
 			<Paginations {...pageProps}/>
+			<SureModel {...modalProps}/>
 	</Wrap>
 
   );

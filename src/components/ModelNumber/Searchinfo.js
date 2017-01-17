@@ -60,7 +60,6 @@ return (
             })(
              <Cascader
               options={styleCategory}
-              onChange={selectCategory}
               placeholder="请选择类别"
               />
             )}
@@ -76,7 +75,6 @@ return (
             })(
             <Cascader
               options={styleYear}
-              onChange={selectRegion}
               placeholder="请选择销售区域"
               />
             )}

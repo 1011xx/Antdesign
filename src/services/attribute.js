@@ -218,8 +218,8 @@ export async function removeAttribute(params) {
 }
 //款号维护接口
 //获取款号类别属性
-export async function queryStyleCategory(params) {
-  return request(`${ipaddress}/fmss/styleController/queryStyleCategory`, {
+export async function queryStyleAttribute(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleAttribute`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
@@ -227,9 +227,19 @@ export async function queryStyleCategory(params) {
     body: qs.stringify(params),
   });
 }
-//获取款号年份属性
-export async function queryStyleYear(params) {
-  return request(`${ipaddress}/fmss/styleController/queryStyleYear`, {
+//获取尺寸组属性
+export async function queryStyleSizeGroup(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleSizeGroup`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取款号单位属性
+export async function queryStyleUnit(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleUnit`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"
@@ -247,9 +257,69 @@ export async function queryStyle(params) {
     body: qs.stringify(params),
   });
 }
+//获取款号类别属性用于填充查询页面款号类别属性组件
+export async function queryStyleCategory(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleCategory`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取款号年份属性用于填充查询页面款号年份属性组件
+export async function queryStyleYear(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleYear`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
 //删除款号
 export async function deleteStyleById(params) {
   return request(`${ipaddress}/fmss/styleController/deleteStyleById`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//新增款号
+export async function newStyle(params) {
+  return request(`${ipaddress}/fmss/styleController/newStyle`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//修改款号
+export async function updateStyle(params) {
+  return request(`${ipaddress}/fmss/styleController/updateStyle`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//款号品名规则
+export async function queryStyleRule(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleRule`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//通过id查询款号详情
+export async function getStyleInfoById(params) {
+  return request(`${ipaddress}/fmss/styleController/getStyleInfoById`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"

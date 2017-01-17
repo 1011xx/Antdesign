@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table,Icon } from 'antd';
+import {Link} from 'dva/router';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './Stylelist.less';
 
@@ -9,7 +10,6 @@ function Stylelist({
   onDeleteItem,
   onDetails,
   onBarcode,
-  additem,
   dataSource,
   loading
 	}) {
@@ -55,7 +55,7 @@ function Stylelist({
     key: 'operation',
     render: (text, record) => (
       <p>
-        <a  onClick={() => onEditItem(record)}>修改</a>
+        <Link to={`/modelnumber/addstyle/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a  onClick={() => onConfig(record)}>配置</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,12 +95,12 @@ function Stylelist({
 
     <TablePlate title="维护颜色">
      <div className={styles.add_plate}>
-       <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
+       <Link to="/modelnumber/editstyle"> <div className={styles.add_btn} ><Icon type="plus-circle-o" />&nbsp;新增</div></Link>
       </div>
 				<Table size="small"
          		className={styles.table}
 		        columns={columns}
-            loading={false}
+            loading={loading}
 		        dataSource={dataSource}
 		        pagination={false}
 		        bordered

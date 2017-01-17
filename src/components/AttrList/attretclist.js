@@ -32,12 +32,12 @@ function AttrEtcList({
 
   }, {
     title: '手工维护',
-    dataIndex: 'isManualMaintence',
-    key: 'isManualMaintence',
+    dataIndex: 'isManualMaintenceName',
+    key: 'isManualMaintenceName',
   }, {
     title: '是否必输',
-    dataIndex: 'isMustInput',
-    key: 'isMustInput',
+    dataIndex: 'isMustInputName',
+    key: 'isMustInputName',
   },{
     title: '操作',
     key: 'operation',

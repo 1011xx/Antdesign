@@ -39,12 +39,13 @@ function Shopinfo({dispatch,shopinfo}){
 			fullName=data.shopname;
 			//将searchForm查询条件对象的值转换为字符串
 			console.log(searchForm);
-			let condit=JSON.stringify(searchForm); 
+			let condit=JSON.stringify(searchForm);
+			console.log(condit);
 			 dispatch({
               type: 'shopinfo/queryShop',
               payload: condit,
             });
-			 
+
 		},
 		selectCategory(value){
 			//获取类别
@@ -83,10 +84,10 @@ function Shopinfo({dispatch,shopinfo}){
 		changePage,
 		current,
 		defaultPageSize,
-		
+
 	//点击修改的时候
 		onEditItem( record){
-			
+
 			//如果需要进入修改页面或者详情页面你点击刷新的话，需要吧ID存到cookies，点击刷新后通过读取cookie。
 			// console.log(record.id);
 			if(record.images){
@@ -109,7 +110,7 @@ function Shopinfo({dispatch,shopinfo}){
 		        }
 		      });
 			}
-			
+
 				// console.log('record.id:'+record.id);
 
 
@@ -128,20 +129,20 @@ function Shopinfo({dispatch,shopinfo}){
 			  dispatch({
 		        type: 'shopinfo/queryinfo',
 		        payload:obj
-		        
+
 		      });
-		
+
 		},
 		//当跳转到详情的时候
 		onEditDetail(record){
-			
+
 			 dispatch({
 		        type: 'shopinfo/updateinfo',
 		        payload:{
 		        	detailItem:record,
 		        }
 		      });
-			 
+
 		},
 		onPageChange(pageNumber){
 			// console.log('Page: ', pageNumber);
@@ -169,9 +170,9 @@ function Shopinfo({dispatch,shopinfo}){
 			changePage.page=pageNumber;
 			console.log('pageNumber:',pageNumber);
 			//将查询条件对象的值转换为字符串
-			let condit=JSON.stringify(changePage); 
+			let condit=JSON.stringify(changePage);
 			// console.log(condit);
-			
+
 			 dispatch({
               type: 'shopinfo/publicdate',
               payload: {
@@ -192,10 +193,10 @@ function Shopinfo({dispatch,shopinfo}){
               	defaultPageSize:pageSize
               }
             });
-			
+
 			changePage.page=current;
 			changePage.rows=pageSize;
-			let condit=JSON.stringify(changePage); 
+			let condit=JSON.stringify(changePage);
 			// console.log(condit);
 			 dispatch({
               type: 'shopinfo/publicdate',
@@ -223,7 +224,7 @@ function Shopinfo({dispatch,shopinfo}){
 		<Wrap
 		   num="1"
 		   last="店仓维护"
-		   
+
 		   >
 		  <Queryinfo {...queryProps}/>
 		  <ShopList {...listProps}></ShopList>

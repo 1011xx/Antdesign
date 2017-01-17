@@ -3,54 +3,46 @@ import ReactDOM from 'react-dom';
 // import { Upload, Icon, Modal } from 'antd';
 // import styles from './upload.less';
 
-import { Transfer } from 'antd';
+import { Tree } from 'antd';
+const TreeNode = Tree.TreeNode;
 
 const Test = React.createClass({
-  getInitialState() {
+  getDefaultProps() {
     return {
-      mockData: [],
-      targetKeys: [],
+      keys: ['0-0-0', '0-0-1'],
     };
   },
-  componentDidMount() {
-    this.getMock();
+  getInitialState() {
+    const keys = this.props.keys;
+    return {
+      defaultExpandedKeys: keys,
+      defaultSelectedKeys: keys,
+      defaultCheckedKeys: keys,
+    };
   },
-
-  getMock() {
-    const targetKeys = [];
-    const mockData = [];
-    for (let i = 0; i < 20; i++) {
-      const data = {
-        key: i.toString(),
-        title: `${i + 100}`,
-        description: `蓝色${i + 1}`,
-      
-      };
-      if (data.chosen) {
-        targetKeys.push(data.key);
-      }
-      mockData.push(data);
-    }
-    this.setState({ mockData, targetKeys });
+  onSelect(info) {
+    console.log('selected', info);
   },
-  filterOption(inputValue, option) {
-    return option.description.indexOf(inputValue) > -1;
-  },
-  handleChange(targetKeys) {
-    console.log(targetKeys);
-    this.setState({ targetKeys });
+  onCheck(info) {
+    console.log('onCheck', info);
   },
   render() {
     return (
-      <Transfer
-        dataSource={this.state.mockData}
-        showSearch
-        filterOption={this.filterOption}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
+      <Tree className="myCls" showLine checkable
        
-        render={item => `${item.title}--${item.description}`}
-      />
+       
+        onSelect={this.onSelect} onCheck={this.onCheck}
+      >
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode title="parent 1-0" key="0-0-0" disabled>
+            <TreeNode title="leaf" key="0-0-0-0" disableCheckbox />
+            <TreeNode title="leaf" key="0-0-0-1" />
+          </TreeNode>
+          <TreeNode title="parent 1-1" key="0-0-1">
+            <TreeNode title={<span style={{ color: '#08c' }}>sss</span>} key="0-0-1-0" />
+          </TreeNode>
+        </TreeNode>
+      </Tree>
     );
   },
 });

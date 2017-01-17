@@ -11,14 +11,14 @@ const app = dva({});
 
 // 3. Model
 app.model(require('./models/login'));
-app.model(require("./models/price"));
-app.model(require("./models/moudelnum"));
 app.model(require("./models/shopinfo"));
 app.model(require('./models/main'));
 app.model(require('./models/attrlist'));
 app.model(require('./models/attrsize'));
 app.model(require('./models/attrsizeItem'));
 app.model(require('./models/attributeClass'));
+app.model(require("./models/moudelnum"));
+// app.model(require("./models/price"));
 
 // 4. Router
 app.router(require('./router'));

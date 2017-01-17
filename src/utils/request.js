@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import Promise from 'bluebird';
 
 function parseJSON(response) {
   return response.json();
@@ -28,4 +29,3 @@ export default function request(url, options) {
     .then((data) => ({ data }))
     .catch((err) => ({ err }));
 }
-
