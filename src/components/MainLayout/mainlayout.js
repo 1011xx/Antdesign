@@ -33,7 +33,7 @@ const Header=({
   onOpenChange,
   handleClick
 }) =>{
-  
+
 
 	return(
  <div className={styles.ant_layout_wrap} >
@@ -46,7 +46,7 @@ const Header=({
             <div className={styles.user}>
               <img src="http://reactjs.cn/react/img/logo.svg" className={styles.who}/>
               <Dropdown overlay={menu}>
-              <a className={styles.ant_dropdown_link} >汤姆·马修
+              <a className={styles.ant_dropdown_link} >王小文
                 <Icon type="down"/>
               </a>
               </Dropdown>
@@ -59,7 +59,7 @@ const Header=({
             <Menu.Item key="4">销售收银子系统</Menu.Item>
           </Menu>
 
-          
+
       </div>
 
         </div>
@@ -73,7 +73,7 @@ const Header=({
         selectedKeys={[currentselectkey]}
         onOpenChange={onOpenChange}
         onClick={handleClick}
-        style={{ width: 210 }}
+        style={{ width: 160 }}
       >
         <SubMenu key="sub1" title={<span><Icon className={styles.iicon} /><span>店仓档案</span></span>}>
           <Menu.Item key="1">
@@ -113,13 +113,13 @@ const Header=({
        <div className={styles.Frameproduct}>
          <div className={styles.product}>
            {children}
-          <div className={styles.footer}>
+          {/*<div className={styles.footer}>
               <div className={styles.innerfooter}>北京智慧境界科技发展有限公司 版权所有 © 2016</div>
-           </div>
-         </div> 
+           </div>*/}
+         </div>
        </div>
-          
-       
+
+
     </div>
   </div>
 

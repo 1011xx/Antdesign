@@ -6,8 +6,11 @@ const FormItem = Form.Item;
 const Modalchosecolor = ({
   handleOk,
   handleCancel,
-
-
+  chosecolorModal,
+  transfordata,
+  targetKeys,
+  handleChange,
+  filterOption,
 }) => {
   const data = [{
          key: '1',
@@ -49,26 +52,17 @@ const Modalchosecolor = ({
                                             title: `content8`,
                                             description: `description 8`,
                                           }];
-var targetKeys=['5'];
-function handleChange(targetKey) {
-    console.log(targetKeys);
-    targetKeys=targetKey
 
-  }
-  function filterOption(inputValue, option) {
-     console.log(inputValue);
-     return option.data.indexOf(inputValue) > -1;
-   }
 
 	return(
     <Modal title={'选择颜色'}
-     visible={true}
+     visible={chosecolorModal}
      onOk={handleOk}
      onCancel={handleCancel}
      closable={false}
    >
     <Transfer
-     dataSource={data}
+     dataSource={transfordata}
      titles={['可选颜色', '已选颜色']}
      showSearch
      listStyle={{
@@ -77,7 +71,7 @@ function handleChange(targetKey) {
      filterOption={filterOption}
      targetKeys={targetKeys}
      onChange={handleChange}
-     render={item => item.title}
+     render={item => `${item.colorCode}  ${item.colorName}`}
      className={styles.center}
     />
   </Modal>
@@ -85,11 +79,13 @@ function handleChange(targetKey) {
 }
 
 Modalchosecolor.propTypes = {
-  title: PropTypes.any,
-	visible: PropTypes.any,
-	form: PropTypes.object,
-	onOk: PropTypes.func,
-	handleCancel: PropTypes.func,
+  handleOk: PropTypes.func,
+  handleCancel: PropTypes.func,
+  chosecolorModal: PropTypes.any,
+  transfordata: PropTypes.array,
+  targetKeys: PropTypes.array,
+  handleChange: PropTypes.func,
+  filterOption: PropTypes.func
 };
 
 export default Modalchosecolor;

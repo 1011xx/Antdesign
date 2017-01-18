@@ -75,12 +75,12 @@ export default function({ history }) {
        <Route path="/maintainsizeitem" component={MaintainSizeItem} />
 
        <Route path="/modelnumber" component={Moudelnumber} />
-       <Route path="/barcode" component={BarCode} />
-
+       <Route path="/modelnumber/barcode/:id" component={BarCode} />//条码页面
 			 <Route path="/modelnumber/addstyle/:id" component={Addstyleroute} /> //修改款号
 			 <Route path="/modelnumber/editstyle" component={Editstyleroute} /> //新增款号
-			 <Route path="/styledetails" component={Styledetails} />
-			  <Route path="/configcolorsize" component={ConfigColorSize} />
+			 <Route path="/modelnumber/configcolorsize/:id" component={ConfigColorSize} />
+			 <Route path="/modelnumber/styledetails/:id" component={Styledetails} />//查看详情页面
+
 			  <Route path="/test" component={Modalchosecolor} />
 				 <Route path="/audit" component={Audit} />
        </Route>

@@ -2,6 +2,7 @@ import request from '../utils/request';
 import qs from 'qs';
 
 // const ipaddress="http://192.168.10.146:5001";
+// const ipaddress="http://dz14571854.imwork.net:23196";
 const ipaddress="";
 
 // 获取颜色
@@ -320,6 +321,16 @@ export async function queryStyleRule(params) {
 //通过id查询款号详情
 export async function getStyleInfoById(params) {
   return request(`${ipaddress}/fmss/styleController/getStyleInfoById`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//获取颜色列表
+export async function queryStyleColor(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleColor`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"

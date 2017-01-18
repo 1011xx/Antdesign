@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
+import PicturesWall from './upload';
 import styles from './Configcolorsize.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -15,7 +16,8 @@ const Configcolorsize=({
     handleSubmit,
     chooseColor,
     dataSource,
-    handleChange
+    handleChange,
+    config,
   })=> {
     const columns = [{
       title: '颜色',
@@ -32,7 +34,8 @@ const Configcolorsize=({
       render:(text, record) => (
         <Select
         multiple
-        style={{ width: 300 }}
+        style={{ width: 300,height:70 }}
+        className={styles.select}
         placeholder="点击输入框选择尺寸"
         onChange={handleChange}
       >
@@ -47,7 +50,15 @@ const Configcolorsize=({
       dataIndex: 'img',
       key: 'img',
       render:(text,record)=>(
-        <div style={{height:100,width:100,background:'#f0f'}}/>
+        <div className={styles.picturewall}>
+        <PicturesWall />
+        </div>
+      ),
+    }, {
+      title: '操作',
+      key: 'operation',
+      render:(text,record)=>(
+        <a onClick={() => onEditDetail(record)}>删除</a>
       ),
     }];
     const data=[{
@@ -56,32 +67,10 @@ const Configcolorsize=({
 
     }];
   return (
-    <Form
-    inline
-    onSubmit={handleSubmit}
-    className={styles.ant_advanced_search_form}
-    >
+    <div>
     <Plate title="款号信息">
-    <FormItem
-    label="款号"
-    >
-    {getFieldDecorator('styleCode', {
-     rules: [{required: true, message: '请输入款号!' }]
-    })(
-      <Input  placeholder="请输入款号"/>
-    )}
-    </FormItem>
-
-    <FormItem
-    label="品名"
-    style={{marginLeft:100}}
-    >
-    {getFieldDecorator('styleName', {
-     rules: [{required: true, message: '请输入品名!' }]
-    })(
-      <Input  placeholder="请输入品名" />
-    )}
-    </FormItem>
+     <div className={styles.inline}>款号：{config.code}</div>
+     <div className={styles.margindis}>品名：{config.name}</div>
     </Plate>
 
     <TablePlate title="配置颜色尺寸图片">
@@ -101,11 +90,12 @@ const Configcolorsize=({
 
     <div className={styles.btn_wrap}>
 
-      <FormItem>
+    <FormItem>
     <Button type="primary" htmlType="submit" size="large">保存</Button>
+    <Button type="ghost" size="large"className={styles.marginbtrn}>取消</Button>
     </FormItem>
 
-       <Button type="ghost" size="large">取消</Button>
+
 
 
     </div>
@@ -116,7 +106,7 @@ const Configcolorsize=({
 
 
     <div style={{height:1}}/>
-    </Form>
+    </div>
   );
 }
 Configcolorsize.propTypes = {

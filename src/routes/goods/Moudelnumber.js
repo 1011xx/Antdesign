@@ -9,7 +9,7 @@ import SureModel from '../../commonComponents/SureModal/SureModal';
 var styleCode='';
 var categoryCode='';
 var yearCode='';
-
+var deleteid='';
 function Moudelnumber({dispatch,moudelnum}) {
 	const {total,current,defaultPageSize,dataSource,styleCategory,styleYear,visibleSure,loading}=moudelnum;
 	//搜索框相应的
@@ -58,12 +58,12 @@ function Moudelnumber({dispatch,moudelnum}) {
 		},
 	  onDeleteItem(item){
 	  	console.log(item);
+			deleteid=item.id;
 			//显示删除弹框，并传递要删除的ID
 			dispatch({
 				type:'moudelnum/publicDate',
 				payload:{
-				visibleSure:true,
-				deleteid:item.id
+				visibleSure:true
 				}
 			});
 		},
@@ -125,6 +125,9 @@ function Moudelnumber({dispatch,moudelnum}) {
 		 //执行删除操作
 		 dispatch({
 			 type:'moudelnum/delete',
+			 payload:{
+				 id:deleteid
+			 }
 		 });
 	 },
 	 handleCancel(){

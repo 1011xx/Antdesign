@@ -22,52 +22,65 @@ function ShopList({
   const columns = [{
     title: '序号',
     dataIndex: 'num',
-    key: 'num'
+    key: 'num',
+    width:50
   }, {
     title: '店仓编号',
     dataIndex: 'code',
-    key: 'code'
+    key: 'code',
+    width:100
   }, {
     title: '店仓名称',
     dataIndex: 'fullName',
-    key: 'fullName'
+    key: 'fullName',
+    width:200
   }, {
     title: '店仓简称',
     dataIndex: 'shortName',
     key: 'shortName',
+    width:100
   }, {
     title: '类别',
     dataIndex: 'typeName',
     key: 'typeName',
+    width:100
   },{
     title: '销售区域',
     dataIndex: 'saleAreaName',
     key: 'saleAreaName',
+    width:100
+
   }, {
     title: '所在城市',
     dataIndex: 'cityName',
     key: 'cityName',
+    width:100
   },
   {
     title: '店仓电话',
     dataIndex: 'mobileNumber',
     key: 'mobileNumber',
+    width:100
   },{
     title: '店长',
     dataIndex: 'shopkeeper',
     key: 'shopkeeper',
+    width:100
   },
   {
     title: '管店经理',
     dataIndex: 'manager',
     key: 'manager',
+    width:100
   },{
     title: '仓店状态',
     dataIndex: 'statusName',
     key: 'statusName',
+      width:100
   },{
     title: '操作',
     key: 'operation',
+      width:200,
     render: (text, record) => (
       <p>
          <Link to={`/shopinfo/shopedit/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
@@ -150,7 +163,7 @@ function ShopList({
 
     <TablePlate title="店仓列表">
             <div className={styles.add_plate}>
-             <Link to="/shopinfo/shopadd"><div onClick={()=>gotoclick()}><Icon type="plus-circle-o" />&nbsp;新增</div></Link>
+             <Link to="/shopinfo/shopadd"><b onClick={()=>gotoclick()}><Icon type="plus-circle-o" />&nbsp;新增</b></Link>
               {/*<a className={styles.add_btn} ><Icon type="plus-circle-o" />&nbsp;新增</a>*/}
             </div>
 				<Table
@@ -160,6 +173,7 @@ function ShopList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
+            scroll={{ y: 'calc(100vh - 410px)' }}
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>

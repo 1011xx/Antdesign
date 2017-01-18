@@ -9,7 +9,8 @@ import {
   getStyleInfoById,
   queryStyleCategory,
   queryStyleYear,
-  updateStyle
+  updateStyle,
+  queryStyleColor
 } from '../services/attribute';
 import {message} from 'antd';
 export default {
@@ -27,7 +28,7 @@ export default {
       defaultPageSize:10,
       styleCategory:[],
       styleYear:[],
-      deleteid:'',
+      chosecolorModal:false,
 
 
       currentpage:1,
@@ -55,6 +56,11 @@ export default {
       arr:[],
       arrlabel:[],
 
+
+      transfordata:[],//颜色穿梭框数据
+      targetKeys:[],//选中的数据
+      config:{},//配置页面信息的获取
+      detaildata:{}//获取商品详情json数据
 
     },
     effects: {
@@ -236,6 +242,47 @@ export default {
                 }
               });
             }
+    },
+    *configcs({ payload }, { call, put,select }){
+      //用于获取配置页面的呀颜色等
+      const details=yield call(getStyleInfoById,{jsonparam:payload});
+      const {data}=yield call(queryStyleColor);
+      if(data.code==0){
+        console.log(data);
+        for(let i=0;i<data.dataList.length;i++){
+          data.dataList[i].key=i+1;
+        }
+        yield put({
+          type:'publicDate',
+          payload:{
+              transfordata:data.dataList
+          }
+        });
+      };
+      if(details.data.code){
+        console.log(details);
+        yield put({
+          type:'publicDate',
+          payload:{
+            config:details.data.styleInfo
+          }
+        })
+      }
+    },
+    *querybyid({ payload }, { call, put}){
+      //根据id来获取商品的详情
+      const {data}=yield call(getStyleInfoById,{jsonparam:payload});
+      
+      if(data.code==0){
+        console.log(data);
+         yield put({
+          type:'publicDate',
+          payload:{
+            detaildata:data.styleInfo
+          }
+        });
+      };
+
     },
         *querypage({ payload }, { call, put,select }){
           // const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
@@ -423,6 +470,21 @@ export default {
               payload:querystr
             });
             //根据获得的id来请求每条数据
+          }else if(strs[1]==='configcolorsize'){
+            console.log(querystr);
+            dispatch({
+              type:'configcs',
+              payload:querystr
+            });
+          }else if(strs[1]==='styledetails'){
+            //如果是查看页面
+            dispatch({
+              type:'querybyid',
+              payload:querystr
+            });
+
+          }else if(strs[1]==='styledetails'){
+            //如果是天马页面
           }
         }
          });

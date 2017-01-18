@@ -38,7 +38,7 @@ function handleSubmit(e){
     validateFields((err, fieldsValue) => {
 
       if (!err) {
-        
+
          const values = {
         ...fieldsValue,
         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
@@ -58,7 +58,7 @@ function handleSubmit(e){
       //  console.log(values);
        getadddata(values);
         // xhr.abort();
-      
+
       }
     });
 }
@@ -87,7 +87,7 @@ for(let k=0;k<region.length;k++){
   }
 }
   saleAreaCode=area[0];
- 
+
 }
 
 function typecode(code){
@@ -98,16 +98,16 @@ function typecode(code){
 
 
 return (
-      
+
         <div>
-        	 <Form 
+        	 <Form
             inline
             className={styles.ant_advanced_search_form}
             onSubmit={handleSubmit}
             >
         <Plate title="基本信息">
-       
-           
+
+
              <Row  className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                   <FormItem
@@ -121,7 +121,7 @@ return (
                   )}
                   </FormItem>
                 </Col>
-              
+
                <Col span={8} className={styles.ant_col_center}>
                  <FormItem
                 label="简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称"
@@ -129,28 +129,28 @@ return (
                 {getFieldDecorator('shortName', {
                    initialValue:item.shortName,
                 rules: [{ required: true, message: '请输入店仓简称!' }]
-                
+
               })(
                  <Input  placeholder="请输入电仓简称" />
                   )}
                 </FormItem>
                </Col>
-              
+
               <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
                 >
-                
-                 <Cascader 
-              options={types} 
+
+                 <Cascader
+              options={types}
               onChange={typecode}
-              placeholder="请选择类别" 
+              placeholder="请选择类别"
               />
-             
+
                 </FormItem>
               </Col>
             </Row>
-            
+
             <Row >
               <Col span={8} className={styles.ant_col_center}>
                 <FormItem
@@ -158,7 +158,7 @@ return (
                 >
                 {getFieldDecorator('establishDate', {
                 rules: [{ required: true, message: '请选择开店时间!' }]
-                
+
               })(
                   <DatePicker  />
               )}
@@ -168,36 +168,36 @@ return (
               <FormItem
               label="&nbsp;&nbsp;销售区域"
               >
-             
-                  <Cascader 
-              options={region} 
+
+                  <Cascader
+              options={region}
               onChange={getSalesarea}
-              placeholder="请选择销售区域" 
+              placeholder="请选择销售区域"
               />
-               
+
 
               </FormItem>
                </Col>
-             
+
             </Row>
-            
-         
+
+
         </Plate>
 
         <Plate title="联系方式">
-           
+
             <Row className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
                 label="&nbsp;&nbsp;所在城市"
                 >
-                 
-                   <Cascader 
-                  options={options} 
+
+                   <Cascader
+                  options={options}
                   onChange={citychange}
-                  placeholder="请选择所在城市" 
+                  placeholder="请选择所在城市"
                   />
-                
+
                 </FormItem>
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
@@ -214,7 +214,6 @@ return (
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
                 label="联系人"
-                required
                 >
                   {getFieldDecorator('contracts', {
                    initialValue:item.contracts,
@@ -224,8 +223,8 @@ return (
                 </FormItem>
                 </Col>
 
-          </Row>     
-          <Row>     
+          </Row>
+          <Row>
 
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
@@ -261,7 +260,7 @@ return (
                 </FormItem>
                 </Col>
              </Row>
-         
+
         </Plate>
 
          <Plate title="照片(最多上传5张)">
@@ -278,22 +277,21 @@ return (
                     <Input type="textarea" rows={6} style={{width:420}}/>
                   )}
                 </FormItem>
-         
+
          </Plate>
-        
+
           <div className={styles.btn_wrap}>
-          
-            <FormItem>
-          <Button type="primary" htmlType="submit" size="large">保存</Button>
-        </FormItem>
-         
-             <Button type="ghost" size="large">取消</Button>
-         
-          
+
+          <FormItem >
+              <Button type="primary" htmlType="submit" size="large">保存</Button>
+              <Button type="ghost" size="large" className={styles.btn_margin}>取消</Button>
+          </FormItem>
+
+
           </div>
            </Form>
         </div>
-       
+
   );
 };
 

@@ -57,13 +57,13 @@ function Stylelist({
       <p>
         <Link to={`/modelnumber/addstyle/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a  onClick={() => onConfig(record)}>配置</a>
+        <Link to={`/modelnumber/configcolorsize/${record.id}`}><span onClick={() => onConfig(record)}>配置</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a  onClick={() => onDeleteItem(record)}>删除</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a onClick={() => onDetails(record)}>查看</a>
+        <Link to={`/modelnumber/styledetails/${record.id}`}><span onClick={() => onDetails(record)}>查看</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a  onClick={() => onBarcode(record)}>条码</a>
+        <Link to={`/modelnumber/barcode/${record.id}`}><span  onClick={() => onBarcode(record)}>条码</span></Link>
 
 
       </p>

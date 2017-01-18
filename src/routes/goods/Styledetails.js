@@ -8,10 +8,8 @@ import styles from './Styledetails.less';
 
 
 function Styledetails({moudelnum}) {
-   const {  dataSource,loading }=moudelnum;
-
+  const { dataSource,loading,detaildata }=moudelnum;
   return (
-
       <Wrap
        num="2"
        url="/modelnumber"
@@ -44,7 +42,6 @@ function Styledetails({moudelnum}) {
          <Row>
           <p>尺寸组：01 马克张</p>
         </Row>
-
      </Plate>
      <Plate title="其他信息">
          <Row>
@@ -56,9 +53,7 @@ function Styledetails({moudelnum}) {
            <Col>备注：该款号于2017年上市</Col>
         </Row>
      </Plate>
-
  </Wrap>
-
   );
 }
 

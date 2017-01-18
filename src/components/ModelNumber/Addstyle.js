@@ -371,10 +371,11 @@ function getCode(arr){
        </Row>
      </Plate>
      <div className={styles.btn_wrap}>
-       <FormItem>
+       <FormItem >
            <Button type="primary" htmlType="submit" size="large">保存</Button>
+           <Button type="ghost" size="large" className={styles.btn_margin}>取消</Button>
        </FormItem>
-           <Button type="ghost" size="large">取消</Button>
+
      </div>
      <div style={{height:1}}/>
   </Form>
