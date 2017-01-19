@@ -44,6 +44,7 @@ import Modalchosecolor from "./components/ModelNumber/Modalchosecolor.js";
 
 
 import Audit from "./routes/price/Audit.js";
+import Set from "./routes/price/Set.js";
 
 
 
@@ -82,7 +83,8 @@ export default function({ history }) {
 			 <Route path="/modelnumber/styledetails/:id" component={Styledetails} />//查看详情页面
 
 			  <Route path="/test" component={Modalchosecolor} />
-				 <Route path="/audit" component={Audit} />
+				<Route path="/audit" component={Audit} />
+        <Route path="/set" component={Set} />
        </Route>
 
 

@@ -47,7 +47,7 @@ return (
               {getFieldDecorator('styleCode', {
 
               })(
-                <Input size="large" placeholder="请输入" />
+                <Input size="small" placeholder="请输入" />
               )}
             </FormItem>
             </Col>
@@ -59,6 +59,7 @@ return (
 
             })(
              <Cascader
+             size="small"
               options={styleCategory}
               placeholder="请选择类别"
               />
@@ -74,6 +75,7 @@ return (
 
             })(
             <Cascader
+            size="small"
               options={styleYear}
               placeholder="请选择销售区域"
               />
@@ -82,7 +84,7 @@ return (
             </Col>
              <Col  span={6} className={styles.ant_col_center}>
             <FormItem>
-              <Button type="primary" onClick={handleSearch}>查询</Button>
+              <Button type="primary" size="default" onClick={handleSearch}>查询</Button>
             </FormItem>
             </Col>
             </Row>

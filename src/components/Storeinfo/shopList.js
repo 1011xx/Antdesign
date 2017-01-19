@@ -43,7 +43,7 @@ function ShopList({
     title: '类别',
     dataIndex: 'typeName',
     key: 'typeName',
-    width:100
+    width:60
   },{
     title: '销售区域',
     dataIndex: 'saleAreaName',
@@ -54,7 +54,7 @@ function ShopList({
     title: '所在城市',
     dataIndex: 'cityName',
     key: 'cityName',
-    width:100
+    width:60
   },
   {
     title: '店仓电话',
@@ -173,7 +173,7 @@ function ShopList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
-            scroll={{ y: 'calc(100vh - 410px)' }}
+            scroll={{  x: 1500,y: 'calc(100vh - 410px)' }}
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>

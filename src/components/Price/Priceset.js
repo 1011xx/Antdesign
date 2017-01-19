@@ -8,14 +8,13 @@ const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const Priceaudit=({
+const Priceset=({
 passdata,
 form: {
   getFieldDecorator,
   validateFields,
   getFieldsValue
 },
-setPrice,
 onCommit,
 onDelete,
 onLook,
@@ -140,9 +139,7 @@ dataSource,
     </Form>
     </Plate>
     <TablePlate title="价格单列表">
-    <div className={styles.add_plate}>
-       <a className={styles.add_btn} onClick={() => setPrice()}><Icon type="pay-circle-o" />&nbsp;设置吊牌价</a>
-      </div>
+   
         <Table size="small"
             className={styles.table}
             columns={columns}
@@ -156,13 +153,12 @@ dataSource,
     </div>
   );
 }
-Priceaudit.propTypes = {
+Priceset.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func,
-  setPrice: PropTypes.func,
   onCommit: PropTypes.func,
   onDelete: PropTypes.func,
   onLook: PropTypes.func,
   dataSource: PropTypes.array
 };
-export default Form.create()(Priceaudit);
+export default Form.create()(Priceset);

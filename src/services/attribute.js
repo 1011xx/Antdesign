@@ -338,3 +338,13 @@ export async function queryStyleColor(params) {
     body: qs.stringify(params),
   });
 }
+//获取条码列表
+export async function queryStyleBarcode(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleBarcode`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}

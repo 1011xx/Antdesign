@@ -10,7 +10,8 @@ import {
   queryStyleCategory,
   queryStyleYear,
   updateStyle,
-  queryStyleColor
+  queryStyleColor,
+  queryStyleBarcode
 } from '../services/attribute';
 import {message} from 'antd';
 export default {
@@ -21,6 +22,7 @@ export default {
       modalVisible:false,
       modalType: 'create',
       dataSource:[],
+      barcodeSource:[],//查看条码表格的数据源
       visibleSure:false,
       loading:true,
       total:0,
@@ -278,11 +280,36 @@ export default {
          yield put({
           type:'publicDate',
           payload:{
-            detaildata:data.styleInfo
+            barcodeSource:data.dataList
           }
         });
       };
 
+    },
+    *querybarcode({ payload }, { call, put,select}){
+      //查询条码，以及分页查询条码
+      //需要传递页码，页数，和styleid
+      //翻页，翻页，翻页，翻页，翻页，翻页，翻页
+      var tempobj={};
+      tempobj.styleId=payload;
+      tempobj.page=1;
+      tempobj.rows=10;
+      // console.log(tempobj);
+      let querystr=JSON.stringify(tempobj);
+       const {data}=yield call(queryStyleBarcode,{jsonparam:querystr});
+        if(data.code==0){
+        // console.log(data);
+        for(let i=0;i<data.dataList.length;i++){
+          data.dataList[i].num=i+1;
+        }
+        console.log(data);
+         yield put({
+          type:'publicDate',
+          payload:{
+            barcodeSource:data.dataList
+          }
+        });
+      };
     },
         *querypage({ payload }, { call, put,select }){
           // const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
@@ -483,8 +510,12 @@ export default {
               payload:querystr
             });
 
-          }else if(strs[1]==='styledetails'){
-            //如果是天马页面
+          }else if(strs[1]==='barcode'){
+            //如果是条码页面
+            dispatch({
+              type:'querybarcode',
+              payload:strs[2]
+            });
           }
         }
          });

@@ -67,17 +67,6 @@ function Editstyleroute({dispatch,moudelnum}) {
       saleType ,//"销售类型"
       sizeItem,//尺寸组
       styleUnit,//单位
-      //手动维护
-      brandManualMaintain ,//品牌
-      yearManualMaintain ,//年份
-      seasonManualMaintain ,//季节
-      seriesnumManualMaintain ,//序号
-      categoryManualMaintain ,//类别
-      materialsManualMaintain ,//面料
-      seriesManualMaintain ,//"系列"
-      bigCategoryManualMaintain ,//"大类别"
-      smallCategoryManualMaintain ,//"小类别"
-      saleTypeManualMaintain ,//"销售类型"
       styleNumbrules,
       styleNamerules,
       stylename,

@@ -8,49 +8,53 @@ import styles from './Barcode.less';
 
 
 function BarCode({moudelnum}) {
-   const {  dataSource,loading }=moudelnum;
-  	 const columns = [{
+   const {  barcodeSource}=moudelnum;
+   const columns = [{
     title: '序号',
     dataIndex: 'num',
     key: 'num',
   }, {
+    title: '条码',
+    dataIndex: 'barcode',
+    key: 'barcode',
+  }, {
+    title: '款号',
+    dataIndex: 'styleCode',
+    key: 'styleCode',
+  },{
     title: '颜色',
     dataIndex: 'colorCode',
     key: 'colorCode',
   }, {
-    title: '颜色名称',
-    dataIndex: 'colorName',
-    key: 'colorName',
-  }, {
-    title: '操作',
-     dataIndex: 'operation',
-    key: 'operation',
+    title: '尺寸',
+    dataIndex: 'size',
+    key: 'size',
   }];
-		  const data = [{
-		  num: '1',
-      id:'sddfdfdrtf',
-		  colorCode: '011',
-		  colorName: '黑色',
-      operation: '黑色',
-		}, {
-		  num: '2',
-      id:'sddfdfdsdff',
-		  colorCode: '012',
-		  colorName: '黄色',
-      operation: '黑色',
-		},{
-		  num: '3',
-      id:'sdsdfdfdfdf',
-		  colorCode: '013',
-		  colorName: '黑咖啡',
-      operation: '黑色',
-		},{
-      num: '4',
-      id:'sddfdsdffdf',
-      colorCode: '014',
-      colorName: '白色',
-      operation: '黑色',
-    }];
+		//   const data = [{
+		//   num: '1',
+  //     id:'sddfdfdrtf',
+		//   colorCode: '011',
+		//   colorName: '黑色',
+  //     operation: '黑色',
+		// }, {
+		//   num: '2',
+  //     id:'sddfdfdsdff',
+		//   colorCode: '012',
+		//   colorName: '黄色',
+  //     operation: '黑色',
+		// },{
+		//   num: '3',
+  //     id:'sdsdfdfdfdf',
+		//   colorCode: '013',
+		//   colorName: '黑咖啡',
+  //     operation: '黑色',
+		// },{
+  //     num: '4',
+  //     id:'sddfdsdffdf',
+  //     colorCode: '014',
+  //     colorName: '白色',
+  //     operation: '黑色',
+  //   }];
 
 
 
@@ -73,8 +77,8 @@ function BarCode({moudelnum}) {
      <Table size="small"
      className={styles.table}
 		 columns={columns}
-     loading={loading}
-		 dataSource={data}
+     loading={false}
+		 dataSource={barcodeSource}
 		 pagination={false}
 		 bordered
 		/>

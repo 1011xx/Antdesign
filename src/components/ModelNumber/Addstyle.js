@@ -127,7 +127,7 @@ function getCode(arr){
              initialValue:stylenum,
              rules: [{required: true, message: '请输入款号!' }]
             })(
-              <Input disabled style={{width:230}}/>
+              <Input size="small" disabled style={{width:230}}/>
             )}
             </FormItem>
 
@@ -139,7 +139,7 @@ function getCode(arr){
              initialValue:stylename,
              rules: [{required: true, message: '请输入品名!' }]
             })(
-              <Input disabled style={{width:240}}/>
+              <Input size="small" disabled style={{width:240}}/>
             )}
             </FormItem>
        </Row>
@@ -157,6 +157,7 @@ function getCode(arr){
                rules: [{required: true, message: '请选择品牌!' }]
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange1}
           options={brand}
@@ -173,6 +174,7 @@ function getCode(arr){
                rules: [{required: true, message: '请选择年份!' }]
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange2}
           options={year}
@@ -189,6 +191,7 @@ function getCode(arr){
                rules: [{required: true, message: '请选择季节!' }]
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange3}
           options={season}
@@ -204,7 +207,7 @@ function getCode(arr){
                initialValue:currentItem.serialnoCode,
                rules: [{required: true, message: '请选择序号!' }]
           })(
-            <Input  placeholder="请输入序号" className={styles.inputwidth} onChange={onChange4}/>
+            <Input size="small" placeholder="请输入序号" className={styles.inputwidth} onChange={onChange4}/>
           )}
           </FormItem>
 
@@ -216,6 +219,7 @@ function getCode(arr){
                rules: [{required: true, message: '请选择类别!' }]
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange5}
           options={category}
@@ -235,6 +239,7 @@ function getCode(arr){
                rules: [{required: true, message: '请选择面料!' }]
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange6}
           options={materials}
@@ -250,6 +255,7 @@ function getCode(arr){
                initialValue:strtoarr(currentItem.seriesCode)
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange7}
           options={series}
@@ -265,6 +271,7 @@ function getCode(arr){
                initialValue:strtoarr(currentItem.bigcategoryCode)
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange8}
           options={bigCategory}
@@ -280,6 +287,7 @@ function getCode(arr){
                initialValue:strtoarr(currentItem.smallcategoryCode)
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange9}
           options={smallCategory}
@@ -295,6 +303,7 @@ function getCode(arr){
                initialValue:strtoarr(currentItem.saletypeCode)
           })(
           <Cascader
+          size="small"
           className={styles.inputwidth}
           onChange={onChange10}
           options={saleType}
@@ -302,13 +311,11 @@ function getCode(arr){
           />
           )}
           </FormItem>
-
        </Row>
      </Plate>
 
      <Plate title="其他信息">
        <Row>
-
         <FormItem
           label="尺寸组"
           >
@@ -317,6 +324,7 @@ function getCode(arr){
              rules: [{required: true, message: '请选择尺寸组!' }]
         })(
         <Cascader
+        size="small"
         className={styles.inputwidth}
         options={sizeItem}
         placeholder="请选择尺寸组"
@@ -335,6 +343,7 @@ function getCode(arr){
              rules: [{required: true, message: '请选择单位!' }]
         })(
         <Cascader
+        size="small"
         className={styles.inputwidth}
         options={styleUnit}
         placeholder="请选择单位"
@@ -350,7 +359,7 @@ function getCode(arr){
              initialValue:currentItem.isUniqCodemanagementCode,
              rules: [{required: true, message: '请选择!' }]
         })(
-        <RadioGroup  >
+        <RadioGroup  size="small">
          <Radio value={'1'}>是</Radio>
          <Radio value={'0'}>否</Radio>
        </RadioGroup>
@@ -365,7 +374,7 @@ function getCode(arr){
           {getFieldDecorator('remarks', {
             initialValue:currentItem.remarks
        })(
-       <Input type="textarea" rows={4} style={{width:500}}/>
+       <Input size="small" type="textarea" rows={4} style={{width:500}}/>
        )}
        </FormItem>
        </Row>

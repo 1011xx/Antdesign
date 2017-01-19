@@ -50,7 +50,7 @@ return (
               {getFieldDecorator('shopname', {
 
               })(
-                <Input size="large" placeholder="请输入" />
+                <Input size="small" placeholder="请输入" />
               )}
             </FormItem>
             </Col>
@@ -59,6 +59,7 @@ return (
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
              <Cascader
+              size="small"
               options={types}
               onChange={selectCategory}
               placeholder="请选择类别"
@@ -88,6 +89,7 @@ return (
             label="销售区域"
             >
             <Cascader
+              size="small"
               options={region}
               onChange={selectRegion}
               placeholder="请选择销售区域"
@@ -120,6 +122,7 @@ return (
             label="所在城市"
             >
               <Cascader
+              size="small"
               options={options}
               onChange={selectCity}
               placeholder="请选择所在城市"
@@ -132,6 +135,7 @@ return (
             label="店仓状态"
             >
             <Cascader
+              size="small"
               options={status}
               onChange={selectShopststus}
               placeholder="请选择店仓状态"
@@ -148,7 +152,7 @@ return (
             </Col>
             <Col  span={8} className={styles.ant_col_center}>
             <FormItem>
-              <Button type="primary" onClick={handleSearch}>查询</Button>
+              <Button type="primary" size="default" onClick={handleSearch}>查询</Button>
             </FormItem>
             </Col>
         </Row>

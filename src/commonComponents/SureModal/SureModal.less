@@ -15,8 +15,10 @@
 .titlecenter{
 	text-align:center;
 	color:#333;
-	margin-bottom:20px;
-
+	margin-bottom:10px;
+	>b{
+		font-size:15px;
+	}
 }
 .scimg{
 	height:18px;
@@ -29,9 +31,21 @@
 }
 .center{
 	text-align:center;
+	font-size: 14px;
+
 }
 .modal{
-	.ant-modal-footer {
-    border-top: none;
+	:global{
+		
+			width:428px !important;
+			height:224px !important;
+		
+		.ant-modal-footer {
+		    border-top: none;
+			}
+			.ant-modal-body {
+			    padding: 26px;
+			}
+		
 	}
 }

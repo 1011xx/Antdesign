@@ -152,7 +152,7 @@ return (
                      initialValue:item.fullName,
                    rules: [{required: true, message: '请输入店仓名称!' }]
                   })(
-                    <Input  placeholder="请输入电仓名称" />
+                    <Input size="small" placeholder="请输入电仓名称" />
                   )}
                   </FormItem>
                 </Col>
@@ -166,7 +166,7 @@ return (
                 rules: [{ required: true, message: '请输入店仓简称!' }]
 
               })(
-                 <Input  placeholder="请输入电仓简称" />
+                 <Input size="small" placeholder="请输入电仓简称" />
                   )}
                 </FormItem>
                </Col>
@@ -180,6 +180,7 @@ return (
 
               })(
                  <Cascader
+                 size="small"
               options={types}
               onChange={typecode}
               placeholder="请选择类别"
@@ -198,7 +199,7 @@ return (
                     initialValue:moment(item.establishDate, 'YYYY-MM-DD'),
                  rules: [{ required: true, message: 'Please select your gender!' }]
               })(
-                  <DatePicker  />
+                  <DatePicker  size="small"/>
                   )}
                 </FormItem>
               </Col>
@@ -210,6 +211,7 @@ return (
                     initialValue:parseArray(item.saleAreaCode)
               })(
                   <Cascader
+                  size="small"
               options={region}
               onChange={getSalesarea}
               placeholder="请选择销售区域"
@@ -235,6 +237,7 @@ return (
                     initialValue:parseArray(item.cityCode)
               })(
                    <Cascader
+                   size="small"
                   options={options}
                   onChange={citychange}
                   placeholder="请选择所在城市"
@@ -249,7 +252,7 @@ return (
                   {getFieldDecorator('telephoneNumber', {
                     initialValue:item.telephoneNumber,
                   })(
-                    <Input size="large" placeholder="请输入店仓电话" />
+                    <Input size="small" placeholder="请输入店仓电话" />
                   )}
                 </FormItem>
                 </Col>
@@ -261,7 +264,7 @@ return (
                   {getFieldDecorator('contracts', {
                    initialValue:item.contracts,
                   })(
-                    <Input size="large" placeholder="请输入联系人名" />
+                    <Input size="small" placeholder="请输入联系人名" />
                   )}
                 </FormItem>
                 </Col>
@@ -276,7 +279,7 @@ return (
                   {getFieldDecorator('mobileNumber', {
                   initialValue:item.mobileNumber,
                   })(
-                    <Input size="large" placeholder="请输入手机号码" />
+                    <Input size="small" placeholder="请输入手机号码" />
                   )}
                 </FormItem>
                 </Col>
@@ -287,7 +290,7 @@ return (
                   {getFieldDecorator('faxNumber', {
                   initialValue:item.faxNumber,
                   })(
-                    <Input size="large" placeholder="请输入传真号码" />
+                    <Input size="small" placeholder="请输入传真号码" />
                   )}
                 </FormItem>
                 </Col>
@@ -298,7 +301,7 @@ return (
                   {getFieldDecorator('address', {
                   initialValue:item.address,
                   })(
-                    <Input size="large" placeholder="请输入店仓地址" style={{width:220}}/>
+                    <Input size="small" placeholder="请输入店仓地址" style={{width:220}}/>
                   )}
                 </FormItem>
                 </Col>
@@ -317,7 +320,7 @@ return (
                   {getFieldDecorator('remarks', {
                   initialValue:item.remarks,
                   })(
-                    <Input type="textarea" rows={6} style={{width:420}}/>
+                    <Input  type="textarea" rows={6} style={{width:420}}/>
                   )}
                 </FormItem>
 
