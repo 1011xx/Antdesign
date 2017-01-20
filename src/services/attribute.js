@@ -348,3 +348,23 @@ export async function queryStyleBarcode(params) {
     body: qs.stringify(params),
   });
 }
+//查询样式配置列表，就是进入配置页面后，请求远端的数据，裂变展示，同时详情也展示
+export async function queryStyleConfigList(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleConfigList`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//款号维护->配置->配置颜色图片尺寸->尺寸
+export async function queryStyleSize(params) {
+  return request(`${ipaddress}/fmss/styleController/queryStyleSize`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}

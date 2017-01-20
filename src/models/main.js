@@ -81,16 +81,6 @@ export default {
              let strs = str.split("/"); 
              strs.shift(); 
              switch(strs[1]){
-                case 'styleattr':
-                 dispatch({
-                    type: 'ChangeOpenkey',
-                    payload: ['sub2'],
-                  });
-                    dispatch({
-                    type: 'ChangeSelectkey',
-                    payload: '2',
-                  });
-                break;
                 case 'shopadd':
                 dispatch({
                   type: 'ChangeOpenkey',
@@ -121,6 +111,66 @@ export default {
                     payload: '1',
                   });
                    break;
+                   case 'styleattr':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '2',
+                  });
+                break;
+                case 'addstyle':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+                break;
+                 case 'configcolorsize':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+                break;
+                case 'barcode':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+                break;
+                 case 'styledetails':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+                break;
+                 case 'editstyle':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub2'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '6',
+                  });
+                break;
              }
 
 

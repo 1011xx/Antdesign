@@ -31,7 +31,6 @@ function handleOk() {
 
 
 const selectopt=selectSource.map((item, key) => {
-
     return(
       <Option key={key} value={item.sizeCode}>{item.sizeName}</Option>
       );

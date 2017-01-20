@@ -3,12 +3,13 @@ import { Table,Row,Col } from 'antd';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
+import Paginations from '../../commonComponents/Pagination/Paginations';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './Barcode.less';
 
 
 function BarCode({moudelnum}) {
-   const {  barcodeSource}=moudelnum;
+   const {barcodeSource,barcodeTotal,barcodecurrent,barcodepagesize}=moudelnum;
    const columns = [{
     title: '序号',
     dataIndex: 'num',
@@ -56,6 +57,46 @@ function BarCode({moudelnum}) {
   //     operation: '黑色',
   //   }];
 
+ //页码
+  const pageProps={
+    total:barcodeTotal,
+    current:barcodecurrent,
+    defaultPageSize:barcodepagesize,
+    onShowSizeChange(currentpage,pagesize){
+      // console.log(currentpage,pagesize);
+       let tempobj={};
+      tempobj.page=currentpage;
+      tempobj.rows=pagesize;
+      dispatch({type:'moudelnum/tableLoading'});
+      dispatch({
+        type:'moudelnum/publicDate',
+        payload:{
+          current:currentpage,
+          defaultPageSize:pagesize
+        }
+      });
+
+       dispatch({
+        type: 'moudelnum/querypage',
+        payload:tempobj
+      });
+
+    },
+    onPageChange(currentpage){
+      // console.log('currentpage:'+currentpage);
+      let tempobj={};
+      tempobj.page=currentpage;
+      tempobj.rows=defaultPageSize;
+      dispatch({type:'moudelnum/tableLoading'});
+      console.log(tempobj);
+      dispatch({
+        type:'moudelnum/publicDate',
+        payload:{
+          current:currentpage
+        }
+      });
+    }
+  };
 
 
 
@@ -84,7 +125,7 @@ function BarCode({moudelnum}) {
 		/>
 
     </TablePlate>
-
+     <Paginations {...pageProps}/>
  </Wrap>
 
   );

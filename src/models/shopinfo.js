@@ -219,7 +219,7 @@ export default {
    	 // console.log(payload);
     const currentpage = yield select(({ shopinfo }) => shopinfo.changePage.page);
     const pagesize = yield select(({ shopinfo }) => shopinfo.changePage.rows);
-
+    // console.info('pagesize--currentpage:',currentpage,pagesize);
    	 const resultlist=yield call(queryShop,{jsonparam:payload});
    	 if(resultlist.data){
       // 开始添加页面序号
@@ -229,7 +229,7 @@ export default {
             resultlist.data.dataList[i-1].num=i;
           }
         }else{
-          let size=(currentpage-1)*10;
+          let size=(currentpage-1)*pagesize;
           for(let j=size;j<long+size;j++){
             resultlist.data.dataList[j-size].num=j+1;
           }

@@ -44,6 +44,7 @@ const Addstyle=({
     onChange9,
     onChange10,
     passdata,
+    cancel,
 
 })=> {
    //获取styleName和styleCode
@@ -122,10 +123,10 @@ function getCode(arr){
 
             <FormItem
             label="款&nbsp;&nbsp;&nbsp;&nbsp;号"
+            required
             >
             {getFieldDecorator('code', {
-             initialValue:stylenum,
-             rules: [{required: true, message: '请输入款号!' }]
+             initialValue:stylenum
             })(
               <Input size="small" disabled style={{width:230}}/>
             )}
@@ -134,10 +135,10 @@ function getCode(arr){
             <FormItem
             label="品&nbsp;&nbsp;&nbsp;&nbsp;名"
             style={{marginLeft:100}}
+            required
             >
             {getFieldDecorator('name', {
-             initialValue:stylename,
-             rules: [{required: true, message: '请输入品名!' }]
+             initialValue:stylename
             })(
               <Input size="small" disabled style={{width:240}}/>
             )}
@@ -382,7 +383,7 @@ function getCode(arr){
      <div className={styles.btn_wrap}>
        <FormItem >
            <Button type="primary" htmlType="submit" size="large">保存</Button>
-           <Button type="ghost" size="large" className={styles.btn_margin}>取消</Button>
+           <Button type="ghost" size="large" onClick={cancel} className={styles.btn_margin}>取消</Button>
        </FormItem>
 
      </div>
@@ -395,7 +396,8 @@ function getCode(arr){
 
 Addstyle.propTypes = {
   form: PropTypes.object,
-  passdata: PropTypes.func
+  passdata: PropTypes.func,
+  cancel:PropTypes.func,
 };
 
 export default Form.create()(Addstyle);

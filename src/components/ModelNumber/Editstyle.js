@@ -42,6 +42,7 @@ const Editstyle=({
     onChange8,
     onChange9,
     onChange10,
+    cancel,
 })=> {
 
   //获取styleName和styleCode
@@ -126,10 +127,10 @@ function getCode(arr){
 
             <FormItem
             label="款&nbsp;&nbsp;&nbsp;&nbsp;号"
+            required
             >
             {getFieldDecorator('code', {
-               initialValue:stylenum,
-             rules: [{required: true, message: '请输入款号!' }]
+               initialValue:stylenum
             })(
               <Input disabled size="small" style={{width:230}}/>
             )}
@@ -138,10 +139,10 @@ function getCode(arr){
             <FormItem
             label="品&nbsp;&nbsp;&nbsp;&nbsp;名"
             style={{marginLeft:100}}
+            required
             >
             {getFieldDecorator('name', {
-               initialValue:stylename,
-             rules: [{required: true, message: '请输入品名!' }]
+               initialValue:stylename
             })(
               <Input disabled size="small" style={{width:240}}/>
             )}
@@ -390,10 +391,10 @@ function getCode(arr){
        </Row>
      </Plate>
      <div className={styles.btn_wrap}>
-       <FormItem>
+       <FormItem >
            <Button type="primary" htmlType="submit" size="large">保存</Button>
+           <Button type="ghost" size="large" className={styles.btn_margin} onClick={cancel}>取消</Button>
        </FormItem>
-           <Button type="ghost" size="large">取消</Button>
      </div>
      <div style={{height:1}}/>
   </Form>
@@ -405,6 +406,7 @@ function getCode(arr){
 Editstyle.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func,
+  cancel:PropTypes.func,
   brand: PropTypes.array ,//品牌
   year: PropTypes.array ,//年份
   season: PropTypes.array ,//季节

@@ -94,9 +94,32 @@ function typecode(code){
  typeCode=code[0];
 }
 
+function checkForm(rule, value, callback){
+//手机号码正则验证
+  if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
+    callback('不是正确的手机号码！');
+  }
+}
+ 
+ function checkfax(rule, value, callback){
+//手机号码正则验证
+  if(!(/^(\d{3,4}-)?\d{7,8}$/.test(value))){
+    callback('不是正确的传真号码！');
+  }
+}
+ function checkname(rule, value, callback){
+//联系人长度
+  if(value.length>100){
+    callback('联系人姓名太长！');
+  }
+}
 
-
-
+ function checktel(rule, value, callback){
+//店仓电话长度
+  if(value.length>100){
+    callback('店仓电话太长！');
+  }
+}
 return (
 
         <div>
@@ -235,6 +258,7 @@ return (
                 >
                   {getFieldDecorator('mobileNumber', {
                   initialValue:item.mobileNumber,
+                  rules:[{validator:checkForm}]
                   })(
                     <Input size="small" placeholder="请输入手机号码" />
                   )}
@@ -246,6 +270,7 @@ return (
                 >
                   {getFieldDecorator('faxNumber', {
                   initialValue:item.faxNumber,
+                   rules:[{validator:checkfax}]
                   })(
                     <Input size="small" placeholder="请输入传真号码" />
                   )}

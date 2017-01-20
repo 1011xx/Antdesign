@@ -1,3 +1,4 @@
+
 import {
   queryStyleAttribute,
   queryStyleSizeGroup,
@@ -11,13 +12,17 @@ import {
   queryStyleYear,
   updateStyle,
   queryStyleColor,
-  queryStyleBarcode
+  queryStyleBarcode,
+  queryStyleConfigList,
+  queryStyleSize
 } from '../services/attribute';
 import {message} from 'antd';
 export default {
   namespace: 'moudelnum',
   state: {
       title:"",
+      savedone:false,//保存成功状态
+      savedtwo:false,//修改成功状态
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
@@ -61,9 +66,15 @@ export default {
 
       transfordata:[],//颜色穿梭框数据
       targetKeys:[],//选中的数据
+      moveKeys:[],//移动的数据
       config:{},//配置页面信息的获取
-      detaildata:{}//获取商品详情json数据
-
+      detaildata:{},//获取商品详情json数据
+      configlist:[],//获取详情也和配置页面的数据，列表展示页数据
+      colorcode:'',//存储颜色代码
+      currentid:'',//当前页面的id
+      currentsizegrop:'',//尺寸组代码
+      sizeoption:[],//尺寸选择数据源
+      listarry:[],//选择颜色后的表格数组
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -117,6 +128,7 @@ export default {
           const pagesize = yield select(({ moudelnum }) => moudelnum.defaultPageSize);
           payload.page=currentpage;
           payload.rows=pagesize;
+          console.log(payload);
           let strarr=JSON.stringify(payload);
           console.info(strarr);
             const {data}= yield call(queryStyle,{jsonparam:strarr});
@@ -196,7 +208,7 @@ export default {
           const rules=yield call(queryStyleRule);
           if(resultinfo.data){
             console.log(resultinfo.data.styleInfo);
-      
+
           //将请求的数据赋值给currentItem和detailItem
             yield put({type:'publicDate',
             payload:{
@@ -247,13 +259,30 @@ export default {
     },
     *configcs({ payload }, { call, put,select }){
       //用于获取配置页面的呀颜色等
-      const details=yield call(getStyleInfoById,{jsonparam:payload});
+      const id = yield select(({ moudelnum }) => moudelnum.currentid);
+      const sizegrop = yield select(({ moudelnum }) => moudelnum.currentsizegrop);
+      let tempid={};
+      let tempstyleid={};
+      let temidstyle={};
+      temidstyle.styleId=id;
+      temidstyle.sizeGroupCode=sizegrop;
+      tempid.id=id;
+      tempstyleid.styleId=id;
+      let str1=JSON.stringify(tempid);
+      let str2=JSON.stringify(tempstyleid);
+      let str3=JSON.stringify(temidstyle);
+        const size=yield call(queryStyleSize,{jsonparam:str3});
       const {data}=yield call(queryStyleColor);
+      const details=yield call(getStyleInfoById,{jsonparam:str1});
+      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
+
+
       if(data.code==0){
         console.log(data);
         for(let i=0;i<data.dataList.length;i++){
           data.dataList[i].key=i+1;
         }
+          console.log(data);
         yield put({
           type:'publicDate',
           payload:{
@@ -269,21 +298,76 @@ export default {
             config:details.data.styleInfo
           }
         })
+      };
+      if(styleConfigList.data.code==0){
+        console.log(styleConfigList.data);
+        if(styleConfigList.data.dataList){
+          yield put({
+            type:'publicDate',
+            payload:{
+              configlist:styleConfigList.data.dataList
+            }
+          });
+        }else{
+          yield put({
+            type:'publicDate',
+            payload:{
+              configlist:{}
+            }
+          });
+        }
+      };
+      if(size.data.code==0){
+        console.log(size.data);
+        yield put({
+          type:'publicDate',
+          payload:{
+            sizeoption:size.data.dataList
+          }
+        });
       }
     },
     *querybyid({ payload }, { call, put}){
       //根据id来获取商品的详情
-      const {data}=yield call(getStyleInfoById,{jsonparam:payload});
-      
+      let tempid={};
+      let tempstyleid={}
+      tempid.id=payload;
+      tempstyleid.styleId=payload;
+      let str1=JSON.stringify(tempid);
+      let str2=JSON.stringify(tempstyleid);
+
+      console.log(payload);
+      const {data}=yield call(getStyleInfoById,{jsonparam:str1});
+      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
       if(data.code==0){
         console.log(data);
          yield put({
           type:'publicDate',
           payload:{
-            barcodeSource:data.dataList
+            detaildata:data.styleInfo
           }
         });
       };
+      if(styleConfigList.data.code==0){
+         console.log('styleConfigList.data');
+        console.log(styleConfigList.data);
+        if(styleConfigList.data.dataList){
+            for(let i=0;i<styleConfigList.data.dataList.length;i++){
+              let size=styleConfigList.data.dataList[i].sizes.split(",").join(" ");
+              styleConfigList.data.dataList[i].colorSize=styleConfigList.data.dataList[i].colorName+" "+size;
+              // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+styleConfigList.data.dataList[i].imageDirectory;
+              let temp=JSON.parse(styleConfigList.data.dataList[i].image);
+              styleConfigList.data.dataList[i].proimage=temp.imageDirectory;
+          }
+        }
+        console.log(styleConfigList.data);
+        yield put({
+          type:'publicDate',
+          payload:{
+            configlist:styleConfigList.data.dataList
+          }
+        });
+      }
 
     },
     *querybarcode({ payload }, { call, put,select}){
@@ -349,19 +433,19 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-                //方案二：再次请求数据
-                 yield put({type:'gettablelist'});
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
+                         defaultPageSize:10,
+                         savedone:true
                       }
                     });
 
@@ -381,9 +465,9 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateStyle,{jsonparam:strarr});
             if(data.code=="0"){
-              message.success(data.msg);
-                console.log(data);
-                
+              // message.success(data.msg);
+                // console.log(data);
+                 yield put({type:'publicDate',payload:{savedtwo:true}});
             }else if(data.code=="4"){
                 message.error(data.msg);
                  yield put({type:'publicDate',payload:{loading:false}});
@@ -471,8 +555,16 @@ export default {
           let strs = str.split("/");
           strs.shift();
           let tempobj={};
+
+
           tempobj.id=strs[2];
           let querystr=JSON.stringify(tempobj);
+          dispatch({
+              type: 'publicDate',
+              payload:{
+              currentid:strs[2]
+              }
+            });
           if(strs[1]==='editstyle'){
             //当进入新增款号页面时候请求下拉框数据
             dispatch({type:'styleAttribute'});
@@ -499,15 +591,25 @@ export default {
             //根据获得的id来请求每条数据
           }else if(strs[1]==='configcolorsize'){
             console.log(querystr);
+            let strarr=strs[2];
+            var newarr=strarr.split(":");
+            console.info('strarr:',newarr[0]);
             dispatch({
-              type:'configcs',
-              payload:querystr
+                type: 'publicDate',
+                payload:{
+                currentid:newarr[0],
+                currentsizegrop:newarr[1]
+                }
+              });
+            dispatch({
+              type:'configcs'
             });
           }else if(strs[1]==='styledetails'){
-            //如果是查看页面
+            //如果是查看页面详情
+            console.log('details')
             dispatch({
               type:'querybyid',
-              payload:querystr
+              payload:strs[2]
             });
 
           }else if(strs[1]==='barcode'){

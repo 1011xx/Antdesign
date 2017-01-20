@@ -7,6 +7,7 @@ import styles from './Configcolorsize.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+
 const Configcolorsize=({
     form: {
       getFieldDecorator,
@@ -18,10 +19,27 @@ const Configcolorsize=({
     dataSource,
     handleChange,
     config,
+    onUpload,
+    onEditDetail,
+    sizeoption,
+    listarry,
+ 
   })=> {
+
+
+
+    // 使用map函数生成option选项
+  const selectopt=sizeoption.map((item, key) => {
+
+    return(
+      <Option key={key} value={item.value}>{item.label}</Option>
+      );
+  });
+
+
     const columns = [{
       title: '颜色',
-      dataIndex: 'color',
+      dataIndex: 'colorCode',
       key: 'color',
     }, {
       title: '颜色名称',
@@ -39,18 +57,16 @@ const Configcolorsize=({
         placeholder="点击输入框选择尺寸"
         onChange={handleChange}
       >
-  <Option value="a10">a10</Option>
-  <Option value="a15">a15</Option>
-  <Option value="c12">c12</Option>
+     {selectopt}
 
-  </Select>
+     </Select>
       ),
     }, {
       title: '图片',
       dataIndex: 'img',
       key: 'img',
       render:(text,record)=>(
-        <div className={styles.picturewall}>
+        <div className={styles.picturewall} onClick={() => onUpload(record)}>
         <PicturesWall />
         </div>
       ),
@@ -65,7 +81,14 @@ const Configcolorsize=({
       color:'101',
       colorName:'黑色'
 
+    },
+    {
+      color:'102',
+      colorName:'绿色'
+
     }];
+
+
   return (
     <div>
     <Plate title="款号信息">
@@ -81,36 +104,26 @@ const Configcolorsize=({
             className={styles.table}
             columns={columns}
             loading={false}
-            dataSource={data}
+            dataSource={listarry}
             pagination={false}
             bordered
           />
 
     </TablePlate>
-
     <div className={styles.btn_wrap}>
-
-    <FormItem>
-    <Button type="primary" htmlType="submit" size="large">保存</Button>
-    <Button type="ghost" size="large"className={styles.marginbtrn}>取消</Button>
-    </FormItem>
-
-
-
-
+      <FormItem>
+        <Button type="primary" htmlType="submit" size="large">保存</Button>
+        <Button type="ghost" size="large"className={styles.marginbtn}>取消</Button>
+      </FormItem>
     </div>
-
-
-
-
-
-
     <div style={{height:1}}/>
     </div>
   );
 }
 Configcolorsize.propTypes = {
   form: PropTypes.object,
-  passdata: PropTypes.func
+  passdata: PropTypes.func,
+  onUpload: PropTypes.func,
+  onEditDetail: PropTypes.func,
 };
 export default Form.create()(Configcolorsize);

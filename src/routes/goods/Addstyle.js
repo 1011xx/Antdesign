@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Addstyle from '../../components/ModelNumber/Addstyle';
-
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var result='';
 var result2='';
 
@@ -28,6 +29,7 @@ function Addstyleroute({dispatch,moudelnum}) {
     currentItem,
     arr,
     arrlabel,
+    savedtwo,//修改成功
   }=moudelnum;
   //通过从后台获取的规则来计算款号和品名
     const getname=function(){
@@ -77,6 +79,10 @@ function Addstyleroute({dispatch,moudelnum}) {
           type:'moudelnum/update',
           payload:value
         })
+      },
+      cancel(){
+        //点击取消后返回到列表页面。
+        dispatch(routerRedux.push('/modelnumber'));
       },
     onChange1(value,selectOption){
 
@@ -132,6 +138,20 @@ function Addstyleroute({dispatch,moudelnum}) {
       getname();
     },
     };
+    const saveProps={
+    content:'修改成功',
+    visibleSave:savedtwo,
+      handleOk(){
+        dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+            savedtwo:false
+          }
+        });
+        //当修改成功后，点击弹出确定按钮后，跳转到列表页
+        dispatch(routerRedux.push('/modelnumber'));
+      }
+  };
   return (
     <Wrap
      num="2"
@@ -140,6 +160,7 @@ function Addstyleroute({dispatch,moudelnum}) {
      next="修改款号"
      >
      <Addstyle {...addProps}/>
+     <Savesuccess {...saveProps}/>
    </Wrap>
   );
 }

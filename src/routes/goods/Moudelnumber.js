@@ -6,6 +6,7 @@ import Stylelist from '../../components/ModelNumber/Stylelist';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 
+
 var styleCode='';
 var categoryCode='';
 var yearCode='';
@@ -51,10 +52,17 @@ function Moudelnumber({dispatch,moudelnum}) {
 		dataSource,
 		loading,
 		onConfig(item){
-
+			console.log('onConfig:',item);
+			dispatch({
+				type:'moudelnum/publicDate',
+				payload:{
+				  currentid:item.id,
+      			  currentsizegrop:item.sizegroupCode
+				}
+			});
 		},
 	  onEditItem(item){
-	  	console.log(item.id);
+	  	console.log('onEditItem:',item);
 		},
 	  onDeleteItem(item){
 	  	console.log(item);
@@ -134,7 +142,9 @@ function Moudelnumber({dispatch,moudelnum}) {
 		 //点击取消删除后
 		 dispatch({type:'moudelnum/sureModalhide'});
 	 }
-	}
+	};
+
+	
   return (
     <Wrap
      num="1"
@@ -142,8 +152,9 @@ function Moudelnumber({dispatch,moudelnum}) {
 	 >
 		  <Searchinfo {...searchProps}/>
 		  <Stylelist {...listProps}/>
-			<Paginations {...pageProps}/>
-			<SureModel {...modalProps}/>
+		  <Paginations {...pageProps}/>
+		  <SureModel {...modalProps}/>
+		 
 	</Wrap>
 
   );

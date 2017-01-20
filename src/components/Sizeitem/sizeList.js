@@ -70,8 +70,8 @@ function SizeList({
   return (
 
 
-    
-   
+
+
     <TablePlate title="维护尺寸组">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
@@ -86,7 +86,7 @@ function SizeList({
 		      />
       {/*ajax加载的时候需要进行的loading={loading}*/}
     </TablePlate>
-   
+
   );
 }
 

@@ -57,7 +57,7 @@ function Stylelist({
       <p>
         <Link to={`/modelnumber/addstyle/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Link to={`/modelnumber/configcolorsize/${record.id}`}><span onClick={() => onConfig(record)}>配置</span></Link>
+        <Link to={`/modelnumber/configcolorsize/${record.id}:${record.sizegroupCode}`}><span onClick={() => onConfig(record)}>配置</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a  onClick={() => onDeleteItem(record)}>删除</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

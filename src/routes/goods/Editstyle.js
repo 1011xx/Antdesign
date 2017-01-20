@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Editstyle from '../../components/ModelNumber/Editstyle';
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var arr=[];
 var arrlabel=[];
 var result='';
@@ -26,6 +28,7 @@ function Editstyleroute({dispatch,moudelnum}) {
     styleNamerules,
     stylename,//品名
     stylenum,//款号
+    savedone,//保存成功
   }=moudelnum;
 
 //通过从后台获取的规则来计算款号和品名
@@ -78,6 +81,10 @@ function Editstyleroute({dispatch,moudelnum}) {
           type:'moudelnum/create',
           payload:value
         })
+      },
+      cancel(){
+        //点击取消按钮需要执行的事件，返回到列表页面
+        dispatch(routerRedux.push('/modelnumber'));
       },
     onChange1(value,selectOption){
       console.log(selectOption);
@@ -135,6 +142,21 @@ function Editstyleroute({dispatch,moudelnum}) {
       getname();
     },
     };
+     const saveProps={
+    content:'保存成功',
+    visibleSave:savedone,
+      handleOk(){
+        dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+            savedone:false
+          }
+        });
+         //当保存成功后，点击弹出确定按钮后，跳转到列表页
+        dispatch(routerRedux.push('/modelnumber'));
+      }
+
+  };
   return (
     <Wrap
      num="2"
@@ -144,6 +166,7 @@ function Editstyleroute({dispatch,moudelnum}) {
      >
 
      <Editstyle {...editProps}/>
+      <Savesuccess {...saveProps}/>
    </Wrap>
   );
 }
