@@ -10,6 +10,7 @@ const Option = Select.Option;
 
 const Pricemaintain=({
 passdata,
+statedata,
 form: {
   getFieldDecorator,
   validateFields,
@@ -21,6 +22,14 @@ onLook,
 dataSource,
 
 })=> {
+  // 使用map函数生成option选项
+ const selectopt=statedata.map((item, key) => {
+
+   return(
+     <Option key={key} value={item.value}>{item.label}</Option>
+     );
+ });
+
   const columns=[{
     title: '序号',
     dataIndex: 'num',
@@ -51,11 +60,7 @@ dataSource,
     key: 'operate',
     render:(text, record) => (
       <p>
-         <a  onClick={() => onCommit(record)}>提交</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Link to={`/audit/modify/${record.id}`}>修改</Link>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <a  onClick={() => onDelete(record)}>删除</a>
+        <Link to={`/audit/modify/${record.id}`}>审核</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <a  onClick={() => onLook(record)}>查看</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -79,12 +84,14 @@ dataSource,
      e.preventDefault();
      validateFields((err, fieldsValue) => {
           if (!err) {
+              if(fieldsValue.date){
             const data = {
               ...fieldsValue,
               date:'',//给date赋值为空，因为没有实际
               start:fieldsValue.date[0].format('YYYY-MM-DD'),
               end:fieldsValue.date[1].format('YYYY-MM-DD')
             };
+          }
             console.log(fieldsValue);
             passdata(data);
            }
@@ -125,15 +132,12 @@ dataSource,
     {getFieldDecorator('status', {
     })(
       <Select  style={{ width: 150,height:22 }} className={styles.selectstyle}>
-     <Option value="jack">Jack</Option>
-     <Option value="lucy">Lucy</Option>
-     <Option value="disabled" >Disabled</Option>
-     <Option value="Yiminghe">yiminghe</Option>
-   </Select>
+      {selectopt}
+      </Select>
     )}
     </FormItem>
     <FormItem className={styles.marginLeft}>
-        <Button type="primary" htmlType="submit" size="large">查询</Button>
+        <Button type="primary" htmlType="submit" size="default">查询</Button>
     </FormItem>
     </Row>
     </Form>

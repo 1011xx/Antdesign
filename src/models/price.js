@@ -1,10 +1,14 @@
-import { queryColor,newColor,updateColor,removeColor } from '../services/attribute';
+import { queryTagPriceConfigAudit,queryTagPriceConfigState } from '../services/price';
 import {message} from 'antd';
 export default {
   //颜色属性维护
     namespace: 'price',
     state: {
       lookupvis:false,
+      statedata:[],
+
+
+
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
@@ -16,25 +20,38 @@ export default {
       defaultPageSize:10,
     },
     effects: {
-        *enter({ payload }, { call, put }){
-            const {data}= yield call(queryColor);
-            if(data){
-            console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                  }
-            yield put({type:'publicDate',
-                      payload:{
-                        dataSource:data.dataList,
-                        total:data.total,
-                        loading:false
-                      }
-                    });
+        *enter({ payload }, { call, put, select }){
+          const currentpage = yield select(({ price }) => price.current);
+          const pagesize = yield select(({ price }) => price.defaultPageSize);
+            //获取表格数据
+            // const {data}= yield call(queryTagPriceConfigAudit);
+            //获取状态控件数据
+            const status= yield call(queryTagPriceConfigState);
+            // if(data){
+            // console.log(data);
+            //  for(let i=1;i<=data.dataList.length;i++){
+            //         data.dataList[i-1].num=i;
+            //       }
+            // yield put({type:'publicDate',
+            //           payload:{
+            //             dataSource:data.dataList,
+            //             total:data.total,
+            //             loading:false
+            //           }
+            //         });
+            // };
+            if(status.data.code==0){
+              console.log(status.data);
+              yield put({type:'publicDate',
+                        payload:{
+                          statedata:status.data.state,
+                        }
+                      });
             }
         },
         *querypage({ payload }, { call, put, select }){
-          const currentpage = yield select(({ attrlist }) => attrlist.current);
-          const pagesize = yield select(({ attrlist }) => attrlist.defaultPageSize);
+          const currentpage = yield select(({ price }) => price.current);
+          const pagesize = yield select(({ price }) => price.defaultPageSize);
           console.log(payload);
           //使用传递过来的参数
           // const currentpage = payload.page;
@@ -188,7 +205,7 @@ export default {
      subscriptions: {
         setup({ dispatch, history }){
          history.listen(location => {
-        if (location.pathname === '/maintaincolor') {
+        if (location.pathname === '/audit'||location.pathname === '/set') {
           dispatch({type: 'enter'});
            dispatch({
             type: 'publicDate',

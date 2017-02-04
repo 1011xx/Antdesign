@@ -6,9 +6,10 @@ import LookupModal from '../../components/Price/LookupModal';
 
 
 function Audit({dispatch,price}) {
-  const {dataSource, lookupvis }=price;
+  const {dataSource, lookupvis,statedata }=price;
   const auditProps={
     dataSource,
+    statedata,
     passdata(data){
       //当点击提交按钮的时候
       console.log(data);
