@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Priceaudit from '../../components/Price/Priceaudit';
+import LookupModal from '../../components/Price/LookupModal';
 
 
 function Audit({dispatch,price}) {
-  const {dataSource }=price;
+  const {dataSource, lookupvis }=price;
   const auditProps={
     dataSource,
     passdata(data){
@@ -24,18 +25,22 @@ function Audit({dispatch,price}) {
     onLook(item){
       //当点击查看的时候
     },
-  }
+  };
+  const lookupProps={
+      lookupvis,
+  };
   return (
     <Wrap
        num="1"
        last="价格审核"
        >
        <Priceaudit {...auditProps}/>
-       </Wrap>
+       <LookupModal {...lookupProps}/>
+   </Wrap>
   );
 }
 
-function mapStateToProps(price) {
+function mapStateToProps({price}) {
   return {price};
 }
 

@@ -92,73 +92,7 @@ function ShopList({
       </p>
     ),
   }];
-		//   const data = [{
-		//   key: '1',
-		//   name: 'John Brown',
-		//   age: 32,
-		//   address: 'New York No. 1 Lake Park',
-		// }, {
-		//   key: '2',
-		//   name: 'Jim Green',
-		//   age: 42,
-		//   address: 'London No. 1 Lake Park',
-		// },{
-		//   key: '3',
-		//   name: 'Joe Black',
-		//   age: 32,
-		//   address: 'Sidney No. 1 Lake Park',
-		// },{
-  //     key: '4',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     address: 'New York No. 1 Lake Park',
-  //   }, {
-  //     key: '5',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //   }, {
-  //     key: '6',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //   },{
-  //     key: '7',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //   },{
-  //     key: '8',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     address: 'New York No. 1 Lake Park',
-  //   }, {
-  //     key: '9',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //   }, {
-  //     key: '10',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //   },{
-  //     key: '11',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sidney No. 1 Lake Park',
-  //   },{
-  //     key: '12',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     address: 'New York No. 1 Lake Park',
-  //   }, {
-  //     key: '13',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //   },{ key: '14',"num":1,"address":"121212","cityCode":"130900","cityName":"沧州市","code":"0713","contracts":"王大催","fullName":"翠微绿","id":"01083F4AB4374CED8885010B6D970290","images":"[]","mobileNumber":"110","provinceCode":"130000","provinceName":"河北省","saleAreaCode":"102","saleAreaName":"华北地区","shortName":"715","status":"1","statusName":"启用","telephoneNumber":"1212","typeCode":"1","typeName":"正价店","num":2}];
-
+		
   return (
 
     <TablePlate title="店仓列表">
@@ -173,7 +107,7 @@ function ShopList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
-            scroll={{  x: 1500,y: 'calc(100vh - 410px)' }}
+            scroll={{y: 'calc(100vh - 410px)' }}
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>

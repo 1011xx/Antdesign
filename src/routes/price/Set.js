@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
-import Priceset from '../../components/Price/Priceset';
+import Pricemaintain from '../../components/Price/Pricemaintain';
 
 function Set({dispatch,price}) {
   const { }=price;
@@ -10,12 +10,12 @@ function Set({dispatch,price}) {
        num="1"
        last="价格维护"
        >
-       <Priceset/>
+       <Pricemaintain/>
        </Wrap>
   );
 }
 
-function mapStateToProps(price) {
+function mapStateToProps({price}) {
   return {price};
 }
 

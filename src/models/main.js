@@ -73,6 +73,26 @@ export default {
                     payload: '6',
                   });
           break; 
+           case '/audit':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '7',
+                  });
+          break; 
+           case '/set':
+                  dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                  dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '8',
+                  });
+          break; 
         }
 
 //针对浏览器地址栏里面有ID的页面进行处理,使得对应的页面使得相应的导航栏显示高亮
@@ -168,7 +188,7 @@ export default {
                   });
                     dispatch({
                     type: 'ChangeSelectkey',
-                    payload: '6',
+                    payload: '',
                   });
                 break;
              }

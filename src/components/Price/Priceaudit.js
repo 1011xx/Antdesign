@@ -105,7 +105,7 @@ dataSource,
     >
     {getFieldDecorator('styleCode', {
     })(
-      <Input  placeholder="请输入款号"/>
+      <Input size="small" placeholder="请输入款号"/>
     )}
     </FormItem>
 

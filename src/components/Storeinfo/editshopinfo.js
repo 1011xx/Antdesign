@@ -331,10 +331,7 @@ return (
             <FormItem>
           <Button type="primary" htmlType="submit" size="large">保存</Button>
         </FormItem>
-
              <Button type="ghost" size="large">取消</Button>
-
-
           </div>
            </Form>
         </div>

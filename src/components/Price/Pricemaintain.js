@@ -8,7 +8,7 @@ const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const Priceset=({
+const Pricemaintain=({
 passdata,
 form: {
   getFieldDecorator,
@@ -79,7 +79,7 @@ dataSource,
      e.preventDefault();
      validateFields((err, fieldsValue) => {
           if (!err) {
-            const data = { 
+            const data = {
               ...fieldsValue,
               date:'',//给date赋值为空，因为没有实际
               start:fieldsValue.date[0].format('YYYY-MM-DD'),
@@ -104,7 +104,7 @@ dataSource,
     >
     {getFieldDecorator('styleCode', {
     })(
-      <Input  placeholder="请输入款号"/>
+      <Input size="small" placeholder="请输入款号"/>
     )}
     </FormItem>
 
@@ -139,7 +139,7 @@ dataSource,
     </Form>
     </Plate>
     <TablePlate title="价格单列表">
-   
+
         <Table size="small"
             className={styles.table}
             columns={columns}
@@ -153,7 +153,7 @@ dataSource,
     </div>
   );
 }
-Priceset.propTypes = {
+Pricemaintain.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func,
   onCommit: PropTypes.func,
@@ -161,4 +161,4 @@ Priceset.propTypes = {
   onLook: PropTypes.func,
   dataSource: PropTypes.array
 };
-export default Form.create()(Priceset);
+export default Form.create()(Pricemaintain);

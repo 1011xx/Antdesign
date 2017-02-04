@@ -45,6 +45,7 @@ const {   previewVisible,
 		  region,
 		  types,
 		  item:behavier==='create'?{}:currentItem,
+		 
 		getadddata(data){
 	// 		setInterval(function(){
 		// data.fullName=num++;
@@ -127,6 +128,7 @@ const {   previewVisible,
 		  },
 
 		 handleChange ( {fileList,file} ) {
+		 	console.log('fileList:',fileList);
 		 	let filelength=fileList.length;
 		 	console.log(filelength);
 		    file.status = 'done';

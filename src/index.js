@@ -18,7 +18,7 @@ app.model(require('./models/attrsize'));
 app.model(require('./models/attrsizeItem'));
 app.model(require('./models/attributeClass'));
 app.model(require("./models/moudelnum"));
-// app.model(require("./models/price"));
+app.model(require("./models/price"));
 
 // 4. Router
 app.router(require('./router'));

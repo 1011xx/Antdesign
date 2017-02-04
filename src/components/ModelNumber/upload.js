@@ -22,7 +22,10 @@ class PicturesWall extends React.Component {
     });
   }
 
-  handleChange = ({ fileList }) => this.setState({ fileList })
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList });
+    console.log('fileList:',fileList);
+  }
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;

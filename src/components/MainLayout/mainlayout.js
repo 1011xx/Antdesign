@@ -105,8 +105,12 @@ const Header=({
         </SubMenu>
 
          <SubMenu key="sub4" title={<span><Icon className={styles.iicon3} /><span>价格档案</span></span>}>
-          <Menu.Item key="7">价格维护</Menu.Item>
-          <Menu.Item key="8">价格审核</Menu.Item>
+          <Menu.Item key="7">
+           <Link to="/audit">价格维护</Link>
+           </Menu.Item>
+          <Menu.Item key="8">
+          <Link to="/set">价格审核</Link>
+          </Menu.Item>
         </SubMenu>
       </Menu>
       </div>

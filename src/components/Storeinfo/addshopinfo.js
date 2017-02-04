@@ -27,13 +27,14 @@ const AddShopinfo = ({
     types,
     options,
     item={},
+    
 
 }) =>{
 
 
 function handleSubmit(e){
  e.preventDefault();
- // console.log(item);
+ console.log(12121212);
  // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
 
@@ -55,7 +56,7 @@ function handleSubmit(e){
       // console.log('fieldsValue:');
       //  console.log(fieldsValue);
       //  console.log('values');
-      //  console.log(values);
+       // console.log(values);
        getadddata(values);
         // xhr.abort();
 
@@ -94,32 +95,32 @@ function typecode(code){
  typeCode=code[0];
 }
 
-function checkForm(rule, value, callback){
-//手机号码正则验证
-  if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
-    callback('不是正确的手机号码！');
-  }
-}
- 
- function checkfax(rule, value, callback){
-//手机号码正则验证
-  if(!(/^(\d{3,4}-)?\d{7,8}$/.test(value))){
-    callback('不是正确的传真号码！');
-  }
-}
- function checkname(rule, value, callback){
-//联系人长度
-  if(value.length>100){
-    callback('联系人姓名太长！');
-  }
-}
+// function checkForm(rule, value, callback){
+// //手机号码正则验证
+//   if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
+//     callback('不是正确的手机号码！');
+//   }
+// }
 
- function checktel(rule, value, callback){
-//店仓电话长度
-  if(value.length>100){
-    callback('店仓电话太长！');
-  }
-}
+//  function checkfax(rule, value, callback){
+// //手机号码正则验证3
+//   if(!(/^(\d{3,4}-)?\d{7,8}$/.test(value))){
+//     callback('不是正确的传真号码！');
+//   }
+// }
+//  function checkname(rule, value, callback){
+// //联系人长度
+//   if(value.length>100){
+//     callback('联系人姓名太长！');
+//   }
+// }
+
+//  function checktel(rule, value, callback){
+// //店仓电话长度
+//   if(value.length>100){
+//     callback('店仓电话太长！');
+//   }
+// }
 return (
 
         <div>
@@ -193,8 +194,8 @@ return (
               label="&nbsp;&nbsp;销售区域"
               >
 
-                  <Cascader
-                  size="small"
+              <Cascader
+              size="small"
               options={region}
               onChange={getSalesarea}
               placeholder="请选择销售区域"
@@ -257,8 +258,7 @@ return (
                 label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
                   {getFieldDecorator('mobileNumber', {
-                  initialValue:item.mobileNumber,
-                  rules:[{validator:checkForm}]
+                  initialValue:item.mobileNumber
                   })(
                     <Input size="small" placeholder="请输入手机号码" />
                   )}
@@ -269,8 +269,7 @@ return (
                 label="传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
                 >
                   {getFieldDecorator('faxNumber', {
-                  initialValue:item.faxNumber,
-                   rules:[{validator:checkfax}]
+                  initialValue:item.faxNumber
                   })(
                     <Input size="small" placeholder="请输入传真号码" />
                   )}
@@ -288,7 +287,6 @@ return (
                 </FormItem>
                 </Col>
              </Row>
-
         </Plate>
 
          <Plate title="照片(最多上传5张)">
@@ -312,9 +310,9 @@ return (
 
           <FormItem >
               <Button type="primary" htmlType="submit" size="large">保存</Button>
-              <Button type="ghost" size="large" className={styles.btn_margin}>取消</Button>
+              
           </FormItem>
-
+          <Button type="ghost" size="large"  className={styles.btn_margin}>取消</Button>
 
           </div>
            </Form>
