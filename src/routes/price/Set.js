@@ -15,7 +15,7 @@ function Set({dispatch,price}) {
   return (
     <Wrap
        num="1"
-       last="价格维护"
+       last="价格审核"
        >
        <Pricemaintain {...auditProps}/>
        </Wrap>

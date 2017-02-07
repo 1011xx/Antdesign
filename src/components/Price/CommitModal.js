@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import {  Table, Input,Modal,Col,Row} from 'antd';
-import styles from './LookupModal.less';
+import styles from './CommitModal.less';
 
 
-const LookupModal = ({
-	lookupvis,
+const CommitModal = ({
+	commitvis,
 	onOk,
 	handleCancel,
+  explain,
 
 }) => {
 function handleOk() {
@@ -52,7 +53,7 @@ function handleOk() {
 
 	return(
          <Modal title="查看审核过程"
-          visible={lookupvis}
+          visible={commitvis}
           onOk={onOk}
           onCancel={handleCancel}
           closable={false}
@@ -93,29 +94,26 @@ function handleOk() {
 				</Col>
 				<Col className="gutter-row" span={8}>
 				<div className="gutter-box">
-
 				</div>
 				</Col>
 		</Row>
 			</div>
-			<Table bordered
-			size="small"
-			pagination={false}
-			className={styles.table}
-			dataSource={dataSource}
-			columns={columns}
-			title={() => '审核信息'}
-			/>
+      <div className={styles.padtop}>
+        <div style={{marginBottom:20,display:'inline-block',verticalAlign: 'middle'}}>
+        说明：</div> <Input onChange={explain} type="textarea" rows={3} style={{width:380}}/>
+        </div>
+
         </Modal>
 
 
 		);
 }
 
-LookupModal.propTypes = {
+CommitModal.propTypes = {
 	lookupvis: PropTypes.any,
 	onOk: PropTypes.func,
 	handleCancel: PropTypes.func,
+  explain:PropTypes.func,
 };
 
-export default LookupModal;
+export default CommitModal;

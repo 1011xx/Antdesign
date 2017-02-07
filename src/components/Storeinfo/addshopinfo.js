@@ -27,17 +27,17 @@ const AddShopinfo = ({
     types,
     options,
     item={},
-    
+
 
 }) =>{
 
 
 function handleSubmit(e){
  e.preventDefault();
- console.log(12121212);
+ // console.log(12121212);
  // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
-
+      console.log('fieldsValue1');
       if (!err) {
 
          const values = {
@@ -53,7 +53,7 @@ function handleSubmit(e){
         'saleAreaName':saleAreaName
 
       };
-      // console.log('fieldsValue:');
+      console.log('fieldsValue:');
       //  console.log(fieldsValue);
       //  console.log('values');
        // console.log(values);
@@ -95,13 +95,13 @@ function typecode(code){
  typeCode=code[0];
 }
 
-// function checkForm(rule, value, callback){
-// //手机号码正则验证
-//   if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
-//     callback('不是正确的手机号码！');
-//   }
-// }
-
+function checkForm(rule, value, callback){
+//手机号码正则验证
+  if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
+    callback('不是正确的手机号码！');
+  }
+}
+//
 //  function checkfax(rule, value, callback){
 // //手机号码正则验证3
 //   if(!(/^(\d{3,4}-)?\d{7,8}$/.test(value))){
@@ -114,7 +114,7 @@ function typecode(code){
 //     callback('联系人姓名太长！');
 //   }
 // }
-
+//
 //  function checktel(rule, value, callback){
 // //店仓电话长度
 //   if(value.length>100){
@@ -258,7 +258,8 @@ return (
                 label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
                   {getFieldDecorator('mobileNumber', {
-                  initialValue:item.mobileNumber
+                    rules: [{validator:checkForm}],
+                    initialValue:item.mobileNumber
                   })(
                     <Input size="small" placeholder="请输入手机号码" />
                   )}
@@ -310,7 +311,7 @@ return (
 
           <FormItem >
               <Button type="primary" htmlType="submit" size="large">保存</Button>
-              
+
           </FormItem>
           <Button type="ghost" size="large"  className={styles.btn_margin}>取消</Button>
 

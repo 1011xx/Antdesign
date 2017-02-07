@@ -6,14 +6,15 @@ export default {
     state: {
       lookupvis:false,
       statedata:[],
-
+      visibleSure:false,
+      commitvis:false,
 
 
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
       dataSource:[],
-      visibleSure:false,
+      
       loading:true,
       total:0,
       current:1,
