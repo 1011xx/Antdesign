@@ -1,4 +1,4 @@
-import { queryTagPriceConfigAudit,queryTagPriceConfigState } from '../services/price';
+import { queryTagPriceConfig,queryTagPriceConfigState,deleteTagPriceConfig,queryTagPriceConfigInfo,queryTagPriceConfigAudit,updateAuditTagPriceConfig } from '../services/price';
 import {message} from 'antd';
 export default {
   //颜色属性维护
@@ -8,15 +8,20 @@ export default {
       statedata:[],
       visibleSure:false,
       commitvis:false,
+      explaintext:'',
+      textareavalue:'',
+      dataSource:[],
+      loading:true,
+      total:0,
+      detaildatasource:{},
+      auditdetaildata:{},
+      deleteid:'',
+      commitdata:{},
 
 
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
-      dataSource:[],
-      
-      loading:true,
-      total:0,
       current:1,
       defaultPageSize:10,
     },
@@ -25,27 +30,27 @@ export default {
           const currentpage = yield select(({ price }) => price.current);
           const pagesize = yield select(({ price }) => price.defaultPageSize);
             //获取表格数据
-            // const {data}= yield call(queryTagPriceConfigAudit);
+            const {data}= yield call(queryTagPriceConfig);
             //获取状态控件数据
             const status= yield call(queryTagPriceConfigState);
-            // if(data){
-            // console.log(data);
-            //  for(let i=1;i<=data.dataList.length;i++){
-            //         data.dataList[i-1].num=i;
-            //       }
-            // yield put({type:'publicDate',
-            //           payload:{
-            //             dataSource:data.dataList,
-            //             total:data.total,
-            //             loading:false
-            //           }
-            //         });
-            // };
+            if(data){
+            console.log(data);
+             for(let i=1;i<=data.dataList.length;i++){
+                    data.dataList[i-1].num=i;
+                  }
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        total:data.total,
+                        loading:false
+                      }
+                    });
+            };
             if(status.data.code==0){
               console.log(status.data);
               yield put({type:'publicDate',
                         payload:{
-                          statedata:status.data.state,
+                          statedata:status.data.dataList,
                         }
                       });
             }
@@ -144,11 +149,13 @@ export default {
             }
         },
         *delete({ payload }, { call, put,select }){
-            console.log('payload:'+payload);
+          //删除价格单列表的数据
+          const delid = yield select(({ price }) => price.deleteid);
             let newId={};
-            newId.id=payload;
+            newId.id=delid;
             let strarr=JSON.stringify(newId);
-            const {data}= yield call(removeColor,{jsonParam:strarr});
+            const {data}= yield call(deleteTagPriceConfig,{jsonParam:strarr});
+            console.log(data);
             if(data.code=="0"){
               message.success(data.msg);
                 console.log(data);
@@ -168,7 +175,63 @@ export default {
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loadings:false}});
             }
+        },
+         *details({ payload }, { call, put,select }){
+          //查看详情页面
+            let newId={};
+            newId.Id=payload;
+            let strarr=JSON.stringify(newId);
+            const {data}= yield call(queryTagPriceConfigInfo,{jsonParam:strarr});
+            if(data.code=="0"){
+                console.log(data);
+                for(let i=0;i<data.data.tagpriceConfigDetailDto.length;i++){
+                  data.data.tagpriceConfigDetailDto[i].num=i+1;
+                }
+              //将获取到的数据给详情页面的表格
+                  yield put({type:'publicDate',
+                      payload:{
+                        detaildatasource:data.data
+                      }
+                    });
+            }
+        },
+        *auditdetail({ payload }, { call, put,select }){
+          //审核详情弹框
+            let newId={};
+            newId.Id=payload;
+            let strarr=JSON.stringify(newId);
+            const {data}= yield call(queryTagPriceConfigAudit,{jsonParam:strarr});
+            if(data.code=="0"){
+                console.log(data);
+                for(let i=0;i<data.data.tagpriceConfigAuditDtoList.length;i++){
+                  data.data.tagpriceConfigAuditDtoList[i].num=i+1;
+                }
+              //将获取到的数据给审核详情弹框
+                  yield put({type:'publicDate',
+                      payload:{
+                        auditdetaildata:data.data
+                      }
+                    });
+            }
+        },
+         *commit({ payload }, { call, put,select }){
+          //提交吊牌价
+            let newId={};
+            newId.Id=payload;
+            let strarr=JSON.stringify(newId);
+            const {data}= yield call(updateAuditTagPriceConfig,{jsonParam:strarr});
+
+            if(data.code=="0"){
+              //将获取到的数据给审核详情弹框
+                  yield put({type:'publicDate',
+                      payload:{
+                        auditdetaildata:data.data
+                      }
+                    });
+            }
         }
+
+
     },
     reducers: {
         Changetitle(state, action) {
@@ -215,6 +278,18 @@ export default {
                defaultPageSize:10
             }
           });
+           }else{
+            let str=location.pathname;
+            let strs = str.split("/");
+            strs.shift();
+            if(strs[1]==='pricedetails'){
+              //如果是查看页面，取得要查询的id,通过id来请求数据
+              dispatch({
+              type:'details',
+              payload:strs[2]
+            });
+
+            }
            }
          });
        }

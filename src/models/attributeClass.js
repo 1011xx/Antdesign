@@ -20,7 +20,6 @@ export default {
       name:'',
 
 
-
       details:{},
       addressId:'',
     },

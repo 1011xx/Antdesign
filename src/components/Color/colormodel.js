@@ -39,7 +39,7 @@ function handleOk() {
           closable={false}
         >
         <Form  inline style={{ width: 264 ,margin:'0 auto'}}>
-        <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
+        <Row style={{padding:'0 0 20px 0','textAlign':'left'}}>
         <FormItem
           label="颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色："
           hasFeedback
@@ -56,7 +56,7 @@ function handleOk() {
         </FormItem>
         </Row>
 
-        <Row style={{'textAlign':'right'}}>
+        <Row style={{'textAlign':'left'}}>
         <FormItem
           label="颜色名称："
           hasFeedback

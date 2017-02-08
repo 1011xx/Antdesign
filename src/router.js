@@ -45,6 +45,8 @@ import Modalchosecolor from "./components/ModelNumber/Modalchosecolor.js";
 
 import Audit from "./routes/price/Audit.js";
 import Set from "./routes/price/Set.js";
+import Pricedetails from "./routes/price/Pricedetails.js";
+import Modify from "./routes/price/Modify.js";
 
 
 
@@ -84,6 +86,11 @@ export default function({ history }) {
 
 			  <Route path="/test" component={Modalchosecolor} />
 				<Route path="/audit" component={Audit} />
+        <Route path="/audit/pricedetails/:id" component={Pricedetails} />
+				<Route path="/audit/modify/:id" component={Modify} />
+
+
+
         <Route path="/set" component={Set} />
        </Route>
 

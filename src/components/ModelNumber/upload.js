@@ -24,7 +24,7 @@ class PicturesWall extends React.Component {
 
   handleChange = ({ fileList }) => {
     this.setState({ fileList });
-    console.log('fileList:',fileList);
+    // console.log('fileList:',fileList);
   }
 
   render() {

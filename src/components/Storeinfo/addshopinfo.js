@@ -37,7 +37,6 @@ function handleSubmit(e){
  // console.log(12121212);
  // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
-      console.log('fieldsValue1');
       if (!err) {
 
          const values = {

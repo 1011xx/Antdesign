@@ -4,12 +4,13 @@ import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import AttrEtcList from '../../components/AttrList/attretclist';
 
+
 //服装属性/款号属性维护
 
 function MainAttrList({dispatch,attributeClass}){
 
 	const {name,spinloading,title,dataSource,loading}=attributeClass;
-	
+
   const attrListProps = {
     title,
     dataSource,
@@ -17,7 +18,7 @@ function MainAttrList({dispatch,attributeClass}){
     onEditItem(item) {
       console.log(title);
       console.log(item);
-     
+
 
       dispatch({
         type: 'attributeClass/publicDate',
@@ -28,10 +29,9 @@ function MainAttrList({dispatch,attributeClass}){
       });
       // console.log(modalVisible);
     },
-    
+
   };
 
- 
 
 
 	return(
@@ -39,8 +39,9 @@ function MainAttrList({dispatch,attributeClass}){
        num="1"
 		   last="属性维护"
 		   >
-		  
+
 		  <AttrEtcList {...attrListProps}/>
+
 		   </Wrap>
 
 		);
@@ -56,4 +57,3 @@ function mapStateToProps({ attributeClass }) {
 }
 
 export default connect(mapStateToProps)(MainAttrList);
-

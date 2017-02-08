@@ -5,14 +5,13 @@ import styles from './LookupModal.less';
 
 const LookupModal = ({
 	lookupvis,
+	auditdetaildata,
 	onOk,
 	handleCancel,
 
 }) => {
-function handleOk() {
 
 
-  }
 	const dataSource = [{
 	  num: '1',
 	  name: '胡彦斌',
@@ -33,20 +32,20 @@ function handleOk() {
 	  key: 'num',
 	}, {
 	  title: '操作员',
-	  dataIndex: 'name',
-	  key: 'name',
+	  dataIndex: 'auditEmployeeName',
+	  key: 'auditEmployeeName',
 	}, {
 	  title: '操作时间',
-	  dataIndex: 'time',
-	  key: 'time',
+	  dataIndex: 'auditDate',
+	  key: 'auditDate',
 	}, {
 	  title: '状态',
-	  dataIndex: 'status',
-	  key: 'status',
+	  dataIndex: 'resultStateName',
+	  key: 'resultStateName',
 	}, {
 	  title: '说明',
-	  dataIndex: 'exp',
-	  key: 'exp',
+	  dataIndex: 'description',
+	  key: 'description',
 	}]
 
 
@@ -62,19 +61,19 @@ function handleOk() {
 		      <Col className="gutter-row" span={8}>
 		        <div className="gutter-box">
 							<span>单据号：</span>
-							<span>P201603120004</span>
+							<span>{auditdetaildata.documentNumber}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
 		        <div className="gutter-box">
 							<span>调价日期：</span>
-							<span>2016-10-25</span>
+							<span>{auditdetaildata.createDate}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>调价人：</span>
-						<span>林明</span>
+						<span>{auditdetaildata.createEmployeeName}</span>
 					</div>
 		      </Col>
     	</Row>
@@ -82,13 +81,13 @@ function handleOk() {
 				<Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>当前状态：</span>
-						<span>审核通过</span>
+						<span>{auditdetaildata.stateName}</span>
 					</div>
 				</Col>
 				<Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>备注：</span>
-						<span>为2017款调价</span>
+						<span>{auditdetaildata.remarks}</span>
 					</div>
 				</Col>
 				<Col className="gutter-row" span={8}>
@@ -102,7 +101,7 @@ function handleOk() {
 			size="small"
 			pagination={false}
 			className={styles.table}
-			dataSource={dataSource}
+			dataSource={auditdetaildata.tagpriceConfigAuditDtoList}
 			columns={columns}
 			title={() => '审核信息'}
 			/>

@@ -1,61 +1,47 @@
 import React, { PropTypes } from 'react';
-import {  Table, Input,Modal,Col,Row} from 'antd';
+import { Form, Table, Input,Modal,Col,Row} from 'antd';
 import styles from './CommitModal.less';
-
+const FormItem = Form.Item;
 
 const CommitModal = ({
+  form: {
+    getFieldDecorator,
+    validateFields,
+    getFieldsValue,
+    resetFields
+    },
 	commitvis,
-	onOk,
-	handleCancel,
+  commitdata,
+  makeSure,
+  handleCancel,
   explain,
+  initvalue,
 
 }) => {
-function handleOk() {
-
-
+  //当点击取消的时候执行的函数，并清空textarea数据
+function Cancel(e) {
+e.preventDefault();
+resetFields();
+handleCancel();
   }
-	const dataSource = [{
-	  num: '1',
-	  name: '胡彦斌',
-	  time: '2016-10-06 12:09:23',
-	  status: '审核通过',
-		exp:'同意'
-	}, {
-	  num: '2',
-	  name: '胡彦号',
-	  time: '2016-10-05 12:09:45',
-	  status: '提交审核',
-		exp:'修改了价格'
-	}]
+  //当点击确定的时候执行的函数，并清空textarea数据
+function handOk(){
 
-	const columns = [{
-	  title: '序号',
-	  dataIndex: 'num',
-	  key: 'num',
-	}, {
-	  title: '操作员',
-	  dataIndex: 'name',
-	  key: 'name',
-	}, {
-	  title: '操作时间',
-	  dataIndex: 'time',
-	  key: 'time',
-	}, {
-	  title: '状态',
-	  dataIndex: 'status',
-	  key: 'status',
-	}, {
-	  title: '说明',
-	  dataIndex: 'exp',
-	  key: 'exp',
-	}]
+  validateFields((err, fieldsValue) => {
+     if (!err) {
+       makeSure(fieldsValue);
+     }
+   });
+   //清楚表单域的值
+  resetFields();
+}
 
 
 	return(
-         <Modal title="查看审核过程"
+         <Modal title="提交"
           visible={commitvis}
-          onOk={onOk}
-          onCancel={handleCancel}
+          onOk={handOk}
+          onCancel={Cancel}
           closable={false}
         >
 				<div className={styles.titletop}>
@@ -63,19 +49,19 @@ function handleOk() {
 		      <Col className="gutter-row" span={8}>
 		        <div className="gutter-box">
 							<span>单据号：</span>
-							<span>P201603120004</span>
+							<span>{commitdata.documentNumber}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
 		        <div className="gutter-box">
 							<span>调价日期：</span>
-							<span>2016-10-25</span>
+							<span>{commitdata.createDate}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>调价人：</span>
-						<span>林明</span>
+						<span>{commitdata.createEmployeeName}</span>
 					</div>
 		      </Col>
     	</Row>
@@ -83,13 +69,13 @@ function handleOk() {
 				<Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>当前状态：</span>
-						<span>审核通过</span>
+						<span>{commitdata.stateName}</span>
 					</div>
 				</Col>
 				<Col className="gutter-row" span={8}>
 					<div className="gutter-box">
 						<span>备注：</span>
-						<span>为2017款调价</span>
+						<span>{commitdata.documentNumber}</span>
 					</div>
 				</Col>
 				<Col className="gutter-row" span={8}>
@@ -99,8 +85,20 @@ function handleOk() {
 		</Row>
 			</div>
       <div className={styles.padtop}>
-        <div style={{marginBottom:20,display:'inline-block',verticalAlign: 'middle'}}>
-        说明：</div> <Input onChange={explain} type="textarea" rows={3} style={{width:380}}/>
+      <Form
+      inline
+      >
+            <FormItem
+                label="说明："
+                >
+                  {getFieldDecorator('description', {
+                  initialValue:initvalue,
+                  })(
+                    <Input type="textarea" rows={3} style={{width:380}} />
+                  )}
+                </FormItem>
+      </Form>
+
         </div>
 
         </Modal>
@@ -111,9 +109,9 @@ function handleOk() {
 
 CommitModal.propTypes = {
 	lookupvis: PropTypes.any,
-	onOk: PropTypes.func,
+	makeSure: PropTypes.func,
 	handleCancel: PropTypes.func,
   explain:PropTypes.func,
 };
 
-export default CommitModal;
+export default Form.create()(CommitModal);
