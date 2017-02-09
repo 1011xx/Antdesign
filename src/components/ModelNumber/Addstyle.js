@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
-import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader } from 'antd';
+import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch } from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
 import styles from './Addstyle.less';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+var statethere;
 function strtoarr(str1){
   let arr=[];
   arr[0]=str1;
@@ -45,6 +46,9 @@ const Addstyle=({
     onChange10,
     passdata,
     cancel,
+    statustest,
+    switchstatus,
+
 
 })=> {
    //获取styleName和styleCode
@@ -71,7 +75,54 @@ function getCode(arr){
     return undefined;
   }
 }
-
+//将switch值转换
+function boolTovalue(isUniqueCodeManagement){
+  if(isUniqueCodeManagement==true){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+// function valueTobool(isUniqueCodeManagement){
+//   console.log('isUniqueCodeManagement',isUniqueCodeManagement);
+//   if(isUniqueCodeManagement==1){
+//     console.log('isUniqueCodeManagement',true);
+//     return true;
+//   }else {
+//       console.log('isUniqueCodeManagement',false);
+//     return false;
+//   }
+// }
+// function statustest(){
+//   currentItem.isUniqCodemanagementCode=!currentItem.isUniqCodemanagementCode;
+// }
+//对序号进行正则验证
+function checkserialCode(rule, value, callback){
+  if(value){
+    if (/^\d{4}$/.test(value)!=true) {
+        callback('请输入正确的序号!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+}
+//当switch发生改变的时候，读取switch的值
+function switchchange(checked){
+  // console.log('checked',checked,boolTovalue(checked));
+  statethere=checked;
+}
+//获取switch的值，这个超级麻烦
+function test(){
+  console.log('statethere',statethere);
+  if(statethere!='undefine'){
+    return boolTovalue(statethere);
+  }else{
+    return boolTovalue(currentItem.isUniqCodemanagementCode);
+  }
+}
+//当提交的时候
   function handleSubmit(e){
       e.preventDefault();
       validateFields((err, fieldsValue) => {
@@ -103,6 +154,7 @@ function getCode(arr){
          smallCategoryName:getName(fieldsValue.smallCategoryCode,smallCategory),
          SizeGroupName:getName(fieldsValue.sizeGroupCode,sizeItem),
          unitName:getName(fieldsValue.unitCode,styleUnit),
+         isUniqueCodeManagement:test(),
         }
         console.log('values:',values);
             passdata(values);
@@ -206,7 +258,9 @@ function getCode(arr){
             >
              {getFieldDecorator('serialNoCode', {
                initialValue:currentItem.serialnoCode,
-               rules: [{required: true, message: '请选择序号!' }]
+               rules: [{required: true, message: '请选择序号!' },{
+                 validator:checkserialCode
+               }]
           })(
             <Input size="small" placeholder="请输入序号" className={styles.inputwidth} onChange={onChange4}/>
           )}
@@ -355,15 +409,14 @@ function getCode(arr){
         <FormItem
           label="是否唯一码管理"
           style={{marginLeft:50}}
+          required
           >
            {getFieldDecorator('isUniqueCodeManagement', {
-             initialValue:currentItem.isUniqCodemanagementCode,
-             rules: [{required: true, message: '请选择!' }]
+
         })(
-        <RadioGroup  size="small">
-         <Radio value={'1'}>是</Radio>
-         <Radio value={'0'}>否</Radio>
-       </RadioGroup>
+          <div onClick={statustest}>
+           <Switch checked={switchstatus} onChange={switchchange} checkedChildren={'是'} unCheckedChildren={'否'} className={styles.switchradio}/>
+          </div>
         )}
         </FormItem>
 

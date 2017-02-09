@@ -30,6 +30,7 @@ function Addstyleroute({dispatch,moudelnum}) {
     arr,
     arrlabel,
     savedtwo,//修改成功
+    switchstatus
   }=moudelnum;
   //通过从后台获取的规则来计算款号和品名
     const getname=function(){
@@ -70,6 +71,7 @@ function Addstyleroute({dispatch,moudelnum}) {
       styleUnit,//单位
       styleNumbrules,
       styleNamerules,
+      switchstatus,
       stylename,
       stylenum,
       currentItem,//根据id获取到的数据
@@ -137,6 +139,25 @@ function Addstyleroute({dispatch,moudelnum}) {
        arrlabel[10]=selectOption[0].label;
       getname();
     },
+    statustest(){
+      
+      if(switchstatus){
+          dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+              switchstatus:false
+          }
+        });
+      }else{
+          dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+              switchstatus:true
+          }
+        });
+      }
+       
+    }
     };
     const saveProps={
     content:'修改成功',

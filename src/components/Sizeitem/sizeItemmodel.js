@@ -19,6 +19,31 @@ const ItemModel = ({
     getFieldsValue,
     },
 }) => {
+	//正则验证尺寸组编号
+		function checkSizeitem(rule, value, callback){
+				if(value){
+		    if (/^\d{2}$/.test(value)!=true) {
+		        callback('请输入正确的尺寸组号!');
+		      } else {
+		        callback();
+		      }
+		  }else{
+		    callback();
+		  }
+		}
+		//验证尺寸组名长度
+		function checksizeGroupName(rule, value, callback){
+			if(value){
+			if (value.length>30) {
+					callback('输入的尺寸组名称过长!');
+				} else {
+					callback();
+				}
+		}else{
+			callback();
+		}
+		}
+		//提交
 function handleOk() {
     validateFields((errors) => {
       if (errors) {
@@ -58,7 +83,9 @@ const selectopt=selectSource.map((item, key) => {
           {getFieldDecorator('sizeGroupCode', {
            initialValue:item.code,
             rules: [
-              { required: true, message: '尺寸未填写' },
+              { required: true, message: '尺寸未填写' },{
+								validator:checkSizeitem
+							}
             ],
           })(
             <Input type="text" />
@@ -74,7 +101,9 @@ const selectopt=selectSource.map((item, key) => {
           {getFieldDecorator('sizeGroupName', {
            initialValue:item.name,
             rules: [
-              { required: true, message: '尺寸组名称未填写' },
+              { required: true, message: '尺寸组名称未填写' },{
+								validator:checksizeGroupName
+							}
             ],
           })(
             <Input type="text" />
@@ -85,7 +114,7 @@ const selectopt=selectSource.map((item, key) => {
          <Row style={{'textAlign':'left'}}>
         <FormItem
           label="选&nbsp;择&nbsp;尺&nbsp;寸&nbsp;："
-          
+
           className={styles.feedback}
         >
           {getFieldDecorator('sizes', {
@@ -94,8 +123,12 @@ const selectopt=selectSource.map((item, key) => {
               { required: true, message: '点击输入框选择尺寸' },
             ],
           })(
-            
-             <Select tags style={{ width: 240 }}
+
+             <Select
+						 		className={styles.select}
+						    multiple
+						    style={{ width: 240 }}
+						    placeholder="请选择尺寸"
                 tokenSeparators={[',']}
               >
                   {selectopt}
@@ -105,8 +138,8 @@ const selectopt=selectSource.map((item, key) => {
          </Row>
       </Form>
         </Modal>
-     
-			
+
+
 		);
 }
 

@@ -41,11 +41,15 @@ function AttrEtcList({
   },{
     title: '操作',
     key: 'operation',
-    render: (text, record) => (
-      <p>
-      <Link to={`/mainattrlist/styleattr/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
-      </p>
-    ),
+    render: (text, record) => {
+      if(record.isManualMaintenceName==="否"){
+        return (
+          <p>
+          <Link to={`/mainattrlist/styleattr/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
+          </p>
+        );
+      }
+    },
   }];
 		//   const data = [{
 		//   num: 1,
@@ -90,11 +94,11 @@ function AttrEtcList({
 }
 
 AttrEtcList.propTypes = {
-  
+
   onEditItem: PropTypes.func,
   dataSource: PropTypes.array,
   loading:PropTypes.bool
-  
+
 };
 
 export default AttrEtcList;

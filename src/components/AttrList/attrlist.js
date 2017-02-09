@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table, Popconfirm, Pagination,Icon, Spin } from 'antd';
+import { Table, Popconfirm, Pagination,Icon, Spin, Row, Col } from 'antd';
 import {Link} from 'dva/router';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
@@ -69,11 +69,19 @@ function AttrList({
     <div>
     <Spin spinning={spinloading}  >
     <Plate title="属性类">
-      <p className={styles.p_padding}>
+    <Row>
+    <Col span={6}>
       <span className={styles.attrpadding}>属性类名称：{details.name}</span>
-      <span className={styles.attrpadding}>代码长度：{details.codeLength}</span>
-      <span className={styles.attrpadding}>顺序号：{details.seqno}</span>
-      </p>
+    </Col>
+    <Col span={6}>
+    <span className={styles.attrpadding}>代码长度：{details.codeLength}</span>
+    </Col>
+    <Col span={6}>
+    <span className={styles.attrpadding}>顺序号：{details.seqno}</span>
+    </Col>
+    <Col span={6}></Col>
+    </Row>
+
     </Plate>
     </Spin>
     <TablePlate title="属性">

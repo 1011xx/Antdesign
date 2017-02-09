@@ -23,6 +23,7 @@ export default {
       title:"",
       savedone:false,//保存成功状态
       savedtwo:false,//修改成功状态
+      switchstatus:false,//修改界面switch状态
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
@@ -94,7 +95,7 @@ export default {
 
             if(data){
               //将数据源改变成
-            // console.log(data);
+            console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
                   }
@@ -207,12 +208,18 @@ export default {
           const resultinfo=yield call(getStyleInfoById,{jsonparam:payload});
           const rules=yield call(queryStyleRule);
           if(resultinfo.data){
-            console.log(resultinfo.data.styleInfo);
+            if(resultinfo.data.styleInfo.isUniqCodemanagementCode==1){
+              resultinfo.data.styleInfo.isUniqCodemanagementCode=true;
+            }else{
+              resultinfo.data.styleInfo.isUniqCodemanagementCode=false;
+            }
+            console.info(resultinfo.data.styleInfo);
 
           //将请求的数据赋值给currentItem和detailItem
             yield put({type:'publicDate',
             payload:{
               currentItem:resultinfo.data.styleInfo,
+              switchstatus:resultinfo.data.styleInfo.isUniqCodemanagementCode,
                 stylename: resultinfo.data.styleInfo.name,//品名
                 stylenum: resultinfo.data.styleInfo.code,//款号
               arr:[

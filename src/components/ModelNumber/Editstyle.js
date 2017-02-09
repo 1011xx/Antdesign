@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader } from 'antd';
+import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch } from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
 import styles from './Addstyle.less';
@@ -69,6 +69,26 @@ function getCode(arr){
     return undefined;
   }
 }
+//将switch值转换
+function boolTovalue(isUniqueCodeManagement){
+  if(isUniqueCodeManagement==true){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+//对序号进行正则验证
+function checkserialCode(rule, value, callback){
+  if(value){
+    if (/^\d{4}$/.test(value)!=true) {
+        callback('请输入正确的序号!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+}
 
   function handleSubmit(e){
    e.preventDefault();
@@ -79,7 +99,6 @@ function getCode(arr){
            const values = {
           ...fieldsValue,
          brandCode:getCode(fieldsValue.brandCode),
-
          seriesCode:getCode(fieldsValue.seriesCode),
          saleTypeCode:getCode(fieldsValue.saleTypeCode),
          yearCode:getCode(fieldsValue.yearCode),
@@ -102,7 +121,7 @@ function getCode(arr){
          smallCategoryName:getName(fieldsValue.smallCategoryCode,smallCategory),
          SizeGroupName:getName(fieldsValue.sizeGroupCode,sizeItem),
          unitName:getName(fieldsValue.unitCode,styleUnit),
-
+         isUniqueCodeManagement:boolTovalue(fieldsValue.isUniqueCodeManagement),
         }
         console.log('values:',values);
             passdata(values);
@@ -214,7 +233,9 @@ function getCode(arr){
             >
              {getFieldDecorator('serialNoCode', {
 
-               rules: [{required: true, message: '请选择序号!' }]
+               rules: [{required: true, message: '请输入序号!'},{
+                 validator: checkserialCode,
+               }]
           })(
             <Input size="small" placeholder="请输入序号" className={styles.inputwidth} onChange={onChange4}/>
 
@@ -366,18 +387,21 @@ function getCode(arr){
         <FormItem
           label="是否唯一码管理"
           style={{marginLeft:30}}
+          required
           >
            {getFieldDecorator('isUniqueCodeManagement', {
 
-             rules: [{required: true, message: '请选择!' }]
+
         })(
-        <RadioGroup  size="small">
-         <Radio value={'1'}>是</Radio>
-         <Radio value={'0'}>否</Radio>
-       </RadioGroup>
+        <Switch checkedChildren={'是'} unCheckedChildren={'否'} className={styles.switchradio}/>
+
+
         )}
         </FormItem>
-
+        {/*<RadioGroup  size="small">
+         <Radio value={'1'}>是</Radio>
+         <Radio value={'0'}>否</Radio>
+       </RadioGroup>*/}
        </Row>
        <Row className={styles.paddingtop}>
        <FormItem

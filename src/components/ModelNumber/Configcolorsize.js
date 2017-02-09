@@ -23,7 +23,8 @@ const Configcolorsize=({
     onEditDetail,
     sizeoption,
     listarry,
- 
+    backurl,
+
   })=> {
 
 
@@ -113,7 +114,7 @@ const Configcolorsize=({
     <div className={styles.btn_wrap}>
       <FormItem>
         <Button type="primary" htmlType="submit" size="large">保存</Button>
-        <Button type="ghost" size="large"className={styles.marginbtn}>取消</Button>
+        <Button type="ghost" size="large" className={styles.marginbtn} onClick={backurl}>取消</Button>
       </FormItem>
     </div>
     <div style={{height:1}}/>
@@ -123,6 +124,7 @@ const Configcolorsize=({
 Configcolorsize.propTypes = {
   form: PropTypes.object,
   passdata: PropTypes.func,
+  backurl:PropTypes.func,
   onUpload: PropTypes.func,
   onEditDetail: PropTypes.func,
 };

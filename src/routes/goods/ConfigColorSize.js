@@ -35,6 +35,9 @@ const configProps={
 	},
  onEditDetail(item){
 	 console.log(item);
+ },
+ backurl(){
+	 dispatch(routerRedux.push('/modelnumber'));
  }
 }
 
@@ -71,12 +74,12 @@ const modalProps={
 				temp.colorName=transfordata[j].colorName;
 			}
 			}
-			
+
 			console.log('temp:',temp);
 			listarry.push(temp);
 		}
 		console.log(listarry);
-		
+
 //完成操作后关闭弹框
 		dispatch({
 			type:'moudelnum/publicDate',
@@ -85,7 +88,7 @@ const modalProps={
 			}
 		});
 
-		
+
 	},
 	handleCancel(){
 //点击弹框取消按钮后

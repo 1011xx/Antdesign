@@ -15,23 +15,47 @@ const AttrModel = ({
     getFieldsValue,
     }
 }) => {
-function handleOk() {
-    validateFields((errors) => {
-      if (errors) {
-        return;
+	//正则验证颜色编号
+	function checkColor(rule, value, callback){
+		if(value){
+    if (/^[0-9]{1,3}$/.test(value)!=true) {
+        callback('请输入正确的颜色代码!');
+      } else {
+        callback();
       }
-      const data = { ...getFieldsValue() };
-      onOk(data);
-    });
-
+  }else{
+    callback();
   }
+	}
+	//验证颜色名称长度
+	function checkcolorName(rule, value, callback){
+		if(value){
+		if (value.length>30) {
+				callback('输入的颜色名称过长!');
+			} else {
+				callback();
+			}
+	}else{
+		callback();
+	}
+	}
+	function handleOk() {
+	    validateFields((errors) => {
+	      if (errors) {
+	        return;
+	      }
+	      const data = { ...getFieldsValue() };
+	      onOk(data);
+	    });
+
+	  }
 
 
 
 	return(
 
-		
-        
+
+
         <Modal title={title}
           visible={visible}
           onOk={handleOk}
@@ -48,7 +72,9 @@ function handleOk() {
           {getFieldDecorator('colorCode', {
            initialValue:item.colorCode,
             rules: [
-              { required: true, message: '颜色未填写' },
+              { required: true, message: '颜色未填写' },{
+								validator:checkColor
+							}
             ],
           })(
             <Input type="text" />
@@ -64,7 +90,9 @@ function handleOk() {
           {getFieldDecorator('colorName', {
    			   initialValue:item.colorName,
             rules: [
-              { required: true, message: '颜色名称未填写' },
+              { required: true, message: '颜色名称未填写' },{
+								validator:checkcolorName
+							}
             ],
           })(
             <Input type="text" />

@@ -15,6 +15,30 @@ const SizeModel = ({
     getFieldsValue,
     },
 }) => {
+//正则验证尺寸编号
+	function checkSize(rule, value, callback){
+		if(value){
+    if (/^[A-Z0-9]{1,3}$/.test(value)!=true) {
+        callback('请输入正确的尺寸代码!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+	}
+	//验证尺寸名称长度
+	function checksizeName(rule, value, callback){
+		if(value){
+		if (value.length>30) {
+				callback('输入的尺寸名称过长!');
+			} else {
+				callback();
+			}
+	}else{
+		callback();
+	}
+	}
 function handleOk() {
     validateFields((errors) => {
       if (errors) {
@@ -30,8 +54,8 @@ function handleOk() {
 
 	return(
 
-		
-        
+
+
          <Modal title={title}
           visible={visible}
           onOk={handleOk}
@@ -48,7 +72,9 @@ function handleOk() {
           {getFieldDecorator('sizeCode', {
            initialValue:item.sizeCode,
             rules: [
-              { required: true, message: '尺寸未填写' },
+              { required: true, message: '尺寸未填写' },{
+								validator:checkSize
+							}
             ],
           })(
             <Input type="text" />
@@ -64,7 +90,9 @@ function handleOk() {
           {getFieldDecorator('sizeName', {
            initialValue:item.sizeName,
             rules: [
-              { required: true, message: '尺寸名称未填写' },
+              { required: true, message: '尺寸名称未填写' },{
+								validator:checksizeName
+							}
             ],
           })(
             <Input type="text" />
@@ -73,8 +101,8 @@ function handleOk() {
          </Row>
       </Form>
         </Modal>
-     
-			
+
+
 		);
 }
 
