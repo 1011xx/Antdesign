@@ -1,5 +1,5 @@
 import { querySize,newSize,updateSize,removeSize } from '../services/attribute';
-import {message} from 'antd';
+import {message,Modal} from 'antd';
 export default {
   //尺寸属性维护
     namespace: 'attrsize',
@@ -18,13 +18,13 @@ export default {
     effects: {
         *enter({ payload }, { call, put, select }){
           //若后期保留停留的页面，开启注释
-           // const currentpage = yield select(({ attrsize }) => attrsize.current);
-           // const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
-           // let tempobj={};
-           // tempobj.page=currentpage;
-           // tempobj.rows=pagesize;
-           // let strarr=JSON.stringify(tempobj);
-            const {data}= yield call(querySize);
+           const currentpage = yield select(({ attrsize }) => attrsize.current);
+           const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
+           let tempobj={};
+           tempobj.page=currentpage;
+           tempobj.rows=pagesize;
+           let strarr=JSON.stringify(tempobj);
+            const {data}= yield call(querySize,{jsonParam:strarr});
             if(data){
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
@@ -36,7 +36,6 @@ export default {
                         total:data.total,
                         loading:false,
                          current:1,
-                         defaultPageSize:10
                       }
                     });
             }
@@ -73,7 +72,7 @@ export default {
                         loading:false
                       }
                     });
-             
+
             }
         },
         *create({ payload }, { call, put,select }){
@@ -84,7 +83,7 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-               message.success(data.msg); 
+               // message.success(data.msg);
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
@@ -95,17 +94,19 @@ export default {
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
+                        modalVisible:false,
+                        loading:true,
                          current:1,
-                         defaultPageSize:10
                       }
                     });
 
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+
+                Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+
             }
         },
         *edit({ payload }, { call, put,select }){
@@ -115,24 +116,26 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateSize,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg); 
+               // message.success(data.msg);
                 console.log(data);
                  //方案二：再次请求数据
                  yield put({type:'enter'});
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
-                         current:1,
-                         defaultPageSize:10
+                        modalVisible:false,
+                        loadings:true,
+                        current:1
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
-            } 
+
+                Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+
+            }
         },
         *delete({ payload }, { call, put,select }){
             console.log('payload:'+payload);
@@ -141,23 +144,23 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeSize,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg); 
+               // message.success(data.msg);
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'enter'});
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
-                         current:1,
-                         defaultPageSize:10
+                         current:1
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+               
+               Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+               yield put({type:'tableLoadingClose'});
             }
         }
     },

@@ -11,7 +11,7 @@ var deleteid=null;//转存删除ID号码
 function MaintainSizeItem({dispatch,attrsizeItem}){
 
 	const {total,current,defaultPageSize,loading,visibleSure,dataSource,selectSource,title,modalVisible,modalType,currentItem}=attrsizeItem;
-	
+
 	const itemModalProps = {
 
 	item:modalType==='create'?{}:currentItem,
@@ -21,21 +21,19 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
     onOk(data) {
       let tempstr=data.sizes.join(",");
       let newarr={...data,'sizes':tempstr};
-      console.log(newarr);
-      console.log(data);
-    dispatch({
-          type:'attrsizeItem/tableLoading'
-        });
+      // console.log(newarr);
+      // console.log(data);
+
       if(modalType==='create'){
         //如果是创建
         console.log('创建');
-       
+
         //这里与后台数据交流
         dispatch({
         type: 'attrsizeItem/create',
         payload: newarr,
       });
-        dispatch({type:'attrsizeItem/hideModal'});
+        // dispatch({type:'attrsizeItem/hideModal'});
       }else{
         //如果是修改
         console.log('修改');
@@ -45,9 +43,9 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
         type: 'attrsizeItem/edit',
         payload: newarr,
       });
-        dispatch({
-          type:'attrsizeItem/hideModal'
-        });
+        // dispatch({
+        //   type:'attrsizeItem/hideModal'
+        // });
       }
 
     },
@@ -167,7 +165,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
       num="1"
       last="尺寸组维护"
 		   >
-		  
+
 		  <SizeList {...itemListProps}/>
 		  <Paginations {...pageProps}/>
       <UserModalGen />

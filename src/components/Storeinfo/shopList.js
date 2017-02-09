@@ -23,64 +23,64 @@ function ShopList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
-    width:50
+    width:'5%'
   }, {
     title: '店仓编号',
     dataIndex: 'code',
     key: 'code',
-    width:100
+    width:'5%'
   }, {
     title: '店仓名称',
     dataIndex: 'fullName',
     key: 'fullName',
-    width:200
+    width:'20%'
   }, {
     title: '店仓简称',
     dataIndex: 'shortName',
     key: 'shortName',
-    width:100
+    width:'10%'
   }, {
     title: '类别',
     dataIndex: 'typeName',
     key: 'typeName',
-    width:60
+    width:'5%'
   },{
     title: '销售区域',
     dataIndex: 'saleAreaName',
     key: 'saleAreaName',
-    width:100
+    width:'5%'
 
   }, {
     title: '所在城市',
     dataIndex: 'cityName',
     key: 'cityName',
-    width:60
+    width:'5%'
   },
   {
     title: '店仓电话',
     dataIndex: 'mobileNumber',
     key: 'mobileNumber',
-    width:100
+    width:'20%'
   },{
     title: '店长',
     dataIndex: 'shopkeeper',
     key: 'shopkeeper',
-    width:100
+    width:'5%'
   },
   {
     title: '管店经理',
     dataIndex: 'manager',
     key: 'manager',
-    width:100
+    width:'5%'
   },{
     title: '仓店状态',
     dataIndex: 'statusName',
     key: 'statusName',
-      width:100
+      width:'5%'
   },{
     title: '操作',
     key: 'operation',
-      width:200,
+      width:'10%',
     render: (text, record) => (
       <p>
          <Link to={`/shopinfo/shopedit/${record.id}`}><span onClick={() => onEditItem(record)}>修改</span></Link>
@@ -92,7 +92,7 @@ function ShopList({
       </p>
     ),
   }];
-		
+
   return (
 
     <TablePlate title="店仓列表">

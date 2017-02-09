@@ -5,7 +5,7 @@ const FormItem = Form.Item;
 
 const SizeModel = ({
 	title,
-	visible,
+	modalVisible,
 	onOk,
 	handleCancel,
 	item={},
@@ -57,7 +57,7 @@ function handleOk() {
 
 
          <Modal title={title}
-          visible={visible}
+          visible={modalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
@@ -108,7 +108,7 @@ function handleOk() {
 
 SizeModel.propTypes = {
   title: PropTypes.any,
-	visible: PropTypes.any,
+	modalVisible: PropTypes.any,
 	form: PropTypes.object,
 	onOk: PropTypes.func,
 	handleCancel: PropTypes.func,

@@ -12,25 +12,33 @@ var locationid=null;
 var deleteid=null;
 function StyleAttr({dispatch,attributeClass}){
 
-	const {name,spinloading,total,current,defaultPageSize,visibleSure,details,title,dataSources,loadings,modalVisible,modalType,currentItem}=attributeClass;
+	const {name,spinloading,total,current,defaultPageSize,visibleSure,details,title,dataSources,loadings,modalVisible,modalType,currentItem,confirmLoading,backMsg,backvalidateStatus}=attributeClass;
 	
 	const attrModalProps = {
 
 	item:modalType==='create'?{}:currentItem,
     title,
     details,
-    visible:modalVisible,
+    confirmLoading,
+    backMsg,
+    backvalidateStatus,
+    modalVisible,
     onOk(data) {
       //当点击修改的时候我们可以获取clsId，但是如果，直接点击新增
       // 就会出现获取不到的状况，那么在创建的时候，直接从地址栏获取，
       // 为了保持统一，直接从地址栏获取。
-
+      // dispatch({
+      //     type:'attributeClass/publicDate',
+      //     payload:{
+      //       confirmLoading:true
+      //     }
+      //   });
       
 
     //让表格显示加载状态
-      dispatch({
-          type:'attributeClass/tableLoadings'
-        });
+      // dispatch({
+      //     type:'attributeClass/tableLoadings'
+      //   });
     //当在点击确定的时候判断是修改还是新增
     if(modalType==='create'){
         //如果是创建
@@ -40,7 +48,7 @@ function StyleAttr({dispatch,attributeClass}){
           type: 'attributeClass/create',
           payload: data,
          });
-        dispatch({type:'attributeClass/hideModal'});
+       
       }else{
          //如果是修改
         console.log('修改');
@@ -51,9 +59,7 @@ function StyleAttr({dispatch,attributeClass}){
         type: 'attributeClass/edit',
         payload: data,
         });
-        dispatch({
-          type:'attributeClass/hideModal'
-        });
+        
       }
    
     },
@@ -61,7 +67,68 @@ function StyleAttr({dispatch,attributeClass}){
       dispatch({
         type: 'attributeClass/hideModal',
       });
+    },
+  checkAttrcode(rule, value, callback){
+  /*
+  details.name--属性类名称
+  details.codeLength--代码长度
+  */
+  if(details.name=="年份"){
+    //如果是年份
+    // console.log(details);
+    // console.log(typeof(details.codeLength));
+
+    if(value){
+      //年份只能存在两位数字的形式01-99
+      if (/^[0][1-9]$|^[1-9][0-9]$/.test(value)!=true) {
+         //  dispatch({
+         //    type:'attributeClass/publicDate',
+         //    payload:{
+         //      backvalidateStatus:'error',
+         //      backMsg:'输入的属性代码有误!'
+         //    }
+         // });
+          callback('输入的属性代码有误!');
+        } else {
+          callback();
+        }
+    }else{
+      callback();
     }
+
+  }else{
+    //如果不是年份
+    if(value){
+      //\w特殊字符校验
+      if(/^[A-Za-z0-9]$/.test(value)!=true){
+        if(value.length>details.codeLength){
+          callback('属性代码长度过长!');
+        }else{
+          callback();
+        }
+      }else{
+        callback();
+      }
+    }else{
+      callback();
+    }
+
+  }
+
+},
+
+ explain(rule, value, callback){
+  //属性描述正则校验
+  if(value){
+    if (value.length>50) {
+        callback('属性描述过长!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+}
   };
 
 

@@ -17,21 +17,26 @@ function SizeList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'10%'
   }, {
     title: '尺寸组号',
     dataIndex: 'code',
     key: 'code',
+      width:'10%'
   }, {
     title: '尺寸组名称',
     dataIndex: 'name',
     key: 'name',
+      width:'35%'
   }, {
     title: '尺寸',
     dataIndex: 'sizes',
     key: 'sizes',
+      width:'35%'
   }, {
     title: '操作',
     key: 'operation',
+      width:'20%',
     render: (text, record) => (
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
@@ -82,6 +87,7 @@ function SizeList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
+            scroll={{y: 'calc(100vh - 290px)' }}
 		        bordered
 		      />
       {/*ajax加载的时候需要进行的loading={loading}*/}

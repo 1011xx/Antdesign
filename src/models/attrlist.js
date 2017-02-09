@@ -1,5 +1,5 @@
 import { queryColor,newColor,updateColor,removeColor } from '../services/attribute';
-import {message} from 'antd';
+import {message,Modal} from 'antd';
 export default {
   //颜色属性维护
     namespace: 'attrlist',
@@ -16,8 +16,14 @@ export default {
       defaultPageSize:10,
     },
     effects: {
-        *enter({ payload }, { call, put }){
-            const {data}= yield call(queryColor);
+        *enter({ payload }, { call, put,select }){
+           const currentpage = yield select(({ attrlist }) => attrlist.current);
+           const pagesize = yield select(({ attrlist }) => attrlist.defaultPageSize);
+           let tempobj={};
+           tempobj.page=currentpage;
+           tempobj.rows=pagesize;
+           let strarr=JSON.stringify(tempobj);
+            const {data}= yield call(queryColor,{jsonParam:strarr});
             if(data){
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
@@ -42,7 +48,7 @@ export default {
             let strarr=JSON.stringify(payload);
             // console.log(strarr)
             const {data}= yield call(queryColor,{jsonParam:strarr});
-            
+
             if(data){
               console.log(data);
                // 开始添加页面序号
@@ -75,28 +81,31 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-               message.success(data.msg); 
+               // message.success(data.msg);
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-                //方案二：再次请求数据
-                 yield put({type:'enter'});
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
+                        modalVisible:false,
                          current:1,
-                         defaultPageSize:10
+                         loadings:true
                       }
                     });
+                   //方案二：再次请求数据
+                 yield put({type:'enter'});
 
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+              Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+              //  yield put({type:'tableLoadingClose'});
+               // message.warning(data.msg);
             }
         },
         *edit({ payload }, { call, put,select }){
@@ -106,50 +115,55 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateColor,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg); 
-                console.log(data);
-                 //方案二：再次请求数据
-                 yield put({type:'enter'});
-                  //将页码设为默认
+               // message.success(data.msg);
+                // console.log(data);
+
+                 //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
+                         modalVisible:false,
+                         loadings:true
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}}); 
+                    //方案二：再次请求数据
+                    yield put({type:'enter'});
+
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+              Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+              //  yield put({type:'tableLoadingClose'});
+               // message.warning(data.msg);
             }
         },
         *delete({ payload }, { call, put,select }){
-            console.log('payload:'+payload);
+            // console.log('payload:'+payload);
             let newId={};
             newId.id=payload;
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeColor,{jsonParam:strarr});
+            console.log(data.code);
             if(data.code=="0"){
-              message.success(data.msg); 
+              // message.success(data.msg);
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'enter'});
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
-                         current:1,
-                         defaultPageSize:10
+                         current:1
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg); 
-                yield put({type:'publicDate',payload:{loadings:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loadings:false}});
-            } 
+              Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+               yield put({type:'tableLoadingClose'});
+               // message.warning(data.msg);
+            }
         }
     },
     reducers: {

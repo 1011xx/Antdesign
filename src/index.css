@@ -3,10 +3,9 @@
   html, body, #root {
     height: 100%;
   }
-  
+
   form .ant-cascader-picker{
   		margin-bottom:4px;
   	}
- 
+
 }
- 

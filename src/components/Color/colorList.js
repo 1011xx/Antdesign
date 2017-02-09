@@ -17,17 +17,21 @@ function ColorList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'10%'
   }, {
     title: '颜色',
     dataIndex: 'colorCode',
     key: 'colorCode',
+      width:'30%'
   }, {
     title: '颜色名称',
     dataIndex: 'colorName',
     key: 'colorName',
+      width:'30%'
   }, {
     title: '操作',
     key: 'operation',
+      width:'30%',
     render: (text, record) => (
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
@@ -70,11 +74,12 @@ function ColorList({
             loading={loading}
 		        dataSource={dataSource}
 		        pagination={false}
+            scroll={{y: 'calc(100vh - 290px)' }}
 		        bordered
 		      />
 
     </TablePlate>
-   
+
   );
 }
 

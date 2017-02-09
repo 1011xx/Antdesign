@@ -1,5 +1,5 @@
 import { querySizeList,queryAllSizeGroup,newSizeGroup,updateSizeGroup,removeSizeGroup } from '../services/attribute';
-import {message} from 'antd';
+import {message,Modal} from 'antd';
 export default {
     namespace: 'attrsizeItem',
     state: {
@@ -58,9 +58,11 @@ export default {
             }
         },
         *gettablelist({ payload }, { call, put, select }){
+           const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
+          const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
           let tempobj={};
-          tempobj.page=1;
-          tempobj.rows=10;
+          tempobj.page=currentpage;
+          tempobj.rows=pagesize;
           let strarr=JSON.stringify(tempobj);
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
 
@@ -127,28 +129,31 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                  //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
                     // payload.num=tabledata.length+1;
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-                //方案二：再次请求数据
-                 yield put({type:'gettablelist'});
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
+                         modalVisible:false,
+                         loadings:true
                       }
                     });
+                    //方案二：再次请求数据
+                     yield put({type:'gettablelist'});
 
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+
+               Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+
             }
 
         },
@@ -159,23 +164,26 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                 console.log(data);
-                 //方案二：再次请求数据
-                 yield put({type:'gettablelist'});
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
+                         modalVisible:false,
+                         loadings:true
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
+                    //方案二：再次请求数据
+                    yield put({type:'gettablelist'});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+               // message.warning(data.msg);
+               Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+
             }
 
         },
@@ -186,7 +194,7 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeSizeGroup,{jsonParam:strarr});
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'gettablelist'});
@@ -194,15 +202,15 @@ export default {
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+               // message.warning(data.msg);
+               Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+               yield put({type:'tableLoadingClose'});
             }
 
         }

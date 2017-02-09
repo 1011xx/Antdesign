@@ -13,16 +13,16 @@ const Paginations = ({
 	}) => {
 	return(
         <div className={styles.Pagination_wrap}>
-           <Pagination  
+           <Pagination
              className={styles.pagination}
              size="small"
-             total={total} 
+             total={total}
              current={current}
-             defaultPageSize={defaultPageSize}
+             defaultPageSize={10}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
-             showQuickJumper 
-             showSizeChanger 
+             showQuickJumper
+             showSizeChanger
            />
         </div>
 		    );

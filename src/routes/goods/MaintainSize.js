@@ -11,25 +11,25 @@ var deleteid=null;//转存删除ID号码
 function MaintainSize({dispatch,attrsize}){
 
 	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrsize;
-	
+
 	const sizeModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
-    visible:modalVisible,
+    modalVisible,
     onOk(data) {
-    dispatch({
-              type:'attrsize/tableLoading'
-            });
+    // dispatch({
+    //           type:'attrsize/tableLoading'
+    //         });
           if(modalType==='create'){
             //如果是创建
             console.log('创建');
-           
+
             //这里与后台数据交流
             dispatch({
             type: 'attrsize/create',
             payload: data,
           });
-            dispatch({type:'attrsize/hideModal'});
+            // dispatch({type:'attrsize/hideModal'});
           }else{
             //如果是修改
             console.log('修改');
@@ -39,9 +39,9 @@ function MaintainSize({dispatch,attrsize}){
             type: 'attrsize/edit',
             payload: data,
           });
-            dispatch({
-              type:'attrsize/hideModal'
-            });
+            // dispatch({
+            //   type:'attrsize/hideModal'
+            // });
           }
 
     },
@@ -152,7 +152,7 @@ const sureModalProps = {
        num="1"
 		   last="尺寸维护"
 		   >
-		  
+
 		  <SizeList {...sizeListProps}/>
       <Paginations {...pageProps}/>
 		  <UserModalGen />

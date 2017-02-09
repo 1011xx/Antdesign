@@ -1,5 +1,5 @@
 import {updateAttribute,newAttribute,removeAttribute,queryAttributeClass,queryAttributeByAttributeClassId,queryAttributeClassById } from '../services/attribute';
-import {message} from 'antd';
+import {Modal,message} from 'antd';
 export default {
   //颜色属性维护
     namespace: 'attributeClass',
@@ -18,6 +18,8 @@ export default {
       current:1,
       defaultPageSize:10,
       name:'',
+      confirmLoading:false,
+      
 
 
       details:{},
@@ -77,9 +79,13 @@ export default {
         },
         //重新请求/mainattrlist/styleattr页面表格的数据
         *queryAttributeClassId({ payload }, { call, put, select }){
+          const currentpage = yield select(({ attributeClass }) => attributeClass.current);
+          const pagesize = yield select(({ attributeClass }) => attributeClass.defaultPageSize);
           const id = yield select(({ attributeClass }) => attributeClass.addressId);
           let tempobj={};
           tempobj.clsId=id;
+          tempobj.page=currentpage;
+          tempobj.rows=pagesize;
           let tempstr=JSON.stringify(tempobj);
           const {data}= yield call(queryAttributeByAttributeClassId,{jsonParam:tempstr});
             if(data){
@@ -97,12 +103,12 @@ export default {
             };
         },
         *querypage({ payload }, { call, put, select }){
-           const id = yield select(({ attributeClass }) => attributeClass.addressId);
-            const currentpage = yield select(({ attributeClass }) => attributeClass.current);
+          const id = yield select(({ attributeClass }) => attributeClass.addressId);
+          const currentpage = yield select(({ attributeClass }) => attributeClass.current);
           const pagesize = yield select(({ attributeClass }) => attributeClass.defaultPageSize);
            payload.clsId=id;
-           console.log('payload:',payload);
-            let tempstr=JSON.stringify(payload);
+           // console.log('payload:',payload);
+          let tempstr=JSON.stringify(payload);
            const {data}= yield call(queryAttributeByAttributeClassId,{jsonParam:tempstr});
             if(data){
               console.log(data);
@@ -113,7 +119,7 @@ export default {
                         data.dataList[i-1].num=i;
                       }
                     }else{
-                      let size=(currentpage-1)*10;
+                      let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
                       }
@@ -140,49 +146,59 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-               message.success(data.msg);
-                //再次请求数据
-                 yield put({type:'queryAttributeClassId'});
-                  //将页码设为默认
+               //将页码设为默认,并关闭弹窗
                   yield put({type:'publicDate',
                       payload:{
+                         modalVisible:false,
                          current:1,
-                         defaultPageSize:10
+                         loadings:true
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loadings:false}});
+                //再次请求数据
+                 yield put({type:'queryAttributeClassId'});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loadings:false}});
+
+                Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+
             }
         },
         //修改数据
         *edit({ payload }, { call, put,select }){
             // const id = yield select(({ attrlist }) => attrlist.currentItem.id);
             // const newpayload = { ...payload, id }; // 等价于payload.id=id;
+
             let strarr=JSON.stringify(payload);
             console.log(strarr);
             const {data}= yield call(updateAttribute,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg);
+
                 console.log(data);
-                 //再次请求数据
-                 yield put({type:'queryAttributeClassId'});
-                  //将页码设为默认
+                //将页码设为默认,并关闭弹窗，是表格显示loading状态
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
+                         modalVisible:false,
+                         loadings:true
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                yield put({type:'publicDate',payload:{loadings:false}});
+                 //再次请求数据
+                 yield put({type:'queryAttributeClassId'});
+                  
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loadings:false}});
+
+              Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+              // message.warning(data.msg);
+               // yield put({type:'publicDate',
+               // payload:{
+               //   backMsg:data.msg,
+               //   backvalidateStatus:"error"
+               // }});
             }
         },
         *delete({ payload }, { call, put,select }){
@@ -192,7 +208,7 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeAttribute,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg);
+               // message.success(data.msg);
                 console.log(data);
                 //再次请求数据
                 yield put({type:'queryAttributeClassId'});
@@ -200,15 +216,15 @@ export default {
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
-                         defaultPageSize:10
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                yield put({type:'publicDate',payload:{loadings:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loadings:false}});
+               // message.warning(data.msg);
+               Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+               yield put({type:'tableLoadingClose'});
             }
         }
     },

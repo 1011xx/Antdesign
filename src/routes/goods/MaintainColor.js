@@ -12,25 +12,25 @@ var deleteid=null;//转存删除ID号码
 function MaintainColor({dispatch,attrlist}){
 
 	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
-	
+
 	const colorModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
-    visible:modalVisible,
+    modalVisible,
     onOk(data) {
-      dispatch({
-          type:'attrlist/tableLoading'
-        });
+      // dispatch({
+      //     type:'attrlist/tableLoading'
+      //   });
       if(modalType==='create'){
         //如果是创建
         console.log('创建');
-       
+
         //这里与后台数据交流
         dispatch({
         type: 'attrlist/create',
         payload: data,
       });
-        dispatch({type:'attrlist/hideModal'});
+
       }else{
         //如果是修改
         console.log('修改');
@@ -40,9 +40,7 @@ function MaintainColor({dispatch,attrlist}){
         type: 'attrlist/edit',
         payload: data,
       });
-        dispatch({
-          type:'attrlist/hideModal'
-        });
+
       }
 
     },
@@ -153,7 +151,7 @@ function MaintainColor({dispatch,attrlist}){
        num="1"
 		   last="颜色维护"
 		   >
-		  
+
 		  <ColorList {...colorListProps}/>
       <Paginations {...pageProps}/>
 		  <UserModalGen />

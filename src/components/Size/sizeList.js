@@ -17,17 +17,21 @@ function SizeList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'10%'
   }, {
     title: '尺寸',
     dataIndex: 'sizeCode',
     key: 'sizeCode',
+    width:'30%'
   }, {
     title: '尺寸名称',
     dataIndex: 'sizeName',
     key: 'sizeName',
+    width:'30%'
   }, {
     title: '操作',
     key: 'operation',
+    width:'30%',
     render: (text, record) => (
       <p>
         <a onClick={() => onEditItem(record)}>修改</a>
@@ -61,8 +65,8 @@ function SizeList({
   return (
 
 
-    
-   
+
+
     <TablePlate title="维护尺寸">
      <div className={styles.add_plate}>
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
@@ -73,11 +77,12 @@ function SizeList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
+            scroll={{y: 'calc(100vh - 290px)' }}
 		        bordered
 		      />
 
     </TablePlate>
-   
+
   );
 }
 

@@ -5,7 +5,7 @@ const FormItem = Form.Item;
 
 const AttrModel = ({
 	title,
-	visible,
+	modalVisible,
 	onOk,
 	handleCancel,
 	item={},
@@ -57,7 +57,7 @@ const AttrModel = ({
 
 
         <Modal title={title}
-          visible={visible}
+          visible={modalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
