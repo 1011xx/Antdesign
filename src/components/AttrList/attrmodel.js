@@ -8,13 +8,75 @@ const AttrModel = ({
 	visible,
 	onOk,
 	handleCancel,
+	details,
 	item={},
 	form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
     },
+
 }) => {
+
+function checkAttrcode(rule, value, callback){
+	/*
+	details.name--属性类名称
+	details.codeLength--代码长度
+	*/
+	if(details.name=="年份"){
+		//如果是年份
+		// console.log(details);
+		// console.log(typeof(details.codeLength));
+
+		if(value){
+			//年份只能存在两位数字的形式01-99
+  		if (/^[0][1-9]$|^[1-9][0-9]$/.test(value)!=true) {
+  				callback('输入的属性代码有误!');
+  			} else {
+  				callback();
+  			}
+  	}else{
+  		callback();
+  	}
+
+	}else{
+		//如果不是年份
+		if(value){
+			//\w特殊字符校验
+			if(/^[A-Za-z0-9]$/.test(value)!=true){
+				if(value.length>details.codeLength){
+					callback('属性代码长度过长!');
+				}else{
+					callback();
+				}
+			}else{
+				callback();
+			}
+		}else{
+			callback();
+		}
+
+	}
+
+}
+
+
+
+
+
+
+function explain(rule, value, callback){
+	if(value){
+		if (value.length>50) {
+				callback('属性描述过长!');
+			} else {
+				callback();
+			}
+	}else{
+		callback();
+	}
+}
+
 function handleOk() {
     validateFields((errors) => {
       if (errors) {
@@ -46,7 +108,9 @@ function handleOk() {
           {getFieldDecorator('code', {
            initialValue:item.code,
             rules: [
-              { required: true, message: '属性代码未填写' },
+              { required: true, message: '属性代码未填写' },{
+								validator:checkAttrcode
+							}
             ],
           })(
             <Input type="text" />
@@ -62,7 +126,9 @@ function handleOk() {
           {getFieldDecorator('name', {
            initialValue:item.name,
             rules: [
-              { required: true, message: '属性描述未填写' },
+              { required: true, message: '属性描述未填写' },{
+								validator:explain
+							}
             ],
           })(
             <Input type="text" />
@@ -71,8 +137,8 @@ function handleOk() {
          </Row>
       </Form>
         </Modal>
-     
-			
+
+
 		);
 }
 

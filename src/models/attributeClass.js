@@ -63,8 +63,9 @@ export default {
                       }
                     });
             };
-          
+
             if(attrdetails.data.code=="0"){
+              console.log(attrdetails.data);
                 yield put({type:'publicDate',
                       payload:{
                         details:attrdetails.data.data,
@@ -123,7 +124,7 @@ export default {
                         dataSources:data.dataList,
                         total:data.total,
                         loadings:false
-                        
+
                       }
                     });
             }
@@ -139,7 +140,7 @@ export default {
             console.log(data);
             //data.code=="0"是成功时要执行的回调
             if(data.code=="0"){
-               message.success(data.msg); 
+               message.success(data.msg);
                 //再次请求数据
                  yield put({type:'queryAttributeClassId'});
                   //将页码设为默认
@@ -151,7 +152,7 @@ export default {
                     });
             }else if(data.code=="4"){
                 message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loadings:false}}); 
+                 yield put({type:'publicDate',payload:{loadings:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loadings:false}});
@@ -165,7 +166,7 @@ export default {
             console.log(strarr);
             const {data}= yield call(updateAttribute,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg); 
+               message.success(data.msg);
                 console.log(data);
                  //再次请求数据
                  yield put({type:'queryAttributeClassId'});
@@ -177,12 +178,12 @@ export default {
                       }
                     });
             }else if(data.code=="4"){
-                message.error(data.msg); 
+                message.error(data.msg);
                 yield put({type:'publicDate',payload:{loadings:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loadings:false}});
-            } 
+            }
         },
         *delete({ payload }, { call, put,select }){
             // console.log('payload:'+payload);
@@ -191,7 +192,7 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(removeAttribute,{jsonParam:strarr});
             if(data.code=="0"){
-               message.success(data.msg); 
+               message.success(data.msg);
                 console.log(data);
                 //再次请求数据
                 yield put({type:'queryAttributeClassId'});
@@ -203,12 +204,12 @@ export default {
                       }
                     });
             }else if(data.code=="4"){
-                message.error(data.msg); 
+                message.error(data.msg);
                 yield put({type:'publicDate',payload:{loadings:false}});
             }else{
               message.warning(data.msg);
                yield put({type:'publicDate',payload:{loadings:false}});
-            } 
+            }
         }
     },
     reducers: {
@@ -260,8 +261,8 @@ export default {
                 let str=location.pathname;
                  // let queryobj={};
                  // let temparr=[];
-                let strs = str.split("/"); 
-                strs.shift(); 
+                let strs = str.split("/");
+                strs.shift();
                 // queryobj.Id=strs[2];
                 // temparr.push(queryobj.Id);
                 // let querystr=JSON.stringify(queryobj);

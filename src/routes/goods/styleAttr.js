@@ -18,6 +18,7 @@ function StyleAttr({dispatch,attributeClass}){
 
 	item:modalType==='create'?{}:currentItem,
     title,
+    details,
     visible:modalVisible,
     onOk(data) {
       //当点击修改的时候我们可以获取clsId，但是如果，直接点击新增
@@ -60,7 +61,7 @@ function StyleAttr({dispatch,attributeClass}){
       dispatch({
         type: 'attributeClass/hideModal',
       });
-    },
+    }
   };
 
 

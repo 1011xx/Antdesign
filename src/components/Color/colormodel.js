@@ -29,15 +29,15 @@ const AttrModel = ({
 	}
 	//验证颜色名称长度
 	function checkcolorName(rule, value, callback){
-		if(value){
-		if (value.length>30) {
-				callback('输入的颜色名称过长!');
-			} else {
-				callback();
-			}
-	}else{
-		callback();
-	}
+  		if(value){
+  		if (value.length>30) {
+  				callback('输入的颜色名称过长!');
+  			} else {
+  				callback();
+  			}
+  	}else{
+  		callback();
+  	}
 	}
 	function handleOk() {
 	    validateFields((errors) => {
