@@ -101,7 +101,7 @@ const LookupModal = ({
 			size="small"
 			pagination={false}
 			className={styles.table}
-			dataSource={auditdetaildata.tagpriceConfigAuditDtoList}
+			dataSource={auditdetaildata.dataList}
 			columns={columns}
 			title={() => '审核信息'}
 			/>

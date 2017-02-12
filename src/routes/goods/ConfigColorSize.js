@@ -9,11 +9,22 @@ import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
 
 function ConfigColorSize({dispatch,moudelnum}){
 
-const {moveKey,chosecolorModal,transfordata,targetKeys,config,currentid,sizeoption,listarry }=moudelnum;
+const {moveKey,chosecolorModal,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
 const configProps={
 	config,
 	sizeoption,
 	listarry,
+	configlist,
+	
+	handleChange(index,key){
+		console.log(index.key);
+		  return (value) => {
+		  	console.log('value',value);
+      // const dataSource = [...this.state.dataSource];
+      // dataSource[index][key] = value;
+      // this.setState({ dataSource });
+    };
+	},
 	chooseColor(){
 		dispatch({
 			type:'moudelnum/publicDate',
@@ -33,8 +44,8 @@ const configProps={
 		});
 
 	},
- onEditDetail(item){
-	 console.log(item);
+ onEditDetail(text,item){
+	 console.log(text,item);
  },
  backurl(){
 	 dispatch(routerRedux.push('/modelnumber'));
@@ -76,7 +87,7 @@ const modalProps={
 			}
 
 			console.log('temp:',temp);
-			listarry.push(temp);
+			configlist.push(temp);
 		}
 		console.log(listarry);
 

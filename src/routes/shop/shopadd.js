@@ -36,7 +36,7 @@ const {   previewVisible,
 		  currentItem,
 		  behavier,
 		  saving,
-		  
+
 	}=shopinfo;
 
 	const addInfoProps={
@@ -45,13 +45,13 @@ const {   previewVisible,
 		  region,
 		  types,
 		  item:behavier==='create'?{}:currentItem,
-		 
+
 		getadddata(data){
 	// 		setInterval(function(){
 		// data.fullName=num++;
 		// data.shortName=numm++;
 		// console.log(data);
-		 let upinfo=JSON.stringify(setProp(data)); 
+		 let upinfo=JSON.stringify(setProp(data));
 		 console.log(upinfo);
 		 // console.log( oFile);
 		 //创建form对象
@@ -72,7 +72,7 @@ const {   previewVisible,
 	          type: 'shopinfo/publicdate',
 	          payload:{
 	              	saving:true
-	           }  
+	           }
 	        });
 // },50);
 
@@ -80,10 +80,10 @@ const {   previewVisible,
 		// 	if(saving==false){
 
 		// 			if(code==0){
-		// 		message.success('门店添加成功1'); 
+		// 		message.success('门店添加成功1');
 		// 		clearInterval(timer);
 		// 		}else if(code==4){
-		// 		message.error('门店添加失败！请重试'); 
+		// 		message.error('门店添加失败！请重试');
 		// 		clearInterval(timer);
 		// 		}else{
 		// 		message.warning('填写的某些规则不满足');
@@ -91,12 +91,15 @@ const {   previewVisible,
 		// 		}
 
 		// 	}
-			
-			
+
+
 		// },1500);
-		
-        
-	}
+
+
+	},
+  backurl(){
+    dispatch(routerRedux.push('/shopinfo'));
+  }
 
 }
 
@@ -113,7 +116,7 @@ const {   previewVisible,
 		},
 
 		handlePreview (file) {
-		   
+
 		    dispatch({
               type: 'shopinfo/PreviewImage',
               payload:{
@@ -121,7 +124,7 @@ const {   previewVisible,
               }
             });
 
-		     
+
 		     dispatch({
               type: 'shopinfo/ShowPreview'
             });
@@ -164,7 +167,7 @@ const {   previewVisible,
 		  // var oMyForm = new FormData();
 		  // oMyForm.append("username", "Groucho");
 		  // oMyForm.append("accountnum", 123456); // 数字123456被立即转换成字符串"123456"
-		   
+
 		  // // fileInputElement中已经包含了用户所选择的文件
 
 		  // for (var i=0;i<oFile.length;i++) {
@@ -173,7 +176,7 @@ const {   previewVisible,
 		  // }
 		  // //var oFile = document.getElementById("uploadImage").files[0]
 		  // //oMyForm.append("userfile", oFile);
-		   
+
 		  // var oFileBody = '<a id="a"><b id="b">hey!</b></a>'; // Blob对象包含的文件内容
 		  // var oBlob = new Blob([oFileBody], { type: "text/xml"});
 		  // oMyForm.append("webmasterfile", oBlob);
@@ -192,7 +195,7 @@ const {   previewVisible,
 			// console.log(oFile);
 		  // console.log(file);
 		}
-		
+
 	};
 	// const tips=()=>{
 	// 		console.log('code:',code);
@@ -205,13 +208,13 @@ const {   previewVisible,
 	// 		// 	 message.warning(msg); break;
 	// 		// }
 	// 		if(code!==5){
-	// 			message.warning(msg); 
+	// 			message.warning(msg);
 	// 		}
 	// 	};
 
 	return(
 	<Spin size="large" tip="保存信息中,请稍后..." spinning={saving}>
-		
+
 		<Wrap
 		   num="2"
 		   url="/shopinfo"
@@ -219,11 +222,11 @@ const {   previewVisible,
 		   next="新增店仓"
 
 		   >
-		  
+
 		  <AddShopinfo {...addInfoProps}>
 		  <PicturesWall  {...uploadProps}/>
 		  </AddShopinfo>
-		 
+
 		   </Wrap>
 	</Spin>
 		);

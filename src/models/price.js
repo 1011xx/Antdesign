@@ -184,13 +184,14 @@ export default {
             const {data}= yield call(queryTagPriceConfigInfo,{jsonParam:strarr});
             if(data.code=="0"){
                 console.log(data);
-                for(let i=0;i<data.data.tagpriceConfigDetailDto.length;i++){
-                  data.data.tagpriceConfigDetailDto[i].num=i+1;
+                console.log(data.tagPriceConfig);
+                for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
+                  data.tagPriceConfig.dataList[i].num=i+1;
                 }
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
                       payload:{
-                        detaildatasource:data.data
+                        detaildatasource:data.tagPriceConfig
                       }
                     });
             }
@@ -202,14 +203,14 @@ export default {
             let strarr=JSON.stringify(newId);
             const {data}= yield call(queryTagPriceConfigAudit,{jsonParam:strarr});
             if(data.code=="0"){
-                console.log(data);
-                for(let i=0;i<data.data.tagpriceConfigAuditDtoList.length;i++){
-                  data.data.tagpriceConfigAuditDtoList[i].num=i+1;
+                console.log('data',data);
+                for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
+                  data.tagPriceConfig.dataList[i].num=i+1;
                 }
               //将获取到的数据给审核详情弹框
                   yield put({type:'publicDate',
                       payload:{
-                        auditdetaildata:data.data
+                        auditdetaildata:data.tagPriceConfig
                       }
                     });
             }

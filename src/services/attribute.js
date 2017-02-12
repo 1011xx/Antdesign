@@ -358,9 +358,19 @@ export async function queryStyleConfigList(params) {
     body: qs.stringify(params),
   });
 }
-//款号维护->配置->配置颜色图片尺寸->尺寸
+//款号维护->配置->配置颜色图片尺寸->尺寸组件查询
 export async function queryStyleSize(params) {
   return request(`${ipaddress}/fmss/styleController/queryStyleSize`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//款号维护->配置->配置颜色图片尺寸->配置完成后的保存上传接口
+export async function saveStyleConfig(params) {
+  return request(`${ipaddress}/fmss/styleController/saveStyleConfig`, {
     method: 'post',
     headers: {
     "Content-Type": "application/x-www-form-urlencoded"

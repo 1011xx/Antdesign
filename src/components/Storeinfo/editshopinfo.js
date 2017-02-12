@@ -43,6 +43,7 @@ const EditShopinfo = ({
     item={},
     deleteImg,
     editloading,
+    backurl,
 }) =>{
 
 //获取citycode和cityname
@@ -258,7 +259,7 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
-                label="联系人"
+                label="&nbsp;联&nbsp;系&nbsp;人"
                 required
                 >
                   {getFieldDecorator('contracts', {
@@ -294,9 +295,9 @@ return (
                   )}
                 </FormItem>
                 </Col>
-                <Col span={8} className={styles.ant_col_center}>
+                <Col span={8} className={styles.ant_col_center} style={{paddingLeft: 55}}>
                  <FormItem
-                label="&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;址"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址"
                 >
                   {getFieldDecorator('address', {
                   initialValue:item.address,
@@ -331,7 +332,7 @@ return (
             <FormItem>
           <Button type="primary" htmlType="submit" size="large">保存</Button>
         </FormItem>
-             <Button type="ghost" size="large">取消</Button>
+             <Button type="ghost" size="large" onClick={backurl}>取消</Button>
           </div>
            </Form>
         </div>

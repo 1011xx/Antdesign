@@ -53,7 +53,7 @@ const {   previewVisible,
 		// data.fullName=num++;
 		// data.shortName=numm++;
 		// console.log(data);
-		 let upinfo=JSON.stringify(setProp(data)); 
+		 let upinfo=JSON.stringify(setProp(data));
 		 // console.log(upinfo);
 		 // console.log( oFile);
 		 //创建form对象
@@ -74,12 +74,15 @@ const {   previewVisible,
 		          type: 'shopinfo/publicdate',
 		          payload:{
 		              updating:true
-		           }  
+		           }
 		        });
 // },50);
-		
-        
-	}
+
+
+	},
+  backurl(){
+    dispatch(routerRedux.push('/shopinfo'));
+  }
 
 }
 
@@ -96,7 +99,7 @@ const {   previewVisible,
 		},
 
 		handlePreview (file) {
-		   
+
 		    dispatch({
               type: 'shopinfo/PreviewImage',
               payload:{
@@ -104,7 +107,7 @@ const {   previewVisible,
               }
             });
 
-		     
+
 		     dispatch({
               type: 'shopinfo/ShowPreview'
             });
@@ -136,7 +139,7 @@ const {   previewVisible,
 		  // var oMyForm = new FormData();
 		  // oMyForm.append("username", "Groucho");
 		  // oMyForm.append("accountnum", 123456); // 数字123456被立即转换成字符串"123456"
-		   
+
 		  // // fileInputElement中已经包含了用户所选择的文件
 
 		  // for (var i=0;i<oFile.length;i++) {
@@ -145,7 +148,7 @@ const {   previewVisible,
 		  // }
 		  // //var oFile = document.getElementById("uploadImage").files[0]
 		  // //oMyForm.append("userfile", oFile);
-		   
+
 		  // var oFileBody = '<a id="a"><b id="b">hey!</b></a>'; // Blob对象包含的文件内容
 		  // var oBlob = new Blob([oFileBody], { type: "text/xml"});
 		  // oMyForm.append("webmasterfile", oBlob);
@@ -163,7 +166,7 @@ const {   previewVisible,
 					}
 				}
 			}
-			
+
 			// console.log(file);
 			//首先组装filelist对象，如果页面进入修改页面，则需要从onremove中读取要删除的文件，保存到新对象中
 			if(file.imageName){
@@ -176,7 +179,7 @@ const {   previewVisible,
 		}
 	};
 
-	
+
 
 	return(
 
@@ -188,11 +191,11 @@ const {   previewVisible,
 		   next="修改店仓"
 
 		   >
-		  
+
 		  <EditShopinfo {...editInfoProps}>
 		  <PicturesWall  {...uploadProps}/>
 		  </EditShopinfo>
-		  
+
 		   </Wrap>
 	</Spin>
 		);

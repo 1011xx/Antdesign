@@ -14,7 +14,8 @@ import {
   queryStyleColor,
   queryStyleBarcode,
   queryStyleConfigList,
-  queryStyleSize
+  queryStyleSize,
+  saveStyleConfig
 } from '../services/attribute';
 import {message} from 'antd';
 export default {
@@ -59,7 +60,7 @@ export default {
       styleNamerules:[],
       stylename:'',
       stylenum:'',
-
+      saveConfig:{},
 
       arr:[],
       arrlabel:[],
@@ -278,10 +279,11 @@ export default {
       let str1=JSON.stringify(tempid);
       let str2=JSON.stringify(tempstyleid);
       let str3=JSON.stringify(temidstyle);
-        const size=yield call(queryStyleSize,{jsonparam:str3});
+      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
+      const size=yield call(queryStyleSize,{jsonparam:str3});
       const {data}=yield call(queryStyleColor);
       const details=yield call(getStyleInfoById,{jsonparam:str1});
-      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
+
 
 
       if(data.code==0){
@@ -298,17 +300,26 @@ export default {
         });
       };
       if(details.data.code){
-        console.log(details);
+        console.log("details",details);
         yield put({
           type:'publicDate',
           payload:{
-            config:details.data.styleInfo
+            config:details.data.styleInfo,
+            saveConfig:{
+              //拼装保存配置的数据头，根据进入不同的页面，去获取不同的信息
+              styleId:details.data.styleInfo.id,
+              styleCode:details.data.styleInfo.code,
+              styleName:details.data.styleInfo.name,
+            }
           }
         })
       };
       if(styleConfigList.data.code==0){
         console.log(styleConfigList.data);
         if(styleConfigList.data.dataList){
+          for(let i=0;i<styleConfigList.data.dataList.length;i++){
+            styleConfigList.data.dataList[i].sizes=styleConfigList.data.dataList[i].sizes.split(',');
+          }
           yield put({
             type:'publicDate',
             payload:{
@@ -361,10 +372,13 @@ export default {
         if(styleConfigList.data.dataList){
             for(let i=0;i<styleConfigList.data.dataList.length;i++){
               let size=styleConfigList.data.dataList[i].sizes.split(",").join(" ");
-              styleConfigList.data.dataList[i].colorSize=styleConfigList.data.dataList[i].colorName+" "+size;
+              styleConfigList.data.dataList[i].colorSize=styleConfigList.data.dataList[i].colorName+"： "+size;
               // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+styleConfigList.data.dataList[i].imageDirectory;
               let temp=JSON.parse(styleConfigList.data.dataList[i].image);
-              styleConfigList.data.dataList[i].proimage=temp.imageDirectory;
+              //当不使用代理的时候取消这条注释
+              // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+temp.imageDirectory;
+              //当使用代理的时候取消这条注释
+              styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
           }
         }
         console.log(styleConfigList.data);
@@ -381,8 +395,9 @@ export default {
       //查询条码，以及分页查询条码
       //需要传递页码，页数，和styleid
       //翻页，翻页，翻页，翻页，翻页，翻页，翻页
+      const id = yield select(({ moudelnum }) => moudelnum.currentid);
       var tempobj={};
-      tempobj.styleId=payload;
+      tempobj.styleId=id;
       tempobj.page=1;
       tempobj.rows=10;
       // console.log(tempobj);
@@ -508,7 +523,27 @@ export default {
                yield put({type:'publicDate',payload:{loading:false}});
             }
 
-        }
+        },
+        *saveconfigs({ payload }, { call, put,select }){
+          //配置颜色尺寸图片后的保存
+            // const id = yield select(({ moudelnum }) => moudelnum.currentItem.id);
+            // payload.id=id;
+            // let strarr=JSON.stringify(payload);
+            // console.log(strarr);
+            const {data}= yield call(updateStyle,{jsonparam:strarr});
+            if(data.code=="0"){
+              // message.success(data.msg);
+                // console.log(data);
+                 yield put({type:'publicDate',payload:{savedtwo:true}});
+            }else if(data.code=="4"){
+                message.error(data.msg);
+                 yield put({type:'publicDate',payload:{loading:false}});
+            }else{
+              message.warning(data.msg);
+               yield put({type:'publicDate',payload:{loading:false}});
+            }
+
+        },
     },
     reducers: {
         Changetitle(state, action) {
@@ -622,8 +657,7 @@ export default {
           }else if(strs[1]==='barcode'){
             //如果是条码页面
             dispatch({
-              type:'querybarcode',
-              payload:strs[2]
+              type:'querybarcode'
             });
           }
         }

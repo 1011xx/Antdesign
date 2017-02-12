@@ -59,7 +59,7 @@ function Pricedetails({price}) {
         className={styles.table}
          columns={columns}
          loading={false}
-         dataSource={detaildatasource.tagpriceConfigDetailDto}
+         dataSource={detaildatasource.dataList}
          pagination={false}
          showHeader={true}
          bordered

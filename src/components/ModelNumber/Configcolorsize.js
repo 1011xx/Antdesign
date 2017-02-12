@@ -7,6 +7,52 @@ import styles from './Configcolorsize.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+class EditableCell extends React.Component {
+  state = {
+    value: this.props.value,
+    editable: false,
+  }
+  handleChange = (value) => {
+    console.log(value);
+    this.setState({ value });
+  }
+  check = () => {
+    this.setState({ editable: false });
+    if (this.props.onChange) {
+      this.props.onChange(this.state.value);
+    }
+  }
+  edit = () => {
+    this.setState({ editable: true });
+  }
+  render() {
+    const { value, editable } = this.state;
+    return (<Select
+        multiple
+        style={{ width: 300,height:70 }}
+        className={styles.select}
+        placeholder="点击输入框选择尺寸"
+        onChange={this.handleChange}
+        onSelect={this.check}
+        
+      >
+     <Option  value={'010'}>010</Option>
+     <Option  value={'020'}>020</Option>
+
+     </Select>);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 const Configcolorsize=({
     form: {
@@ -18,12 +64,14 @@ const Configcolorsize=({
     chooseColor,
     dataSource,
     handleChange,
+    getIndex,
     config,
     onUpload,
     onEditDetail,
     sizeoption,
     listarry,
     backurl,
+    configlist,
 
   })=> {
 
@@ -50,17 +98,11 @@ const Configcolorsize=({
       title: '尺寸',
       dataIndex: 'size',
       key: 'size',
-      render:(text, record) => (
-        <Select
-        multiple
-        style={{ width: 300,height:70 }}
-        className={styles.select}
-        placeholder="点击输入框选择尺寸"
-        onChange={handleChange}
-      >
-     {selectopt}
-
-     </Select>
+      render:(text, record, index) => (
+        <EditableCell
+          value={text}
+          onChange={handleChange(index, 'name')}
+        />
       ),
     }, {
       title: '图片',
@@ -75,7 +117,7 @@ const Configcolorsize=({
       title: '操作',
       key: 'operation',
       render:(text,record)=>(
-        <a onClick={() => onEditDetail(record)}>删除</a>
+        <a onClick={() => onEditDetail(text,record)}>删除</a>
       ),
     }];
     const data=[{
@@ -105,7 +147,7 @@ const Configcolorsize=({
             className={styles.table}
             columns={columns}
             loading={false}
-            dataSource={listarry}
+            dataSource={configlist}
             pagination={false}
             bordered
           />
@@ -127,5 +169,6 @@ Configcolorsize.propTypes = {
   backurl:PropTypes.func,
   onUpload: PropTypes.func,
   onEditDetail: PropTypes.func,
+  handleChange: PropTypes.func,
 };
 export default Form.create()(Configcolorsize);

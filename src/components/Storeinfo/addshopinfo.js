@@ -27,6 +27,7 @@ const AddShopinfo = ({
     types,
     options,
     item={},
+    backurl,
 
 
 }) =>{
@@ -98,6 +99,8 @@ function checkForm(rule, value, callback){
 //手机号码正则验证
   if(!(/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/.test(value))){
     callback('不是正确的手机号码！');
+  }else{
+    callback();
   }
 }
 //
@@ -239,7 +242,7 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
-                label="联系人"
+                label="&nbsp;联&nbsp;系&nbsp;人"
                 >
                   {getFieldDecorator('contracts', {
                    initialValue:item.contracts,
@@ -275,9 +278,9 @@ return (
                   )}
                 </FormItem>
                 </Col>
-                <Col span={8} className={styles.ant_col_center}>
+                <Col span={8} className={styles.ant_col_center} style={{paddingLeft: 55}}>
                  <FormItem
-                label="&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;址"
+                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址"
                 >
                   {getFieldDecorator('address', {
                   initialValue:item.address,
@@ -312,7 +315,7 @@ return (
               <Button type="primary" htmlType="submit" size="large">保存</Button>
 
           </FormItem>
-          <Button type="ghost" size="large"  className={styles.btn_margin}>取消</Button>
+          <Button type="ghost" size="large" onClick={backurl} className={styles.btn_margin}>取消</Button>
 
           </div>
            </Form>

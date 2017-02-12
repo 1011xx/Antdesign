@@ -39,6 +39,7 @@ class PicturesWall extends React.Component {
       <div className="clearfix">
         <Upload
           action="/fmss/styleController/styleConfigUploadImage"
+          data={{jsonparam:'{"styleId":"669A0B2BFEAA4E838D2AE3B186D3A7C4","colorCode":"000"}'}}
           listType="picture-card"
           fileList={fileList}
           onPreview={this.handlePreview}
