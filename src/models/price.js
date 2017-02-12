@@ -204,6 +204,9 @@ export default {
             const {data}= yield call(queryTagPriceConfigAudit,{jsonParam:strarr});
             if(data.code=="0"){
                 console.log('data',data);
+                // 获取年月日，出去具体的时间
+                data.tagPriceConfig.createDate=data.tagPriceConfig.createDate.split(' ')[0];
+                // 给table数据添加序号
                 for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                   data.tagPriceConfig.dataList[i].num=i+1;
                 }

@@ -93,7 +93,7 @@ function AttrList({
        <a className={styles.add_btn} onClick={() => additem()}><Icon type="plus-circle-o" />&nbsp;新增</a>
       </div>
 				<Table size="small"
-        className={styles.table}
+        className={styles.tableattrlist}
 		        columns={columns}
 		        dataSource={dataSources}
 		        pagination={false}

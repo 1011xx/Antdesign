@@ -5,6 +5,7 @@ import {  Spin ,message} from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import AddShopinfo from '../../components/Storeinfo/addshopinfo';
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 // let num=86;
 // let numm=86;
 
@@ -36,6 +37,8 @@ const {   previewVisible,
 		  currentItem,
 		  behavier,
 		  saving,
+      addvisibleSave,
+      adduploading
 
 	}=shopinfo;
 
@@ -44,6 +47,7 @@ const {   previewVisible,
 		 options,
 		  region,
 		  types,
+      adduploading,
 		  item:behavier==='create'?{}:currentItem,
 
 		getadddata(data){
@@ -197,21 +201,19 @@ const {   previewVisible,
 		}
 
 	};
-	// const tips=()=>{
-	// 		console.log('code:',code);
-	// 		// switch(code){
-	// 		// 	case 0:
-	// 		// 	 message.success(msg); break;
-	// 		// 	 case 4:
-	// 		// 	 message.error(msg); break;
-	// 		// 	 default:
-	// 		// 	 message.warning(msg); break;
-	// 		// }
-	// 		if(code!==5){
-	// 			message.warning(msg);
-	// 		}
-	// 	};
 
+  const saveProps={
+    content:'新增成功！',
+  	addvisibleSave,
+    handleOk(){
+      dispatch(routerRedux.push('/shopinfo'));
+      dispatch({type:'shopinfo/publicdate',
+      payload:{
+        addvisibleSave:false
+      }
+    })
+    }
+  }
 	return(
 	<Spin size="large" tip="保存信息中,请稍后..." spinning={saving}>
 
@@ -226,6 +228,7 @@ const {   previewVisible,
 		  <AddShopinfo {...addInfoProps}>
 		  <PicturesWall  {...uploadProps}/>
 		  </AddShopinfo>
+      <Savesuccess {...saveProps}/>
 
 		   </Wrap>
 	</Spin>

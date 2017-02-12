@@ -44,6 +44,7 @@ const EditShopinfo = ({
     deleteImg,
     editloading,
     backurl,
+    uploading,
 }) =>{
 
 //获取citycode和cityname
@@ -124,6 +125,102 @@ function typecode(code){
   gettypecode(code);
 }
 
+function shopname(rule, value, callback){
+  if(value){
+    if(value.length>100){
+      callback("店仓名称太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function shopshortname(rule, value, callback){
+  if(value){
+    if(value.length>100){
+      callback("店仓简称太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function address(rule, value, callback){
+  if(value){
+    if(value.length>200){
+      callback("地址太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function contect(rule, value, callback){
+  if(value){
+    if(value.length>50){
+      callback("姓名太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function fax(rule, value, callback){
+  if(value){
+    if(value.length>50){
+      callback("传真太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function mobile(rule, value, callback){
+  if(value){
+    if(value.length>50){
+      callback("手机号码太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function shopphone(rule, value, callback){
+  if(value){
+    if(value.length>50){
+      callback("店仓电话太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
+function remark(rule, value, callback){
+  if(value){
+    if(value.length>1000){
+      callback("备注太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+}
+
 if(editloading){
   return(
       <Spin spinning={editloading} tip="页面加载中，请稍后...">
@@ -135,7 +232,7 @@ if(editloading){
 
 return (
 
-        <div>
+        <Spin spinning={uploading} >
         	 <Form
             inline
             className={styles.ant_advanced_search_form}
@@ -151,7 +248,9 @@ return (
                   >
                   {getFieldDecorator('fullName', {
                      initialValue:item.fullName,
-                   rules: [{required: true, message: '请输入店仓名称!' }]
+                   rules: [{required: true, message: '请输入店仓名称!' },{
+                     validator:shopname
+                   }]
                   })(
                     <Input size="small" placeholder="请输入电仓名称" />
                   )}
@@ -164,7 +263,9 @@ return (
                 >
                 {getFieldDecorator('shortName', {
                    initialValue:item.shortName,
-                rules: [{ required: true, message: '请输入店仓简称!' }]
+                rules: [{ required: true, message: '请输入店仓简称!' },{
+                  validator:shopshortname
+                }]
 
               })(
                  <Input size="small" placeholder="请输入电仓简称" />
@@ -252,6 +353,7 @@ return (
                 >
                   {getFieldDecorator('telephoneNumber', {
                     initialValue:item.telephoneNumber,
+                    rules: [{validator:shopphone}]
                   })(
                     <Input size="small" placeholder="请输入店仓电话" />
                   )}
@@ -264,6 +366,7 @@ return (
                 >
                   {getFieldDecorator('contracts', {
                    initialValue:item.contracts,
+                   rules: [{validator:contect}]
                   })(
                     <Input size="small" placeholder="请输入联系人名" />
                   )}
@@ -278,7 +381,8 @@ return (
                 label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
                   {getFieldDecorator('mobileNumber', {
-                  initialValue:item.mobileNumber,
+                    rules: [{validator:mobile}],
+                  initialValue:item.mobileNumber
                   })(
                     <Input size="small" placeholder="请输入手机号码" />
                   )}
@@ -290,6 +394,7 @@ return (
                 >
                   {getFieldDecorator('faxNumber', {
                   initialValue:item.faxNumber,
+                  rules: [{validator:fax}]
                   })(
                     <Input size="small" placeholder="请输入传真号码" />
                   )}
@@ -301,6 +406,7 @@ return (
                 >
                   {getFieldDecorator('address', {
                   initialValue:item.address,
+                  rules: [{validator:address}]
                   })(
                     <Input size="small" placeholder="请输入店仓地址" style={{width:220}}/>
                   )}
@@ -320,6 +426,7 @@ return (
                 >
                   {getFieldDecorator('remarks', {
                   initialValue:item.remarks,
+                  rules: [{validator:remark}]
                   })(
                     <Input  type="textarea" rows={6} style={{width:420}}/>
                   )}
@@ -332,10 +439,10 @@ return (
             <FormItem>
           <Button type="primary" htmlType="submit" size="large">保存</Button>
         </FormItem>
-             <Button type="ghost" size="large" onClick={backurl}>取消</Button>
+             <Button type="ghost" size="large" onClick={backurl} className={styles.btn_margin}>取消</Button>
           </div>
            </Form>
-        </div>
+        </Spin>
 
   );
 };

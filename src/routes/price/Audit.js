@@ -21,6 +21,7 @@ function Audit({dispatch,price}) {
     },
     onCommit(item){
       //当点击提交的时候，获取当前行表格的数据，在模态框上显示
+      item.createDate=item.createDate.split(" ")[0];
       dispatch({
         type:'price/publicDate',
         payload:{

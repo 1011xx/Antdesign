@@ -47,6 +47,7 @@ import Audit from "./routes/price/Audit.js";
 import Set from "./routes/price/Set.js";
 import Pricedetails from "./routes/price/Pricedetails.js";
 import Modify from "./routes/price/Modify.js";
+import Pendingprice from "./routes/price/Pendingprice.js";
 
 
 
@@ -92,6 +93,8 @@ export default function({ history }) {
 
 
         <Route path="/set" component={Set} />
+         <Route path="/set/pending/:id" component={Pendingprice} />
+       
        </Route>
 
 

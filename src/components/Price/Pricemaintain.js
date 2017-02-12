@@ -40,31 +40,33 @@ dataSource,
     key: 'documentNumber',
   },{
     title: '预计生效日期',
-    dataIndex: 'ExpectEffectiveDate',
-    key: 'ExpectEffectiveDate',
+    dataIndex: 'expectEffectiveDate',
+    key: 'expectEffectiveDate',
   }, {
     title: '创建人',
-    dataIndex: 'CreateEmployeeName',
-    key: 'CreateEmployeeName',
+    dataIndex: 'createEmployeeName',
+    key: 'createEmployeeName',
   },{
     title: '创建时间',
-    dataIndex: 'CreateDate',
-    key: 'CreateDate',
+    dataIndex: 'createDate',
+    key: 'createDate',
   }, {
     title: '状态',
-    dataIndex: 'StateName',
-    key: 'StateName',
+    dataIndex: 'stateName',
+    key: 'stateName',
   },{
     title: '操作',
     dataIndex: 'operate',
     key: 'operate',
     render:(text, record) => (
       <p>
-        <Link to={`/audit/modify/${record.id}`}>审核</Link>
+        <Link to={`/set/pending/${record.id}`}>审核</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <a  onClick={() => onLook(record)}>查看</a>
+
+          <Link to={`/audit/pricedetails/${record.id}`}>查看</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <Link to={`/modelnumber/detail/${record.id}`}>详情</Link>
+
+         <a  onClick={() => onLook(record)}>详情</a>
 
 
 
@@ -148,7 +150,7 @@ dataSource,
             className={styles.table}
             columns={columns}
             loading={false}
-            dataSource={data}
+            dataSource={dataSource}
             pagination={false}
             bordered
           />

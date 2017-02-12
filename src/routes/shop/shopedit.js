@@ -5,7 +5,7 @@ import {  Spin ,message} from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import EditShopinfo from '../../components/Storeinfo/editshopinfo';
-
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 
 
 //将json对象中为undefined的值转化为空字符串
@@ -37,6 +37,8 @@ const {   previewVisible,
 		  updating,
 		  deleteImg,
 		  editloading,
+      visibleSave,
+      uploading,
 	}=shopinfo;
 
 	const editInfoProps={
@@ -47,6 +49,7 @@ const {   previewVisible,
 		  behavier,
 		  deleteImg,
 		  editloading,
+      uploading,
 		  item:behavier==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
@@ -73,7 +76,8 @@ const {   previewVisible,
 			dispatch({
 		          type: 'shopinfo/publicdate',
 		          payload:{
-		              updating:true
+		              updating:true,
+                  uploading:true
 		           }
 		        });
 // },50);
@@ -178,7 +182,18 @@ const {   previewVisible,
 			}
 		}
 	};
-
+const saveProps={
+  content:'修改成功！',
+	visibleSave,
+  handleOk(){
+    dispatch(routerRedux.push('/shopinfo'));
+    dispatch({type:'shopinfo/publicdate',
+    payload:{
+      visibleSave:false
+    }
+  })
+  }
+}
 
 
 	return(
@@ -195,7 +210,7 @@ const {   previewVisible,
 		  <EditShopinfo {...editInfoProps}>
 		  <PicturesWall  {...uploadProps}/>
 		  </EditShopinfo>
-
+      <Savesuccess {...saveProps}/>
 		   </Wrap>
 	</Spin>
 		);

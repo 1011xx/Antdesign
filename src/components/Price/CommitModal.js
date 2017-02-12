@@ -43,12 +43,13 @@ function handOk(){
           onOk={handOk}
           onCancel={Cancel}
           closable={false}
+          maskClosable={false}
         >
 				<div className={styles.titletop}>
 				<Row gutter={16}>
 		      <Col className="gutter-row" span={8}>
 		        <div className="gutter-box">
-							<span>单据号：</span>
+							<span>单&nbsp;&nbsp;据&nbsp;&nbsp;号：</span>
 							<span>{commitdata.documentNumber}</span>
 						</div>
 		      </Col>
@@ -66,23 +67,28 @@ function handOk(){
 		      </Col>
     	</Row>
 			<Row gutter={16} className={styles.rowspace}>
-				<Col className="gutter-row" span={8}>
+				<Col className="gutter-row" span={8} style={{marginLeft:1}}>
 					<div className="gutter-box">
 						<span>当前状态：</span>
 						<span>{commitdata.stateName}</span>
 					</div>
 				</Col>
 				<Col className="gutter-row" span={8}>
-					<div className="gutter-box">
-						<span>备注：</span>
-						<span>{commitdata.documentNumber}</span>
-					</div>
+
 				</Col>
 				<Col className="gutter-row" span={8}>
-				<div className="gutter-box">
-				</div>
+
 				</Col>
 		</Row>
+    <Row className={styles.rowspace}>
+    <Col span={24} style={{marginLeft:2}}>
+    <div className="gutter-box">
+      <span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+      <span>{commitdata.remarks}</span>
+    </div>
+    </Col>
+    </Row>
+
 			</div>
       <div className={styles.padtop}>
       <Form

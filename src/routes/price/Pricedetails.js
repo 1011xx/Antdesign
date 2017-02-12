@@ -47,10 +47,21 @@ function Pricedetails({price}) {
        >
      <Plate title="基础信息">
          <Row>
-          <div className={styles.inlineblock}>单据号：{detaildatasource.documentNumber}</div>
-          <div className={styles.margin}>预计生效日期：{detaildatasource.expectEffectiveDate}</div>
-          <div className={styles.margin}>状态：{detaildatasource.stateName}</div>
-          <div className={styles.margin}>备注：{detaildatasource.remarks}</div>
+         <Col span={6} style={{marginLeft: 1}}>
+           <span > 单据号：{detaildatasource.documentNumber}</span>
+         </Col>
+         <Col span={6}>
+           <span >预计生效日期：{detaildatasource.expectEffectiveDate}</span>
+         </Col>
+         <Col span={6}>
+           <span >状&nbsp;&nbsp;&nbsp;&nbsp;态：{detaildatasource.stateName}</span>
+         </Col>
+         <Col span={6}>
+
+         </Col>
+        </Row>
+        <Row style={{paddingTop:5}}>
+        <span >备&nbsp;&nbsp;&nbsp;&nbsp;注：{detaildatasource.remarks}</span>
         </Row>
      </Plate>
 

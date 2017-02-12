@@ -23,7 +23,7 @@ function ShopList({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
-    width:'5%'
+    width:'3%'
   }, {
     title: '店仓编号',
     dataIndex: 'code',
@@ -33,7 +33,7 @@ function ShopList({
     title: '店仓名称',
     dataIndex: 'fullName',
     key: 'fullName',
-    width:'20%'
+    width:'22%'
   }, {
     title: '店仓简称',
     dataIndex: 'shortName',

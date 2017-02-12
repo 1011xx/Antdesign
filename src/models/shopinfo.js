@@ -1,6 +1,6 @@
 import { queryShopInfo,updateShop,addShop,queryProvicneAndCity,querySaleArea,queryShopStatus,queryShopType ,queryShop} from '../services/shopinfo';
 import { parse } from 'qs';
-import {message} from 'antd';
+import {Modal} from 'antd';
 export default {
   namespace: 'shopinfo',
   state: {
@@ -37,9 +37,10 @@ export default {
     detailItem:{},
     saving:false,
     updating:false,
-
-
-
+    visibleSave:false,
+    addvisibleSave:false,
+    uploading:false,
+    adduploading:false,
 
   },
   reducers: {
@@ -246,20 +247,26 @@ export default {
    *upload({payload},{call,put}){
     const resultupload=yield call(addShop,payload);
     if(resultupload.data){
-      // console.info(resultupload.data.msg);
+      console.info(resultupload.data.msg);
       yield put({type:'publicdate',
           payload:{
             saving:false
           }
         });
       if(resultupload.data.code==0){
-       message.success(resultupload.data.msg);
-
-       }else if(resultupload.data.code==4){
-       message.error(resultupload.data.msg);
+        yield put({type:'publicdate',
+        payload:{
+          addvisibleSave:true,
+          adduploading:false
+        }
+      });
+alert(resultupload.data.msg);
 
        }else{
-       message.warning(resultupload.data.msg);
+         Modal.error({
+           title: '提示',
+           content: resultupload.data.msg,
+         });
 
        };
     }
@@ -275,13 +282,20 @@ export default {
           }
         });
         if(resultupdate.data.code==0){
-       message.success(resultupdate.data.msg);
+          yield put({type:'publicdate',
+          payload:{
+            visibleSave:true,
+            uploading:false
+          }
+        });
 
-       }else if(resultupdate.data.code==4){
-       message.error(resultupdate.data.msg);
 
        }else{
-       message.warning(resultupdate.data.msg);
+         Modal.error({
+           title: '提示',
+           content: resultupdate.data.msg,
+         });
+
        };
     }
  }
