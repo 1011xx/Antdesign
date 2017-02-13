@@ -8,7 +8,7 @@ import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './Barcode.less';
 
 
-function BarCode({moudelnum}) {
+function BarCode({dispatch,moudelnum}) {
    const {barcodeSource,barcodeTotal,barcodecurrent,barcodepagesize}=moudelnum;
    const columns = [{
     title: '序号',
@@ -24,12 +24,12 @@ function BarCode({moudelnum}) {
     key: 'styleCode',
   },{
     title: '颜色',
-    dataIndex: 'colorCode',
-    key: 'colorCode',
+    dataIndex: 'colorName',
+    key: 'colorName',
   }, {
     title: '尺寸',
-    dataIndex: 'size',
-    key: 'size',
+    dataIndex: 'sizeName',
+    key: 'sizeName',
   }];
 		//   const data = [{
 		//   num: '1',
@@ -67,34 +67,36 @@ function BarCode({moudelnum}) {
        let tempobj={};
       tempobj.page=currentpage;
       tempobj.rows=pagesize;
+      // console.log(currentpage,pagesize);
       dispatch({type:'moudelnum/tableLoading'});
       dispatch({
         type:'moudelnum/publicDate',
         payload:{
-          current:currentpage,
-          defaultPageSize:pagesize
+          barcodecurrent:currentpage,
+          barcodepagesize:pagesize
         }
       });
 
        dispatch({
-        type: 'moudelnum/querypage',
-        payload:tempobj
+        type: 'moudelnum/querybarcode'
       });
 
     },
     onPageChange(currentpage){
       // console.log('currentpage:'+currentpage);
-      let tempobj={};
-      tempobj.page=currentpage;
-      tempobj.rows=defaultPageSize;
+      // let tempobj={};
+      // tempobj.page=currentpage;
+      // tempobj.rows=defaultPageSize;
+      console.log(currentpage);
       dispatch({type:'moudelnum/tableLoading'});
-      console.log(tempobj);
+
       dispatch({
         type:'moudelnum/publicDate',
         payload:{
-          current:currentpage
+          barcodecurrent:currentpage
         }
       });
+      dispatch({type:'moudelnum/querybarcode'});
     }
   };
 
@@ -110,8 +112,8 @@ function BarCode({moudelnum}) {
        >
      <Plate title="款号信息">
      <Row>
-      <Col span={8}>款号：M160342K12322</Col>
-      <Col span={8} >品名：Mark Cheng2016初夏0379连衣裙</Col>
+      <Col span={8}>款&nbsp;&nbsp;&nbsp;&nbsp;号：M160342K12322</Col>
+      <Col span={8} >品&nbsp;&nbsp;&nbsp;&nbsp;名：Mark Cheng2016初夏0379连衣裙</Col>
     </Row>
      </Plate>
      <TablePlate title="条码列表">

@@ -24,6 +24,8 @@ function Moudelnumber({dispatch,moudelnum}) {
 			//创建查询数据newarr
 			styleCode=data.styleCode;
 			if((data.categoryCode) && (data.yearCode)){
+				categoryCode=data.categoryCode[0];
+				yearCode=data.yearCode[0];
 				var newarr={...data,
 						'yearCode':data.yearCode[0],
 						'categoryCode':data.categoryCode[0]
@@ -40,11 +42,10 @@ function Moudelnumber({dispatch,moudelnum}) {
 					var newarr={...data,
 							'yearCode':data.yearCode[0]
 					};
-			}else
-			{
+			}else{
 				var newarr=data;
 			}
-			dispatch({type:'moudelnum/gettablelist',payload:newarr});
+			dispatch({type:'moudelnum/querypage',payload:newarr});
 		}
 	};
 	//表格列表相应的操作
@@ -90,8 +91,15 @@ function Moudelnumber({dispatch,moudelnum}) {
 		onShowSizeChange(currentpage,pagesize){
 			// console.log(currentpage,pagesize);
 			 let tempobj={};
-			tempobj.page=currentpage;
-			tempobj.rows=pagesize;
+			 if(categoryCode){
+				 tempobj.categoryCode=categoryCode;
+			 }
+			if(yearCode){
+				tempobj.yearCode=yearCode;
+			}
+
+
+
 			dispatch({type:'moudelnum/tableLoading'});
 			dispatch({
 				type:'moudelnum/publicDate',
@@ -100,7 +108,6 @@ function Moudelnumber({dispatch,moudelnum}) {
 					defaultPageSize:pagesize
 				}
 			});
-
 			 dispatch({
 				type: 'moudelnum/querypage',
 				payload:tempobj
@@ -109,17 +116,30 @@ function Moudelnumber({dispatch,moudelnum}) {
 		},
 		onPageChange(currentpage){
 			// console.log('currentpage:'+currentpage);
+			// let tempobj={};
+			// tempobj.page=currentpage;
+			// tempobj.rows=defaultPageSize;
+			// console.log(tempobj);
 			let tempobj={};
-			tempobj.page=currentpage;
-			tempobj.rows=defaultPageSize;
+			if(categoryCode){
+				tempobj.categoryCode=categoryCode;
+			}
+		 if(yearCode){
+			 tempobj.yearCode=yearCode;
+		 }
 			dispatch({type:'moudelnum/tableLoading'});
-			console.log(tempobj);
+
 			dispatch({
 				type:'moudelnum/publicDate',
 				payload:{
 					current:currentpage
 				}
 			});
+			//执行分页请求
+			dispatch({
+			 type: 'moudelnum/querypage',
+			 payload:tempobj
+		 });
 		}
 	};
 
@@ -144,7 +164,7 @@ function Moudelnumber({dispatch,moudelnum}) {
 	 }
 	};
 
-	
+
   return (
     <Wrap
      num="1"
@@ -154,7 +174,7 @@ function Moudelnumber({dispatch,moudelnum}) {
 		  <Stylelist {...listProps}/>
 		  <Paginations {...pageProps}/>
 		  <SureModel {...modalProps}/>
-		 
+
 	</Wrap>
 
   );

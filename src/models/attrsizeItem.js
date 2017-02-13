@@ -57,35 +57,7 @@ export default {
                     });
             }
         },
-        *gettablelist({ payload }, { call, put, select }){
-           const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
-          const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
-          let tempobj={};
-          tempobj.page=currentpage;
-          tempobj.rows=pagesize;
-          let strarr=JSON.stringify(tempobj);
-            const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
 
-            if(data){
-               let long=data.dataList.length;
-             for(let i=0;i<long;i++){
-              let tempsizes=data.dataList[i].sizes.split(",").join(" ");
-              data.dataList[i].sizes=tempsizes;
-             }
-            console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                  }
-            yield put({type:'publicDate',
-                      payload:{
-                        dataSource:data.dataList,
-                        total:data.total,
-                        loading:false
-                      }
-                    });
-            }
-
-        },
         *querypage({ payload }, { call, put,select }){
           const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
           const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);

@@ -100,7 +100,7 @@ const sureModalProps = {
   };
 
   const pageProps={
-    total,
+		total,
     current,
     defaultPageSize,
     onShowSizeChange(currentpage,pagesize){

@@ -34,7 +34,7 @@ class EditableCell extends React.Component {
         placeholder="点击输入框选择尺寸"
         onChange={this.handleChange}
         onSelect={this.check}
-        
+
       >
      <Option  value={'010'}>010</Option>
      <Option  value={'020'}>020</Option>
@@ -135,8 +135,8 @@ const Configcolorsize=({
   return (
     <div>
     <Plate title="款号信息">
-     <div className={styles.inline}>款号：{config.code}</div>
-     <div className={styles.margindis}>品名：{config.name}</div>
+     <div className={styles.inline}>款&nbsp;&nbsp;&nbsp;&nbsp;号：{config.code}</div>
+     <div className={styles.margindis}>品&nbsp;&nbsp;&nbsp;&nbsp;名：{config.name}</div>
     </Plate>
 
     <TablePlate title="配置颜色尺寸图片">

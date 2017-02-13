@@ -38,22 +38,22 @@ function Styledetails({moudelnum}) {
        >
      <Plate title="基本信息">
          <Row>
-          <div className={styles.inlineblock}>款号：{detaildata.code}</div>
-          <div className={styles.margin}>品名：{detaildata.name}</div>
+          <div className={styles.inlineblock}>款&nbsp;&nbsp;&nbsp;&nbsp;号：{detaildata.code}</div>
+          <div className={styles.margin}>品&nbsp;&nbsp;&nbsp;&nbsp;名：{detaildata.name}</div>
         </Row>
      </Plate>
      <Plate title="商品属性">
      <Row className={styles.divstyle} type="flex" justify="space-between">
-     <Col span={4} >品牌：{detaildata.brandName}</Col>
-     <Col span={4} >年份：{detaildata.yearName}</Col>
-     <Col span={4} >&nbsp;&nbsp;&nbsp;&nbsp;季节：{detaildata.seasonName}</Col>
-     <Col span={4} >&nbsp;&nbsp;&nbsp;&nbsp;序号：{detaildata.serialnoName}</Col>
-     <Col span={4} >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类别：{detaildata.categoryName}</Col>
+     <Col span={4} >品&nbsp;&nbsp;&nbsp;&nbsp;牌：{detaildata.brandName}</Col>
+     <Col span={4} >年&nbsp;&nbsp;&nbsp;&nbsp;份：{detaildata.yearName}</Col>
+     <Col span={4} >季&nbsp;&nbsp;&nbsp;&nbsp;节：{detaildata.seasonName}</Col>
+     <Col span={4} >序&nbsp;&nbsp;&nbsp;&nbsp;号：{detaildata.serialnoName}</Col>
+     <Col span={4} >类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：{detaildata.categoryName}</Col>
 
     </Row>
     <Row className={styles.divstyle} type="flex" justify="space-between" style={{marginTop:8}}>
-    <Col span={4} >面料：{detaildata.materialsName}</Col>
-    <Col span={4} >系列：{detaildata.seriesName}</Col>
+    <Col span={4} >面&nbsp;&nbsp;&nbsp;&nbsp;料：{detaildata.materialsName}</Col>
+    <Col span={4} >系&nbsp;&nbsp;&nbsp;&nbsp;列：{detaildata.seriesName}</Col>
     <Col span={4} >大类别：{detaildata.bigcategoryName}</Col>
     <Col span={4} >小类别：{detaildata.smallcategoryName}</Col>
     <Col span={4} >销售类型：{detaildata.saletypeName}</Col>
@@ -77,12 +77,12 @@ function Styledetails({moudelnum}) {
      <div style={{marginTop:5}}></div>
      <Plate title="其他信息" >
          <Row>
-          <div className={styles.danwei}>单位：{detaildata.unitName}</div>
+          <div className={styles.danwei}>单&nbsp;&nbsp;&nbsp;&nbsp;位：{detaildata.unitName}</div>
           <div className={styles.weiyi}>是否唯一码管理：{detaildata.isUniqCodemanagementName}</div>
 
         </Row>
          <Row className={styles.margintop}>
-           <Col>备注：{detaildata.remarks}</Col>
+           <Col>备&nbsp;&nbsp;&nbsp;&nbsp;注：{detaildata.remarks}</Col>
         </Row>
      </Plate>
  </Wrap>

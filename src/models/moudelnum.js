@@ -30,6 +30,9 @@ export default {
       modalType: 'create',
       dataSource:[],
       barcodeSource:[],//查看条码表格的数据源
+      barcodeTotal:0,
+      barcodecurrent:1,
+      barcodepagesize:10,
       visibleSure:false,
       loading:true,
       total:0,
@@ -149,7 +152,6 @@ export default {
                       }
                     });
             }
-
         },
         *styleAttribute({ payload }, { call, put,select }){
             const {data}= yield call(queryStyleAttribute);
@@ -396,56 +398,72 @@ export default {
       //需要传递页码，页数，和styleid
       //翻页，翻页，翻页，翻页，翻页，翻页，翻页
       const id = yield select(({ moudelnum }) => moudelnum.currentid);
+      const barcodepage = yield select(({ moudelnum }) => moudelnum.barcodecurrent);
+      const barcodepagesize = yield select(({ moudelnum }) => moudelnum.barcodepagesize);
       var tempobj={};
       tempobj.styleId=id;
-      tempobj.page=1;
-      tempobj.rows=10;
-      // console.log(tempobj);
+      tempobj.page=barcodepage;
+      tempobj.rows=barcodepagesize;
+      console.log(tempobj);
       let querystr=JSON.stringify(tempobj);
        const {data}=yield call(queryStyleBarcode,{jsonparam:querystr});
         if(data.code==0){
-        // console.log(data);
-        for(let i=0;i<data.dataList.length;i++){
-          data.dataList[i].num=i+1;
+
+        let long=data.dataList.length;
+      if(barcodepage<2){
+        for(let i=1;i<=long;i++){
+            data.dataList[i-1].num=i;
+          }
+        }else{
+          let size=(barcodepage-1)*barcodepagesize;
+          for(let j=size;j<long+size;j++){
+            data.dataList[j-size].num=j+1;
+          }
         }
         console.log(data);
          yield put({
           type:'publicDate',
           payload:{
-            barcodeSource:data.dataList
+            barcodeSource:data.dataList,
+            barcodeTotal:data.total
           }
         });
       };
     },
         *querypage({ payload }, { call, put,select }){
-          // const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
-          // const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
-          //   let strarr=JSON.stringify(payload);
-          //   console.log(strarr)
-          //   const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
-          //   if(data){
-          //   console.log(data);
-          //    // 开始添加页面序号
-          //        let long=data.dataList.length;
-          //         if(currentpage<2){
-          //           for(let i=1;i<=long;i++){
-          //               data.dataList[i-1].num=i;
-          //             }
-          //           }else{
-          //             let size=(currentpage-1)*10;
-          //             for(let j=size;j<long+size;j++){
-          //               data.dataList[j-size].num=j+1;
-          //             }
-          //           }
-          //           //添加页面序号结束
-          //   yield put({type:'publicDate',
-          //             payload:{
-          //               dataSource:data.dataList,
-          //               total:data.total,
-          //               loading:false
-          //             }
-          //           });
-          //   }
+          const currentpage = yield select(({ moudelnum }) => moudelnum.current);
+          const pagesize = yield select(({ moudelnum }) => moudelnum.defaultPageSize);
+
+          payload.page=currentpage;
+          payload.rows=pagesize;
+
+          let strarr=JSON.stringify(payload);
+          console.log(strarr)
+          const {data}= yield call(queryStyle,{jsonparam:strarr});
+
+            if(data){
+              //将数据源改变成
+                  let long=data.dataList.length;
+                       if(currentpage<2){
+                         for(let i=1;i<=long;i++){
+                             data.dataList[i-1].num=i;
+                           }
+                         }else{
+                           let size=(currentpage-1)*pagesize;
+                           for(let j=size;j<long+size;j++){
+                             data.dataList[j-size].num=j+1;
+                           }
+                         }
+               console.log(data);
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        total:data.total,
+                        loading:false
+                      }
+                    });
+            };
+
         },
         *create({ payload }, { call, put,select }){
             // const tabledata = yield select(({ attrsizeItem }) => attrsizeItem.dataSource);
