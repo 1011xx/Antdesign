@@ -301,7 +301,11 @@ export default {
         //这里给选择尺寸框数据
         if(styleConfigList.data.dataList){
           for(let i=0;i<styleConfigList.data.dataList.length;i++){
+            let temp={};
             styleConfigList.data.dataList[i].sizes=styleConfigList.data.dataList[i].sizes.split(',');
+            temp.styleId=styleConfigList.data.dataList[i].styleId;
+            temp.colorCode=styleConfigList.data.dataList[i].colorCode;
+            styleConfigList.data.dataList[i].json=JSON.stringify(temp);
           }
           yield put({
             type:'publicDate',

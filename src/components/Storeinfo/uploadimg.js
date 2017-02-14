@@ -5,7 +5,7 @@ import styles from './uploadimg.less';
 const uploadButton = (
       <div>
         <Icon type="plus" />
-        <div className={styles.ant_upload_text}>Upload</div>
+        <div className={styles.ant_upload_text}>上传图片</div>
       </div>
     );
 

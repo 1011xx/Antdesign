@@ -109,10 +109,15 @@ const modalProps={
 		//从颜色数据源中找出colorCode和colorName
 		for(let i=0;i<moveKey.length;i++){
 			let temp={};
+			let tempjson={};
 			for(let j=0;j<transfordata.length;j++){
 				if(transfordata[j].key==moveKey[i]){
 				temp.colorCode=transfordata[j].colorCode;
 				temp.colorName=transfordata[j].colorName;
+				//新增的时候组装json
+				tempjson.styleId=currentid;
+				tempjson.colorCode=transfordata[j].colorCode;
+				temp.json=JSON.stringify(tempjson);
 				//将穿梭框选中的删除掉
 				transfordata.splice(j,1);
 			}
@@ -121,7 +126,7 @@ const modalProps={
 			console.log('temp:',temp);
 			configlist.push(temp);
 		}
-		console.log(listarry);
+		
 
 //完成操作后关闭弹框
 		dispatch({

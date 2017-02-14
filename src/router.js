@@ -48,7 +48,7 @@ import Set from "./routes/price/Set.js";
 import Pricedetails from "./routes/price/Pricedetails.js";
 import Modify from "./routes/price/Modify.js";
 import Pendingprice from "./routes/price/Pendingprice.js";
-
+import PicturesWall from "./routes/price/upload.js";
 
 
 
@@ -99,7 +99,7 @@ export default function({ history }) {
 
 
 
- <Route path="/upload" component={Text} />
+ <Route path="/upload" component={PicturesWall} />
 
       <Route path="/login" component={Login} />
       <Route path="/Moudelnumber" component={Moudelnumber} />

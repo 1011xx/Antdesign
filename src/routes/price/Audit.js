@@ -6,6 +6,7 @@ import LookupModal from '../../components/Price/LookupModal';
 import CommitModal from '../../components/Price/CommitModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
+
 var exp;
 var styleCode;
 var start;
@@ -243,7 +244,6 @@ function Audit({dispatch,price}) {
   		 });
   		}
   	};
-
 
 
   return (
