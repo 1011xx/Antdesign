@@ -4,17 +4,50 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Priceaudit from '../../components/Price/Priceaudit';
 import LookupModal from '../../components/Price/LookupModal';
 import CommitModal from '../../components/Price/CommitModal';
+import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 var exp;
-
+var styleCode;
+var start;
+var end;
+var state;
 function Audit({dispatch,price}) {
-  const {dataSource, lookupvis,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid }=price;
+  const {dataSource, lookupvis,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize}=price;
   const auditProps={
     dataSource,
     statedata,
     passdata(data){
       //当点击提交按钮的时候,
-      console.log(data);
+
+      styleCode=data.styleCode;
+      start=data.start;
+      end=data.end;
+      state=data.status;
+      //按照搜索条件请求表格数据
+      let tempobj={};
+      if(styleCode){
+        tempobj.styleNo=styleCode;
+      }
+     if(state){
+       tempobj.state=state;
+     }
+     if(start){
+       tempobj.expectEffectiveStartDate=start;
+     }
+     if(end){
+       tempobj.expectEffectivEndDate=end;
+     }
+     dispatch({type:'price/tableLoading'});
+     dispatch({
+       type:'price/publicDate',
+       payload:{
+         current:1
+       }
+     });
+      dispatch({
+       type: 'price/querypage',
+       payload:tempobj
+     });
     },
     setPrice(){
       //当点击设置吊牌价的时候
@@ -141,12 +174,85 @@ function Audit({dispatch,price}) {
       });
     },
   };
+
+
+  //页码
+  	const pageProps={
+  		total,
+  		current,
+  		defaultPageSize,
+  		onShowSizeChange(currentpage,pagesize){
+  			// console.log(currentpage,pagesize);
+  			 let tempobj={};
+  			 if(styleCode){
+  				 tempobj.styleNo=styleCode;
+  			 }
+  			if(state){
+  				tempobj.state=state;
+  			}
+        if(start){
+          tempobj.expectEffectiveStartDate=start;
+        }
+        if(end){
+          tempobj.expectEffectivEndDate=end;
+        }
+
+
+
+  			dispatch({type:'price/tableLoading'});
+  			dispatch({
+  				type:'price/publicDate',
+  				payload:{
+  					current:currentpage,
+  					defaultPageSize:pagesize
+  				}
+  			});
+  			 dispatch({
+  				type: 'price/querypage',
+  				payload:tempobj
+  			});
+
+  		},
+  		onPageChange(currentpage){
+        let tempobj={};
+        if(styleCode){
+          tempobj.styleNo=styleCode;
+        }
+       if(state){
+         tempobj.state=state;
+       }
+       if(start){
+         tempobj.expectEffectiveStartDate=start;
+       }
+       if(end){
+         tempobj.expectEffectivEndDate=end;
+       }
+
+  			dispatch({type:'price/tableLoading'});
+
+  			dispatch({
+  				type:'price/publicDate',
+  				payload:{
+  					current:currentpage
+  				}
+  			});
+  			//执行分页请求
+  			dispatch({
+  			 type: 'price/querypage',
+  			 payload:tempobj
+  		 });
+  		}
+  	};
+
+
+
   return (
     <Wrap
        num="1"
        last="价格维护"
        >
        <Priceaudit {...auditProps}/>
+       <Paginations {...pageProps}/>
        <LookupModal {...lookupProps}/>
        <CommitModal {...commitProps}/>
        <SureModel {...delProps}/>

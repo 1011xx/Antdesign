@@ -80,6 +80,7 @@ export default {
       currentsizegrop:'',//尺寸组代码
       sizeoption:[],//尺寸选择数据源
       listarry:[],//选择颜色后的表格数组
+      exitcolor:[],
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -281,23 +282,76 @@ export default {
       let str1=JSON.stringify(tempid);
       let str2=JSON.stringify(tempstyleid);
       let str3=JSON.stringify(temidstyle);
-      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
+      var exitcolorCode=[];//已存在的颜色
+      const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});//获取已有列表的数据
       const size=yield call(queryStyleSize,{jsonparam:str3});
-      const {data}=yield call(queryStyleColor);
+      const {data}=yield call(queryStyleColor);//获取颜色列表
       const details=yield call(getStyleInfoById,{jsonparam:str1});
 
 
-
+      if(styleConfigList.data.code==0){
+        console.log(styleConfigList.data);
+        //这里将获取到的颜色保存下来
+        if(styleConfigList.data.dataList){
+          for(let i=0;i<styleConfigList.data.dataList.length;i++){
+            exitcolorCode.push(styleConfigList.data.dataList[i].colorCode);
+          }
+        }
+        // console.log(exitcolorCode);
+        //这里给选择尺寸框数据
+        if(styleConfigList.data.dataList){
+          for(let i=0;i<styleConfigList.data.dataList.length;i++){
+            styleConfigList.data.dataList[i].sizes=styleConfigList.data.dataList[i].sizes.split(',');
+          }
+          yield put({
+            type:'publicDate',
+            payload:{
+              configlist:styleConfigList.data.dataList,
+            }
+          });
+        }else{
+          yield put({
+            type:'publicDate',
+            payload:{
+              configlist:{}
+            }
+          });
+        }
+      };
       if(data.code==0){
-        console.log(data);
+        // console.error(data);
+        //复制原数组；
+        const temparr=data.dataList.concat();
+
         for(let i=0;i<data.dataList.length;i++){
           data.dataList[i].key=i+1;
+          temparr[i].key=i+1;
         }
-          console.log(data);
+
         yield put({
           type:'publicDate',
           payload:{
-              transfordata:data.dataList
+              exitcolor:temparr
+          }
+        });
+            // console.log(exitcolorCode);
+            //找出列表中已经有的数据，并排除掉给穿梭框
+            for(let i=0;i<exitcolorCode.length;i++){
+              for(let j=0;j<data.dataList.length;j++){
+                if(exitcolorCode[i]==data.dataList[j].colorCode){
+                  // console.log(data.dataList[j]);
+                  // console.log(data.dataList.splice(j,1));
+                  data.dataList.splice(j,1);
+
+                }
+              }
+            }
+              console.log(data);
+        yield put({
+          type:'publicDate',
+          payload:{
+              transfordata:data.dataList,
+
           }
         });
       };
@@ -316,27 +370,7 @@ export default {
           }
         })
       };
-      if(styleConfigList.data.code==0){
-        console.log(styleConfigList.data);
-        if(styleConfigList.data.dataList){
-          for(let i=0;i<styleConfigList.data.dataList.length;i++){
-            styleConfigList.data.dataList[i].sizes=styleConfigList.data.dataList[i].sizes.split(',');
-          }
-          yield put({
-            type:'publicDate',
-            payload:{
-              configlist:styleConfigList.data.dataList
-            }
-          });
-        }else{
-          yield put({
-            type:'publicDate',
-            payload:{
-              configlist:{}
-            }
-          });
-        }
-      };
+
       if(size.data.code==0){
         console.log(size.data);
         yield put({
@@ -441,7 +475,7 @@ export default {
           console.log(strarr)
           const {data}= yield call(queryStyle,{jsonparam:strarr});
 
-            if(data){
+            if(data.code==0){
               //将数据源改变成
                   let long=data.dataList.length;
                        if(currentpage<2){

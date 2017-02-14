@@ -98,8 +98,6 @@ function Moudelnumber({dispatch,moudelnum}) {
 				tempobj.yearCode=yearCode;
 			}
 
-
-
 			dispatch({type:'moudelnum/tableLoading'});
 			dispatch({
 				type:'moudelnum/publicDate',

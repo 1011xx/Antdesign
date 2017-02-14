@@ -12,18 +12,19 @@ export default {
       textareavalue:'',
       dataSource:[],
       loading:true,
-      total:0,
       detaildatasource:{},
       auditdetaildata:{},
       deleteid:'',
       commitdata:{},
+      total:0,
+      current:1,
+      defaultPageSize:10,
 
 
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
-      current:1,
-      defaultPageSize:10,
+     
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -58,13 +59,14 @@ export default {
         *querypage({ payload }, { call, put, select }){
           const currentpage = yield select(({ price }) => price.current);
           const pagesize = yield select(({ price }) => price.defaultPageSize);
-          console.log(payload);
+          // console.log(payload);
           //使用传递过来的参数
-          // const currentpage = payload.page;
-          // const pagesize = payload.rows;
+            payload.page=currentpage;
+            payload.rows=pagesize;
             let strarr=JSON.stringify(payload);
-            // console.log(strarr)
-            const {data}= yield call(queryColor,{jsonParam:strarr});
+            console.log(strarr)
+            //获取表格数据
+            const {data}= yield call(queryTagPriceConfig,{jsonParam:strarr});
 
             if(data){
               console.log(data);
@@ -75,7 +77,7 @@ export default {
                         data.dataList[i-1].num=i;
                       }
                     }else{
-                      let size=(currentpage-1)*10;
+                      let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
                       }

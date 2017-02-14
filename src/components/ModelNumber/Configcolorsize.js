@@ -67,7 +67,7 @@ const Configcolorsize=({
     getIndex,
     config,
     onUpload,
-    onEditDetail,
+    onDelete,
     sizeoption,
     listarry,
     backurl,
@@ -117,7 +117,7 @@ const Configcolorsize=({
       title: '操作',
       key: 'operation',
       render:(text,record)=>(
-        <a onClick={() => onEditDetail(text,record)}>删除</a>
+        <a onClick={() => onDelete(text,record)}>删除</a>
       ),
     }];
     const data=[{
@@ -168,7 +168,7 @@ Configcolorsize.propTypes = {
   passdata: PropTypes.func,
   backurl:PropTypes.func,
   onUpload: PropTypes.func,
-  onEditDetail: PropTypes.func,
+  onDelete: PropTypes.func,
   handleChange: PropTypes.func,
 };
 export default Form.create()(Configcolorsize);

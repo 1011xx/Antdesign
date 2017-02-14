@@ -127,21 +127,32 @@ dataSource,
     status:0
   }];
 
+   function transform(a){
+     if(a){
+       return a.format('YYYY-MM-DD');
+     }
+   }
+
   function handleSubmit(e){
      e.preventDefault();
      validateFields((err, fieldsValue) => {
           if (!err) {
             if(fieldsValue.date){
-              const data = {
+              var datas = {
                 ...fieldsValue,
                 date:'',//给date赋值为空，因为没有实际
-                start:fieldsValue.date[0].format('YYYY-MM-DD'),
-                end:fieldsValue.date[1].format('YYYY-MM-DD')
+                start:transform(fieldsValue.date[0]),
+                end:transform(fieldsValue.date[1])
+              };
+
+            }else{
+              var datas = {
+                ...fieldsValue
               };
             }
+            // console.log(datas);
+            passdata(datas);
 
-            console.log(fieldsValue);
-            passdata(data);
            }
         });
   }

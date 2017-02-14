@@ -9,15 +9,15 @@ import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
 
 function ConfigColorSize({dispatch,moudelnum}){
 
-const {moveKey,chosecolorModal,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
+const {moveKey,chosecolorModal,exitcolor,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
 const configProps={
 	config,
 	sizeoption,
 	listarry,
 	configlist,
-	
+
 	handleChange(index,key){
-		console.log(index.key);
+		// console.log(index,key);
 		  return (value) => {
 		  	console.log('value',value);
       // const dataSource = [...this.state.dataSource];
@@ -44,8 +44,39 @@ const configProps={
 		});
 
 	},
- onEditDetail(text,item){
-	 console.log(text,item);
+ onDelete(text,item){
+	//  console.log('exitcolor',exitcolor);
+	//  console.log('transfordata',transfordata);
+	//   console.log(item.colorCode);
+	console.log(configlist);
+	if(configlist){
+		for(let j=0;j<configlist.length;j++){
+			if(configlist[j].colorCode==item.colorCode){
+				//删除相应的列表条目
+					configlist.splice(j,1);
+			}
+		}
+	}
+
+
+
+
+		 var temparr=transfordata.concat();
+	 for(let i=0;i<exitcolor.length;i++){
+		 if(exitcolor[i].colorCode==item.colorCode){
+			 //找到要删除的colorCode对象
+			//  console.log('exitcolor[i]',exitcolor[i]);
+			 temparr.push(exitcolor[i]);
+		 }
+	 }
+	 //将删除后的颜色发送给transfordata
+	 dispatch({
+		 type:'moudelnum/publicDate',
+		 payload:{
+			 transfordata:temparr
+		 }
+	 });
+	 console.log('transfordata',transfordata);
  },
  backurl(){
 	 dispatch(routerRedux.push('/modelnumber'));
@@ -75,7 +106,6 @@ const modalProps={
 	handleOk(){
 //点击弹框确定按钮后,在这里通过targetKey去生成表格数组
 
-		console.log(moveKey);
 		//从颜色数据源中找出colorCode和colorName
 		for(let i=0;i<moveKey.length;i++){
 			let temp={};
@@ -83,6 +113,8 @@ const modalProps={
 				if(transfordata[j].key==moveKey[i]){
 				temp.colorCode=transfordata[j].colorCode;
 				temp.colorName=transfordata[j].colorName;
+				//将穿梭框选中的删除掉
+				transfordata.splice(j,1);
 			}
 			}
 
@@ -95,7 +127,8 @@ const modalProps={
 		dispatch({
 			type:'moudelnum/publicDate',
 			payload:{
-				chosecolorModal:false
+				chosecolorModal:false,
+				targetKeys:[]
 			}
 		});
 

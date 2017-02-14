@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal } from 'antd';
+import { Form, Icon, Input, Button, Select,Cascader ,DatePicker, Row, Col,Upload, Modal,Spin } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import moment from 'moment';
 import styles from './addshopinfo.less';
