@@ -119,7 +119,7 @@ class PicturesWall extends React.Component {
 
 
 
-      console.log('retback',retback);
+      // console.log('retback',retback);
     }
 
 
@@ -170,11 +170,9 @@ const Configcolorsize=({
       validateFields,
       getFieldsValue
     },
-    handleSubmit,
     chooseColor,
     dataSource,
-    handleChange,
-    getIndex,
+    getadddata,
     config,
     onUpload,
     onDelete,
@@ -185,7 +183,18 @@ const Configcolorsize=({
 
   })=> {
 
+    function handleSubmit(e){
+     e.preventDefault();
+        validateFields((err, fieldsValue) => {
+          if (!err) {
 
+
+           getadddata(fieldsValue,retback);
+
+
+          }
+        });
+    }
 
     // 使用map函数生成option选项
   const selectopt=sizeoption.map((item, key) => {
@@ -209,10 +218,22 @@ const Configcolorsize=({
       dataIndex: 'size',
       key: 'size',
       render:(text, record, index) => (
-        <EditableCell
-          value={text}
-          onChange={handleChange(index, 'name')}
-        />
+        <FormItem>
+                 {getFieldDecorator(`${index}`, {
+                     initialValue:record.sizes
+                   })(
+                   <Select
+                       multiple
+                       style={{ width: 300,height:70 }}
+                       className={styles.select}
+                       placeholder="点击输入框选择尺寸"
+                     >
+                    {selectopt}
+
+                    </Select>
+                 )}
+        </FormItem>
+
       ),
     }, {
       title: '图片',
@@ -244,6 +265,10 @@ const Configcolorsize=({
 
   return (
     <div>
+    <Form
+      inline
+      onSubmit={handleSubmit}
+    >
     <Plate title="款号信息">
      <div className={styles.inline}>款&nbsp;&nbsp;&nbsp;&nbsp;号：{config.code}</div>
      <div className={styles.margindis}>品&nbsp;&nbsp;&nbsp;&nbsp;名：{config.name}</div>
@@ -269,6 +294,7 @@ const Configcolorsize=({
         <Button type="ghost" size="large" className={styles.marginbtn} onClick={backurl}>取消</Button>
       </FormItem>
     </div>
+    </Form>
     <div style={{height:1}}/>
     </div>
   );
@@ -279,6 +305,6 @@ Configcolorsize.propTypes = {
   backurl:PropTypes.func,
   onUpload: PropTypes.func,
   onDelete: PropTypes.func,
-  handleChange: PropTypes.func,
+
 };
 export default Form.create()(Configcolorsize);

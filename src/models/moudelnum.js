@@ -582,21 +582,15 @@ export default {
         },
         *saveconfigs({ payload }, { call, put,select }){
           //配置颜色尺寸图片后的保存
-            // const id = yield select(({ moudelnum }) => moudelnum.currentItem.id);
-            // payload.id=id;
-            // let strarr=JSON.stringify(payload);
-            // console.log(strarr);
-            const {data}= yield call(updateStyle,{jsonparam:strarr});
+          let strarr=JSON.stringify(payload);
+            const {data}= yield call(saveStyleConfig,{jsonparam:strarr});
             if(data.code=="0"){
-              // message.success(data.msg);
-                // console.log(data);
-                 yield put({type:'publicDate',payload:{savedtwo:true}});
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
-            }else{
+              message.success(data.msg);
+                console.log(data);
+                 // yield put({type:'publicDate',payload:{savedtwo:true}});
+            }else {
               message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+               // yield put({type:'publicDate',payload:{loading:false}});
             }
 
         },
