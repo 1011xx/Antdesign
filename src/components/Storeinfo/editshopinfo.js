@@ -232,7 +232,7 @@ if(editloading){
 
 return (
 
-        <Spin spinning={uploading} >
+       
         	 <Form
             inline
             className={styles.ant_advanced_search_form}
@@ -442,7 +442,7 @@ return (
              <Button type="ghost" size="large" onClick={backurl} className={styles.btn_margin}>取消</Button>
           </div>
            </Form>
-        </Spin>
+       
 
   );
 };

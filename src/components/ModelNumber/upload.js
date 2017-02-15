@@ -44,12 +44,7 @@ class PicturesWall extends React.Component {
     success=(ret)=>{
       console.log('ret',ret);
     }
-  // handleChange = (info) => {
-  //   if (info.file.status === 'done') {
-  //     // Get this url from response in real world.
-  //     getBase64(info.file.originFileObj, imageUrl => this.setState({ imageUrl }));
-  //   }
-  // }
+
 
   render() {
     const imageUrl = this.state.imageUrl;
@@ -180,7 +175,7 @@ export default PicturesWall;
 //   configs:[{
 //     colorCode:"456",
 //     colorName:"亮蓝色",
-//     sizes:"010,012,013",
+    // sizes:"010,012,013",
 //     image:{
 //       imageOriginalName:"S61231-11513314.jpg",
 //       imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg",

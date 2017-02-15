@@ -126,6 +126,13 @@ function Audit({dispatch,price}) {
 
      },
      makeSure(Value){
+       //组装要发给后台的数据，点击提交的时候发送的数据
+       let tempobj={};
+       tempobj.id=commitdata.id;
+       tempobj.documentNumber=commitdata.documentNumber;
+       tempobj.expectEffectiveDate=commitdata.expectEffectiveDate;
+       tempobj.state=commitdata.state;
+
        console.log(Value);
 
 

@@ -28,7 +28,7 @@ const AddShopinfo = ({
     options,
     item={},
     backurl,
-    adduploading,
+    
 
 }) =>{
 
@@ -218,7 +218,7 @@ function remark(rule, value, callback){
 // }
 return (
 
-          <Spin spinning={adduploading} >
+          
         	 <Form
             inline
             className={styles.ant_advanced_search_form}
@@ -421,7 +421,7 @@ return (
 
           </div>
            </Form>
-        </Spin>
+    
 
   );
 };

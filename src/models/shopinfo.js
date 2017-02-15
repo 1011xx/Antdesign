@@ -260,7 +260,6 @@ export default {
           adduploading:false
         }
       });
-alert(resultupload.data.msg);
 
        }else{
          Modal.error({

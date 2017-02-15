@@ -38,7 +38,7 @@ const {   previewVisible,
 		  behavier,
 		  saving,
       addvisibleSave,
-      adduploading
+     
 
 	}=shopinfo;
 
@@ -47,7 +47,7 @@ const {   previewVisible,
 		 options,
 		  region,
 		  types,
-      adduploading,
+         
 		  item:behavier==='create'?{}:currentItem,
 
 		getadddata(data){
@@ -204,7 +204,7 @@ const {   previewVisible,
 
   const saveProps={
     content:'新增成功！',
-  	addvisibleSave,
+  	visibleSave:addvisibleSave,
     handleOk(){
       dispatch(routerRedux.push('/shopinfo'));
       dispatch({type:'shopinfo/publicdate',

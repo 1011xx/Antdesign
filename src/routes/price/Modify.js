@@ -4,9 +4,12 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Modifyprice from '../../components/Price/Modifyprice';
 
 function Modify({dispatch,price}) {
-  const { }=price;
-  const auditProps={
+  const {detaildatasource }=price;
+  const modifyProps={
+    detaildatasource,
+    onDelete(item){
 
+    }
   };
 
   return (
@@ -16,7 +19,7 @@ function Modify({dispatch,price}) {
     last="价格维护"
     next="修改调价单"
     >
-      <Modifyprice />
+      <Modifyprice {...modifyProps}/>
    </Wrap>
   );
 }

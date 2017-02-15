@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal } from 'antd';
+import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal,Spin } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import {styleConfigDeleteImage} from '../../services/attribute';
@@ -212,6 +212,7 @@ const Configcolorsize=({
     listarry,
     backurl,
     configlist,
+    saveSpin,
 
   })=> {
 
@@ -296,7 +297,7 @@ const Configcolorsize=({
 
 
   return (
-    <div>
+    <Spin spinning={saveSpin} tip="保存中...">
     <Form
       inline
       onSubmit={handleSubmit}
@@ -328,7 +329,7 @@ const Configcolorsize=({
     </div>
     </Form>
     <div style={{height:30}}/>
-    </div>
+    </Spin>
   );
 }
 Configcolorsize.propTypes = {

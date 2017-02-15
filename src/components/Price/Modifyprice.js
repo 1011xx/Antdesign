@@ -6,6 +6,9 @@ import EditableCell from './Edittable';
 import styles from './Modifyprice.less';
 const FormItem = Form.Item;
 
+
+
+
 const Modifyprice = ({
   form: {
     getFieldDecorator,
@@ -13,17 +16,9 @@ const Modifyprice = ({
     getFieldsValue,
     resetFields
     },
-	commitvis,
-  commitdata,
-  makeSure,
-  handleCancel,
-  explain,
-  initvalue,
-
-
-
-
-  choosestyle,
+    choosestyle,
+    onDelete,
+	  detaildatasource,
 
 }) => {
 
@@ -34,29 +29,23 @@ const Modifyprice = ({
 
    }, {
      title: '款号',
-     dataIndex: 'code',
-     key: 'code',
+     dataIndex: 'styleNo',
+     key: 'styleNo',
 
    }, {
      title: '当前吊牌价',
-     dataIndex: 'current',
-     key: 'current',
+     dataIndex: 'currentTagprice',
+     key: 'currentTagprice',
 
    }, {
      title: '设置吊牌价',
-     dataIndex: 'setprice',
-     key: 'setprice',
-     render: (text, record, index) => (
-        <EditableCell
-          value={text}
-          onChange={this.onCellChange(index, 'name')}
-        />
-      ),
+     dataIndex: 'configTagprice',
+     key: 'configTagprice',
+
    }, {
      title: '备注',
      dataIndex: 'remarks',
      key: 'remarks',
-
    },{
      title: '操作',
      key: 'operation',
@@ -94,7 +83,7 @@ const Modifyprice = ({
 		      <Col className="gutter-row" span={8}>
 		        <div className={styles.gutterbox}>
 							<span>单据号：</span>
-							<span>23232ewfwefwef1</span>
+							<span>{detaildatasource.documentNumber}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
@@ -114,7 +103,7 @@ const Modifyprice = ({
 		      <Col className="gutter-row" span={8}>
 					<div className={styles.gutterbox}>
 						<span>状态：</span>
-						<span>未提交</span>
+						<span>{detaildatasource.stateName}</span>
 					</div>
 		      </Col>
     	</Row>
@@ -125,8 +114,8 @@ const Modifyprice = ({
             <FormItem
                 label="说明："
                 >
-                  {getFieldDecorator('exp', {
-                  initialValue:initvalue,
+                  {getFieldDecorator('description', {
+                  initialValue:"initvalue",
                   })(
                     <Input type="textarea" rows={3} style={{width:650}} />
                   )}
@@ -139,7 +128,7 @@ const Modifyprice = ({
             <div className={styles.add_plate}>
               <a className={styles.add_btn} onClick={choosestyle}>选择款号</a>
               <a className={styles.add_btn} onClick={choosestyle}>批量设置价格</a>
-              <a className={styles.add_btn} onClick={choosestyle}>下载模版</a>
+              <a className={styles.add_btn} href=" http://192.168.10.146:5001/fmss/tagPriceController/tagPriceConfigController/tagPriceConfigTemplateDownload" target="_blank">下载模版</a>
               <a className={styles.add_btn} onClick={choosestyle}>批量导入款号</a>
             </div>
 			    <Table
@@ -147,7 +136,7 @@ const Modifyprice = ({
             className={styles.table}
 		        columns={columns}
             rowSelection={rowSelection}
-
+            dataSource={detaildatasource.dataList}
 		        pagination={false}
             loading={false}
 		        bordered

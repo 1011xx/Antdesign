@@ -184,7 +184,7 @@ const {   previewVisible,
 	};
 const saveProps={
   content:'修改成功！',
-	visibleSave,
+  visibleSave,
   handleOk(){
     dispatch(routerRedux.push('/shopinfo'));
     dispatch({type:'shopinfo/publicdate',

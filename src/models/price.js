@@ -1,4 +1,10 @@
-import { queryTagPriceConfig,queryTagPriceConfigState,deleteTagPriceConfig,queryTagPriceConfigInfo,queryTagPriceConfigAudit,updateAuditTagPriceConfig } from '../services/price';
+import { queryTagPriceConfig,
+          queryTagPriceConfigState,
+          deleteTagPriceConfig,
+          queryTagPriceConfigInfo,
+          queryTagPriceConfigAudit,
+          updateAuditTagPriceConfig
+        } from '../services/price';
 import {message} from 'antd';
 export default {
   //颜色属性维护
@@ -48,7 +54,11 @@ export default {
                     });
             };
             if(status.data.code==0){
-              console.log(status.data);
+              let tempobj={};
+              tempobj.label="全部";
+              tempobj.value="";
+              status.data.dataList.unshift(tempobj);
+              console.log(status.data.dataList);
               yield put({type:'publicDate',
                         payload:{
                           statedata:status.data.dataList,
@@ -179,16 +189,17 @@ export default {
             }
         },
          *details({ payload }, { call, put,select }){
-          //查看详情页面
+          //查看详情页面，修改页面也会需要用到这个接口
             let newId={};
             newId.Id=payload;
             let strarr=JSON.stringify(newId);
             const {data}= yield call(queryTagPriceConfigInfo,{jsonParam:strarr});
             if(data.code=="0"){
                 console.log(data);
-                console.log(data.tagPriceConfig);
+    
                 for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                   data.tagPriceConfig.dataList[i].num=i+1;
+                  data.tagPriceConfig.dataList[i].key=i+1;
                 }
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
@@ -295,7 +306,14 @@ export default {
               payload:strs[2]
             });
 
+            }else if(strs[1]==='modify'){
+              //修改页面需要去请求数据，和详情页面请求的数据一样
+                 dispatch({
+                type:'details',
+                payload:strs[2]
+              });
             }
+
            }
          });
        }

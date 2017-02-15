@@ -17,7 +17,7 @@ import {
   queryStyleSize,
   saveStyleConfig
 } from '../services/attribute';
-import {message} from 'antd';
+import {Modal} from 'antd';
 export default {
   namespace: 'moudelnum',
   state: {
@@ -34,6 +34,7 @@ export default {
       barcodecurrent:1,
       barcodepagesize:10,
       visibleSure:false,
+      savevisibleSave:false,
       loading:true,
       total:0,
       current:1,
@@ -41,6 +42,7 @@ export default {
       styleCategory:[],
       styleYear:[],
       chosecolorModal:false,
+      saveSpin:false,
 
 
       currentpage:1,
@@ -535,12 +537,11 @@ export default {
                       }
                     });
 
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
             }
 
         },
@@ -554,13 +555,14 @@ export default {
               // message.success(data.msg);
                 // console.log(data);
                  yield put({type:'publicDate',payload:{savedtwo:true}});
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
             }
+
+
 
         },
         *delete({ payload }, { call, put,select }){
@@ -568,7 +570,7 @@ export default {
             let strarr=JSON.stringify(payload);
             const {data}= yield call(deleteStyleById,{jsonparam:strarr});
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                 console.log(data);
                 //方案二：再次请求数据
                 yield put({type:'enter'});
@@ -579,13 +581,11 @@ export default {
                          defaultPageSize:10
                       }
                     });
-            }else if(data.code=="4"){
-                message.error(data.msg);
-                 yield put({type:'publicDate',payload:{loading:false}});
             }else{
-              message.warning(data.msg);
-               yield put({type:'publicDate',payload:{loading:false}});
-            }
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });}
 
         },
         *saveconfigs({ payload }, { call, put,select }){
@@ -593,11 +593,14 @@ export default {
           let strarr=JSON.stringify(payload);
             const {data}= yield call(saveStyleConfig,{jsonparam:strarr});
             if(data.code=="0"){
-              message.success(data.msg);
+              // message.success(data.msg);
                 console.log(data);
-                 // yield put({type:'publicDate',payload:{savedtwo:true}});
+                 yield put({type:'publicDate',payload:{savevisibleSave:true}});
             }else {
-              message.warning(data.msg);
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
                // yield put({type:'publicDate',payload:{loading:false}});
             }
 

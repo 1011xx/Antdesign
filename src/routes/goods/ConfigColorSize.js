@@ -4,20 +4,27 @@ import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var deleteimgdata=[];
 
 
 function ConfigColorSize({dispatch,moudelnum}){
 
-const {moveKey,chosecolorModal,exitcolor,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
+const {moveKey,chosecolorModal,exitcolor,saveSpin,savevisibleSave,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
 const configProps={
 	config,
 	sizeoption,
 	listarry,
 	configlist,
-
+	saveSpin,
 	getadddata(value,retback){
-		console.log('retback:',retback);
+		dispatch({
+			type:'moudelnum/publicDate',
+			payload:{
+				saveSpin:true
+			}
+		});
+		// console.log('retback:',retback);
 		// console.log('configlist:',configlist);
 		//给表格数据添加image对象
 		if(retback.length>0){
@@ -243,7 +250,20 @@ const modalProps={
 			}
 		});
 	},
-}
+};
+const saveProps={
+	content:'保存成功！',
+	visibleSave:savevisibleSave,
+	handleOk(){
+		dispatch(routerRedux.push('/modelnumber'));
+		dispatch({type:'moudelnum/publicDate',
+		payload:{
+			savevisibleSave:false,
+			saveSpin:false
+		}
+	})
+	}
+};
 
 	return(
 		<Wrap
@@ -253,6 +273,7 @@ const modalProps={
 		>
 		<Configcolorsize {...configProps}/>
 		<Modalchosecolor {...modalProps}/>
+		<Savesuccess {...saveProps}/>
 		</Wrap>
 
 		);
