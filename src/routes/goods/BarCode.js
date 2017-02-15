@@ -14,22 +14,27 @@ function BarCode({dispatch,moudelnum}) {
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'5%'
   }, {
     title: '条码',
     dataIndex: 'barcode',
     key: 'barcode',
+    width:'35%'
   }, {
     title: '款号',
     dataIndex: 'styleCode',
     key: 'styleCode',
+    width:'35%'
   },{
     title: '颜色',
     dataIndex: 'colorName',
     key: 'colorName',
+    width:'10%'
   }, {
     title: '尺寸',
     dataIndex: 'sizeName',
     key: 'sizeName',
+    width:'10%'
   }];
 		//   const data = [{
 		//   num: '1',
@@ -123,6 +128,7 @@ function BarCode({dispatch,moudelnum}) {
      loading={false}
 		 dataSource={barcodeSource}
 		 pagination={false}
+     scroll={{y: 'calc(100vh - 335px)' }}
 		 bordered
 		/>
 

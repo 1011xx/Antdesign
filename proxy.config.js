@@ -14,7 +14,7 @@
 module.exports = {
   // Forward 到另一个服务器
   'GET https://assets.daily/*': 'https://assets.online/',
-  'GET http://localhost:8989/*' : 'http://192.168.10.146:5001/',
+  'GET http://localhost:8989/fmss' : 'http://192.168.10.146:5001//fmss',
   // 'GET http://localhost:8989/*' : 'http://dz14571854.imwork.net:23196/',
 
   // Forward 到另一个服务器，并指定路径

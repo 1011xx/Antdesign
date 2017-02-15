@@ -305,7 +305,15 @@ export default {
             styleConfigList.data.dataList[i].sizes=styleConfigList.data.dataList[i].sizes.split(',');
             temp.styleId=styleConfigList.data.dataList[i].styleId;
             temp.colorCode=styleConfigList.data.dataList[i].colorCode;
-            styleConfigList.data.dataList[i].json=JSON.stringify(temp);
+            let tempdata=JSON.parse(styleConfigList.data.dataList[i].image);
+
+              //当不使用代理的时候取消这条注释
+              // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+temp.imageDirectory;
+              //当使用代理的时候取消这条注释
+            styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
+             temp.imageName=tempdata.imageName;
+             styleConfigList.data.dataList[i].json=JSON.stringify(temp);
+             styleConfigList.data.dataList[i].image=tempdata;
           }
           yield put({
             type:'publicDate',

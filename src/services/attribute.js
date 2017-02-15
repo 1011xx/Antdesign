@@ -378,3 +378,13 @@ export async function saveStyleConfig(params) {
     body: qs.stringify(params),
   });
 }
+//款号维护->配置->配置颜色图片尺寸->单独删除图片接口
+export async function styleConfigDeleteImage(params) {
+  return request(`${ipaddress}/fmss/styleController/styleConfigDeleteImage`, {
+    method: 'post',
+    headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}

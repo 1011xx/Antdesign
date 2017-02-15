@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
-
+var deleteimgdata=[];
 
 
 function ConfigColorSize({dispatch,moudelnum}){
@@ -17,7 +17,8 @@ const configProps={
 	configlist,
 
 	getadddata(value,retback){
-		// console.log('retback:',JSON.stringify(retback));
+		console.log('retback:',retback);
+		// console.log('configlist:',configlist);
 		//给表格数据添加image对象
 		if(retback.length>0){
 			for(let j=0;j<configlist.length;j++){
@@ -28,40 +29,60 @@ const configProps={
 				}
 			}
 		}
-// console.log('configlist:',configlist);
-		// var _a={
+// console.log('configlist1:',configlist);
+/*******************数据格式****************************/
+		// {
 		//   styleId:"FF0CAE08FE8D4D70B61BCDD6524C5B14",
 		//   styleCode:"Y0223911B0333",
 		//   styleName:"ROYAL RAYE2002年初夏3911背心纯棉",
 		//   configs:[{
 		//     colorCode:"456",
 		//     colorName:"亮蓝色",
-		    // sizes:"010,012,013",
+		//     sizes:"010,012,013",
 		//     image:{
 		//       imageOriginalName:"S61231-11513314.jpg",
 		//       imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg",
 		//       imageDirectory:"/images/FF0CAE08FE8D4D70B61BCDD6524C5B14/456/ed852558d8f04a86bd46ffc5d8894228.jpg",
 		//       imageType:"jpg"
-		//     }
+		//     }，
+		// 		deleteImage:[{
+		// 		  colorCode:"456"
+		// 		  imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
+		// 		  StyleCode:"Y0223911B0333"
+		// 		}]
 		//   }]
 		//
 		// };
+		/********************这儿为获取的sizes***************************/
 		let temparr=[];
 		for (let key in value) {
 			if(value[key]){
 				temparr.push(value[key].join(','));
 			}
 		}
-		console.log(temparr);//这儿为获取的sizes
-/***********************************************/
-// console.log('configlist:',configlist);
-let temparr2=[];
+		console.log(temparr);
+/**********************组装deleteimage*************************/
+
+		if(retback.length>0){
+			for(let j=0;j<deleteimgdata.length;j++){
+				for(let k=0;k<retback.length;k++){
+					if(deleteimgdata[j].colorCode==retback[k].colorCode){
+						deleteimgdata[j].imageName=retback[k].reg[0].imageName;
+					}
+				}
+			}
+		}
+console.log('deleteimgdata:',deleteimgdata);
+/************************组装configs***********************/
+//这里组装configs
+	let temparr2=[];
   for(let i=0;i<configlist.length;i++){
 		let tempobj={};
 		tempobj.colorCode=configlist[i].colorCode;
 		tempobj.colorName=configlist[i].colorName;
 		tempobj.sizes=temparr[i];
 		tempobj.image=configlist[i].image;
+		tempobj.deleteImage=deleteimgdata;
 		temparr2.push(tempobj)
 	}
 	// console.log('temparr2:',temparr2);
@@ -69,13 +90,15 @@ let temparr2=[];
 
 
 
+/***********************************************/
+//这里组装整个json
 		let temp={};
 		temp.styleId=currentid;
 		temp.styleCode=config.code;
 		temp.styleName=config.name;
 		temp.configs=temparr2;
 
-// console.log(JSON.stringify(temp));
+console.log(temp);
 dispatch({type:'moudelnum/saveconfigs',
 					payload:temp
 				})
@@ -101,13 +124,27 @@ dispatch({type:'moudelnum/saveconfigs',
 
 	},
  onDelete(text,item){
-	//  console.log('exitcolor',exitcolor);
-	//  console.log('transfordata',transfordata);
-	//   console.log(item.colorCode);
-	console.log(configlist);
+	//   要删除的数据格式
+	// 		deleteImage:[{
+	// 		  colorCode:"456"
+	// 		  imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
+	// 		  StyleCode:"Y0223911B0333"
+	// 		}]
+	console.log('configlist:',configlist);
+	console.log(item);
 	if(configlist){
+		let tempdelobj={};
+		//找到要删除的数据
 		for(let j=0;j<configlist.length;j++){
 			if(configlist[j].colorCode==item.colorCode){
+				//首先组装要删除的json
+				tempdelobj.colorCode=item.colorCode;
+				tempdelobj.styleCode=item.styleCode;
+				if(configlist[j].image){
+					tempdelobj.imageName=configlist[j].image.imageName;
+				}
+				console.log('tempdelobj:',tempdelobj);
+				deleteimgdata.push(tempdelobj);
 				//删除相应的列表条目
 					configlist.splice(j,1);
 			}
@@ -170,6 +207,7 @@ const modalProps={
 				if(transfordata[j].key==moveKey[i]){
 				temp.colorCode=transfordata[j].colorCode;
 				temp.colorName=transfordata[j].colorName;
+				temp.styleCode=config.code;
 				//新增的时候组装json
 				tempjson.styleId=currentid;
 				tempjson.colorCode=transfordata[j].colorCode;
@@ -179,8 +217,9 @@ const modalProps={
 			}
 			}
 
-			console.log('temp:',temp);
+			// console.log('temp:',temp);
 			configlist.push(temp);
+			console.log('configlist：',configlist);
 		}
 
 

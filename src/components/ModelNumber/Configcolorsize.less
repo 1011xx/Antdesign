@@ -68,6 +68,109 @@ tr{
     .ant-upload-list-picture-card .ant-upload-list-item{
       margin:0;
     }
-    
+
+  }
+}
+:global{
+  .imageborder{
+    width:94px;
+    height:94px;
+    padding:8px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    display: inline-block;
+    position: relative;
+  }
+
+  .upload-actions:hover{
+    z-index: 1001;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ;
+    -moz-transition:all 0.3s ; /* Firefox 4 */
+    -webkit-transition:all 0.3s ; /* Safari and Chrome */
+    -o-transition:all 0.3s ; /* Opera */
+  }
+  .upload-actions:hover .anticons{
+    opacity:1;
+  }
+  .imgstyle{
+    width:76px;
+    height:76px;
+    border-radius: 4px;
+  }
+  .upload-actions{
+    width:76px;
+    height:76px;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    white-space: nowrap;
+    transition: all 0.3s ;
+    -moz-transition:all 0.3s ; /* Firefox 4 */
+    -webkit-transition:all 0.3s ; /* Safari and Chrome */
+    -o-transition:all 0.3s ; /* Opera */
+  }
+  .btns{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+  }
+  .anticons{
+    z-index: 10;
+    -webkit-transition: all .3;
+    transition: all .3;
+    cursor: pointer;
+    font-size: 16px;
+    width: 16px;
+    color: rgba(255, 255, 255, 0.91);
+    opacity: 0;
+    margin: 0 4px;
+
+    transition: opacity 0.3s ;
+    -moz-transition:opacity 0.3s ; /* Firefox 4 */
+    -webkit-transition:opacity 0.3s ; /* Safari and Chrome */
+    -o-transition:opacity 0.3s ; /* Opera */
+
+    display: inline-block;
+    font-style: normal;
+    vertical-align: baseline;
+    text-align: center;
+    text-transform: none;
+    line-height: 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .uploadstyle{
+    width:94px;
+    height:94px;
+    padding:20px 0;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    background-color: #fbfbfb;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    transition: border-color 0.3s ease;
+    -moz-transition:border-color 0.3s ease;; /* Firefox 4 */
+    -webkit-transition:border-color 0.3s ease;; /* Safari and Chrome */
+    -o-transition:border-color 0.3s ease;; /* Opera */
+  }
+  .uploadstyle:hover{
+    border-color:#108EE9;
+  }
+  .upload-icon{
+    font-size: 28px;
+    color: #999;
   }
 }
