@@ -1,195 +1,190 @@
 import React, { PropTypes } from 'react';
-import {  Table, Input,Modal,Col,Row} from 'antd';
+import {  Form,Button,Transfer,Table,Select, Input,Modal,Col,Row} from 'antd';
+import BigModal from '../../commonComponents/BigModal/BigModal';
 import styles from './ChoosestyleModal.less';
+const FormItem = Form.Item;
+const Option = Select.Option;
 
-
-const LookupModal = ({
-	lookupvis,
-	auditdetaildata,
+const StyleModal = ({
+	visible,
+  modalyear,
+  modalseason,
+  modalbrand,
+  modalcategory,
+	modalstyle,
 	onOk,
 	handleCancel,
+	passdata,
+	form: {
+    getFieldDecorator,
+    validateFields,
+    getFieldsValue
+    },
+		targetKeys,
+		handleTransferChange,
+
 
 }) => {
-
-
-	const dataSource = [{
-	  num: '1',
-	  auditEmployeeName: '胡彦斌',
-	  auditDate: '2016-10-06 12:09:23',
-	  resultStateName: '审核通过',
-		description:'同意'
-	}, {
-	  num: '2',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '3',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '4',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '5',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '6',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '7',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '8',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '9',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '10',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '11',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '12',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}, {
-	  num: '13',
-	  auditEmployeeName: '胡彦号',
-	  auditDate: '2016-10-05 12:09:45',
-	  resultStateName: '提交审核',
-		description:'修改了价格'
-	}]
-
-	const columns = [{
-	  title: '序号',
-	  dataIndex: 'num',
-	  key: 'num',
-		width:'10%'
-	}, {
-	  title: '操作员',
-	  dataIndex: 'auditEmployeeName',
-	  key: 'auditEmployeeName',
-		width:'15%'
-	}, {
-	  title: '操作时间',
-	  dataIndex: 'auditDate',
-	  key: 'auditDate',
-		width:'29%'
-	}, {
-	  title: '状态',
-	  dataIndex: 'resultStateName',
-	  key: 'resultStateName',
-		width:'16%'
-	}, {
-	  title: '说明',
-	  dataIndex: 'description',
-	  key: 'description',
-		width:'30%'
-	}]
+	// 使用map函数生成yearoption选项
+  const selectyear=modalyear.map((item, key) => {
+    return(
+      <Option key={key} value={item.code}>{item.name}</Option>
+      );
+  });
+	// 使用map函数生成yearoption选项
+  const selectseason=modalseason.map((item, key) => {
+    return(
+      <Option key={key} value={item.code}>{item.name}</Option>
+      );
+  });
+	// 使用map函数生成yearoption选项
+	const selectbrand=modalbrand.map((item, key) => {
+		return(
+			<Option key={key} value={item.code}>{item.name}</Option>
+			);
+	});
+	// 使用map函数生成yearoption选项
+	const selectcategory=modalcategory.map((item, key) => {
+		return(
+			<Option key={key} value={item.code}>{item.name}</Option>
+			);
+	});
+	// 使用map函数生成yearoption选项
+	// const selectyear=modalyear.map((item, key) => {
+	// 	return(
+	// 		<Option key={key} value={item.code}>{item.name}</Option>
+	// 		);
+	// });
+function handleSubmit(e){
+	e.preventDefault();
+		validateFields((err, fieldsValue) => {
+				 if (!err) {
+						 var datas = {
+							 ...fieldsValue
+						 };
+					 }
+					 passdata(datas);
+			 });
+}
 
 
 	return(
-         <Modal title="查看审核过程"
-          visible={lookupvis}
-          onOk={onOk}
-          onCancel={handleCancel}
+         <BigModal
+		  		title="查看审核过程"
+          visible={visible}
+          handleOk={onOk}
+          handleCancel={handleCancel}
           closable={false}
-					maskClosable={false}
+		   		maskClosable={false}
         >
 				<div className={styles.titletop}>
+				<Form
+            inline
+            onSubmit={handleSubmit}
+            >
 				<Row gutter={16}>
-		      <Col className="gutter-row" span={8}>
-		        <div className="gutter-box">
-							<span>单&nbsp;&nbsp;据&nbsp;&nbsp;号：</span>
-							<span>{auditdetaildata.documentNumber}</span>
-						</div>
+		      <Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+							<FormItem
+									 label="款号"
+									 >
+									 {getFieldDecorator('styleNo')(
+										 <Input size="small"  style={{ width: 120 }}/>
+									 )}
+							 </FormItem>
 		      </Col>
-		      <Col className="gutter-row" span={8}>
-		        <div className="gutter-box">
-							<span>调价日期：</span>
-							<span>{auditdetaildata.createDate}</span>
-						</div>
+		      <Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+					<FormItem
+							 label="年份"
+							 >
+							 {getFieldDecorator('yearCode')(
+								 <Select   style={{ width: 120 }} size="small">
+							      {selectyear}
+							    </Select>
+							 )}
+					 </FormItem>
 		      </Col>
-		      <Col className="gutter-row" span={8}>
-					<div className="gutter-box">
-						<span>调价人：</span>
-						<span>{auditdetaildata.createEmployeeName}</span>
-					</div>
+		      <Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+					<FormItem
+							 label="季节"
+							 >
+							 {getFieldDecorator('seasonCode')(
+								 <Select   style={{ width: 120 }} size="small">
+									 {selectseason}
+								 </Select>
+							 )}
+					 </FormItem>
+		      </Col>
+					<Col className="gutter-row" span={3} style={{textAlign: 'right'}}>
+
 		      </Col>
     	</Row>
-			<Row gutter={16} className={styles.rowspace}>
-				<Col className="gutter-row" span={8} style={{marginLeft:1}}>
-					<div className="gutter-box">
-						<span>当前状态：</span>
-						<span>{auditdetaildata.stateName}</span>
-					</div>
-				</Col>
-				<Col className="gutter-row" span={8}>
-				</Col>
-				<Col className="gutter-row" span={8}>
-				</Col>
+			<Row gutter={16} className={styles.rowspace} style={{paddingBottom: 8,
+    borderBottom: '1px solid #e9e9e9'}}>
+					<Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+					<FormItem
+							 label="品牌"
+							 >
+							 {getFieldDecorator('brandCode')(
+								 <Select   style={{ width: 120 }} size="small">
+									 {selectbrand}
+								 </Select>
+							 )}
+					 </FormItem>
+					</Col>
+					<Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+					<FormItem
+							 label="批次"
+							 >
+							 {getFieldDecorator('pici')(
+								 <Select   style={{ width: 120 }} size="small" >
+
+								 </Select>
+							 )}
+					 </FormItem>
+					</Col>
+					<Col className="gutter-row" span={7} style={{textAlign: 'right'}}>
+					<FormItem
+							 label="类别"
+							 >
+							 {getFieldDecorator('categoryCode')(
+								 <Select   style={{ width: 120 }} size="small">
+									 {selectcategory}
+								 </Select>
+							 )}
+					 </FormItem>
+					</Col>
+					<Col className="gutter-row" span={3} >
+					<FormItem >
+						<Button type="primary" htmlType="submit" size="default">查询</Button>
+				  </FormItem>
+					</Col>
 		</Row>
-		<Row className={styles.rowspace}>
-		<Col span={24} style={{marginLeft:2}}>
-		<div className="gutter-box">
-			<span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
-			<span>{auditdetaildata.remarks}</span>
-		</div>
-		</Col>
-		</Row>
+		</Form>
 			</div>
-			<Table bordered
-			size="small"
-			pagination={false}
-			className={styles.table}
-			dataSource={auditdetaildata.dataList}
-			scroll={{y: 200 }}
-			columns={columns}
-			title={() => '审核信息'}
-			/>
-			{/*dataSource={auditdetaildata.dataList}*/}
-        </Modal>
+			<Transfer
+				className={styles.transfer}
+				dataSource={modalstyle}
+				titles={['可选款号', '已选款号']}
+        listStyle={{
+          width: 300,
+          height: 300,
+        }}
+				targetKeys={targetKeys}
+        onChange={handleTransferChange}
+				render={item=>item.code}
+
+        />
+
+        </BigModal>
 
 
 		);
 }
 
-LookupModal.propTypes = {
+StyleModal.propTypes = {
 	lookupvis: PropTypes.any,
 	onOk: PropTypes.func,
 	handleCancel: PropTypes.func,
 };
 
-export default LookupModal;
+export default Form.create()(StyleModal);

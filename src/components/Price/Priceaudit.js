@@ -21,6 +21,7 @@ onCommit,
 onDelete,
 onLook,
 dataSource,
+loading,
 
 })=> {
   // 使用map函数生成option选项
@@ -208,7 +209,7 @@ dataSource,
         <Table size="small"
             className={styles.table}
             columns={columns}
-            loading={false}
+            loading={loading}
             dataSource={dataSource}
             pagination={false}
             bordered

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Form, Table, Input,Col,Row,DatePicker} from 'antd';
+import Upload from 'rc-upload';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import EditableCell from './Edittable';
@@ -19,6 +20,7 @@ const Modifyprice = ({
     choosestyle,
     onDelete,
 	  detaildatasource,
+    onSuccess,
 
 }) => {
 
@@ -115,7 +117,6 @@ const Modifyprice = ({
                 label="说明："
                 >
                   {getFieldDecorator('description', {
-                  initialValue:"initvalue",
                   })(
                     <Input type="textarea" rows={3} style={{width:650}} />
                   )}
@@ -128,8 +129,14 @@ const Modifyprice = ({
             <div className={styles.add_plate}>
               <a className={styles.add_btn} onClick={choosestyle}>选择款号</a>
               <a className={styles.add_btn} onClick={choosestyle}>批量设置价格</a>
-              <a className={styles.add_btn} href=" http://192.168.10.146:5001/fmss/tagPriceController/tagPriceConfigController/tagPriceConfigTemplateDownload" target="_blank">下载模版</a>
-              <a className={styles.add_btn} onClick={choosestyle}>批量导入款号</a>
+              <a className={styles.add_btn} href="http://192.168.10.178:9081/fmss/tagPriceController/tagPriceConfigTemplateDownload" target="_blank">下载模版</a>
+              <Upload
+                action="/fmss/tagPriceController/tagPriceConfigBatchImportStyles"
+                onSuccess={onSuccess}
+              >
+                <a className={styles.add_btn} >批量导入款号</a>
+               </Upload>
+
             </div>
 			    <Table
             size="small"

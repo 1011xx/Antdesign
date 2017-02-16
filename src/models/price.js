@@ -3,9 +3,14 @@ import { queryTagPriceConfig,
           deleteTagPriceConfig,
           queryTagPriceConfigInfo,
           queryTagPriceConfigAudit,
-          updateAuditTagPriceConfig
+          updateAuditTagPriceConfig,
+          queryTagPriceConfigStyleYear,
+          queryTagPriceConfigStyleSeason,
+          queryTagPriceConfigStyleBrand,
+          queryTagPriceConfigStyleCategory,
+          queryTagPriceConfigStyle,
         } from '../services/price';
-import {message} from 'antd';
+import {Modal} from 'antd';
 export default {
   //颜色属性维护
     namespace: 'price',
@@ -25,12 +30,21 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
+      modalyear:[],
+      modalseason:[],
+      modalbrand:[],
+      modalcategory:[],
+      modalpici:[],
+      modalstyle:[],
+      chosestylemodal:false,
+     
+
 
 
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
-     
+
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -196,11 +210,15 @@ export default {
             const {data}= yield call(queryTagPriceConfigInfo,{jsonParam:strarr});
             if(data.code=="0"){
                 console.log(data);
-    
-                for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
-                  data.tagPriceConfig.dataList[i].num=i+1;
-                  data.tagPriceConfig.dataList[i].key=i+1;
+                if(data.tagPriceConfig.dataList){
+                    for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
+                    data.tagPriceConfig.dataList[i].num=i+1;
+                    data.tagPriceConfig.dataList[i].key=i+1;
+                  }
+                }else{
+                  data.tagPriceConfig.dataList=[];
                 }
+                
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
                       payload:{
@@ -233,20 +251,126 @@ export default {
         },
          *commit({ payload }, { call, put,select }){
           //提交吊牌价
-            let newId={};
-            newId.Id=payload;
-            let strarr=JSON.stringify(newId);
+            let strarr=JSON.stringify(payload);
             const {data}= yield call(updateAuditTagPriceConfig,{jsonParam:strarr});
 
             if(data.code=="0"){
+
+              console.log(data);
               //将获取到的数据给审核详情弹框
                   yield put({type:'publicDate',
                       payload:{
-                        auditdetaildata:data.data
+                        commitvis:false
                       }
                     });
+            }else{
+
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
             }
-        }
+        },
+        *getselectdata({ payload }, { call, put,select }){
+         //获得弹框中的select组件的下拉选项数据
+          const styleno= yield call(queryTagPriceConfigStyle);//获取所有的款号
+          const styleYear= yield call(queryTagPriceConfigStyleYear);
+          const styleSeason= yield call(queryTagPriceConfigStyleSeason);
+          const styleBrand= yield call(queryTagPriceConfigStyleBrand);
+          const styleCategory= yield call(queryTagPriceConfigStyleCategory);
+          // const stylepc= yield call(pici);
+           if(styleno.data.code=="0"){
+            // console.log(styleno.data);
+             //复制原数组；
+                const temparr=styleno.data.data.concat();
+
+                for(let i=0;i<styleno.data.data.length;i++){
+                  temparr[i].key=i+1;
+                }
+                // console.log('temparr:',temparr);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalstyle:temparr
+                     }
+                   });
+           };
+           if(styleYear.data.code=="0"){
+            // console.log(styleYear);
+              let tempyear={};
+              tempyear.code="undefined";
+              tempyear.name="全部";
+              styleYear.data.data.unshift(tempyear);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalyear:styleYear.data.data
+                     }
+                   });
+           };
+           if(styleSeason.data.code=="0"){
+            // console.log(styleSeason);
+             let tempSeason={};
+              tempSeason.code="undefined";
+              tempSeason.name="全部";
+              styleSeason.data.data.unshift(tempSeason);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalseason:styleSeason.data.data
+                     }
+                   });
+           };
+           if(styleBrand.data.code=="0"){
+            // console.log(styleBrand);
+               let tempBrand={};
+              tempBrand.code="undefined";
+              tempBrand.name="全部";
+              styleBrand.data.data.unshift(tempBrand);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalbrand:styleBrand.data.data
+                     }
+                   });
+           };
+           if(styleCategory.data.code=="0"){
+            // console.log(styleCategory);
+             let tempCategory={};
+              tempCategory.code="undefined";
+              tempCategory.name="全部";
+              styleCategory.data.data.unshift(tempCategory);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalcategory:styleCategory.data.data
+                     }
+                   });
+           };
+           // if(stylepc.data.code=="0"){
+           //  console.log(stylepc);
+
+           //       yield put({type:'publicDate',
+           //           payload:{
+           //             auditdetaildata:data.data
+           //           }
+           //         });
+           // };
+       },
+       *getstyle({ payload }, { call, put,select }){
+        let strarr=JSON.stringify(payload);
+        const {data}= yield call(queryTagPriceConfigStyle,{jsonParam:strarr});
+          if(data.code==0){
+            //复制原数组；
+                const temparr=data.data.concat();
+
+                for(let i=0;i<data.data.length;i++){
+                  temparr[i].key=i+1;
+                }
+                 console.log('temparr:',temparr);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalstyle:temparr
+                     }
+                   });
+
+          }
+       }
 
 
     },
@@ -309,9 +433,12 @@ export default {
             }else if(strs[1]==='modify'){
               //修改页面需要去请求数据，和详情页面请求的数据一样
                  dispatch({
-                type:'details',
-                payload:strs[2]
-              });
+                    type:'details',
+                    payload:strs[2]
+                  });
+                dispatch({
+                  type:'getselectdata'
+                });
             }
 
            }

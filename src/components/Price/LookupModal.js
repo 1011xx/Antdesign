@@ -126,41 +126,38 @@ const LookupModal = ({
           onOk={onOk}
           onCancel={handleCancel}
           closable={false}
+					width={700}
 					maskClosable={false}
+					className={styles.modal}
         >
 				<div className={styles.titletop}>
 				<Row gutter={16}>
-		      <Col className="gutter-row" span={8}>
+		      <Col className="gutter-row" span={6}>
 		        <div className="gutter-box">
 							<span>单&nbsp;&nbsp;据&nbsp;&nbsp;号：</span>
 							<span>{auditdetaildata.documentNumber}</span>
 						</div>
 		      </Col>
-		      <Col className="gutter-row" span={8}>
+		      <Col className="gutter-row" span={6}>
 		        <div className="gutter-box">
 							<span>调价日期：</span>
 							<span>{auditdetaildata.createDate}</span>
 						</div>
 		      </Col>
-		      <Col className="gutter-row" span={8}>
+		      <Col className="gutter-row" span={6}>
 					<div className="gutter-box">
 						<span>调价人：</span>
 						<span>{auditdetaildata.createEmployeeName}</span>
 					</div>
 		      </Col>
-    	</Row>
-			<Row gutter={16} className={styles.rowspace}>
-				<Col className="gutter-row" span={8} style={{marginLeft:1}}>
+					<Col className="gutter-row" span={6}>
 					<div className="gutter-box">
 						<span>当前状态：</span>
 						<span>{auditdetaildata.stateName}</span>
 					</div>
-				</Col>
-				<Col className="gutter-row" span={8}>
-				</Col>
-				<Col className="gutter-row" span={8}>
-				</Col>
-		</Row>
+		      </Col>
+    	</Row>
+
 		<Row className={styles.rowspace}>
 		<Col span={24} style={{marginLeft:2}}>
 		<div className="gutter-box">
@@ -174,8 +171,8 @@ const LookupModal = ({
 			size="small"
 			pagination={false}
 			className={styles.table}
-			dataSource={auditdetaildata.dataList}
-			scroll={{y: 200 }}
+			dataSource={dataSource}
+			scroll={{y: 285 }}
 			columns={columns}
 			title={() => '审核信息'}
 			/>

@@ -13,9 +13,10 @@ var start;
 var end;
 var state;
 function Audit({dispatch,price}) {
-  const {dataSource, lookupvis,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize}=price;
+  const {dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource}=price;
   const auditProps={
     dataSource,
+    loading,
     statedata,
     passdata(data){
       //当点击提交按钮的时候,
@@ -54,6 +55,7 @@ function Audit({dispatch,price}) {
       //当点击设置吊牌价的时候
     },
     onCommit(item){
+      console.log(item);
       //当点击提交的时候，获取当前行表格的数据，在模态框上显示
       item.createDate=item.createDate.split(" ")[0];
       dispatch({
@@ -63,6 +65,12 @@ function Audit({dispatch,price}) {
           commitdata:item
         }
       });
+      //请求接口数据
+      dispatch({
+        type:'price/details',
+        payload:item.id
+      });
+
     },
     onDelete(item){
       //当点击删除按钮的时候,显示删除弹窗
@@ -123,25 +131,50 @@ function Audit({dispatch,price}) {
            commitvis:false
          }
        });
-
      },
      makeSure(Value){
        //组装要发给后台的数据，点击提交的时候发送的数据
-       let tempobj={};
-       tempobj.id=commitdata.id;
-       tempobj.documentNumber=commitdata.documentNumber;
-       tempobj.expectEffectiveDate=commitdata.expectEffectiveDate;
-       tempobj.state=commitdata.state;
 
-       console.log(Value);
+       // detaildatasource是获取到的详情数据，需要从获取到的详情数据中提取数据发送给后台
+      //  console.log(detaildatasource);
+       let tempcommitobj={};
+       if(Value.description){
+         //获取description数据
+         tempcommitobj.description=Value.description;
+       }
+       tempcommitobj.id=detaildatasource.id;
+       tempcommitobj.documentNumber=detaildatasource.documentNumber;
+       tempcommitobj.expectEffectiveDate=detaildatasource.expectEffectiveDate;
+       tempcommitobj.state=detaildatasource.state;
+       tempcommitobj.remarks=detaildatasource.remarks;
+
+       let tempcommitarr=[];
+       for (let value of detaildatasource.dataList) {
+         //遍历dataList并组装数据
+           let temparrobj={};
+           temparrobj.id=value.configId;
+           temparrobj.styleNo=value.styleNo;
+           temparrobj.currentTagprice=value.currentTagprice;
+           temparrobj.configTagprice=value.configTagprice;
+           temparrobj.remarks=value.remarks;
+           temparrobj.seqno=value.seqno;
+           tempcommitarr.push(temparrobj);
+         }
+       tempcommitobj.tagpriceConfigDetailDto=tempcommitarr;
+
+      //  console.log('tempcommitobj:',tempcommitobj);
 
 
        //确定提交后要执行操作,关闭弹窗，然后执行提交操作
+      //  dispatch({
+      //    type:'price/publicDate',
+      //    payload:{
+      //      commitvis:false
+      //    }
+      //  });
        dispatch({
-         type:'price/publicDate',
-         payload:{
-           commitvis:false
-         }
+         type:'price/commit',
+         payload:tempcommitobj
        });
 
      },
