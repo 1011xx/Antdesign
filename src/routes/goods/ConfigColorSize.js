@@ -194,8 +194,7 @@ const modalProps={
 		dispatch({
 			type:'moudelnum/publicDate',
 			payload:{
-				targetKeys:targetKey,
-				moveKey:moveKeys
+				targetKeys:targetKey
 			}
 		});
 	},
@@ -207,11 +206,11 @@ const modalProps={
 //点击弹框确定按钮后,在这里通过targetKey去生成表格数组
 
 		//从颜色数据源中找出colorCode和colorName
-		for(let i=0;i<moveKey.length;i++){
+		for(let i=0;i<targetKeys.length;i++){
 			let temp={};
 			let tempjson={};
 			for(let j=0;j<transfordata.length;j++){
-				if(transfordata[j].key==moveKey[i]){
+				if(transfordata[j].key==targetKeys[i]){
 				temp.colorCode=transfordata[j].colorCode;
 				temp.colorName=transfordata[j].colorName;
 				temp.styleCode=config.code;

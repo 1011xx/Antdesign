@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
+import {setProps} from "../../utils/common";
 import Wrap from '../../commonComponents/wrap/wrap';
 import Searchinfo from '../../components/ModelNumber/Searchinfo';
 import Stylelist from '../../components/ModelNumber/Stylelist';
@@ -7,10 +8,10 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 
 
-var styleCode='';
-var categoryCode='';
-var yearCode='';
-var deleteid='';
+var styleCode;
+var categoryCode;
+var yearCode;
+var deleteid;
 function Moudelnumber({dispatch,moudelnum}) {
 	const {total,current,defaultPageSize,dataSource,styleCategory,styleYear,visibleSure,loading}=moudelnum;
 	//搜索框相应的
@@ -18,33 +19,20 @@ function Moudelnumber({dispatch,moudelnum}) {
 		styleCategory,
 		styleYear,
 		loading,
-		passdata(data){
-			console.log(data);
+		passdata(value){
+			let data=setProps(value);
+			console.log("data",data);
 			//分别赋值，保存状态
 			//创建查询数据newarr
 			styleCode=data.styleCode;
-			if((data.categoryCode) && (data.yearCode)){
-				categoryCode=data.categoryCode[0];
-				yearCode=data.yearCode[0];
-				var newarr={...data,
-						'yearCode':data.yearCode[0],
-						'categoryCode':data.categoryCode[0]
+			categoryCode=data.categoryCode;
+			yearCode=data.yearCode;
+				let newarr={...data,
+					    styleCode:data.styleCode,
+						yearCode:data.yearCode,
+						categoryCode:data.categoryCode
 				};
-			}else
-			if(data.categoryCode){
-				categoryCode=data.categoryCode[0];
-				var newarr={...data,
-						'categoryCode':data.categoryCode[0]
-				};
-			}else
-			if(data.yearCode){
-				yearCode=data.yearCode[0];
-					var newarr={...data,
-							'yearCode':data.yearCode[0]
-					};
-			}else{
-				var newarr=data;
-			}
+			
 			dispatch({type:'moudelnum/querypage',payload:newarr});
 		}
 	};

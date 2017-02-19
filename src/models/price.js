@@ -49,6 +49,10 @@ export default {
       newData:{},
       saveState:'tempsave',//暂存tempsave，提交审核commit
       uploadExcel:[],
+      targetKeys:[],//选中的数据
+      moveKeys:[],//移动的数据
+      allpriceModal:false,
+      selectedRows:[],
 
 
 
@@ -376,7 +380,7 @@ export default {
           const styleCategory= yield call(queryTagPriceConfigStyleCategory);
           // const stylepc= yield call(pici);
            if(styleno.data.code=="0"){
-            // console.log(styleno.data);
+            console.log(styleno.data);
              //复制原数组；
                 const temparr=styleno.data.data.concat();
 

@@ -19,6 +19,7 @@ const Modifyprice = ({
     resetFields
     },
     choosestyle,
+    setprice,
     onDelete,
 	  detaildatasource,
     onSuccess,
@@ -27,6 +28,8 @@ const Modifyprice = ({
     backurl,
     Submitted,
     temporaryStorage,
+    selecteonChange
+
 
 }) => {
 
@@ -88,14 +91,9 @@ const Modifyprice = ({
 
    const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  onSelect: (record, selected, selectedRows) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (selected, selectedRows, changeRows) => {
-    console.log(selected, selectedRows, changeRows);
-  },
+    // console.log('onChange:', 'selectedRows: ', selectedRows);
+    selecteonChange(selectedRows);
+  }
 };
 
 
@@ -195,7 +193,7 @@ function handleSubmit(e){
       <TablePlate title="价格信息">
             <div className={styles.add_plate}>
               <a className={styles.add_btn} onClick={choosestyle}>选择款号</a>
-              <a className={styles.add_btn} onClick={choosestyle}>批量设置价格</a>
+              <a className={styles.add_btn} onClick={setprice}>批量设置价格</a>
               <a className={styles.add_btn} href="http://192.168.10.178:9081/fmss/tagPriceController/tagPriceConfigTemplateDownload" target="_blank">下载模版</a>
               <Upload
                 action="/fmss/tagPriceController/tagPriceConfigBatchImportStyles"

@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button, Select,Cascader,Row,Col } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import styles from './Searchinfo.less';
 const FormItem = Form.Item;
-
+const Option = Select.Option;
 
 const Searchinfo = ({
   styleCategory,
@@ -19,6 +19,19 @@ const Searchinfo = ({
     getFieldsValue
     },
 }) =>{
+
+  
+  const categoryOption=styleCategory.map((item,key)=>{
+      return(
+       <Option key={key} value={item.value}>{item.label}</Option>
+     );
+  });
+
+   const yearOption=styleYear.map((item,key)=>{
+      return(
+       <Option key={key} value={item.value}>{item.label}</Option>
+     );
+  });
 
 function handleSearch(){
 	validateFields((errors) => {
@@ -58,11 +71,9 @@ return (
             {getFieldDecorator('categoryCode', {
 
             })(
-             <Cascader
-             size="small"
-              options={styleCategory}
-              placeholder="请选择类别"
-              />
+             <Select size="small" placeholder="请选择类别" style={{ width: 150,height:22,textAlign:'left' }} >
+                {categoryOption}
+             </Select>
             )}
             </FormItem>
            </Col>
@@ -72,13 +83,11 @@ return (
             label="年份"
             >
             {getFieldDecorator('yearCode', {
-
+              
             })(
-            <Cascader
-            size="small"
-              options={styleYear}
-              placeholder="请选择销售区域"
-              />
+             <Select size="small" placeholder="请选择年份" style={{ width: 150,height:22,textAlign:'left' }} >
+                  {yearOption}
+             </Select>
             )}
             </FormItem>
             </Col>

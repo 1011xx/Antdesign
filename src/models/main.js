@@ -201,6 +201,16 @@ export default {
                     payload: '7',
                   });
                 break;
+                 case 'modify':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '7',
+                  });
+                break;
                 case 'setpricedetails':
                  dispatch({
                     type: 'ChangeOpenkey',

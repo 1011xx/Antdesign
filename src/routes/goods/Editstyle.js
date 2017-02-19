@@ -105,23 +105,20 @@ function Editstyleroute({dispatch,moudelnum}) {
         //点击取消按钮需要执行的事件，返回到列表页面
         dispatch(routerRedux.push('/modelnumber'));
       },
-    onChange1(value,selectOption){
-      console.log(selectOption);
-      arrlabel[1]=selectOption[0].label;
-      arr[1]=value[0];
+    onChange1(value){
+      arrlabel[1]=value.label;
+      arr[1]=value.key;
       getname();
-
-
     },
-    onChange2(value,selectOption){
-      arr[2]=value[0];
-       arrlabel[2]=selectOption[0].label;
+    onChange2(value){
+       arr[2]=value.key;
+       arrlabel[2]=value.label;
        getname();
 
     },
-    onChange3(value,selectOption){
-      arr[3]=value[0];
-       arrlabel[3]=selectOption[0].label;
+    onChange3(value){
+      arr[3]=value.key;
+       arrlabel[3]=value.label;
        getname();
 
     },
@@ -130,34 +127,34 @@ function Editstyleroute({dispatch,moudelnum}) {
        arrlabel[4]=e.target.value;
       getname();
     },
-    onChange5(value,selectOption){
-       arr[5]=value[0];
-       arrlabel[5]=selectOption[0].label;
+    onChange5(value){
+        arr[5]=value.key;
+       arrlabel[5]=value.label;
        getname();
     },
-    onChange6(value,selectOption){
-      arr[6]=value[0];
-       arrlabel[6]=selectOption[0].label;
+    onChange6(value){
+      arr[6]=value.key;
+       arrlabel[6]=value.label;
       getname();
     },
-    onChange7(value,selectOption){
-      arr[7]=value[0];
-       arrlabel[7]=selectOption[0].label;
+    onChange7(value){
+       arr[7]=value.key;
+       arrlabel[7]=value.label;
       getname();
     },
-    onChange8(value,selectOption){
-      arr[8]=value[0];
-       arrlabel[8]=selectOption[0].label;
+    onChange8(value){
+        arr[8]=value.key;
+       arrlabel[8]=value.label;
       getname();
     },
-    onChange9(value,selectOption){
-      arr[9]=value[0];
-       arrlabel[9]=selectOption[0].label;
+    onChange9(value){
+       arr[9]=value.key;
+       arrlabel[9]=value.label;
       getname();
     },
-    onChange10(value,selectOption){
-      arr[10]=value[0];
-       arrlabel[10]=selectOption[0].label;
+    onChange10(value){
+       arr[10]=value.key;
+       arrlabel[10]=value.label;
       getname();
     },
     };

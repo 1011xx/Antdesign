@@ -5,6 +5,7 @@ import Plate from '../../commonComponents/plate/plate';
 import styles from './Addstyle.less';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
 var statethere;
 function strtoarr(str1){
   let arr=[];
@@ -132,29 +133,30 @@ function test(){
           console.log(fieldsValue);
            const values = {
           ...fieldsValue,
-         brandCode:getCode(fieldsValue.brandCode),
-         seriesCode:getCode(fieldsValue.seriesCode),
-         saleTypeCode:getCode(fieldsValue.saleTypeCode),
-         yearCode:getCode(fieldsValue.yearCode),
-         categoryCode:getCode(fieldsValue.categoryCode),
-         bigCategoryCode:getCode(fieldsValue.bigCategoryCode),
-         seasonCode:getCode(fieldsValue.seasonCode),
-         materialsCode:getCode(fieldsValue.materialsCode),
-         smallCategoryCode:getCode(fieldsValue.smallCategoryCode),
-         sizeGroupCode:getCode(fieldsValue.sizeGroupCode),
-         unitCode:getCode(fieldsValue.unitCode),
-         brandName:getName(fieldsValue.brandCode,brand),
-         SerialNoName:fieldsValue.serialNoCode,
-         seriesName:getName(fieldsValue.seriesCode,series),
-         saleTypeName:getName(fieldsValue.saleTypeCode,saleType),
-         yearName:getName(fieldsValue.yearCode,year),
-         categoryName:getName(fieldsValue.categoryCode,category),
-         bigCategoryName:getName(fieldsValue.bigCategoryCode,bigCategory),
-         seasonName:getName(fieldsValue.seasonCode,season),
-         materialsName:getName(fieldsValue.materialsCode,materials),
-         smallCategoryName:getName(fieldsValue.smallCategoryCode,smallCategory),
-         SizeGroupName:getName(fieldsValue.sizeGroupCode,sizeItem),
-         unitName:getName(fieldsValue.unitCode,styleUnit),
+          brandCode:fieldsValue.brandCode.key,
+          brandName:fieldsValue.brandCode.label,
+          bigCategoryCode:fieldsValue.bigCategoryCode.key,
+          bigCategoryName:fieldsValue.bigCategoryCode.label,
+          categoryCode:fieldsValue.categoryCode.key,
+          categoryName:fieldsValue.categoryCode.label,
+          seriesCode:fieldsValue.seriesCode.key,
+          saleTypeCode:fieldsValue.saleTypeCode.key,
+          yearCode:fieldsValue.yearCode.key,
+          categoryCode:fieldsValue.categoryCode.key,
+          seasonCode:fieldsValue.seasonCode.key,
+          materialsCode:fieldsValue.materialsCode.key,
+          smallCategoryCode:fieldsValue.smallCategoryCode.key,
+          sizeGroupCode:fieldsValue.sizeGroupCode.key,
+          SizeGroupName:fieldsValue.sizeGroupCode.label,
+          unitCode:fieldsValue.unitCode.key,
+          SerialNoName:fieldsValue.serialNoCode,
+          seriesName:fieldsValue.seriesCode.label,
+          saleTypeName:fieldsValue.saleTypeCode.label,
+          yearName:fieldsValue.yearCode.label,
+          seasonName:fieldsValue.seasonCode.label,
+          materialsName:fieldsValue.materialsCode.label,
+          smallCategoryName:fieldsValue.smallCategoryCode.label,
+          unitName:fieldsValue.unitCode.label,
          isUniqueCodeManagement:test(),
         }
         console.log('values:',values);
@@ -164,8 +166,75 @@ function test(){
       });
   }
 
+
+
+
+  const brandOption=brand.map((item,key)=>{
+    console.log("item:",item);
+        return(
+         <Option key={key} value={item.value}>{item.label}</Option>
+       );
+    });
+  const yearOption=year.map((item,key)=>{
+        return(
+         <Option key={key} value={item.value}>{item.label}</Option>
+       );
+    });
+  const seasonOption=season.map((item,key)=>{
+          return(
+           <Option key={key} value={item.value}>{item.label}</Option>
+         );
+      });
+  const seriesnumOption=seriesnum.map((item,key)=>{
+            return(
+             <Option key={key} value={item.value}>{item.label}</Option>
+           );
+        });
+        const categoryOption=category.map((item,key)=>{
+                return(
+                 <Option key={key} value={item.value}>{item.label}</Option>
+               );
+            });
+
+       const materialsOption=materials.map((item,key)=>{
+                  return(
+                   <Option key={key} value={item.value}>{item.label}</Option>
+                 );
+              });
+       const seriesOption=series.map((item,key)=>{
+                  return(
+                   <Option key={key} value={item.value}>{item.label}</Option>
+                 );
+              });
+        const bigCategoryOption=bigCategory.map((item,key)=>{
+                    return(
+                     <Option key={key} value={item.value}>{item.label}</Option>
+                   );
+                });
+        const smallCategoryOption=smallCategory.map((item,key)=>{
+                      return(
+                       <Option key={key} value={item.value}>{item.label}</Option>
+                     );
+                  });
+        const saleTypeOption=saleType.map((item,key)=>{
+                          return(
+                           <Option key={key} value={item.value}>{item.label}</Option>
+                         );
+                      });
+        const sizeItemOption=sizeItem.map((item,key)=>{
+                            return(
+                             <Option key={key} value={item.value}>{item.label}</Option>
+                           );
+                        });
+        const styleUnitOption=styleUnit.map((item,key)=>{
+                            return(
+                             <Option key={key} value={item.value}>{item.label}</Option>
+                           );
+                        });
+
+
   return (
-    
+
 <Spin tip="保存中,请稍后..." spinning={saveFlag}>
 
      <Form
@@ -209,16 +278,12 @@ function test(){
 
             >
              {getFieldDecorator('brandCode', {
-               initialValue:strtoarr(currentItem.brandCode),
+               initialValue:{key:currentItem.brandCode},
                rules: [{required: true, message: '请选择品牌!' }]
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange1}
-          options={brand}
-          placeholder="请选择品牌"
-          />
+            <Select placeholder="请选择品牌" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange1}>
+            {brandOption}
+            </Select>
           )}
           </FormItem>
 
@@ -226,16 +291,12 @@ function test(){
             label="年&nbsp;&nbsp;&nbsp;&nbsp;份"
             >
              {getFieldDecorator('yearCode', {
-               initialValue:strtoarr(currentItem.yearCode),
+               initialValue:{key:currentItem.yearCode},
                rules: [{required: true, message: '请选择年份!' }]
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange2}
-          options={year}
-          placeholder="请选择年份"
-          />
+            <Select placeholder="请选择年份" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange2}>
+            {yearOption}
+            </Select>
           )}
           </FormItem>
 
@@ -243,16 +304,12 @@ function test(){
             label="季&nbsp;&nbsp;&nbsp;&nbsp;节"
             >
              {getFieldDecorator('seasonCode', {
-               initialValue:strtoarr(currentItem.seasonCode),
+               initialValue:{key:currentItem.seasonCode},
                rules: [{required: true, message: '请选择季节!' }]
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange3}
-          options={season}
-          placeholder="请选择季节"
-          />
+            <Select placeholder="请选择季节" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange3}>
+            {seasonOption}
+            </Select>
           )}
           </FormItem>
 
@@ -273,16 +330,12 @@ function test(){
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
              {getFieldDecorator('categoryCode', {
-               initialValue:strtoarr(currentItem.categoryCode),
+               initialValue:{key:currentItem.categoryCode},
                rules: [{required: true, message: '请选择类别!' }]
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange5}
-          options={category}
-          placeholder="请选择类别"
-          />
+            <Select placeholder="请选择类别" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange5}>
+            {categoryOption}
+            </Select>
           )}
           </FormItem>
 
@@ -293,16 +346,12 @@ function test(){
             label="面&nbsp;&nbsp;&nbsp;&nbsp;料"
             >
              {getFieldDecorator('materialsCode', {
-               initialValue:strtoarr(currentItem.materialsCode),
+               initialValue:{key:currentItem.materialsCode},
                rules: [{required: true, message: '请选择面料!' }]
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange6}
-          options={materials}
-          placeholder="请选择面料"
-          />
+            <Select placeholder="请选择面料" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange6}>
+            {materialsOption}
+            </Select>
           )}
           </FormItem>
 
@@ -310,15 +359,11 @@ function test(){
             label="&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;&nbsp;列"
             >
              {getFieldDecorator('seriesCode', {
-               initialValue:strtoarr(currentItem.seriesCode)
+               initialValue:{key:currentItem.seriesCode}
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange7}
-          options={series}
-          placeholder="请选择系列"
-          />
+            <Select placeholder="请选择面料" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange7}>
+            {seriesOption}
+            </Select>
           )}
           </FormItem>
 
@@ -326,15 +371,11 @@ function test(){
             label="&nbsp;大&nbsp;类&nbsp;别"
             >
              {getFieldDecorator('bigCategoryCode', {
-               initialValue:strtoarr(currentItem.bigcategoryCode)
+               initialValue:{key:currentItem.bigcategoryCode}
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange8}
-          options={bigCategory}
-          placeholder="请选择大类别"
-          />
+            <Select placeholder="请选择大类别" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange8}>
+            {bigCategoryOption}
+            </Select>
           )}
           </FormItem>
 
@@ -342,15 +383,11 @@ function test(){
             label="&nbsp;小&nbsp;类&nbsp;别"
             >
              {getFieldDecorator('smallCategoryCode', {
-               initialValue:strtoarr(currentItem.smallcategoryCode)
+               initialValue:{key:currentItem.smallcategoryCode}
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange9}
-          options={smallCategory}
-          placeholder="请选择小类别"
-          />
+            <Select placeholder="请选择小类别" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange9}>
+            {smallCategoryOption}
+            </Select>
           )}
           </FormItem>
 
@@ -358,15 +395,11 @@ function test(){
             label="&nbsp;&nbsp;销售类型"
             >
              {getFieldDecorator('saleTypeCode', {
-               initialValue:strtoarr(currentItem.saletypeCode)
+               initialValue:{key:currentItem.saletypeCode}
           })(
-          <Cascader
-          size="small"
-          className={styles.inputwidth}
-          onChange={onChange10}
-          options={saleType}
-          placeholder="请选择销售类型"
-          />
+            <Select placeholder="请选择销售类型" className={styles.inputwidth} size="small" labelInValue={true} onSelect={onChange10}>
+            {saleTypeOption}
+            </Select>
           )}
           </FormItem>
        </Row>
@@ -378,15 +411,12 @@ function test(){
           label="尺寸组"
           >
            {getFieldDecorator('sizeGroupCode', {
-              initialValue:strtoarr(currentItem.sizegroupCode),
+              initialValue:{key:currentItem.sizegroupCode},
              rules: [{required: true, message: '请选择尺寸组!' }]
         })(
-        <Cascader
-        size="small"
-        className={styles.inputwidth}
-        options={sizeItem}
-        placeholder="请选择尺寸组"
-        />
+          <Select placeholder="请选择尺寸组" className={styles.inputwidth} size="small" labelInValue={true} >
+          {sizeItemOption}
+          </Select>
         )}
         </FormItem>
         <span className={styles.lineheight}>注意：一旦修改尺寸组，所有的颜色和尺寸都会被清空，需要重新配置颜色尺寸和图片</span>
@@ -397,15 +427,12 @@ function test(){
           label="单&nbsp;&nbsp;&nbsp;&nbsp;位"
           >
            {getFieldDecorator('unitCode', {
-              initialValue:strtoarr(currentItem.unitCode),
+              initialValue:{key:currentItem.unitCode},
              rules: [{required: true, message: '请选择单位!' }]
         })(
-        <Cascader
-        size="small"
-        className={styles.inputwidth}
-        options={styleUnit}
-        placeholder="请选择单位"
-        />
+          <Select placeholder="请选择单位" className={styles.inputwidth} size="small" labelInValue={true} >
+          {styleUnitOption}
+          </Select>
         )}
         </FormItem>
 

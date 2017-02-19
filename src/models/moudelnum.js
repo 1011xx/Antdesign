@@ -1,4 +1,4 @@
-
+import {addAll} from "../utils/common";
 import {
   queryStyleAttribute,
   queryStyleSizeGroup,
@@ -73,7 +73,6 @@ export default {
 
       transfordata:[],//颜色穿梭框数据
       targetKeys:[],//选中的数据
-      moveKeys:[],//移动的数据
       config:{},//配置页面信息的获取
       detaildata:{},//获取商品详情json数据
       configlist:[],//获取详情也和配置页面的数据，列表展示页数据
@@ -116,14 +115,20 @@ export default {
                     });
             };
             if(stylecategory.data.code==0){
-              // console.log(stylecategory.data);
+              console.log(stylecategory.data);
+             //添加全部选项
+             stylecategory.data.dataList.unshift(addAll());
                yield put({type:'publicDate',
                       payload:{
                         styleCategory:stylecategory.data.dataList,
                       }
                     });
+             
+              
             };
             if(styleyear.data.code==0){
+             //添加全部选项
+             styleyear.data.dataList.unshift(addAll());
               // console.log(styleyear.data);
                yield put({type:'publicDate',
                       payload:{

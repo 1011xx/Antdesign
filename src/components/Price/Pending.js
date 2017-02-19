@@ -130,6 +130,7 @@ function boolTovalue(isUniqueCodeManagement){
 
             <Row>
             <FormItem
+            className={styles.switch}
                  label="审核"
                  >
                  {getFieldDecorator('resultState', {
