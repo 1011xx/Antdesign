@@ -3,12 +3,16 @@ import { queryTagPriceConfig,
           deleteTagPriceConfig,
           queryTagPriceConfigInfo,
           queryTagPriceConfigAudit,
-          updateAuditTagPriceConfig,
+          updateAuditTagPriceConfig,//提交审核
+          updateSaveTagPriceConfig,//暂存
           queryTagPriceConfigStyleYear,
           queryTagPriceConfigStyleSeason,
           queryTagPriceConfigStyleBrand,
           queryTagPriceConfigStyleCategory,
           queryTagPriceConfigStyle,
+          queryTagPriceAuditState,
+          queryTagPriceAuditResult,
+          auditTagPriceConfig,//价格审核-》审核
         } from '../services/price';
 import {Modal} from 'antd';
 export default {
@@ -30,6 +34,9 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
+      setpagetotal:0,
+      setpagecurrent:1,
+      setpagedefaultPageSize:10,
       modalyear:[],
       modalseason:[],
       modalbrand:[],
@@ -37,19 +44,27 @@ export default {
       modalpici:[],
       modalstyle:[],
       chosestylemodal:false,
-     
+      setType: 'create',
+      setStatus:'新增调价单',
+      newData:{},
+      saveState:'tempsave',//暂存tempsave，提交审核commit
+      uploadExcel:[],
 
 
 
-      currentItem:{},
-      modalVisible:false,
-      modalType: 'create',
+
+
+
+      pending_visible:false,
+      pending_spin:true,
+
+
 
     },
     effects: {
         *enter({ payload }, { call, put, select }){
-          const currentpage = yield select(({ price }) => price.current);
-          const pagesize = yield select(({ price }) => price.defaultPageSize);
+          // const currentpage = yield select(({ price }) => price.current);
+          // const pagesize = yield select(({ price }) => price.defaultPageSize);
             //获取表格数据
             const {data}= yield call(queryTagPriceConfig);
             //获取状态控件数据
@@ -78,6 +93,81 @@ export default {
                           statedata:status.data.dataList,
                         }
                       });
+            }
+        },
+        *enterset({ payload }, { call, put, select }){
+          const setpagecurrentpage = yield select(({ price }) => price.setpagecurrent);
+          const setpagepagesize = yield select(({ price }) => price.setpagedefaultPageSize);
+          let temp={};
+          temp.rows=setpagepagesize;
+          temp.page=setpagecurrentpage;
+          let strarr=JSON.stringify(temp);
+          console.log(strarr);
+           //获取表格数据
+            const {data}= yield call(queryTagPriceAuditResult,{jsonParam:strarr});
+            //获取状态控件数据
+            const status= yield call(queryTagPriceAuditState);
+            if(data){
+            console.log(data);
+             for(let i=1;i<=data.dataList.length;i++){
+                    data.dataList[i-1].num=i;
+                  }
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        setpagetotal:data.total,
+                        loading:false
+                      }
+                    });
+            };
+            if(status.data.code==0){
+              console.log(status);
+              let tempobj={};
+              tempobj.label="全部";
+              tempobj.value="";
+              status.data.state.unshift(tempobj);
+              console.log(status.data.state);
+              yield put({type:'publicDate',
+                        payload:{
+                          statedata:status.data.state,
+                        }
+                      });
+            }
+        },
+        *querysetpage({ payload }, { call, put, select }){
+          const currentpage = yield select(({ price }) =>  price.setpagecurrent);
+          const pagesize = yield select(({ price }) => price.setpagedefaultPageSize);
+          // console.log(payload);
+          //使用传递过来的参数
+            payload.page=currentpage;
+            payload.rows=pagesize;
+            let strarr=JSON.stringify(payload);
+            console.log(strarr)
+            //获取表格数据
+            const {data}= yield call(queryTagPriceAuditResult,{jsonParam:strarr});
+
+            if(data){
+              console.log(data);
+               // 开始添加页面序号
+                 let long=data.dataList.length;
+                  if(currentpage<2){
+                    for(let i=1;i<=long;i++){
+                        data.dataList[i-1].num=i;
+                      }
+                    }else{
+                      let size=(currentpage-1)*pagesize;
+                      for(let j=size;j<long+size;j++){
+                        data.dataList[j-size].num=j+1;
+                      }
+                    }
+                    //添加页面序号结束
+            yield put({type:'publicDate',
+                      payload:{
+                        dataSource:data.dataList,
+                        setpagetotal:data.total,
+                        loading:false
+                      }
+                    });
             }
         },
         *querypage({ payload }, { call, put, select }){
@@ -210,19 +300,25 @@ export default {
             const {data}= yield call(queryTagPriceConfigInfo,{jsonParam:strarr});
             if(data.code=="0"){
                 console.log(data);
+                data.tagPriceConfig.createDate=data.tagPriceConfig.createDate.split(" ")[0];
                 if(data.tagPriceConfig.dataList){
                     for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                     data.tagPriceConfig.dataList[i].num=i+1;
                     data.tagPriceConfig.dataList[i].key=i+1;
+                    //给已经存在的数据加上标记
+                data.tagPriceConfig.dataList[i].priceFlag=`configTagprice${i+1}`;
+                data.tagPriceConfig.dataList[i].remarkFlag=`remarks${i+1}`;
+             
                   }
                 }else{
                   data.tagPriceConfig.dataList=[];
                 }
-                
+
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
                       payload:{
-                        detaildatasource:data.tagPriceConfig
+                        detaildatasource:data.tagPriceConfig,
+                        pending_spin:false
                       }
                     });
             }
@@ -368,10 +464,71 @@ export default {
                        modalstyle:temparr
                      }
                    });
+          }
+       },
+       *tempsave({ payload }, { call, put,select }){
+        //暂存
+        let strarr=JSON.stringify(payload);
+        const {data}= yield call(updateSaveTagPriceConfig,{jsonParam:strarr});
+          if(data.code==0){
+            alert(data.msg);
+            // //复制原数组；
+            //     const temparr=data.data.concat();
 
+            //     for(let i=0;i<data.data.length;i++){
+            //       temparr[i].key=i+1;
+            //     }
+            //      console.log('temparr:',temparr);
+            //      yield put({type:'publicDate',
+            //          payload:{
+            //            modalstyle:temparr
+            //          }
+            //        });
+          }else{
+             alert(data.msg);
+          }
+
+       },
+       *commitsave({ payload }, { call, put,select }){
+        //提交审核
+        let strarr=JSON.stringify(payload);
+        const {data}= yield call(updateAuditTagPriceConfig,{jsonParam:strarr});
+          if(data.code==0){
+            //复制原数组；
+      
+
+          }else{
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
+          }
+       },
+       *tagpriceconfig({ payload }, { call, put}){
+        //提交审核
+        let strarr=JSON.stringify(payload);
+        const {data}= yield call(auditTagPriceConfig,{jsonParam:strarr});
+          if(data.code==0){
+            //复制原数组；
+             yield put({type:'publicDate',
+                     payload:{
+                       pending_spin:false,
+                       pending_visible:true
+                     }
+                   });
+          }else{
+            yield put({type:'publicDate',
+                     payload:{
+                       pending_spin:false
+                     }
+                   });
+              Modal.error({
+                 title: '提示',
+                 content: data.msg,
+               });
           }
        }
-
+       
 
     },
     reducers: {
@@ -410,32 +567,65 @@ export default {
      subscriptions: {
         setup({ dispatch, history }){
          history.listen(location => {
-        if (location.pathname === '/audit'||location.pathname === '/set') {
-          dispatch({type: 'enter'});
+        if (location.pathname === '/audit') {
+          
            dispatch({
             type: 'publicDate',
             payload:{
                current:1,
-               defaultPageSize:10
+               defaultPageSize:10,
+               loading:true,
+               newData:{}
             }
           });
+           dispatch({type: 'enter'});
+           }else if(location.pathname === '/set'){
+              
+            dispatch({
+            type: 'publicDate',
+            payload:{
+               setpagecurrent:1,
+               setpagedefaultPageSize:10,
+               loading:true
+            }
+          });
+             dispatch({type: 'enterset'});
+
            }else{
             let str=location.pathname;
             let strs = str.split("/");
             strs.shift();
-            if(strs[1]==='pricedetails'){
+            if(strs[1]==='auditpricedetails'||strs[1]==='setpricedetails'||strs[1]==='pending'){
               //如果是查看页面，取得要查询的id,通过id来请求数据
-              dispatch({
-              type:'details',
-              payload:strs[2]
-            });
+              
+               dispatch({
+                    type: 'publicDate',
+                    payload:{
+                      pending_spin:true
+                    }
+                  });
+                dispatch({
+                type:'details',
+                payload:strs[2]
+              });
 
             }else if(strs[1]==='modify'){
               //修改页面需要去请求数据，和详情页面请求的数据一样
+              if(strs[2]){
+                 dispatch({
+                    type: 'publicDate',
+                    payload:{
+                       setStatus:'修改调价单',
+                       setType:'edit'
+                    }
+                  });
+
                  dispatch({
                     type:'details',
                     payload:strs[2]
                   });
+              }
+
                 dispatch({
                   type:'getselectdata'
                 });

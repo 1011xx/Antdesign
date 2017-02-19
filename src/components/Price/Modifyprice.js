@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import { Form, Table, Input,Col,Row,DatePicker} from 'antd';
+import { Form, Table, Input,Col,Row,DatePicker,Button} from 'antd';
 import Upload from 'rc-upload';
+import moment from 'moment';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import EditableCell from './Edittable';
@@ -21,36 +22,62 @@ const Modifyprice = ({
     onDelete,
 	  detaildatasource,
     onSuccess,
+    setType,
+    getdata,
+    backurl,
+    Submitted,
+    temporaryStorage,
 
 }) => {
 
   const columns = [{
      title: '序号',
-     dataIndex: 'num',
-     key: 'num',
-
+     dataIndex: 'key',
+     key: 'key',
+     width:'5%'
    }, {
      title: '款号',
      dataIndex: 'styleNo',
      key: 'styleNo',
-
+     width:'30%'
    }, {
      title: '当前吊牌价',
      dataIndex: 'currentTagprice',
      key: 'currentTagprice',
-
+     width:'20%'
    }, {
      title: '设置吊牌价',
      dataIndex: 'configTagprice',
      key: 'configTagprice',
-
+     width:'20%',
+     render:(text,record,index) => (
+       <FormItem>
+                 {getFieldDecorator(`configTagprice${record.key}`, {
+                     initialValue:record.configTagprice,
+                     rules: [{ required: true, message: '设置吊牌价必须填写!' }]
+                   })(
+                   <Input size="small" style={{ width: 186}}/>
+                 )}
+        </FormItem>
+     )
    }, {
      title: '备注',
      dataIndex: 'remarks',
      key: 'remarks',
+     width:'20%',
+     render:(text,record) => (
+       <FormItem>
+                 {getFieldDecorator(`remarks${record.key}`, {
+                     initialValue:record.remarks
+                   })(
+                    <Input size="small" style={{ width: 186}}/>
+                 )}
+        </FormItem>
+     )
    },{
      title: '操作',
      key: 'operation',
+      width:'5%',
      render: (text, record) => (
        <p>
          <a onClick={()=>onDelete(record)}>删除</a>
@@ -58,10 +85,7 @@ const Modifyprice = ({
      ),
    }];
 
- // const data=[{
- //    num:'1',
- //
- // }]
+
    const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -74,56 +98,99 @@ const Modifyprice = ({
   },
 };
 
+
+
+function handleSubmit(e){
+    e.preventDefault();
+       validateFields((err, fieldsValue) => {
+         if (!err) {
+           if(fieldsValue.expectEffectiveDate){
+             const data={
+               ...fieldsValue,
+               'expectEffectiveDate':fieldsValue['expectEffectiveDate'].format('YYYY-MM-DD')
+             }
+            getdata(data);
+          }else{
+            getdata(fieldsValue);
+          }
+
+         }
+       });
+   }
+
+
 	return(
     <div>
+      <Form inline  onSubmit={handleSubmit}>
           <Plate title="查询信息">
-          <Form
-          inline
-          >
 				<div className={styles.titletop}>
 				<Row gutter={16}>
-		      <Col className="gutter-row" span={8}>
+		      <Col className="gutter-row" span={6}>
 		        <div className={styles.gutterbox}>
 							<span>单据号：</span>
 							<span>{detaildatasource.documentNumber}</span>
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
-          <FormItem
-          required
-          label="预计生效日期："
-          >
-                {getFieldDecorator('expectEffectiveDate', {
-
-                })(
-                  <DatePicker size="small" />
-
-                )}
-              </FormItem>
-
+          {
+            setType==='create'?
+            <FormItem
+            label="预计生效日期："
+            >
+              {getFieldDecorator('expectEffectiveDate', {
+                rules: [{ required: true, message: '请选择预计生效日期!' }]
+              })(
+                <DatePicker size="small" />
+              )}
+            </FormItem>
+            :
+            detaildatasource.expectEffectiveDate ?
+            <FormItem
+            required
+            label="预计生效日期："
+            >
+              {getFieldDecorator('expectEffectiveDate', {
+                initialValue:moment(detaildatasource.expectEffectiveDate, 'YYYY-MM-DD'),
+                rules: [{ required: true, message: '请选择预计生效日期!' }]
+              })(
+                <DatePicker size="small" />
+              )}
+            </FormItem>
+            :
+            <FormItem
+            required
+            label="预计生效日期："
+            >
+              {getFieldDecorator('expectEffectiveDate', {
+                rules: [{ required: true, message: '请选择预计生效日期!' }]
+              })(
+                <DatePicker size="small" />
+              )}
+            </FormItem>
+          }
 		      </Col>
-		      <Col className="gutter-row" span={8}>
+		      <Col className="gutter-row" span={6}>
 					<div className={styles.gutterbox}>
 						<span>状态：</span>
 						<span>{detaildatasource.stateName}</span>
 					</div>
 		      </Col>
+          <Col className="gutter-row" span={4}>
+		      </Col>
     	</Row>
 
 			</div>
       <div className={styles.padtop}>
-
             <FormItem
-                label="说明："
+                label="备注："
                 >
-                  {getFieldDecorator('description', {
+                  {getFieldDecorator('remarks', {
                   })(
                     <Input type="textarea" rows={3} style={{width:650}} />
                   )}
                 </FormItem>
-
         </div>
-  </Form>
+
       </Plate>
       <TablePlate title="价格信息">
             <div className={styles.add_plate}>
@@ -150,6 +217,14 @@ const Modifyprice = ({
 		      />
 
     </TablePlate>
+    <div className={styles.formbtn}>
+    <FormItem>
+       <Button type="primary" htmlType="submit" className={styles.marginbtn} size="large" onClick={temporaryStorage}>暂存</Button>
+       <Button type="primary" htmlType="submit" className={styles.marginbtn} size="large" onClick={Submitted }>提交审核</Button>
+       <Button type="ghost" size="large"  onClick={backurl}>取消</Button>
+     </FormItem>
+     </div>
+    </Form>
 </div>
 		);
 }

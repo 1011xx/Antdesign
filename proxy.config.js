@@ -1,7 +1,7 @@
 // 'use strict';
 
 // const mock = {
-	
+
 // };
 // require('fs').readdirSync(require('path').join(__dirname + '/mock'))
 //   .forEach(function (file) {
@@ -21,9 +21,9 @@ module.exports = {
   'GET https://assets.daily/*': 'https://assets.online/v2/',
 
   // Forward 到另一个服务器，不指定来源服务器
-  // 'POST /fmss/*': 'http://localhost:8081/',
-  'POST /fmss/*': 'http://192.168.10.178:9081/',
-   
+  'POST /fmss/*': 'http://localhost:8081/',
+  // 'POST /fmss/*': 'http://192.168.10.178:9081/',
+
   // 'POST /fmss/*': 'http://192.168.10.146:5001/',
   // 'POST /fmss/*': 'http://dz14571854.imwork.net:30782/',
 

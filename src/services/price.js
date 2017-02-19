@@ -15,7 +15,7 @@ export async function queryTagPriceConfigState(params) {
     body: qs.stringify(params),
   });
 }
-// 获取吊牌价设置审核第一页列表
+// 获取吊牌价设置第一页列表
 export async function queryTagPriceConfig(params) {
   return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceConfig`, {
     method: 'post',
@@ -25,7 +25,7 @@ export async function queryTagPriceConfig(params) {
     body: qs.stringify(params),
   });
 }
-//获取吊牌价设置审核信息
+// 获取吊牌价设置第一页列表
 export async function queryTagPriceConfigAudit(params) {
   return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceConfigAudit`, {
     method: 'post',
@@ -35,6 +35,17 @@ export async function queryTagPriceConfigAudit(params) {
     body: qs.stringify(params),
   });
 }
+
+// // 获取吊牌价设置审核第一页列表
+// export async function queryTagPriceAuditResult(params) {
+//   return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceAuditResult`, {
+//     method: 'post',
+//      headers: {
+//     "Content-Type": "application/x-www-form-urlencoded"
+//     },
+//     body: qs.stringify(params),
+//   });
+// }
 //获取查看页面数据
 export async function queryTagPriceConfigInfo(params) {
   return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceConfigInfo`, {
@@ -56,9 +67,19 @@ export async function deleteTagPriceConfig(params) {
     body: qs.stringify(params),
   });
 }
-//提交调整价格数据接口同时也是提交吊牌价设置接口
+//提交调整价格数据接口同时也是提交吊牌价设置接口,
 export async function updateAuditTagPriceConfig(params) {
   return request(`${ipaddress}/fmss/tagPriceController/updateAuditTagPriceConfig`, {
+    method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//修改暂存接口吊牌价设置
+export async function updateSaveTagPriceConfig(params) {
+  return request(`${ipaddress}/fmss/tagPriceController/updateSaveTagPriceConfig`, {
     method: 'post',
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
@@ -86,6 +107,35 @@ export async function auditTagPriceConfig(params) {
     body: qs.stringify(params),
   });
 }
+// 查询页面初始化吊牌价设置状态组件
+export async function queryTagPriceAuditState(params) {
+  return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceAuditState`, {
+    method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -151,3 +201,4 @@ export async function queryTagPriceConfigStyle(params) {
     body: qs.stringify(params),
   });
 }
+

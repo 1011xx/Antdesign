@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch } from 'antd';
+import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch,Spin } from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
 import styles from './Addstyle.less';
@@ -48,6 +48,7 @@ const Addstyle=({
     cancel,
     statustest,
     switchstatus,
+    saveFlag,
 
 
 })=> {
@@ -164,6 +165,8 @@ function test(){
   }
 
   return (
+    
+<Spin tip="保存中,请稍后..." spinning={saveFlag}>
 
      <Form
      inline
@@ -442,7 +445,7 @@ function test(){
      </div>
      <div style={{height:1}}/>
   </Form>
-
+</Spin>
 
   );
 }

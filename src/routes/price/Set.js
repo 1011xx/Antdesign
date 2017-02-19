@@ -5,11 +5,17 @@ import LookupModal from '../../components/Price/LookupModal';
 import Pricemaintain from '../../components/Price/Pricemaintain';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 
+var styleCode;
+var start;
+var end;
+var state;
+
 function Set({dispatch,price}) {
-  const {dataSource, statedata,lookupvis,auditdetaildata }=price;
-  const auditProps={
+  const {dataSource, statedata,loading,lookupvis,auditdetaildata,setpagetotal,setpagecurrent,setpagedefaultPageSize }=price;
+  const setProps={
     dataSource,
     statedata,
+    loading,
     onLook(item){
       //当点击详情的时候
       dispatch({
@@ -23,6 +29,40 @@ function Set({dispatch,price}) {
         }
       });
     },
+
+    passdata(data){
+       //当点击提交按钮的时候,
+console.log(data);
+      styleCode=data.styleCode;
+      start=data.start;
+      end=data.end;
+      state=data.status;
+      //按照搜索条件请求表格数据
+      let tempobj={};
+      if(styleCode){
+        tempobj.styleNo=styleCode;
+      }
+     if(state){
+       tempobj.resultState=state;
+     }
+     if(start){
+       tempobj.expectEffectiveDate=start;
+     }
+     if(end){
+       tempobj.expectEffectiveEndDate=end;
+     }
+     dispatch({
+       type:'price/publicDate',
+       payload:{
+         setpagecurrent:1
+       }
+     });
+      dispatch({
+       type: 'price/querysetpage',
+       payload:tempobj
+     });
+
+    }
   };
   const lookupProps={
       lookupvis,
@@ -32,7 +72,8 @@ function Set({dispatch,price}) {
         dispatch({
           type:'price/publicDate',
           payload:{
-            lookupvis:false
+            lookupvis:false,
+            auditdetaildata:{}
           }
         });
       },
@@ -41,85 +82,86 @@ function Set({dispatch,price}) {
         dispatch({
           type:'price/publicDate',
           payload:{
-            lookupvis:false
+            lookupvis:false,
+            auditdetaildata:{}
           }
         });
       },
   };
   //页码
-  	// const pageProps={
-  	// 	total,
-  	// 	current,
-  	// 	defaultPageSize,
-  	// 	onShowSizeChange(currentpage,pagesize){
-  	// 		// console.log(currentpage,pagesize);
-  	// 		 let tempobj={};
-  	// 		 if(styleCode){
-  	// 			 tempobj.styleNo=styleCode;
-  	// 		 }
-  	// 		if(state){
-  	// 			tempobj.state=state;
-  	// 		}
-    //     if(start){
-    //       tempobj.expectEffectiveStartDate=start;
-    //     }
-    //     if(end){
-    //       tempobj.expectEffectivEndDate=end;
-    //     }
-    //
-    //
-    //
-  	// 		dispatch({type:'price/tableLoading'});
-  	// 		dispatch({
-  	// 			type:'price/publicDate',
-  	// 			payload:{
-  	// 				current:currentpage,
-  	// 				defaultPageSize:pagesize
-  	// 			}
-  	// 		});
-  	// 		 dispatch({
-  	// 			type: 'price/querypage',
-  	// 			payload:tempobj
-  	// 		});
-    //
-  	// 	},
-  	// 	onPageChange(currentpage){
-    //     let tempobj={};
-    //     if(styleCode){
-    //       tempobj.styleNo=styleCode;
-    //     }
-    //    if(state){
-    //      tempobj.state=state;
-    //    }
-    //    if(start){
-    //      tempobj.expectEffectiveStartDate=start;
-    //    }
-    //    if(end){
-    //      tempobj.expectEffectivEndDate=end;
-    //    }
-    //
-  	// 		dispatch({type:'price/tableLoading'});
-    //
-  	// 		dispatch({
-  	// 			type:'price/publicDate',
-  	// 			payload:{
-  	// 				current:currentpage
-  	// 			}
-  	// 		});
-  	// 		//执行分页请求
-  	// 		dispatch({
-  	// 		 type: 'price/querypage',
-  	// 		 payload:tempobj
-  	// 	 });
-  	// 	}
-  	// };
+  	const pageProps={
+      total:setpagetotal,
+      current:setpagecurrent,
+      defaultPageSize:setpagedefaultPageSize,
+  		onShowSizeChange(currentpage,pagesize){
+  			// console.log(currentpage,pagesize);
+  			 let tempobj={};
+  			 if(styleCode){
+  				 tempobj.styleNo=styleCode;
+  			 }
+  			if(state){
+  				tempobj.resultState=state;
+  			}
+        if(start){
+          tempobj.expectEffectiveDate=start;
+        }
+        if(end){
+          tempobj.expectEffectiveEndDate=end;
+        }
+
+
+
+  			dispatch({type:'price/tableLoading'});
+  			dispatch({
+  				type:'price/publicDate',
+  				payload:{
+  					setpagecurrent:currentpage,
+  					setpagedefaultPageSize:pagesize
+  				}
+  			});
+  			 dispatch({
+  				type: 'price/querysetpage',
+  				payload:tempobj
+  			});
+
+  		},
+  		onPageChange(currentpage){
+        let tempobj={};
+        if(styleCode){
+          tempobj.styleNo=styleCode;
+        }
+       if(state){
+         tempobj.resultState=state;
+       }
+       if(start){
+         tempobj.expectEffectiveDate=start;
+       }
+       if(end){
+         tempobj.expectEffectiveEndDate=end;
+       }
+
+  			dispatch({type:'price/tableLoading'});
+
+  			dispatch({
+  				type:'price/publicDate',
+  				payload:{
+  					setpagecurrent:currentpage
+  				}
+  			});
+  			//执行分页请求
+  			dispatch({
+  			 type: 'price/querysetpage',
+  			 payload:tempobj
+  		 });
+  		}
+  	};
   return (
     <Wrap
        num="1"
        last="价格审核"
        >
-       <Pricemaintain {...auditProps}/>
-       {/* <Paginations {...pageProps}/>*/}
+       <Pricemaintain {...setProps}/>
+        <Paginations {...pageProps}/>
 
         <LookupModal {...lookupProps}/>
        </Wrap>

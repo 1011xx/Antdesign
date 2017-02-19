@@ -45,7 +45,8 @@ import Modalchosecolor from "./components/ModelNumber/Modalchosecolor.js";
 
 import Audit from "./routes/price/Audit.js";
 import Set from "./routes/price/Set.js";
-import Pricedetails from "./routes/price/Pricedetails.js";
+import SetPricedetails from "./routes/price/SetPricedetails.js";
+import AuditPricedetails from "./routes/price/AuditPricedetails.js";
 import Modify from "./routes/price/Modify.js";
 import Pendingprice from "./routes/price/Pendingprice.js";
 import PicturesWall from "./routes/price/upload.js";
@@ -87,14 +88,16 @@ export default function({ history }) {
 
 			  <Route path="/test" component={Modalchosecolor} />
 				<Route path="/audit" component={Audit} />
-        <Route path="/audit/pricedetails/:id" component={Pricedetails} />
+        <Route path="/audit/auditpricedetails/:id" component={AuditPricedetails} />
+				<Route path="/set/setpricedetails/:id" component={SetPricedetails} />
 				<Route path="/audit/modify/:id" component={Modify} />
+        <Route path="/audit/modify" component={Modify} />
 
 
 
         <Route path="/set" component={Set} />
          <Route path="/set/pending/:id" component={Pendingprice} />
-       
+
        </Route>
 
 

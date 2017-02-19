@@ -16,10 +16,9 @@ form: {
   validateFields,
   getFieldsValue
 },
-onCommit,
-onDelete,
 onLook,
 dataSource,
+loading
 
 })=> {
   // 使用map函数生成option选项
@@ -34,36 +33,43 @@ dataSource,
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'5%'
   }, {
     title: '单据号',
     dataIndex: 'documentNumber',
     key: 'documentNumber',
+    width:'30%'
   },{
     title: '预计生效日期',
     dataIndex: 'expectEffectiveDate',
     key: 'expectEffectiveDate',
+    width:'8%'
   }, {
     title: '创建人',
     dataIndex: 'createEmployeeName',
     key: 'createEmployeeName',
+    width:'8%'
   },{
     title: '创建时间',
     dataIndex: 'createDate',
     key: 'createDate',
+      width:'10%'
   }, {
     title: '状态',
     dataIndex: 'stateName',
     key: 'stateName',
+      width:'10%'
   },{
     title: '操作',
     dataIndex: 'operate',
     key: 'operate',
+      width:'15%',
     render:(text, record) => (
       <p>
         <Link to={`/set/pending/${record.id}`}>审核</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-          <Link to={`/audit/pricedetails/${record.id}`}>查看</Link>
+          <Link to={`/set/setpricedetails/${record.id}`}>查看</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
          <a  onClick={() => onLook(record)}>详情</a>
@@ -82,20 +88,33 @@ dataSource,
     StateName:'审核不通过'
   }];
 
+   function transform(a){
+     if(a){
+       return a.format('YYYY-MM-DD');
+     }
+   }
+
+
   function handleSubmit(e){
      e.preventDefault();
      validateFields((err, fieldsValue) => {
           if (!err) {
-              if(fieldsValue.date){
-            const data = {
-              ...fieldsValue,
-              date:'',//给date赋值为空，因为没有实际
-              start:fieldsValue.date[0].format('YYYY-MM-DD'),
-              end:fieldsValue.date[1].format('YYYY-MM-DD')
-            };
-          }
-            console.log(fieldsValue);
-            passdata(data);
+            if(fieldsValue.date){
+              var datas = {
+                ...fieldsValue,
+                date:'',//给date赋值为空，因为没有实际
+                start:transform(fieldsValue.date[0]),
+                end:transform(fieldsValue.date[1])
+              };
+
+            }else{
+              var datas = {
+                ...fieldsValue
+              };
+            }
+            // console.log(datas);
+            passdata(datas);
+
            }
         });
   }
@@ -132,6 +151,7 @@ dataSource,
       className={styles.marginLeft}
     >
     {getFieldDecorator('status', {
+      initialValue:"",
     })(
       <Select  style={{ width: 150,height:22 }} className={styles.selectstyle}>
       {selectopt}
@@ -149,9 +169,10 @@ dataSource,
         <Table size="small"
             className={styles.table}
             columns={columns}
-            loading={false}
+            loading={loading}
             dataSource={dataSource}
             pagination={false}
+            scroll={{y: 'calc(100vh - 378px)' }}
             bordered
           />
 

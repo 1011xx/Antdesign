@@ -29,6 +29,7 @@ function Editstyleroute({dispatch,moudelnum}) {
     stylename,//品名
     stylenum,//款号
     savedone,//保存成功
+    saveFlag,//保存状态
   }=moudelnum;
 
 //通过从后台获取的规则来计算款号和品名
@@ -56,6 +57,18 @@ function Editstyleroute({dispatch,moudelnum}) {
     });
 
   }
+  // const clear=function(){
+  //   //当进入页面的时候
+  //   console.log('location.hash:',location.hash);
+  //   console.log(location.hash.split("?")[0].split("/")[2]);
+  //   if(location.hash.split("?")[0].split("/")[2]==="editstyle"){
+  //     console.log(122222222222222222);
+  //   }
+  //   // if(flag){
+  //   //  arr=[];
+  //   //  arrlabel=[];
+  //   // }
+  // }
 
   	const editProps={
       brand ,//品牌
@@ -74,9 +87,15 @@ function Editstyleroute({dispatch,moudelnum}) {
       styleNamerules,
       stylename,
       stylenum,
+      saveFlag,
       passdata(value){
         console.log(value);
-
+        dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+            saveFlag:true
+          }
+        });
         dispatch({
           type:'moudelnum/create',
           payload:value

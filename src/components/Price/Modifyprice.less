@@ -17,17 +17,43 @@
 .add_plate{
 	height:30px;
 	background:#fff;
-border-left: 1px solid #e9e9e9;
+  border-left: 1px solid #e9e9e9;
 	border-right: 1px solid #e9e9e9;
 	display:flex;
 	flex-direction:row;
 	justify-content: flex-start;
 	align-items:center;
-
 }
 .add_btn{
 	font-size:14px;
 	font-weight:bold;
 	color: #108ee9;
 	margin-left:35px;
+}
+.formbtn{
+	text-align: center;
+	margin-top:50px;
+	:global{
+		 .ant-form-item {
+     width:100%;
+     margin-right: 0;
+}
+	}
+}
+.marginbtn{
+	margin-right:120px;
+}
+.table{
+tr{
+	td,th{
+    text-align: center;
+	}
+  	td:nth-child(3){
+		text-align: left;
+	}
+	td:nth-child(4){
+	text-align: right;
+}
+
+	}
 }

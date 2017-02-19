@@ -19,6 +19,7 @@ form: {
 setPrice,
 onCommit,
 onDelete,
+onEditItem,
 onLook,
 dataSource,
 loading,
@@ -36,47 +37,54 @@ loading,
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+    width:'5%'
   }, {
     title: '单据号',
     dataIndex: 'documentNumber',
     key: 'documentNumber',
+    width:'30%'
   },{
     title: '预计生效日期',
     dataIndex: 'expectEffectiveDate',
     key: 'expectEffectiveDate',
+    width:'8%'
   }, {
     title: '创建人',
     dataIndex: 'createEmployeeName',
     key: 'createEmployeeName',
+    width:'8%'
   },{
     title: '创建时间',
     dataIndex: 'createDate',
     key: 'createDate',
+    width:'10%'
   }, {
     title: '状态',
     dataIndex: 'stateName',
     key: 'stateName',
+    width:'10%'
   },{
     title: '操作',
     dataIndex: 'operate',
     key: 'operate',
+    width:'15%',
     render:(text, record) => {
       if(record.state==1){
         return (
         <p>
           <a  onClick={() => onCommit(record)}>提交</a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to={`/audit/modify/${record.id}`}>修改</Link>
+          <Link to={`/audit/modify/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a  onClick={() => onDelete(record)}>删除</a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to={`/audit/pricedetails/${record.id}`}>查看</Link>
+          <Link to={`/audit/auditpricedetails/${record.id}`}>查看</Link>
         </p>
       );
     }else if(record.state==2||record.state==4){
       return (
       <p>
-      <Link to={`/audit/pricedetails/${record.id}`}>查看</Link>
+      <Link to={`/audit/auditpricedetails/${record.id}`}>查看</Link>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a  onClick={() => onLook(record)}>详情</a>
       </p>
@@ -86,11 +94,11 @@ loading,
       <p>
         <a  onClick={() => onCommit(record)}>提交</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Link to={`/audit/modify/${record.id}`}>修改</Link>
+        <Link to={`/audit/modify/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <a  onClick={() => onDelete(record)}>删除</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Link to={`/audit/pricedetails/${record.id}`}>查看</Link>
+        <Link to={`/audit/auditpricedetails/${record.id}`}>查看</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a  onClick={() => onLook(record)}>详情</a>
       </p>
@@ -190,6 +198,7 @@ loading,
       className={styles.marginLeft}
     >
     {getFieldDecorator('status', {
+      initialValue:"",
     })(
       <Select  style={{ width: 150,height:22 }} className={styles.selectstyle}>
       {selectopt}
@@ -212,6 +221,7 @@ loading,
             loading={loading}
             dataSource={dataSource}
             pagination={false}
+            scroll={{y: 'calc(100vh - 378px)' }}
             bordered
           />
 

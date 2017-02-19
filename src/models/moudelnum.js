@@ -83,6 +83,7 @@ export default {
       sizeoption:[],//尺寸选择数据源
       listarry:[],//选择颜色后的表格数组
       exitcolor:[],
+      saveFlag:false,
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -528,16 +529,24 @@ export default {
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
 
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
+                         saveFlag:false,
                          current:1,
                          defaultPageSize:10,
-                         savedone:true
+                         savedone:true,
+
                       }
                     });
 
             }else{
+               yield put({type:'publicDate',
+                      payload:{
+                         saveFlag:false
+                      }
+                    });
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -551,11 +560,23 @@ export default {
             let strarr=JSON.stringify(payload);
             console.log(strarr);
             const {data}= yield call(updateStyle,{jsonparam:strarr});
+
             if(data.code=="0"){
               // message.success(data.msg);
                 // console.log(data);
-                 yield put({type:'publicDate',payload:{savedtwo:true}});
+                 yield put({
+                  type:'publicDate',
+                  payload:{
+                     saveFlag:false,
+                    savedtwo:true
+                  }
+                });
             }else{
+               yield put({type:'publicDate',
+                      payload:{
+                         saveFlag:false
+                      }
+                    });
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -650,7 +671,8 @@ export default {
             type: 'publicDate',
             payload:{
                current:1,
-               defaultPageSize:10
+               defaultPageSize:10,
+               
             }
           });
         }else{

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch } from 'antd';
+import { Table,Row,Col,Form,Input,Button,Select,Radio ,Cascader,Switch,Spin } from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
 import styles from './Addstyle.less';
@@ -25,7 +25,7 @@ const Editstyle=({
     saleType ,//"销售类型"
     sizeItem,//尺寸组
     styleUnit,//单位
-
+    saveFlag,//保存状态
 
     passdata,
     styleNumbrules,
@@ -134,6 +134,8 @@ function checkserialCode(rule, value, callback){
   }
   return (
 
+
+<Spin tip="保存中,请稍后..." spinning={saveFlag}>
      <Form
      inline
      onSubmit={handleSubmit}
@@ -390,7 +392,7 @@ function checkserialCode(rule, value, callback){
           required
           >
            {getFieldDecorator('isUniqueCodeManagement', {
-
+            initialValue:true,
 
         })(
         <Switch checkedChildren={'是'} unCheckedChildren={'否'} className={styles.switchradio}/>
@@ -422,7 +424,7 @@ function checkserialCode(rule, value, callback){
      </div>
      <div style={{height:1}}/>
   </Form>
-
+</Spin>
 
   );
 }

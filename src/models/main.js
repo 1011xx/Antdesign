@@ -188,7 +188,37 @@ export default {
                   });
                     dispatch({
                     type: 'ChangeSelectkey',
-                    payload: '',
+                    payload: '6',
+                  });
+                break;
+                case 'auditpricedetails':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '7',
+                  });
+                break;
+                case 'setpricedetails':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '8',
+                  });
+                break;
+                 case 'pending':
+                 dispatch({
+                    type: 'ChangeOpenkey',
+                    payload: ['sub4'],
+                  });
+                    dispatch({
+                    type: 'ChangeSelectkey',
+                    payload: '8',
                   });
                 break;
              }

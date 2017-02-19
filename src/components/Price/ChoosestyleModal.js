@@ -75,7 +75,7 @@ function handleSubmit(e){
           handleOk={onOk}
           handleCancel={handleCancel}
           closable={false}
-		   		maskClosable={false}
+		  maskClosable={false}
         >
 				<div className={styles.titletop}>
 				<Form
@@ -96,7 +96,9 @@ function handleSubmit(e){
 					<FormItem
 							 label="年份"
 							 >
-							 {getFieldDecorator('yearCode')(
+							 {getFieldDecorator('yearCode',{
+							 	initialValue:"undefined",
+							 })(
 								 <Select   style={{ width: 120 }} size="small">
 							      {selectyear}
 							    </Select>
@@ -107,7 +109,9 @@ function handleSubmit(e){
 					<FormItem
 							 label="季节"
 							 >
-							 {getFieldDecorator('seasonCode')(
+							 {getFieldDecorator('seasonCode',{
+							 	initialValue:"undefined",
+							 })(
 								 <Select   style={{ width: 120 }} size="small">
 									 {selectseason}
 								 </Select>
@@ -124,7 +128,9 @@ function handleSubmit(e){
 					<FormItem
 							 label="品牌"
 							 >
-							 {getFieldDecorator('brandCode')(
+							 {getFieldDecorator('brandCode',{
+							 	initialValue:"undefined",
+							 })(
 								 <Select   style={{ width: 120 }} size="small">
 									 {selectbrand}
 								 </Select>
@@ -135,7 +141,9 @@ function handleSubmit(e){
 					<FormItem
 							 label="批次"
 							 >
-							 {getFieldDecorator('pici')(
+							 {getFieldDecorator('pici',{
+							 	initialValue:"",
+							 })(
 								 <Select   style={{ width: 120 }} size="small" >
 
 								 </Select>
@@ -146,7 +154,9 @@ function handleSubmit(e){
 					<FormItem
 							 label="类别"
 							 >
-							 {getFieldDecorator('categoryCode')(
+							 {getFieldDecorator('categoryCode',{
+							 	initialValue:"undefined",
+							 })(
 								 <Select   style={{ width: 120 }} size="small">
 									 {selectcategory}
 								 </Select>

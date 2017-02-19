@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Priceaudit from '../../components/Price/Priceaudit';
 import LookupModal from '../../components/Price/LookupModal';
@@ -13,7 +14,7 @@ var start;
 var end;
 var state;
 function Audit({dispatch,price}) {
-  const {dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource}=price;
+  const {dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
   const auditProps={
     dataSource,
     loading,
@@ -34,10 +35,10 @@ function Audit({dispatch,price}) {
        tempobj.state=state;
      }
      if(start){
-       tempobj.expectEffectiveStartDate=start;
+       tempobj.expectEffectiveDate=start;
      }
      if(end){
-       tempobj.expectEffectivEndDate=end;
+       tempobj.expectEffectiveEndDate=end;
      }
      dispatch({type:'price/tableLoading'});
      dispatch({
@@ -53,6 +54,14 @@ function Audit({dispatch,price}) {
     },
     setPrice(){
       //当点击设置吊牌价的时候
+      dispatch({
+        type:'price/publicDate',
+        payload:{
+          setType:'create',
+          setStatus:'新增调价单'
+        }
+      });
+      dispatch(routerRedux.push('/audit/modify'));
     },
     onCommit(item){
       console.log(item);
@@ -71,6 +80,15 @@ function Audit({dispatch,price}) {
         payload:item.id
       });
 
+    },
+    onEditItem(){
+      dispatch({
+        type:'price/publicDate',
+        payload:{
+          setType:'edit',
+          setStatus:'修改调价单'
+        }
+      });
     },
     onDelete(item){
       //当点击删除按钮的时候,显示删除弹窗
@@ -162,7 +180,7 @@ function Audit({dispatch,price}) {
          }
        tempcommitobj.tagpriceConfigDetailDto=tempcommitarr;
 
-      //  console.log('tempcommitobj:',tempcommitobj);
+       console.log('tempcommitobj:',tempcommitobj);
 
 
        //确定提交后要执行操作,关闭弹窗，然后执行提交操作
@@ -223,20 +241,19 @@ function Audit({dispatch,price}) {
   		current,
   		defaultPageSize,
   		onShowSizeChange(currentpage,pagesize){
-  			// console.log(currentpage,pagesize);
-  			 let tempobj={};
-  			 if(styleCode){
-  				 tempobj.styleNo=styleCode;
-  			 }
-  			if(state){
-  				tempobj.state=state;
-  			}
-        if(start){
-          tempobj.expectEffectiveStartDate=start;
+        let tempobj={};
+        if(styleCode){
+          tempobj.styleNo=styleCode;
         }
-        if(end){
-          tempobj.expectEffectivEndDate=end;
-        }
+       if(state){
+         tempobj.state=state;
+       }
+       if(start){
+         tempobj.expectEffectiveDate=start;
+       }
+       if(end){
+         tempobj.expectEffectiveEndDate=end;
+       }
 
 
 
@@ -263,10 +280,10 @@ function Audit({dispatch,price}) {
          tempobj.state=state;
        }
        if(start){
-         tempobj.expectEffectiveStartDate=start;
+         tempobj.expectEffectiveDate=start;
        }
        if(end){
-         tempobj.expectEffectivEndDate=end;
+         tempobj.expectEffectiveEndDate=end;
        }
 
   			dispatch({type:'price/tableLoading'});

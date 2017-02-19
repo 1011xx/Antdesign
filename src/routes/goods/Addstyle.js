@@ -30,7 +30,8 @@ function Addstyleroute({dispatch,moudelnum}) {
     arr,
     arrlabel,
     savedtwo,//修改成功
-    switchstatus
+    switchstatus,
+    saveFlag,
   }=moudelnum;
   //通过从后台获取的规则来计算款号和品名
     const getname=function(){
@@ -74,9 +75,17 @@ function Addstyleroute({dispatch,moudelnum}) {
       switchstatus,
       stylename,
       stylenum,
+      saveFlag,
       currentItem,//根据id获取到的数据
       passdata(value){
         console.log(value);
+        
+        dispatch({
+          type:'moudelnum/publicDate',
+          payload:{
+              saveFlag:true
+          }
+        });
         dispatch({
           type:'moudelnum/update',
           payload:value

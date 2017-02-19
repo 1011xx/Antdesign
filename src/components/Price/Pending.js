@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form,Table,Row,Col,Input, Radio ,Button} from 'antd';
+import { Form,Table,Row,Col,Input, Radio ,Button,Spin,Switch} from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
@@ -14,6 +14,7 @@ const Pending=({
     resetFields
     },
   detaildatasource,
+  pending_spin,
   getdata,
   backurl,
  })=> {
@@ -58,55 +59,54 @@ const Pending=({
         callback();
       }
     }
+    //将switch值转换
+function boolTovalue(isUniqueCodeManagement){
+  if(isUniqueCodeManagement==true){
+    return 4;
+  }else{
+    return 3;
+  }
+}
 
     function handleSubmit(e){
       e.preventDefault();
     validateFields((err, fieldsValue) => {
       if (!err) {
 
-      //    const values = {
-      //   ...fieldsValue,
-      //   'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-      //   'provinceCode':provinceCode,
-      //   'cityCode':cityCode,
-      //   'cityName':cityName,
-      //   'provinceName':provinceName,
-      //   'provinceCode':provinceCode,
-      //   'typeCode':typeCode,
-      //   'saleAreaCode':saleAreaCode,
-      //   'saleAreaName':saleAreaName
-      //
-      // };
-      console.log('fieldsValue:',fieldsValue);
-      getdata(fieldsValue);
+         const values = {
+        ...fieldsValue,
+        resultState:boolTovalue(fieldsValue.resultState)
+      };
+      getdata(values);
 
       }
     });
     }
   return (
+    <Spin spinning={pending_spin} size="large">
       <Wrap
        num="2"
        url="/audit"
-       last="价格维护"
-       next="查看详情"
+       last="价格审核"
+       next="审核"
        >
      <Plate title="基础信息">
          <Row>
          <Col span={6} style={{marginLeft: 1}}>
-           <span > 单据号：1</span>
+           <span > 单据号：{detaildatasource.documentNumber}</span>
          </Col>
          <Col span={6}>
-           <span >预计生效日期：1</span>
+           <span >预计生效日期：{detaildatasource.expectEffectiveDate}</span>
          </Col>
          <Col span={6}>
-           <span >状&nbsp;&nbsp;&nbsp;&nbsp;态：1</span>
+           <span >状&nbsp;&nbsp;&nbsp;&nbsp;态：{detaildatasource.stateName}</span>
          </Col>
          <Col span={6}>
 
          </Col>
         </Row>
         <Row style={{paddingTop:5}}>
-        <span >备&nbsp;&nbsp;&nbsp;&nbsp;注：1</span>
+        <span >备&nbsp;&nbsp;&nbsp;&nbsp;注：{detaildatasource.remarks}</span>
         </Row>
      </Plate>
 
@@ -115,7 +115,7 @@ const Pending=({
         className={styles.table}
          columns={columns}
          loading={false}
-         dataSource={data}
+         dataSource={detaildatasource.dataList}
          pagination={false}
          showHeader={true}
          bordered
@@ -132,21 +132,23 @@ const Pending=({
             <FormItem
                  label="审核"
                  >
-                 {getFieldDecorator('pending', {
-                  rules: [{required: true, message: '请选择!' }]
+                 {getFieldDecorator('resultState', {
+                 initialValue:false,
                  })(
-                   <RadioGroup>
-                      <Radio value="1">通过</Radio>
-                      <Radio value="0">不通过</Radio>
-                    </RadioGroup>
+                   <Switch checkedChildren={'通过'} unCheckedChildren={'不通过'} />
+                  
                  )}
             </FormItem>
+             {/*<RadioGroup>
+                                   <Radio value="4">通过</Radio>
+                                   <Radio value="3">不通过</Radio>
+                           </RadioGroup>*/}
             </Row>
             <Row>
             <FormItem
                  label="&nbsp;&nbsp;&nbsp;说明"
                  >
-                 {getFieldDecorator('explain', {
+                 {getFieldDecorator('description', {
                   rules: [{
                     validator:checkexp
                   }]
@@ -168,6 +170,7 @@ const Pending=({
           </div>
 </Form>
  </Wrap>
+  </Spin>
   );
 }
 

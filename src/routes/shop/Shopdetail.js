@@ -10,8 +10,8 @@ function Shopdetail({shopinfo}) {
 
   const image=function(){
     // console.log(location.host);
-    let imgurl='http://'+location.host+'/fmss';
-    // let imgurl='http://192.168.10.146:5001/fmss';
+    // let imgurl='http://'+location.host+'/fmss';
+    let imgurl='http://192.168.10.146:5001/fmss';
     // let imgurl='/proxyDir/fmss';
     console.log(imgurl);
     if(detailItem.images){

@@ -171,7 +171,7 @@ const LookupModal = ({
 			size="small"
 			pagination={false}
 			className={styles.table}
-			dataSource={dataSource}
+			dataSource={auditdetaildata.dataList}
 			scroll={{y: 285 }}
 			columns={columns}
 			title={() => '审核信息'}
