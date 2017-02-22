@@ -47,7 +47,8 @@ import Audit from "./routes/price/Audit.js";
 import Set from "./routes/price/Set.js";
 import SetPricedetails from "./routes/price/SetPricedetails.js";
 import AuditPricedetails from "./routes/price/AuditPricedetails.js";
-import Modify from "./routes/price/Modify.js";
+import Add from "./routes/price/Add.js";
+import Edit from "./routes/price/Edit.js";
 import Pendingprice from "./routes/price/Pendingprice.js";
 import PicturesWall from "./routes/price/upload.js";
 
@@ -90,8 +91,8 @@ export default function({ history }) {
 				<Route path="/audit" component={Audit} />
         <Route path="/audit/auditpricedetails/:id" component={AuditPricedetails} />
 				<Route path="/set/setpricedetails/:id" component={SetPricedetails} />
-				<Route path="/audit/modify/:id" component={Modify} />
-        <Route path="/audit/modify" component={Modify} />
+				<Route path="/audit/Edit/:id" component={Edit} />
+        <Route path="/audit/Add" component={Add} />
 
 
 

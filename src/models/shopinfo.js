@@ -1,6 +1,7 @@
 import { queryShopInfo,updateShop,addShop,queryProvicneAndCity,querySaleArea,queryShopStatus,queryShopType ,queryShop} from '../services/shopinfo';
 import { parse } from 'qs';
 import {Modal} from 'antd';
+import {addAll} from '../utils/common'
 export default {
   namespace: 'shopinfo',
   state: {
@@ -102,25 +103,25 @@ export default {
             loading:true
           }
         });
-  	  const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"'+PageSize+'"}'});
+  	 
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
-      if(shoplist.data){
-       		// console.log(shoplist.data);
-          for(let i=1;i<=shoplist.data.dataList.length;i++){
-            shoplist.data.dataList[i-1].num=i;
-          }
-	      	yield put({type:'ShopList',
-	      	payload:{
-	      		dataSource:shoplist.data.dataList,
-            total:shoplist.data.total
-	      	}
-	      });
-      };
+      const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"'+PageSize+'"}'});
+     
       if(province.data){
-
+        console.log(province.data.provincecity);
+        let tempobj={};
+        let childobj={};
+        let childarr=[];
+        tempobj.label="全部";
+        tempobj.value="undefined";
+        childobj.label="全部";
+        childobj.value="undefined";
+        childarr.push(childobj);
+        tempobj.children=childarr;
+        province.data.provincecity.unshift(tempobj);
 	      	yield put({type:'ProvicneAndCity',
 	      	payload:{
 	      		options:province.data.provincecity
@@ -128,7 +129,7 @@ export default {
 	      });
       };
        if(salesarea.data){
-
+          salesarea.data.salesArea.unshift(addAll());
 	       	 yield put({type:'SaleArea',
 	      	payload:{
 	      		region:salesarea.data.salesArea
@@ -136,7 +137,7 @@ export default {
 	      });
        };
        if(shopstatus.data){
-
+        shopstatus.data.shopStatus.unshift(addAll());
 	      	yield put({type:'ShopStatus',
 	      	payload:{
 	      		status:shopstatus.data.shopStatus
@@ -144,14 +145,26 @@ export default {
 	      });
       };
       if(shoptype.data){
-
+          shoptype.data.shopType.unshift(addAll());
 	      	yield put({type:'ShopType',
 	      	payload:{
 	      		types:shoptype.data.shopType
 	      	}
 	      });
       };
-       //enteraddpage
+       if(shoplist.data){
+          // console.log(shoplist.data);
+          for(let i=1;i<=shoplist.data.dataList.length;i++){
+            shoplist.data.dataList[i-1].num=i;
+          }
+          yield put({type:'ShopList',
+          payload:{
+            dataSource:shoplist.data.dataList,
+            total:shoplist.data.total
+          }
+        });
+      };
+       
 
     },
     *enteraddpage({ payload}, { call, put }) {
@@ -304,7 +317,7 @@ export default {
   subscriptions: {
   	setup({ dispatch, history }){
   		 history.listen(location => {
-        if (location.pathname === '/shopinfo') {
+        if (location.pathname === '/shopinfo'||location.pathname === '/') {
         	// console.log(location.pathname);
           dispatch({type: 'enter'});
 

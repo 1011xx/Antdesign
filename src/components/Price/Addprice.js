@@ -5,13 +5,13 @@ import moment from 'moment';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import EditableCell from './Edittable';
-import styles from './Modifyprice.less';
+import styles from './Editprice.less';
 const FormItem = Form.Item;
 
 
 
 
-const Modifyprice = ({
+const Addprice = ({
   form: {
     getFieldDecorator,
     validateFields,
@@ -23,6 +23,7 @@ const Modifyprice = ({
     onDelete,
 	  detaildatasource,
     onSuccess,
+    onErrors,
     setType,
     getdata,
     backurl,
@@ -198,6 +199,7 @@ function handleSubmit(e){
               <Upload
                 action="/fmss/tagPriceController/tagPriceConfigBatchImportStyles"
                 onSuccess={onSuccess}
+                onError={onErrors}
               >
                 <a className={styles.add_btn} >批量导入款号</a>
                </Upload>
@@ -227,7 +229,7 @@ function handleSubmit(e){
 		);
 }
 
-Modifyprice.propTypes = {
+Addprice.propTypes = {
 	lookupvis: PropTypes.any,
 	makeSure: PropTypes.func,
 	handleCancel: PropTypes.func,
@@ -235,4 +237,4 @@ Modifyprice.propTypes = {
   choosestyle:PropTypes.func,
 };
 
-export default Form.create()(Modifyprice);
+export default Form.create()(Addprice);

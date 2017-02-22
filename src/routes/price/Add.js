@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'dva';
+import { Modal} from 'antd';
 import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
-import Modifyprice from '../../components/Price/Modifyprice';
+import Addprice from '../../components/Price/Addprice';
 import CommitModal from '../../components/Price/CommitModal';
 import StyleModal from '../../components/Price/ChoosestyleModal';
 import Setallprice from '../../components/Price/setAllprice';
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var brandCode;
 var categoryCode;
 var seasonCode;
@@ -37,19 +39,16 @@ function setProps(obj) {
     return obj;
 }
 
-
-
-function Modify({dispatch,price}) {
+function Add({dispatch,price}) {
   const {
     detaildatasource,//修改吊牌价时候获取到的数据源
-    setType,
-    setStatus,
     modalyear,
     modalseason,
     modalbrand,
     modalcategory,
     chosestylemodal,
-    modalstyle,
+    modalstyle,//穿梭框数据
+    copymodalstyle,//拷贝穿梭框数据
     newData,//新增吊牌价时候存储的数据
     saveState,//暂存tempsave，提交审核commit
     commitvis,
@@ -58,11 +57,12 @@ function Modify({dispatch,price}) {
     uploadExcel,
     targetKeys,
     allpriceModal,
-    selectedRows
+    selectedRows,
+    commitdone,
+
    }=price;
-  const modifyProps={
-    setType,
-    detaildatasource:setType==='create'?newData:detaildatasource,//这里判断是新增还是修改
+  const addProps={
+    detaildatasource:newData,
     choosestyle(){
       dispatch({
         type:'price/publicDate',
@@ -89,117 +89,146 @@ function Modify({dispatch,price}) {
       });
     },
     onDelete(item){
-        if(setType=='create'){
+
+      //当点击删除的时候，删除newDate.dsataList数组里面的数据，同时要把穿梭框里面的数据复原
           let copyCreatejson=Object.assign({}, newData);
+          let temptransf=modalstyle.concat();
+          // console.log('modalstyle:',modalstyle);
           for(let index in copyCreatejson.dataList){
             if(copyCreatejson.dataList[index].key==item.key){
-              console.log(item.key,copyCreatejson.dataList[index].key);
+              // console.log(item.key,copyCreatejson.dataList[index].styleNo);
               copyCreatejson.dataList.splice(index,1);
+              //把删除的数据删除后，重新给dataList.key排序
+              let rowkey=1;
+              for(let index_k in copyCreatejson.dataList){
+                copyCreatejson.dataList[index_k].key=rowkey++;
+              }
+              // console.log(copyCreatejson.dataList);
             }
           };
+          //从以前备份的穿梭框中找出删除的code对应的key
+          for(let value of copymodalstyle){
+            // console.log(value);
+            if(value.code==item.styleNo){
+              // console.error(value.code,item.styleNo);
+              // console.info(value.code,value.key);
+              let tempobj={};
+              tempobj.key=value.key;
+              tempobj.code=value.code;
+              temptransf.unshift(tempobj);
+              // console.log('modalstyle:',temptransf);
+            }
+          }
           dispatch({
             type:'price/publicDate',
             payload:{
-              newData:copyCreatejson
-            }
-          });
-        }else{
-
-          let copyCreatejson=Object.assign({}, detaildatasource);
-          for(let index in copyCreatejson.dataList){
-            if(copyCreatejson.dataList[index].key==item.key){
-              // 将从表格中删除的数据添加到穿梭框的数据中
-              // let length=modalstyle.length;
-              // modalstyle[modalstyle.length].key
-              // copyCreatejson.dataList[index].styleNo
-              // copyCreatejson.dataList[index].styleNocode
-              //从表格中删除一行数据
-              console.log(item.key,copyCreatejson.dataList[index].key);
-              copyCreatejson.dataList.splice(index,1);
-            }
-          };
-          dispatch({
-            type:'price/publicDate',
-            payload:{
-              newData:copyCreatejson
+              newData:copyCreatejson,
+              modalstyle:temptransf
             }
           });
 
 
+          // let copyCreatejson=Object.assign({}, detaildatasource);
+          // for(let index in copyCreatejson.dataList){
+          //   if(copyCreatejson.dataList[index].key==item.key){
+          //     // 将从表格中删除的数据添加到穿梭框的数据中
+          //     // let length=modalstyle.length;
+          //     // modalstyle[modalstyle.length].key
+          //     // copyCreatejson.dataList[index].styleNo
+          //     // copyCreatejson.dataList[index].styleNocode
+          //     //从表格中删除一行数据
+          //     console.log(item.key,copyCreatejson.dataList[index].key);
+          //     copyCreatejson.dataList.splice(index,1);
+          //   }
+          // };
+          // dispatch({
+          //   type:'price/publicDate',
+          //   payload:{
+          //     newData:copyCreatejson
+          //   }
+          // });
 
-
-        }
-
-
-
+    },
+    onErrors(err) {
+      //当批量导入是出现错误时，弹框提示
+      let str=" "+err;
+      Modal.error({
+        title: '错误',
+        content: str,
+      });
     },
     onSuccess(ret){
       if(ret.code==0){
-          if(setType=='create'){
+
+            //如果是新建
             let copyCreatejson=Object.assign({}, newData);
             let createDatalength=0;
             //这里没有做导入的数据重复的判断
-            if(copyCreatejson&&copyCreatejson.dataList){
+
+            if(newData&&newData.dataList){
+              var transFormdata=modalstyle.concat();
               //如果存在dataList，说明之前已经添加数据
               createDatalength=copyCreatejson.dataList.length;
 
               for (let value of ret.data) {
-                console.log(value);
+                // console.log(value);
                 value.key=++createDatalength;
                 //在json中天加标记用于去获取表单
                 value.priceFlag=`configTagprice${createDatalength}`;
                 value.remarkFlag=`remarks${createDatalength}`;
                 copyCreatejson.dataList.push(value);
+                // 从穿梭框中去掉导入数据中有的款号
+                for(let index in transFormdata){
+                  // console.log(transFormdata[index].code,value.styleNo);
+                  if(transFormdata[index].code==value.styleNo){
+                    transFormdata.splice(index,1);
+                    // console.log(transFormdata);
+                  }
+                }
               }
             }else{
               //如果之前没有添加数据
               let tempCreatearr=[];
+              // var transFormdata=Object.assign({}, modalstyle);
+              var transFormdata=modalstyle.concat();
               for (let value of ret.data) {
-                console.log(value);
+
                 value.key=++createDatalength;
                 value.priceFlag=`configTagprice${createDatalength}`;
                 value.remarkFlag=`remarks${createDatalength}`;
                 tempCreatearr.push(value);
+
                 // copyCreatejson.dataList.push(value);
+                // 从穿梭框中去掉导入数据中有的款号
+                for(let index in transFormdata){
+                  // console.log(transFormdata[index].code,value.styleNo);
+                  if(transFormdata[index].code==value.styleNo){
+                    transFormdata.splice(index,1);
+                    // console.log(transFormdata);
+                  }
+                }
               }
               copyCreatejson.dataList=tempCreatearr;
             }
 
-
-
-            console.log('copyCreatejson:',copyCreatejson);
+            // console.log('copyCreatejson:',transFormdata);
             dispatch({
               type:'price/publicDate',
               payload:{
-                newData:copyCreatejson
+                newData:copyCreatejson,
+                modalstyle:transFormdata
               }
             });
-          }else{
-            console.log(ret);
-            let copyjson=Object.assign({}, detaildatasource);
-            let lenghtofdata=detaildatasource.dataList.length;
-            for (let variable of ret.data) {
-              console.log(variable);
-              variable.key=++lenghtofdata;
-              copyjson.dataList.push(variable);
-            }
-            dispatch({
-              type:'price/publicDate',
-              payload:{
-                detaildatasource:copyjson
-              }
-            });
-          console.log(detaildatasource);
-          }
+
       }
 
     },
     getdata(values){
-      if(setType=='create'){
+
         // console.log('新建吊牌价');
         if(saveState=='commit'){
           console.log('新建提交审核');
-          // console.log(values);
+          console.log(values);
           //这里将表单中获取的数据组装好
           newData.expectEffectiveDate=values.expectEffectiveDate;
           newData.remarks=values.remarks;
@@ -214,7 +243,7 @@ function Modify({dispatch,price}) {
                 newData.dataList[index].remarks=values[key];
               }
             }
-                // console.log(key + ": " + values[key]);
+                console.log(key + ": " + values[key]);
             }
 
 
@@ -236,47 +265,7 @@ function Modify({dispatch,price}) {
           //   payload:
           // });
         }
-      }else{
-        // console.log('修改吊牌价');
-        if(saveState=='commit'){
-          console.log('修改提交审核');
-          //修改吊牌价
 
-          //这里会获取到期待的日期，和评论
-          detaildatasource.expectEffectiveDate=values.expectEffectiveDate;
-          detaildatasource.remarks=values.remarks;
-          //遍历object对象，找除相应的key对应的value,并更改newData中的值准备提交用
-          for (let key of Object.keys(values)) {
-            for (let index in detaildatasource.dataList) {
-              // console.log(newData.dataList[index]);
-              if(key==detaildatasource.dataList[index].priceFlag){
-                detaildatasource.dataList[index].configTagprice=values[key];
-              }
-              if(key==detaildatasource.dataList[index].remarkFlag){
-                detaildatasource.dataList[index].remarks=values[key];
-              }
-            }
-                // console.log(key + ": " + values[key]);
-            }
-
-          // console.log('detaildatasource:',detaildatasource);
-
-          dispatch({
-            type:'price/publicDate',
-            payload:{
-              commitdata:detaildatasource,
-              commitvis:true
-            }
-          });
-        }else{
-          console.log('修改暂存');
-          console.log(values);
-          // dispatch({
-          //   type:'price/tempsave',
-          //   payload:detaildatasource
-          // });
-        }
-      }
 
 
     },
@@ -304,69 +293,76 @@ function Modify({dispatch,price}) {
 
     }
   };
-  const modalProps={
+  const transforProps={
     visible:chosestylemodal,
     modalyear,
     modalseason,
     modalbrand,
     modalcategory,
     modalstyle,//穿梭框数据
-    targetKeys,
+    targetKeys,//选中的数据
     onOk(){
+// 1.如果打开新增页面，没有进行任何添加操作
+// 2.如果先通过Excel导入数据，后通过穿梭框导入数据
+// 3.如果先从穿梭框添加数据，后从excel导入。
+
+
       //从穿梭框数据元中通过key找出选中的数据
-      for(let i in targetKeys){
-        let temp={};
-        let tempjson={};
-        for (let j in modalstyle) {
-          //如果key相同说明就是需要照的数据
-          if(modalstyle[i].key==targetKeys[j]){
-            //首先看看dataList里面有多少数据
-            if(setType=='create'){
-              if(newData.dataList){
-                let lengthList=newData.dataList.length;
-                temp.key=++lengthList;
-                temp.styleNo=modalstyle[i].code;
-                temp.styleNocode=modalstyle[i].key;
-                modalstyle.splice(j,1);
-              }else{
-                let lengthList=0;
-                temp.key=++lengthList;
-                temp.styleNo=modalstyle[i].code;
-                temp.styleNocode=modalstyle[i].key;
-                modalstyle.splice(j,1);
-              };
+        let tempobj={};//定义零时对象
+        // let temparr=[];//定义零时数组
+        let transftempdata=modalstyle.concat();
+        let copyDetaildatasource=Object.assign({}, newData);
 
-
-
-            }else{
-                let lengthList=detaildatasource.dataList.length;
-                //找到需要的款号
-
-            }
-
-
-
+          if(newData.dataList){
+            console.log('hasdata');
+          var lengthList=newData.dataList.length;
+          }else{
+            console.log('nodata');
+          var lengthList=0;
           }
 
+
+      for(let j in targetKeys){
+        for (let index_i in modalstyle) {
+
+            let temp={};
+          //如果key相同说明就是需要照的数据
+          if(modalstyle[index_i].key==targetKeys[j]){
+            console.info(modalstyle[index_i].key,targetKeys[j],index_i,j);
+
+            lengthList=lengthList+1;
+            temp.key=lengthList;
+            temp.styleNo=modalstyle[index_i].code;
+            console.log(modalstyle[index_i].code);
+            temp.styleNocode=modalstyle[index_i].key;
+            temp.priceFlag='configTagprice'+lengthList;
+            temp.remarkFlag='remarks'+lengthList;
+            //删除已经选中的穿梭框数据
+
+            // console.log('transftempdata:',modalstyle[index_i].code,);
+            modalstyle.splice(index_i,1)
+            console.log(transftempdata);
+            if(copyDetaildatasource.dataList){
+              copyDetaildatasource.dataList.push(temp);
+            }else{
+              let arr=[];
+              arr.push(temp);
+              copyDetaildatasource.dataList=arr;
+            }
+
+          }
         }
-        if(setType=='create'){
-          let temparr=[];
-          temparr.push(temp);
-          newData.dataList=temparr;
-          console.log(newData.dataList);
-
-        }else{
-          detaildatasource.dataList.push(temp);
-          console.log(detaildatasource.dataList);
-        }
-
-
       }
-      //完成操作后关闭弹框
+  // copyDetaildatasource.dataList=temparr;
+  // console.log('tempobj:',tempobj);
+
+      //完成操作后关闭弹框，并清空穿梭框中选中的数据
 		dispatch({
 			type:'price/publicDate',
 			payload:{
 				chosestylemodal:false,
+        newData:copyDetaildatasource,
+        modalstyle:modalstyle,
 				targetKeys:[]
 			}
 		});
@@ -432,22 +428,17 @@ function Modify({dispatch,price}) {
        //组装要发给后台的数据，点击提交的时候发送的数据
 
        // detaildatasource是获取到的详情数据，需要从获取到的详情数据中提取数据发送给后台
-    if(setType=='create'){
+
       newData.description=Value.description;
+      //新建提交
+      newData.tagpriceConfigDetailDto=newData.dataList;
+      delete newData.dataList;
       console.log('newData:',newData);
       dispatch({
-        type:'price/commit',
+        type:'price/commitsave',
         payload:newData
       });
-    }else{
-      detaildatasource.description=Value.description;
-      console.log('detaildatasource:',detaildatasource);
-      dispatch({
-        type:'price/commit',
-        payload:detaildatasource
-      });
 
-    }
 
       //  let tempcommitobj={};
       //  if(Value.description){
@@ -508,7 +499,7 @@ function Modify({dispatch,price}) {
         }
       });
       console.log(data);
-        if(setType=='create'){
+
           console.log('newData',newData);
           let copynewData=Object.assign({}, newData);
           for (let i in copynewData.dataList) {
@@ -524,23 +515,7 @@ function Modify({dispatch,price}) {
               newData:copynewData
             }
           });
-        }else{
-          console.log('detaildatasource',detaildatasource);
-          let copyDetaildatasource=Object.assign({}, detaildatasource);
-          for (let i in copyDetaildatasource.dataList) {
-            for (let j in selectedRows) {
-              if (copyDetaildatasource.dataList[i].key==selectedRows[j].key) {
-                  copyDetaildatasource.dataList[i].configTagprice=data.ALLprice;
-              }
-            }
-          }
-          dispatch({
-            type:'price/publicDate',
-            payload:{
-              detaildatasource:copyDetaildatasource
-            }
-          });
-        }
+
 
     },
     handleCancel(){
@@ -552,18 +527,33 @@ function Modify({dispatch,price}) {
       });
     }
   };
+  const saveProps={
+   content:'保存成功',
+   visibleSave:commitdone,
+     handleOk(){
+       dispatch({
+         type:'price/publicDate',
+         payload:{
+           commitdone:false
+         }
+       });
+        //当保存成功后，点击弹出确定按钮后，跳转到列表页
+       dispatch(routerRedux.push('/audit'));
+     }
+ };
 
   return (
     <Wrap
     num="2"
     url="/audit"
     last="价格维护"
-    next={setStatus}
+    next="新增调价单"
     >
-      <Modifyprice {...modifyProps}/>
-      <StyleModal {...modalProps}/>
+      <Addprice {...addProps}/>
+      <StyleModal {...transforProps}/>
       <CommitModal {...commitProps}/>
       <Setallprice {...priceProps}/>
+      <Savesuccess {...saveProps}/>
    </Wrap>
   );
 }
@@ -572,4 +562,4 @@ function mapStateToProps({price}) {
   return {price};
 }
 
-export default connect(mapStateToProps)(Modify);
+export default connect(mapStateToProps)(Add);

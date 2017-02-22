@@ -201,4 +201,13 @@ export async function queryTagPriceConfigStyle(params) {
     body: qs.stringify(params),
   });
 }
-
+// 获取款号列表
+export async function toAuditTagPriceConfig(params) {
+  return request(`${ipaddress}/fmss/tagPriceController/toAuditTagPriceConfig`, {
+    method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}

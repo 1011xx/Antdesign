@@ -13,6 +13,7 @@ import { queryTagPriceConfig,
           queryTagPriceAuditState,
           queryTagPriceAuditResult,
           auditTagPriceConfig,//价格审核-》审核
+          toAuditTagPriceConfig,//新增提交审核
         } from '../services/price';
 import {Modal} from 'antd';
 export default {
@@ -61,6 +62,7 @@ export default {
 
       pending_visible:false,
       pending_spin:true,
+      commitdone:false,//审核提交完成，弹框的状态
 
 
 
@@ -383,14 +385,16 @@ export default {
             console.log(styleno.data);
              //复制原数组；
                 const temparr=styleno.data.data.concat();
+                const temparr1=styleno.data.data.concat();
 
                 for(let i=0;i<styleno.data.data.length;i++){
-                  temparr[i].key=i+1;
+                  temparr[i].key=i;
                 }
                 // console.log('temparr:',temparr);
                  yield put({type:'publicDate',
                      payload:{
-                       modalstyle:temparr
+                       modalstyle:temparr,
+                       copymodalstyle:temparr1
                      }
                    });
            };
@@ -453,11 +457,13 @@ export default {
            // };
        },
        *getstyle({ payload }, { call, put,select }){
+        //根据条件获取款号
         let strarr=JSON.stringify(payload);
         const {data}= yield call(queryTagPriceConfigStyle,{jsonParam:strarr});
           if(data.code==0){
             //复制原数组；
                 const temparr=data.data.concat();
+                const temparr1=data.data.concat();
 
                 for(let i=0;i<data.data.length;i++){
                   temparr[i].key=i+1;
@@ -465,7 +471,8 @@ export default {
                  console.log('temparr:',temparr);
                  yield put({type:'publicDate',
                      payload:{
-                       modalstyle:temparr
+                       modalstyle:temparr,
+                       copymodalstyle:temparr1
                      }
                    });
           }
@@ -494,38 +501,49 @@ export default {
 
        },
        *commitsave({ payload }, { call, put,select }){
-        //提交审核
+        //新建 提交审核
+       
         let strarr=JSON.stringify(payload);
-        const {data}= yield call(updateAuditTagPriceConfig,{jsonParam:strarr});
+         // console.log('payload:',strarr);
+        const {data}= yield call(toAuditTagPriceConfig,{jsonParam:strarr});
           if(data.code==0){
             //复制原数组；
       
+                  yield put({type:'publicDate',
+                         payload:{
+                           commitdone:true,
+                           commitvis:false
+                         }
+                       });
 
-          }else{
+          }else if(data.code==1){
               Modal.error({
+                 title: '提示',
+                 content: `下列款号重复${data.msg}`,
+               });
+          }else{
+             Modal.error({
                  title: '提示',
                  content: data.msg,
                });
           }
        },
-       *tagpriceconfig({ payload }, { call, put}){
-        //提交审核
+       *updatecommitsave({ payload }, { call, put}){
+        //修改提交审核
         let strarr=JSON.stringify(payload);
-        const {data}= yield call(auditTagPriceConfig,{jsonParam:strarr});
+         console.log('payload:',payload);
+        const {data}= yield call(updateAuditTagPriceConfig,{jsonParam:strarr});
           if(data.code==0){
             //复制原数组；
-             yield put({type:'publicDate',
-                     payload:{
-                       pending_spin:false,
-                       pending_visible:true
-                     }
-                   });
+      
+                  yield put({type:'publicDate',
+                         payload:{
+                           commitdone:true,
+                           commitvis:false
+                         }
+                       });
+
           }else{
-            yield put({type:'publicDate',
-                     payload:{
-                       pending_spin:false
-                     }
-                   });
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -613,17 +631,9 @@ export default {
                 payload:strs[2]
               });
 
-            }else if(strs[1]==='modify'){
+            }else if(strs[1]==='Edit'||strs[1]==='Add'){
               //修改页面需要去请求数据，和详情页面请求的数据一样
               if(strs[2]){
-                 dispatch({
-                    type: 'publicDate',
-                    payload:{
-                       setStatus:'修改调价单',
-                       setType:'edit'
-                    }
-                  });
-
                  dispatch({
                     type:'details',
                     payload:strs[2]

@@ -9,7 +9,6 @@ var arrlabel=[];
 var result='';
 var result2='';
 
-
 function Editstyleroute({dispatch,moudelnum}) {
   const {
     brand,//品牌

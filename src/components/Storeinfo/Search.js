@@ -12,10 +12,6 @@ const Queryinfo = ({
   status,
   types,
   passdata,
-  selectCategory,
-  selectRegion,
-  selectCity,
-  selectShopststus,
   form: {
     getFieldDecorator,
     validateFields,
@@ -23,15 +19,46 @@ const Queryinfo = ({
     },
 }) =>{
 
-function handleSearch(){
-	validateFields((errors) => {
-          if (errors) {
-            return;
+function handleSearch(e){
+  e.preventDefault();
+	validateFields((errors,fieldsValue) => {
+          if (!errors) {
+            if(fieldsValue.provincecitys){
+              const data = {
+                 ...fieldsValue,
+                 provinceCode:fieldsValue.provincecitys[0],
+                 cityCode:fieldsValue.provincecitys[1],
+               };
+              //  console.log(data);
+               passdata(data);
+            }else{
+              // console.log(fieldsValue);
+              passdata(fieldsValue);
+            }
+
           }
-          const data = { ...getFieldsValue() };
-          passdata(data);
+
+
         });
 }
+
+const typesOption=types.map((item,key)=>{
+    return(
+     <Option key={key} value={item.value}>{item.label}</Option>
+   );
+});
+
+const regionOption=region.map((item,key)=>{
+    return(
+     <Option key={key} value={item.value}>{item.label}</Option>
+   );
+});
+
+const statusOption=status.map((item,key)=>{
+    return(
+     <Option key={key} value={item.value}>{item.label}</Option>
+   );
+});
 
 
 return (
@@ -58,12 +85,15 @@ return (
             <FormItem
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
-             <Cascader
-              size="small"
-              options={types}
-              onChange={selectCategory}
-              placeholder="请选择类别"
-              />
+            {getFieldDecorator('shopType', {
+              initialValue:'undefined'
+            })(
+              <Select size="small" placeholder="请选择类别" style={{ width: 153,textAlign:'left' }} >
+                 {typesOption}
+              </Select>
+            )}
+
+
 
                           {/*<Select
                             placeholder="请选择类别"
@@ -88,12 +118,15 @@ return (
              <FormItem
             label="销售区域"
             >
-            <Cascader
-              size="small"
-              options={region}
-              onChange={selectRegion}
-              placeholder="请选择销售区域"
-              />
+            {getFieldDecorator('saleAreaCode', {
+                initialValue:'undefined'
+            })(
+              <Select size="small" placeholder="请选择销售区域" style={{ width: 153,textAlign:'left' }} >
+                 {regionOption}
+              </Select>
+            )}
+
+
 
 
 
@@ -121,12 +154,16 @@ return (
             <FormItem
             label="所在城市"
             >
+            {getFieldDecorator('provincecitys', {
+                initialValue:['undefined','undefined']
+            })(
               <Cascader
               size="small"
               options={options}
-              onChange={selectCity}
               placeholder="请选择所在城市"
               />
+            )}
+
 
             </FormItem>
           </Col>
@@ -134,12 +171,15 @@ return (
              <FormItem
             label="店仓状态"
             >
-            <Cascader
-              size="small"
-              options={status}
-              onChange={selectShopststus}
-              placeholder="请选择店仓状态"
-              />
+            {getFieldDecorator('shopStatus', {
+                initialValue:'undefined'
+            })(
+              <Select size="small" placeholder="请选择销售区域" style={{ width: 153,textAlign:'left' }} >
+                 {statusOption}
+              </Select>
+            )}
+
+
               {/*<Select
               placeholder="请选择店仓状态"
               style={{ width: 153 }}

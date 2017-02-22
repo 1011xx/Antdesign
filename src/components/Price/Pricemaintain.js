@@ -64,20 +64,31 @@ loading
     dataIndex: 'operate',
     key: 'operate',
       width:'15%',
-    render:(text, record) => (
-      <p>
-        <Link to={`/set/pending/${record.id}`}>审核</Link>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    render:(text, record) => {
+      if(record.state==2){
+        return (
+                <p>
+                  <Link to={`/set/pending/${record.id}`}>审核</Link>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`/set/setpricedetails/${record.id}`}>查看</Link>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <a  onClick={() => onLook(record)}>详情</a>
+                </p>
+          );
+      }else{
+        return (
+            <p>
+              <Link to={`/set/setpricedetails/${record.id}`}>查看</Link>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <a  onClick={() => onLook(record)}>详情</a>
+            </p>
+          );
 
-          <Link to={`/set/setpricedetails/${record.id}`}>查看</Link>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-         <a  onClick={() => onLook(record)}>详情</a>
+      }
+    }
 
 
-
-      </p>
-    ),
+   
   }];
   const data=[{
     num:1,
@@ -172,7 +183,7 @@ loading
             loading={loading}
             dataSource={dataSource}
             pagination={false}
-            scroll={{y: 'calc(100vh - 378px)' }}
+            scroll={{y: 'calc(100vh - 350px)' }}
             bordered
           />
 

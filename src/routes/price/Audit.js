@@ -62,7 +62,7 @@ function Audit({dispatch,price}) {
           setStatus:'新增调价单'
         }
       });
-      dispatch(routerRedux.push('/audit/modify'));
+      dispatch(routerRedux.push('/audit/Add'));
     },
     onCommit(item){
       console.log(item);

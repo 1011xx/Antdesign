@@ -107,7 +107,7 @@ function ShopList({
 		        dataSource={dataSource}
 		        pagination={false}
             loading={loading}
-            scroll={{y: 'calc(100vh - 410px)' }}
+            scroll={{y: 'calc(100vh - 420px)' ,x:1366}}
 		        bordered
 		      />
           <div className={styles.Pagination_wrap}>

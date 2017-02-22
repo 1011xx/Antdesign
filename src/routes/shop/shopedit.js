@@ -49,7 +49,7 @@ const {   previewVisible,
 		  behavier,
 		  deleteImg,
 		  editloading,
-      uploading,
+          uploading,
 		  item:behavier==='create'?{}:currentItem,
 		getadddata(data){
 	// 		setInterval(function(){
@@ -57,7 +57,7 @@ const {   previewVisible,
 		// data.shortName=numm++;
 		// console.log(data);
 		 let upinfo=JSON.stringify(setProp(data));
-		 // console.log(upinfo);
+		 console.log(upinfo);
 		 // console.log( oFile);
 		 //创建form对象
 		  var oMyForm = new FormData();
@@ -77,7 +77,7 @@ const {   previewVisible,
 		          type: 'shopinfo/publicdate',
 		          payload:{
 		              updating:true,
-                  uploading:true
+                   uploading:true
 		           }
 		        });
 // },50);

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux,browserHistory,History    } from 'dva/router';
 import { connect } from 'dva';
+import {setProps} from '../../utils/common';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
@@ -32,13 +33,35 @@ function Shopinfo({dispatch,shopinfo}){
 		region,
 		status,
 		types,
-		passdata(data){
-			// console.log(data);
+		passdata(value){
+			console.log('value:',value);
+			let data=setProps(value);
 			//获取文本框
 			searchForm.fullName=data.shopname;
 			fullName=data.shopname;
+			searchForm.shopType=data.shopType;
+			shopType=data.shopType;
+			searchForm.saleAreaCode=data.saleAreaCode;
+			saleAreaCode=data.saleAreaCode;
+			searchForm.shopStatus=data.shopStatus;
+			shopStatus=data.shopStatus;
+			if(data.provinceCode){
+				searchForm.provinceCode=data.provinceCode;
+				provinceCode=data.provinceCode;
+			}else{
+				searchForm.provinceCode=undefined;
+				provinceCode=undefined;
+			}
+			if(data.cityCode){
+				searchForm.cityCode=data.cityCode;
+	 			cityCode=data.cityCode;
+			}else{
+				searchForm.cityCode=undefined;
+	 			cityCode=undefined;
+			}
+
 			//将searchForm查询条件对象的值转换为字符串
-			console.log(searchForm);
+			// console.log('searchForm:',searchForm);
 			let condit=JSON.stringify(searchForm);
 			console.log(condit);
 			 dispatch({
@@ -46,36 +69,36 @@ function Shopinfo({dispatch,shopinfo}){
               payload: condit,
             });
 
-		},
-		selectCategory(value){
-			//获取类别
-			// console.log(value);
-			searchForm.shopType=value[0];
-			shopType=value[0];
-
-			// console.log(searchForm);
-		},
-		selectRegion(value){
-			// 获取地区
-			// console.log(value);
-			searchForm.saleAreaCode=value[0];
-			saleAreaCode=value[0];
-		},
-		selectCity(value){
-			// 获取城市
- 			// console.log(value);
- 			searchForm.provinceCode=value[0];
- 			searchForm.cityCode=value[1];
- 			provinceCode=value[0];
- 			cityCode=value[1];
-		},
-		selectShopststus(value){
-			// 获取店铺状态
-			// console.log(value);
-			searchForm.shopStatus=value[0];
-			shopStatus=value[0];
-			// console.log(searchForm)
 		}
+		// selectCategory(value){
+		// 	//获取类别
+		// 	// console.log(value);
+		// 	searchForm.shopType=value[0];
+		// 	shopType=value[0];
+		//
+		// 	// console.log(searchForm);
+		// },
+		// selectRegion(value){
+		// 	// 获取地区
+		// 	// console.log(value);
+		// 	searchForm.saleAreaCode=value[0];
+		// 	saleAreaCode=value[0];
+		// },
+		// selectCity(value){
+		// 	// 获取城市
+ 	// 		// console.log(value);
+ 	// 		searchForm.provinceCode=value[0];
+ 	// 		searchForm.cityCode=value[1];
+ 	// 		provinceCode=value[0];
+ 	// 		cityCode=value[1];
+		// },
+		// selectShopststus(value){
+		// 	// 获取店铺状态
+		// 	// console.log(value);
+		// 	searchForm.shopStatus=value[0];
+		// 	shopStatus=value[0];
+		// 	// console.log(searchForm)
+		// }
 	};
 	const listProps={
 		dataSource,

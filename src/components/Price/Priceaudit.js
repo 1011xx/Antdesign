@@ -74,7 +74,7 @@ loading,
         <p>
           <a  onClick={() => onCommit(record)}>提交</a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to={`/audit/modify/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
+          <Link to={`/audit/Edit/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            <a  onClick={() => onDelete(record)}>删除</a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -94,7 +94,7 @@ loading,
       <p>
         <a  onClick={() => onCommit(record)}>提交</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Link to={`/audit/modify/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
+        <Link to={`/audit/Edit/${record.id}`}><span onClick={()=>onEditItem()}>修改</span></Link>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <a  onClick={() => onDelete(record)}>删除</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

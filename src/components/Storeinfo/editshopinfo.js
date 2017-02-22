@@ -5,13 +5,7 @@ import moment from 'moment';
 import styles from './addshopinfo.less';
 const FormItem = Form.Item;
 const Option = Select.Option;
-let provinceName='';
-let cityName='';
-let provinceCode='';
-let cityCode='';
-let saleAreaCode='';
-let saleAreaName='';
-let typeCode='';
+
 
 
 function parseArray(arrStr) {
@@ -47,82 +41,211 @@ const EditShopinfo = ({
     uploading,
 }) =>{
 
-//获取citycode和cityname
-function getcpCodeName(arr){
-  // 遍历options获取citycode和cityname
-  for(let i=0;i<options.length;i++){
-    if(options[i].value==arr[0]){
-       provinceName=options[i].label;
-       for(let j=0;j<options[i].children.length;j++){
-      if(options[i].children[j].value==arr[1])
-       cityName=options[i].children[j].label;
-      }
-    };
-  }
-  provinceCode=arr[0];
-  cityCode=arr[1];
-}
-//获取saleAreaName和saleAreaCode
-function getgetSalesarea(arr){
-  for(let k=0;k<region.length;k++){
-  if(region[k].value==arr[0]){
-     saleAreaName=region[k].label;
-  }
-}
-  saleAreaCode=arr[0];
-}
-//获取typeCode
-function gettypecode(arr){
-  typeCode=arr[0];
-}
+// //获取citycode和cityname
+// function getcpCodeName(arr){
+//   // 遍历options获取citycode和cityname
+//   for(let i=0;i<options.length;i++){
+//     if(options[i].value==arr[0]){
+//        provinceName=options[i].label;
+//        for(let j=0;j<options[i].children.length;j++){
+//       if(options[i].children[j].value==arr[1])
+//        cityName=options[i].children[j].label;
+//       }
+//     };
+//   }
+//   provinceCode=arr[0];
+//   cityCode=arr[1];
+// }
+// //获取saleAreaName和saleAreaCode
+// function getgetSalesarea(arr){
+//   for(let k=0;k<region.length;k++){
+//   if(region[k].value==arr[0]){
+//      saleAreaName=region[k].label;
+//   }
+// }
+//   saleAreaCode=arr[0];
+// }
+// //获取typeCode
+// function gettypecode(arr){
+//   typeCode=arr[0];
+// }
+
+
+// function handleSubmit(e){
+//  e.preventDefault();
+//  // console.log(item);
+//  // console.log(provinceName,cityName);
+//     validateFields((err, fieldsValue) => {
+//       if (!err) {
+//         //格式转换
+//         getcpCodeName(fieldsValue.cityCode);
+//         getgetSalesarea(fieldsValue.saleAreaCode);
+//         gettypecode(fieldsValue.typeCode);
+//          const values = {
+//         ...fieldsValue,
+//         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+//         'cityCode':cityCode,
+//         'cityName':cityName,
+//         'provinceName':provinceName,
+//         'provinceCode':provinceCode,
+//         'typeCode':typeCode,
+//         'saleAreaCode':saleAreaCode,
+//         'saleAreaName':saleAreaName,
+//         'id':item.id,
+//         'code':item.code,
+//         'status':item.status,
+//         'images':item.images,
+//         'deleteImages':deleteImg,
+//
+//       };
+//
+//        getadddata(values);
+//
+//       }
+//     });
+// }
 
 
 function handleSubmit(e){
  e.preventDefault();
- // console.log(item);
- // console.log(provinceName,cityName);
     validateFields((err, fieldsValue) => {
       if (!err) {
-        //格式转换
-        getcpCodeName(fieldsValue.cityCode);
-        getgetSalesarea(fieldsValue.saleAreaCode);
-        gettypecode(fieldsValue.typeCode);
+           console.log('fieldsValue:',fieldsValue);
+     if(fieldsValue.cityCode){
+       //如果city数组的值存在的话
+       if(fieldsValue.saleAreaCode){
+         let tempobj=citychange(fieldsValue.cityCode);
+          const values = {
+         ...fieldsValue,
+         ...tempobj,
+         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+         'provinceCode':fieldsValue.cityCode[0],
+         'cityCode':fieldsValue.cityCode[1],
+         'typeCode':fieldsValue.typeCode.key,
+         'saleAreaCode':fieldsValue.saleAreaCode.key,
+         'saleAreaName':fieldsValue.saleAreaCode.label,
+         'id':item.id,
+         'code':item.code,
+         'status':item.status,
+         'images':item.images,
+         'deleteImages':deleteImg,
+       };
+       console.log('values:',values);
+        getadddata(values);
+       }else{
+         let tempobj=citychange(fieldsValue.cityCode);
+          const values = {
+         ...fieldsValue,
+         ...tempobj,
+         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+         'provinceCode':fieldsValue.cityCode[0],
+         'cityCode':fieldsValue.cityCode[1],
+         'typeCode':fieldsValue.typeCode.key,
+         'saleAreaCode':undefined,
+         'saleAreaName':undefined,
+         'id':item.id,
+         'code':item.code,
+         'status':item.status,
+         'images':item.images,
+         'deleteImages':deleteImg,
+       };
+       console.log('values:',values);
+        getadddata(values);
+       }
+
+     }else{
+       //如果city数组的值不存在
+       if(fieldsValue.saleAreaCode){
          const values = {
-        ...fieldsValue,
-        'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-        'cityCode':cityCode,
-        'cityName':cityName,
-        'provinceName':provinceName,
-        'provinceCode':provinceCode,
-        'typeCode':typeCode,
-        'saleAreaCode':saleAreaCode,
-        'saleAreaName':saleAreaName,
-        'id':item.id,
-        'code':item.code,
-        'status':item.status,
-        'images':item.images,
-        'deleteImages':deleteImg,
+         ...fieldsValue,
+         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+         'provinceCode':undefined,
+         'cityCode':undefined,
+         'cityName':undefined,
+         'provinceName':undefined,
+         'typeCode':fieldsValue.typeCode.key,
+         'saleAreaCode':fieldsValue.saleAreaCode.key,
+         'saleAreaName':fieldsValue.saleAreaCode.label,
+         'id':item.id,
+         'code':item.code,
+         'status':item.status,
+         'images':item.images,
+         'deleteImages':deleteImg,
+       };
+       console.log('values:',values);
+        getadddata(values);
+       }else{
+         const values = {
+         ...fieldsValue,
+         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
+         'provinceCode':undefined,
+         'cityCode':undefined,
+         'cityName':undefined,
+         'provinceName':undefined,
+         'typeCode':fieldsValue.typeCode.key,
+         'saleAreaCode':undefined,
+         'saleAreaName':undefined,
+         'id':item.id,
+         'code':item.code,
+         'status':item.status,
+         'images':item.images,
+         'deleteImages':deleteImg,
+       };
+       console.log('values:',values);
+        getadddata(values);
+       }
 
-      };
+     }
 
-       getadddata(values);
 
       }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function citychange(citycode){
+//   // 遍历options获取citycode和cityname
+//   getcpCodeName(citycode);
+//
+// }
+//
+// function getSalesarea(area){
+//   getgetSalesarea(area);
+//
+// }
+//
+// function typecode(code){
+//   gettypecode(code);
+// }
 function citychange(citycode){
   // 遍历options获取citycode和cityname
-  getcpCodeName(citycode);
-
-}
-
-function getSalesarea(area){
-  getgetSalesarea(area);
-
-}
-
-function typecode(code){
-  gettypecode(code);
+  // console.log('cityCode:',cityCode);
+  for(let i=0;i<options.length;i++){
+    if(options[i].value==citycode[0]){
+       var provinceName=options[i].label;
+       for(let j=0;j<options[i].children.length;j++){
+      if(options[i].children[j].value==citycode[1])
+      var  cityName=options[i].children[j].label;
+      }
+    };
+  }
+  return {provinceName,cityName}
 }
 
 function shopname(rule, value, callback){
@@ -228,11 +351,21 @@ if(editloading){
       </Spin>
     )
 }
+const typesOption=types.map((item,key)=>{
+    return(
+     <Option key={key} value={item.value}>{item.label}</Option>
+   );
+});
 
+const regionOption=region.map((item,key)=>{
+   return(
+    <Option key={key} value={item.value}>{item.label}</Option>
+  );
+});
 
 return (
 
-       
+
         	 <Form
             inline
             className={styles.ant_advanced_search_form}
@@ -278,15 +411,12 @@ return (
                 label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
                 >
                  {getFieldDecorator('typeCode', {
-                   initialValue:parseArray(item.typeCode)
-
+                   initialValue:{key:parseArray(item.typeCode)[0]}
               })(
-                 <Cascader
-                 size="small"
-              options={types}
-              onChange={typecode}
-              placeholder="请选择类别"
-              />
+                <Select size="small" labelInValue={true} placeholder="请选择类别" style={{ width: 153,textAlign:'left' }} >
+                   {typesOption}
+                </Select>
+
               )}
                 </FormItem>
               </Col>
@@ -310,14 +440,11 @@ return (
               label="&nbsp;&nbsp;销售区域"
               >
               {getFieldDecorator('saleAreaCode', {
-                    initialValue:parseArray(item.saleAreaCode)
+                    initialValue:{key:parseArray(item.saleAreaCode)[0]}
               })(
-                  <Cascader
-                  size="small"
-              options={region}
-              onChange={getSalesarea}
-              placeholder="请选择销售区域"
-              />
+                <Select size="small" labelInValue={true} placeholder="请选择销售区域" style={{ width: 153,textAlign:'left' }} >
+                   {regionOption}
+                </Select>
                )}
 
               </FormItem>
@@ -442,7 +569,7 @@ return (
              <Button type="ghost" size="large" onClick={backurl} className={styles.btn_margin}>取消</Button>
           </div>
            </Form>
-       
+
 
   );
 };
