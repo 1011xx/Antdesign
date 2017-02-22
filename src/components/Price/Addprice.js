@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Table, Input,Col,Row,DatePicker,Button} from 'antd';
+import { Form, Table, Input,Col,Row,DatePicker,Button,Spin} from 'antd';
 import Upload from 'rc-upload';
 import moment from 'moment';
 import Plate from '../../commonComponents/plate/plate';
@@ -29,10 +29,16 @@ const Addprice = ({
     backurl,
     Submitted,
     temporaryStorage,
-    selecteonChange
+    selecteonChange,
+    datechanger,
+    remarkschange,
+    tagPrice,
+    tagremarks,
+    addeditloading
 
 
 }) => {
+
 
   const columns = [{
      title: '序号',
@@ -60,7 +66,7 @@ const Addprice = ({
                      initialValue:record.configTagprice,
                      rules: [{ required: true, message: '设置吊牌价必须填写!' }]
                    })(
-                   <Input size="small" style={{ width: 186}}/>
+                   <Input size="small"  style={{ width: 186}}  onBlur={tagPrice}/>
                  )}
         </FormItem>
      )
@@ -74,7 +80,7 @@ const Addprice = ({
                  {getFieldDecorator(`remarks${record.key}`, {
                      initialValue:record.remarks
                    })(
-                    <Input size="small" style={{ width: 186}}/>
+                    <Input size="small" style={{ width: 186}} onBlur={tagremarks}/>
                  )}
         </FormItem>
      )
@@ -119,9 +125,9 @@ function handleSubmit(e){
 
 
 	return(
-    <div>
+    <Spin tip="保存中,请稍后..." spinning={addeditloading}>
       <Form inline  onSubmit={handleSubmit}>
-          <Plate title="查询信息">
+          <Plate title="基础信息">
 				<div className={styles.titletop}>
 				<Row gutter={16}>
 		      <Col className="gutter-row" span={6}>
@@ -131,42 +137,16 @@ function handleSubmit(e){
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
-          {
-            setType==='create'?
             <FormItem
             label="预计生效日期："
             >
               {getFieldDecorator('expectEffectiveDate', {
                 rules: [{ required: true, message: '请选择预计生效日期!' }]
               })(
-                <DatePicker size="small" />
+                <DatePicker size="small"  onChange={datechanger}/>
               )}
             </FormItem>
-            :
-            detaildatasource.expectEffectiveDate ?
-            <FormItem
-            required
-            label="预计生效日期："
-            >
-              {getFieldDecorator('expectEffectiveDate', {
-                initialValue:moment(detaildatasource.expectEffectiveDate, 'YYYY-MM-DD'),
-                rules: [{ required: true, message: '请选择预计生效日期!' }]
-              })(
-                <DatePicker size="small" />
-              )}
-            </FormItem>
-            :
-            <FormItem
-            required
-            label="预计生效日期："
-            >
-              {getFieldDecorator('expectEffectiveDate', {
-                rules: [{ required: true, message: '请选择预计生效日期!' }]
-              })(
-                <DatePicker size="small" />
-              )}
-            </FormItem>
-          }
+
 		      </Col>
 		      <Col className="gutter-row" span={6}>
 					<div className={styles.gutterbox}>
@@ -185,7 +165,7 @@ function handleSubmit(e){
                 >
                   {getFieldDecorator('remarks', {
                   })(
-                    <Input type="textarea" rows={3} style={{width:650}} />
+                    <Input type="textarea" rows={3} style={{width:650}} onBlur={remarkschange}/>
                   )}
                 </FormItem>
         </div>
@@ -225,7 +205,7 @@ function handleSubmit(e){
      </FormItem>
      </div>
     </Form>
-</div>
+</Spin>
 		);
 }
 

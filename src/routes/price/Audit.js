@@ -225,7 +225,8 @@ function Audit({dispatch,price}) {
       dispatch({
         type:'price/publicDate',
         payload:{
-          visibleSure:false
+          visibleSure:false,
+          loading:true
         }
       });
       //执行删除操作

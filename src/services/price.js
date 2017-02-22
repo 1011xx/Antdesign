@@ -67,7 +67,7 @@ export async function deleteTagPriceConfig(params) {
     body: qs.stringify(params),
   });
 }
-//提交调整价格数据接口同时也是提交吊牌价设置接口,
+//提交调整价格数据接口同时也是提交吊牌价设置接口,修改页面提交审核
 export async function updateAuditTagPriceConfig(params) {
   return request(`${ipaddress}/fmss/tagPriceController/updateAuditTagPriceConfig`, {
     method: 'post',
@@ -110,6 +110,16 @@ export async function auditTagPriceConfig(params) {
 // 查询页面初始化吊牌价设置状态组件
 export async function queryTagPriceAuditState(params) {
   return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceAuditState`, {
+    method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}
+//新增页面暂存
+export async function saveTagPriceConfig(params) {
+  return request(`${ipaddress}/fmss/tagPriceController/saveTagPriceConfig`, {
     method: 'post',
      headers: {
     "Content-Type": "application/x-www-form-urlencoded"
@@ -201,7 +211,7 @@ export async function queryTagPriceConfigStyle(params) {
     body: qs.stringify(params),
   });
 }
-// 获取款号列表
+//新增页面提交审核
 export async function toAuditTagPriceConfig(params) {
   return request(`${ipaddress}/fmss/tagPriceController/toAuditTagPriceConfig`, {
     method: 'post',

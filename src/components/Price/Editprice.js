@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Table, Input,Col,Row,DatePicker,Button} from 'antd';
+import { Form, Table, Input,Col,Row,DatePicker,Button,Spin} from 'antd';
 import Upload from 'rc-upload';
 import moment from 'moment';
 import Plate from '../../commonComponents/plate/plate';
@@ -29,7 +29,8 @@ const Editprice = ({
     backurl,
     Submitted,
     temporaryStorage,
-    selecteonChange
+    selecteonChange,
+    addeditloading
 
 
 }) => {
@@ -119,9 +120,9 @@ function handleSubmit(e){
 
 
 	return(
-    <div>
+    <Spin tip="保存中,请稍后..." spinning={addeditloading}>
       <Form inline  onSubmit={handleSubmit}>
-          <Plate title="查询信息">
+          <Plate title="基础信息">
 				<div className={styles.titletop}>
 				<Row gutter={16}>
 		      <Col className="gutter-row" span={6}>
@@ -131,19 +132,7 @@ function handleSubmit(e){
 						</div>
 		      </Col>
 		      <Col className="gutter-row" span={8}>
-          {
-            setType==='create'?
-            <FormItem
-            label="预计生效日期："
-            >
-              {getFieldDecorator('expectEffectiveDate', {
-                rules: [{ required: true, message: '请选择预计生效日期!' }]
-              })(
-                <DatePicker size="small" />
-              )}
-            </FormItem>
-            :
-            detaildatasource.expectEffectiveDate ?
+
             <FormItem
             required
             label="预计生效日期："
@@ -155,18 +144,7 @@ function handleSubmit(e){
                 <DatePicker size="small" />
               )}
             </FormItem>
-            :
-            <FormItem
-            required
-            label="预计生效日期："
-            >
-              {getFieldDecorator('expectEffectiveDate', {
-                rules: [{ required: true, message: '请选择预计生效日期!' }]
-              })(
-                <DatePicker size="small" />
-              )}
-            </FormItem>
-          }
+
 		      </Col>
 		      <Col className="gutter-row" span={6}>
 					<div className={styles.gutterbox}>
@@ -225,7 +203,7 @@ function handleSubmit(e){
      </FormItem>
      </div>
     </Form>
-</div>
+</Spin>
 		);
 }
 

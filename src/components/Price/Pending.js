@@ -137,7 +137,7 @@ function boolTovalue(isUniqueCodeManagement){
                  initialValue:false,
                  })(
                    <Switch checkedChildren={'通过'} unCheckedChildren={'不通过'} />
-                  
+
                  )}
             </FormItem>
              {/*<RadioGroup>
@@ -147,7 +147,7 @@ function boolTovalue(isUniqueCodeManagement){
             </Row>
             <Row>
             <FormItem
-                 label="&nbsp;&nbsp;&nbsp;说明"
+                 label="说明"
                  >
                  {getFieldDecorator('description', {
                   rules: [{

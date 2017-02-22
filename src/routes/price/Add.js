@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ReactDOM} from 'react';
 import { connect } from 'dva';
 import { Modal} from 'antd';
 import { routerRedux } from 'dva/router';
@@ -59,10 +59,13 @@ function Add({dispatch,price}) {
     allpriceModal,
     selectedRows,
     commitdone,
+    addeditloading,
+
 
    }=price;
   const addProps={
     detaildatasource:newData,
+    addeditloading,
     choosestyle(){
       dispatch({
         type:'price/publicDate',
@@ -126,27 +129,6 @@ function Add({dispatch,price}) {
               modalstyle:temptransf
             }
           });
-
-
-          // let copyCreatejson=Object.assign({}, detaildatasource);
-          // for(let index in copyCreatejson.dataList){
-          //   if(copyCreatejson.dataList[index].key==item.key){
-          //     // 将从表格中删除的数据添加到穿梭框的数据中
-          //     // let length=modalstyle.length;
-          //     // modalstyle[modalstyle.length].key
-          //     // copyCreatejson.dataList[index].styleNo
-          //     // copyCreatejson.dataList[index].styleNocode
-          //     //从表格中删除一行数据
-          //     console.log(item.key,copyCreatejson.dataList[index].key);
-          //     copyCreatejson.dataList.splice(index,1);
-          //   }
-          // };
-          // dispatch({
-          //   type:'price/publicDate',
-          //   payload:{
-          //     newData:copyCreatejson
-          //   }
-          // });
 
     },
     onErrors(err) {
@@ -259,11 +241,37 @@ function Add({dispatch,price}) {
 
         }else{
           console.log('新建暂存');
-          console.log(values);
-          // dispatch({
-          //   type:'price/tempsave',
-          //   payload:
-          // });
+          // console.log(values);
+          //这里将表单中获取的数据组装好
+          newData.expectEffectiveDate=values.expectEffectiveDate;
+          newData.remarks=values.remarks;
+          //遍历object对象，找除相应的key对应的value,并更改newData中的值准备提交用
+          for (let key of Object.keys(values)) {
+            for (let index in newData.dataList) {
+              // console.log(newData.dataList[index]);
+              if(key==newData.dataList[index].priceFlag){
+                newData.dataList[index].configTagprice=values[key];
+              }
+              if(key==newData.dataList[index].remarkFlag){
+                newData.dataList[index].remarks=values[key];
+              }
+            }
+                // console.log(key + ": " + values[key]);
+            }
+            newData.tagpriceConfigDetailDto=newData.dataList;
+            // delete newData.dataList;
+            // console.log('newData',newData);
+            // dispatch({
+            //   type:'price/publicDate',
+            //   payload:{
+            //     commitdata:newData
+            //   }
+            // });
+
+          dispatch({
+            type:'price/tempsave',
+            payload:newData
+          });
         }
 
 
@@ -282,12 +290,37 @@ function Add({dispatch,price}) {
       });
 
     },
+    tagPrice(e){
+      //设置吊牌价
+      console.log(e.target.id);
+      console.log(e.target.value);
+    },
+    tagremarks(e){
+      //table中的备注
+      console.log(e.target.id);
+      console.log(e.target.value);
+    },
+    datechanger(field, value){
+      //datepicker选择器
+      console.log( value);
+    },
+    remarkschange(e){
+      //总体价格信息下的备注
+      console.log(e.target.value);
+    },
     temporaryStorage(){
-      //暂存
+      console.log('暂存');
+      // ReactDOM.findDOMNode
+      // let Dom=document.getElementbyId("configTagprice1").value;
+      // alert(Dom);
+
+      //暂存,不能通过 submit来取得form表单的值，因为通过form表单
+
       dispatch({
         type:'price/publicDate',
         payload:{
-          saveState:'tempsave'
+          saveState:'tempsave',
+          addeditloading:true
         }
       });
 
@@ -340,7 +373,7 @@ function Add({dispatch,price}) {
             //删除已经选中的穿梭框数据
 
             // console.log('transftempdata:',modalstyle[index_i].code,);
-            modalstyle.splice(index_i,1)
+            modalstyle.splice(index_i,1);
             console.log(transftempdata);
             if(copyDetaildatasource.dataList){
               copyDetaildatasource.dataList.push(temp);
@@ -353,8 +386,6 @@ function Add({dispatch,price}) {
           }
         }
       }
-  // copyDetaildatasource.dataList=temparr;
-  // console.log('tempobj:',tempobj);
 
       //完成操作后关闭弹框，并清空穿梭框中选中的数据
 		dispatch({
@@ -426,7 +457,6 @@ function Add({dispatch,price}) {
      },
      makeSure(Value){
        //组装要发给后台的数据，点击提交的时候发送的数据
-
        // detaildatasource是获取到的详情数据，需要从获取到的详情数据中提取数据发送给后台
 
       newData.description=Value.description;
@@ -438,42 +468,6 @@ function Add({dispatch,price}) {
         type:'price/commitsave',
         payload:newData
       });
-
-
-      //  let tempcommitobj={};
-      //  if(Value.description){
-      //    //获取description数据
-      //    tempcommitobj.description=Value.description;
-      //  }
-      //  tempcommitobj.id=detaildatasource.id;
-      //  tempcommitobj.documentNumber=detaildatasource.documentNumber;
-      //  tempcommitobj.expectEffectiveDate=detaildatasource.expectEffectiveDate;
-      //  tempcommitobj.state=detaildatasource.state;
-      //  tempcommitobj.remarks=detaildatasource.remarks;
-       //
-      //  let tempcommitarr=[];
-      //  for (let value of detaildatasource.dataList) {
-      //    //遍历dataList并组装数据
-      //      let temparrobj={};
-      //      temparrobj.id=value.configId;
-      //      temparrobj.styleNo=value.styleNo;
-      //      temparrobj.currentTagprice=value.currentTagprice;
-      //      temparrobj.configTagprice=value.configTagprice;
-      //      temparrobj.remarks=value.remarks;
-      //      temparrobj.seqno=value.seqno;
-      //      tempcommitarr.push(temparrobj);
-      //    }
-      //  tempcommitobj.tagpriceConfigDetailDto=tempcommitarr;
-       //
-
-
-       //确定提交后要执行操作,关闭弹窗，然后执行提交操作
-      //  dispatch({
-      //    type:'price/publicDate',
-      //    payload:{
-      //      commitvis:false
-      //    }
-      //  });
 
 
      },
@@ -534,7 +528,8 @@ function Add({dispatch,price}) {
        dispatch({
          type:'price/publicDate',
          payload:{
-           commitdone:false
+           commitdone:false,
+           addeditloading:false
          }
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页
