@@ -55,7 +55,7 @@ import PicturesWall from "./routes/price/upload.js";
 
 
 const handleEnter=({params})=>{
-	// console.log(params);
+	console.log('handleEnter:',params);
 }
 
 export default function({ history }) {
@@ -103,7 +103,7 @@ export default function({ history }) {
 
 
 
- <Route path="/upload" component={PicturesWall} />
+ <Route path="/upload" component={Text} />
 
       <Route path="/login" component={Login} />
       <Route path="/Moudelnumber" component={Moudelnumber} />

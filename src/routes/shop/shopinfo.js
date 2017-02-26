@@ -6,12 +6,12 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
 
-var shopType='';
-var saleAreaCode='';
-var provinceCode='';
-var cityCode='';
-var shopStatus='';
-var fullName='';
+// var shopType='';
+// var saleAreaCode='';
+// var provinceCode='';
+// var cityCode='';
+// var shopStatus='';
+// var fullName='';
 
 //将字符串数组转换为数组
 // function parseArray(arrStr) {
@@ -27,7 +27,26 @@ var fullName='';
 // };
 
 function Shopinfo({dispatch,shopinfo}){
-	const {behavier,current,updateFileList,defaultPageSize,options,region,status,types,dataSource,searchForm,loading,total,changePage}=shopinfo;
+	const {behavier,
+		current,
+		updateFileList,
+		defaultPageSize,
+		options,
+		region,
+		status,
+		types,
+		dataSource,
+		searchForm,
+		loading,
+		total,
+		changePage,
+		shopType,
+		saleAreaCode,
+		provinceCode,
+		cityCode,
+		shopStatus,
+		fullName
+	}=shopinfo;
 	const queryProps={
 		options,
 		region,
@@ -37,27 +56,60 @@ function Shopinfo({dispatch,shopinfo}){
 			console.log('value:',value);
 			let data=setProps(value);
 			//获取文本框
+			dispatch({
+				type:'shopinfo/publicdate',
+				payload:{
+					fullName:data.shopname,
+					shopType:data.shopType,
+					saleAreaCode:data.saleAreaCode,
+					shopStatus:data.shopStatus,
+					loading:true
+				}
+			});
 			searchForm.fullName=data.shopname;
-			fullName=data.shopname;
+			// fullName=data.shopname;
 			searchForm.shopType=data.shopType;
-			shopType=data.shopType;
+			// shopType=data.shopType;
 			searchForm.saleAreaCode=data.saleAreaCode;
-			saleAreaCode=data.saleAreaCode;
+			// saleAreaCode=data.saleAreaCode;
 			searchForm.shopStatus=data.shopStatus;
-			shopStatus=data.shopStatus;
+			// shopStatus=data.shopStatus;
 			if(data.provinceCode){
 				searchForm.provinceCode=data.provinceCode;
-				provinceCode=data.provinceCode;
+				// provinceCode=data.provinceCode;
+				dispatch({
+					type:'shopinfo/publicdate',
+					payload:{
+						provinceCode:data.provinceCode
+					}
+				});
 			}else{
 				searchForm.provinceCode=undefined;
-				provinceCode=undefined;
+				// provinceCode=undefined;
+				dispatch({
+					type:'shopinfo/publicdate',
+					payload:{
+						provinceCode:undefined
+					}
+				});
 			}
 			if(data.cityCode){
 				searchForm.cityCode=data.cityCode;
-	 			cityCode=data.cityCode;
+				dispatch({
+					type:'shopinfo/publicdate',
+					payload:{
+						cityCode:data.cityCode
+					}
+				});
 			}else{
 				searchForm.cityCode=undefined;
-	 			cityCode=undefined;
+
+				dispatch({
+					type:'shopinfo/publicdate',
+					payload:{
+						cityCode:undefined
+					}
+				});
 			}
 
 			//将searchForm查询条件对象的值转换为字符串
@@ -70,35 +122,7 @@ function Shopinfo({dispatch,shopinfo}){
             });
 
 		}
-		// selectCategory(value){
-		// 	//获取类别
-		// 	// console.log(value);
-		// 	searchForm.shopType=value[0];
-		// 	shopType=value[0];
-		//
-		// 	// console.log(searchForm);
-		// },
-		// selectRegion(value){
-		// 	// 获取地区
-		// 	// console.log(value);
-		// 	searchForm.saleAreaCode=value[0];
-		// 	saleAreaCode=value[0];
-		// },
-		// selectCity(value){
-		// 	// 获取城市
- 	// 		// console.log(value);
- 	// 		searchForm.provinceCode=value[0];
- 	// 		searchForm.cityCode=value[1];
- 	// 		provinceCode=value[0];
- 	// 		cityCode=value[1];
-		// },
-		// selectShopststus(value){
-		// 	// 获取店铺状态
-		// 	// console.log(value);
-		// 	searchForm.shopStatus=value[0];
-		// 	shopStatus=value[0];
-		// 	// console.log(searchForm)
-		// }
+
 	};
 	const listProps={
 		dataSource,
@@ -199,7 +223,8 @@ function Shopinfo({dispatch,shopinfo}){
 			 dispatch({
               type: 'shopinfo/publicdate',
               payload: {
-              	current:pageNumber
+              	current:pageNumber,
+								loading:true
               }
             });
 
@@ -213,7 +238,9 @@ function Shopinfo({dispatch,shopinfo}){
 			dispatch({
               type: 'shopinfo/publicdate',
               payload: {
-              	defaultPageSize:pageSize
+              	defaultPageSize:pageSize,
+								current:current,
+								loading:true
               }
             });
 
@@ -221,12 +248,7 @@ function Shopinfo({dispatch,shopinfo}){
 			changePage.rows=pageSize;
 			let condit=JSON.stringify(changePage);
 			// console.log(condit);
-			 dispatch({
-              type: 'shopinfo/publicdate',
-              payload: {
-              	current:current
-              }
-            });
+
 		 dispatch({
               type: 'shopinfo/queryShop',
               payload: condit,

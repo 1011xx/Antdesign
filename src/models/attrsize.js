@@ -206,7 +206,8 @@ export default {
             type: 'publicDate',
             payload:{
                current:1,
-               defaultPageSize:10
+               defaultPageSize:10,
+               loading:true
             }
           });
            }

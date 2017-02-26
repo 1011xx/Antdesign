@@ -49,7 +49,9 @@ export default {
       chosestylemodal:false,
       setType: 'create',
       setStatus:'新增调价单',
-      newData:{},
+      newData:{
+        dataList:[]
+      },
       saveState:'tempsave',//暂存tempsave，提交审核commit
       uploadExcel:[],
       targetKeys:[],//选中的数据
@@ -66,7 +68,10 @@ export default {
       pending_spin:true,
       commitdone:false,//审核提交完成，弹框的状态
       addeditloading:false,
-
+      styleCode:undefined,
+      start:undefined,
+      end:undefined,
+      state:undefined
 
 
     },
@@ -166,11 +171,20 @@ export default {
         *querysetpage({ payload }, { call, put, select }){
           const currentpage = yield select(({ price }) =>  price.setpagecurrent);
           const pagesize = yield select(({ price }) => price.setpagedefaultPageSize);
+          const styleCode = yield select(({ price }) => price.styleCode);
+          const state = yield select(({ price }) => price.state);
+          const start = yield select(({ price }) => price.start);
+          const end = yield select(({ price }) => price.end);
           // console.log(payload);
           //使用传递过来的参数
-            payload.page=currentpage;
-            payload.rows=pagesize;
-            let strarr=JSON.stringify(payload);
+           let tempobj={};
+            tempobj.page=currentpage;
+            tempobj.rows=pagesize;
+            tempobj.styleCode=styleCode;
+            tempobj.resultState=state;
+            tempobj.expectEffectiveDate=start;
+            tempobj.expectEffectiveEndDate=end;
+            let strarr=JSON.stringify(tempobj);
             console.log(strarr)
             //获取表格数据
             const {data}= yield call(queryTagPriceAuditResult,{jsonParam:strarr});
@@ -202,16 +216,26 @@ export default {
         *querypage({ payload }, { call, put, select }){
           const currentpage = yield select(({ price }) => price.current);
           const pagesize = yield select(({ price }) => price.defaultPageSize);
+          const styleCode = yield select(({ price }) => price.styleCode);
+          const state = yield select(({ price }) => price.state);
+          const start = yield select(({ price }) => price.start);
+          const end = yield select(({ price }) => price.end);
           // console.log(payload);
           //使用传递过来的参数
-            payload.page=currentpage;
-            payload.rows=pagesize;
-            let strarr=JSON.stringify(payload);
+          let tempobj={};
+            tempobj.page=currentpage;
+            tempobj.rows=pagesize;
+            tempobj.styleCode=styleCode;
+            tempobj.state=state;
+            tempobj.expectEffectiveDate=start;
+            tempobj.expectEffectiveEndDate=end;
+
+            let strarr=JSON.stringify(tempobj);
             console.log(strarr)
             //获取表格数据
             const {data}= yield call(queryTagPriceConfig,{jsonParam:strarr});
 
-            if(data){
+            if(data.code==0){
               console.log(data);
                // 开始添加页面序号
                  let long=data.dataList.length;
@@ -382,13 +406,14 @@ export default {
 
             if(data.code=="0"){
 
-              console.log(data);
-              //将获取到的数据给审核详情弹框
+                
                   yield put({type:'publicDate',
                       payload:{
-                        commitvis:false
+                        commitvis:false,
+                        loading:true
                       }
                     });
+                   yield put({type: 'enter'});
             }else{
 
               Modal.error({
@@ -529,6 +554,7 @@ export default {
        *audittempsave({ payload }, { call, put,select }){
         //修改页面暂存
         let strarr=JSON.stringify(payload);
+        console.log(payload);
         const {data}= yield call(updateSaveTagPriceConfig,{jsonParam:strarr});
           if(data.code==0){
             yield put({type:'publicDate',
@@ -780,9 +806,14 @@ export default {
            dispatch({
             type: 'publicDate',
             payload:{
-
+               current:1,
+              defaultPageSize:10,
                loading:true,
-               newData:{}
+               newData:{},
+               styleCode:undefined,
+               start:undefined,
+                end:undefined,
+                state:undefined
             }
           });
            dispatch({type: 'enter'});
@@ -791,8 +822,13 @@ export default {
             dispatch({
             type: 'publicDate',
             payload:{
-
-               loading:true
+               styleCode:undefined,
+               start:undefined,
+               end:undefined,
+               state:undefined,
+               loading:true,
+               current:1,
+              defaultPageSize:10
             }
           });
              dispatch({type: 'enterset'});
@@ -827,6 +863,17 @@ export default {
                 }
 
             }else if(strs[1]==='Add'){
+             
+               dispatch({
+                    type: 'publicDate',
+                    payload:{
+                      newData:{
+                        dataList:[]
+                      }
+                    }
+                  });
+              
+             
                //首先请求款号列表
                dispatch({
                   type:'getselectdata'

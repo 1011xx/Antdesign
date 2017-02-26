@@ -8,12 +8,12 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 
 
-var styleCode;
-var categoryCode;
-var yearCode;
+// var styleCode;
+// var categoryCode;
+// var yearCode;
 var deleteid;
 function Moudelnumber({dispatch,moudelnum}) {
-	const {total,current,defaultPageSize,dataSource,styleCategory,styleYear,visibleSure,loading}=moudelnum;
+	const {total,current,defaultPageSize,styleCode,categoryCode,yearCode,dataSource,styleCategory,styleYear,visibleSure,loading}=moudelnum;
 	//搜索框相应的
 	const searchProps={
 		styleCategory,
@@ -24,9 +24,15 @@ function Moudelnumber({dispatch,moudelnum}) {
 			console.log("data",data);
 			//分别赋值，保存状态
 			//创建查询数据newarr
-			styleCode=data.styleCode;
-			categoryCode=data.categoryCode;
-			yearCode=data.yearCode;
+			dispatch({
+				type:'moudelnum/publicDate',
+				payload:{
+				  styleCode:data.styleCode,
+				  categoryCode:data.categoryCode,
+			      yearCode:data.yearCode
+				}
+			});
+			
 				let newarr={...data,
 					    styleCode:data.styleCode,
 						yearCode:data.yearCode,

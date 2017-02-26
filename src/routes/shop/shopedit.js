@@ -111,12 +111,19 @@ const {   previewVisible,
               }
             });
 
-
 		     dispatch({
               type: 'shopinfo/ShowPreview'
             });
 		  },
+      beforeUpload(file){
+        for(let key of Object.keys(fileList)){
+          if(file.name==fileList[key].name){
+            message.error('两次上传的文件名相同！');
+            return false;
+          }
+        }
 
+      },
 		 handleChange ( {fileList,file} ) {
 		 	let filelength=fileList.length;
 		 	// console.log(filelength);

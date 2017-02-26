@@ -5,7 +5,14 @@ import {addAll} from '../utils/common'
 export default {
   namespace: 'shopinfo',
   state: {
-  	options:[],
+  	options:[{
+      label:'全部',
+      value:'undefined',
+      children:[{
+        label:'全部',
+        value:'undefined'
+      }]
+    }],
   	region:[],
   	status:[],
   	types:[],
@@ -42,6 +49,18 @@ export default {
     addvisibleSave:false,
     uploading:false,
     adduploading:false,
+
+
+
+
+
+
+ shopType:'',
+ saleAreaCode:'',
+ provinceCode:'',
+ cityCode:'',
+ shopStatus:'',
+ fullName:''
 
   },
   reducers: {
@@ -129,7 +148,7 @@ export default {
 	      });
       };
        if(salesarea.data){
-          salesarea.data.salesArea.unshift(addAll());
+          // salesarea.data.salesArea.unshift(addAll());
 	       	 yield put({type:'SaleArea',
 	      	payload:{
 	      		region:salesarea.data.salesArea
@@ -137,7 +156,7 @@ export default {
 	      });
        };
        if(shopstatus.data){
-        shopstatus.data.shopStatus.unshift(addAll());
+        // shopstatus.data.shopStatus.unshift(addAll());
 	      	yield put({type:'ShopStatus',
 	      	payload:{
 	      		status:shopstatus.data.shopStatus
@@ -145,7 +164,7 @@ export default {
 	      });
       };
       if(shoptype.data){
-          shoptype.data.shopType.unshift(addAll());
+          // shoptype.data.shopType.unshift(addAll());
 	      	yield put({type:'ShopType',
 	      	payload:{
 	      		types:shoptype.data.shopType
@@ -253,7 +272,8 @@ export default {
 	      	yield put({type:'ShopList',
 	      	payload:{
 	      		dataSource:resultlist.data.dataList,
-            total:resultlist.data.total
+            total:resultlist.data.total,
+            loading:false
 	      	}
 	      });
       };
@@ -319,6 +339,39 @@ export default {
   		 history.listen(location => {
         if (location.pathname === '/shopinfo'||location.pathname === '/') {
         	// console.log(location.pathname);
+            dispatch({type: 'publicdate',
+                      payload:{
+                      current:1,
+                      defaultPageSize:10,
+                      // searchForm:{
+                      //   cityCode:undefined,
+                      //   fullName:undefined,
+                      //   page:1,
+                      //   provinceCode:undefined,
+                      //   rows:10,
+                      //   saleAreaCode:undefined,
+                      //   shopStatus:undefined,
+                      //   shopType:undefined
+                      // },
+                      // changePage:{
+                      //   cityCode:undefined,
+                      //   fullName:undefined,
+                      //   page:1,
+                      //   provinceCode:undefined,
+                      //   rows:10,
+                      //   saleAreaCode:undefined,
+                      //   shopStatus:undefined,
+                      //   shopType:undefined
+                      // },
+                      fullName:undefined,
+                      shopType:undefined,
+                      saleAreaCode:undefined,
+                      shopStatus:undefined,
+                      provinceCode:undefined,
+                      cityCode:undefined
+
+                    }
+                  });
           dispatch({type: 'enter'});
 
         }else if (location.pathname === '/shopinfo/shopadd') {

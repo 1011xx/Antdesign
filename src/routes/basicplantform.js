@@ -6,8 +6,8 @@ import { connect } from 'dva';
 function Basicplantform({}){
 	return(
 
-		<p>【基础平台欢迎首页】</p>
-			
+		<p style={{display:'flex',fontSize:30,justifyContent:'center'}}>【基础平台欢迎首页】</p>
+
 		);
 }
 

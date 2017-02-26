@@ -83,6 +83,14 @@ export default {
       listarry:[],//选择颜色后的表格数组
       exitcolor:[],
       saveFlag:false,
+
+
+
+
+
+      styleCode:undefined,
+      categoryCode:undefined,
+      yearCode:undefined
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -117,18 +125,18 @@ export default {
             if(stylecategory.data.code==0){
               console.log(stylecategory.data);
              //添加全部选项
-             stylecategory.data.dataList.unshift(addAll());
+            //  stylecategory.data.dataList.unshift(addAll());
                yield put({type:'publicDate',
                       payload:{
                         styleCategory:stylecategory.data.dataList,
                       }
                     });
-             
-              
+
+
             };
             if(styleyear.data.code==0){
              //添加全部选项
-             styleyear.data.dataList.unshift(addAll());
+            //  styleyear.data.dataList.unshift(addAll());
               // console.log(styleyear.data);
                yield put({type:'publicDate',
                       payload:{
@@ -677,7 +685,11 @@ export default {
             payload:{
                current:1,
                defaultPageSize:10,
-               
+               loading:true,
+               styleCode:undefined,
+               categoryCode:undefined,
+               yearCode:undefined
+
             }
           });
         }else{

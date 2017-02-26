@@ -10,47 +10,56 @@ import SureModel from '../../commonComponents/SureModal/SureModal';
 
 
 var exp;
-var styleCode;
-var start;
-var end;
-var state;
+
+
+// var styleCode;
+// var start;
+// var end;
+// var state;
 function Audit({dispatch,price}) {
-  const {dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
+  const {styleCode,start,end,state,dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
   const auditProps={
     dataSource,
     loading,
     statedata,
     passdata(data){
       //当点击提交按钮的时候,
+      dispatch({
+       type:'price/publicDate',
+       payload:{
+          styleCode:data.styleCode,
+          start:data.start,
+          end:data.end,
+          state:data.status
+       }
+     });
 
-      styleCode=data.styleCode;
-      start=data.start;
-      end=data.end;
-      state=data.status;
-      //按照搜索条件请求表格数据
-      let tempobj={};
-      if(styleCode){
-        tempobj.styleNo=styleCode;
-      }
-     if(state){
-       tempobj.state=state;
-     }
-     if(start){
-       tempobj.expectEffectiveDate=start;
-     }
-     if(end){
-       tempobj.expectEffectiveEndDate=end;
-     }
+     
      dispatch({type:'price/tableLoading'});
      dispatch({
        type:'price/publicDate',
        payload:{
-         current:1
+         current:1,
+         loading:true
        }
      });
+      //按照搜索条件请求表格数据
+     //  let tempobj={};
+     //  // if(styleCode){
+     //    tempobj.styleNo=styleCode;
+     //  // }
+     // // if(state){
+     //   tempobj.state=state;
+     // // }
+     // // if(start){
+     //   tempobj.expectEffectiveDate=start;
+     // // }
+     // // if(end){
+     //   tempobj.expectEffectiveEndDate=end;
+     // // }
+     // console.log('tempobj:',tempobj);
       dispatch({
-       type: 'price/querypage',
-       payload:tempobj
+       type: 'price/querypage'
      });
     },
     setPrice(){
@@ -196,17 +205,6 @@ function Audit({dispatch,price}) {
          payload:tempcommitobj
        });
 
-     },
-     explain(e){
-       //获取说明输入框的内容
-       exp = e.target.value;
-       console.log(exp);
-       dispatch({
-         type:'price/publicDate',
-         payload:{
-           explaintext:e.target.value
-         }
-       });
      }
   };
   const delProps={

@@ -80,7 +80,6 @@ class PicturesWall extends React.Component {
       this.setState({
         previewImage: file.url || file.thumbUrl,
         previewVisible: true,
-
       });
     }
 
@@ -190,10 +189,6 @@ class PicturesWall extends React.Component {
   }
 }
 //图片上传组件结束
-
-
-
-
 
 
 const Configcolorsize=({

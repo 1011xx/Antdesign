@@ -38,7 +38,7 @@ const {   previewVisible,
 		  behavier,
 		  saving,
       addvisibleSave,
-     
+
 
 	}=shopinfo;
 
@@ -47,7 +47,7 @@ const {   previewVisible,
 		 options,
 		  region,
 		  types,
-         
+
 		  item:behavier==='create'?{}:currentItem,
 
 		getadddata(data){
@@ -133,7 +133,15 @@ const {   previewVisible,
               type: 'shopinfo/ShowPreview'
             });
 		  },
+      beforeUpload(file){
+        for(let key of Object.keys(fileList)){
+          if(file.name==fileList[key].name){
+            message.error('两次上传的文件名相同！');
+            return false;
+          }
+        }
 
+      },
 		 handleChange ( {fileList,file} ) {
 		 	console.log('fileList:',fileList);
 		 	let filelength=fileList.length;

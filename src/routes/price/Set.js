@@ -5,13 +5,13 @@ import LookupModal from '../../components/Price/LookupModal';
 import Pricemaintain from '../../components/Price/Pricemaintain';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 
-var styleCode;
-var start;
-var end;
-var state;
+// var styleCode;
+// var start;
+// var end;
+// var state;
 
 function Set({dispatch,price}) {
-  const {dataSource, statedata,loading,lookupvis,auditdetaildata,setpagetotal,setpagecurrent,setpagedefaultPageSize }=price;
+  const {styleCode,start,end,state,dataSource, statedata,loading,lookupvis,auditdetaildata,setpagetotal,setpagecurrent,setpagedefaultPageSize }=price;
   const setProps={
     dataSource,
     statedata,
@@ -32,34 +32,43 @@ function Set({dispatch,price}) {
 
     passdata(data){
        //当点击提交按钮的时候,
-console.log(data);
-      styleCode=data.styleCode;
-      start=data.start;
-      end=data.end;
-      state=data.status;
+// console.log(data);
+ dispatch({
+       type:'price/publicDate',
+       payload:{
+          styleCode:data.styleCode,
+          start:data.start,
+          end:data.end,
+          state:data.status
+       }
+     });
+      // styleCode=data.styleCode;
+      // start=data.start;
+      // end=data.end;
+      // state=data.status;
       //按照搜索条件请求表格数据
-      let tempobj={};
-      if(styleCode){
-        tempobj.styleNo=styleCode;
-      }
-     if(state){
-       tempobj.resultState=state;
-     }
-     if(start){
-       tempobj.expectEffectiveDate=start;
-     }
-     if(end){
-       tempobj.expectEffectiveEndDate=end;
-     }
+     //  let tempobj={};
+     //  if(styleCode){
+     //    tempobj.styleNo=styleCode;
+     //  }
+     // if(state){
+     //   tempobj.resultState=state;
+     // }
+     // if(start){
+     //   tempobj.expectEffectiveDate=start;
+     // }
+     // if(end){
+     //   tempobj.expectEffectiveEndDate=end;
+     // }
      dispatch({
        type:'price/publicDate',
        payload:{
-         setpagecurrent:1
+         setpagecurrent:1,
+         loading:true
        }
      });
       dispatch({
-       type: 'price/querysetpage',
-       payload:tempobj
+       type: 'price/querysetpage'
      });
 
     }

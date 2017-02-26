@@ -19,6 +19,7 @@ const PicturesWall=({
   handlePreview,
   handleChange,
   customRequest,
+  beforeUpload,
   onRemove
 
 })=>{
@@ -31,6 +32,7 @@ const PicturesWall=({
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
+          beforeUpload={beforeUpload}
           onRemove={onRemove}
           customRequest={customRequest}
         >
@@ -55,7 +57,7 @@ PicturesWall.propTypes = {
   handleChange: PropTypes.func,
   customRequest: PropTypes.func,
   onRemove: PropTypes.func,
-  
+
 
 };
 export default PicturesWall;
@@ -104,7 +106,7 @@ export default PicturesWall;
 //   // var oMyForm = new FormData();
 //   // oMyForm.append("username", "Groucho");
 //   // oMyForm.append("accountnum", 123456); // 数字123456被立即转换成字符串"123456"
-   
+
 //   // // fileInputElement中已经包含了用户所选择的文件
 
 //   // for (var i=0;i<oFile.length;i++) {
@@ -113,7 +115,7 @@ export default PicturesWall;
 //   // }
 //   // //var oFile = document.getElementById("uploadImage").files[0]
 //   // //oMyForm.append("userfile", oFile);
-   
+
 //   // var oFileBody = '<a id="a"><b id="b">hey!</b></a>'; // Blob对象包含的文件内容
 //   // var oBlob = new Blob([oFileBody], { type: "text/xml"});
 //   // oMyForm.append("webmasterfile", oBlob);

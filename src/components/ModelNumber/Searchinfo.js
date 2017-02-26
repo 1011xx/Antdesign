@@ -20,7 +20,7 @@ const Searchinfo = ({
     },
 }) =>{
 
-  
+
   const categoryOption=styleCategory.map((item,key)=>{
       return(
        <Option key={key} value={item.value}>{item.label}</Option>
@@ -53,7 +53,7 @@ return (
             className={styles.ant_advanced_search_form}
             >
             <Row className={styles.ant_row_style}>
-            <Col  span={6} className={styles.ant_col_center}>
+            <Col  span={7} className={styles.ant_col_center}>
             <FormItem
             label="款号"
             >
@@ -64,34 +64,36 @@ return (
               )}
             </FormItem>
             </Col>
-            <Col  span={6} className={styles.ant_col_center}>
+            <Col  span={7} className={styles.ant_col_center}>
             <FormItem
             label="类别"
             >
             {getFieldDecorator('categoryCode', {
-
+              initialValue:'undefined'
             })(
              <Select size="small" placeholder="请选择类别" style={{ width: 150,height:22,textAlign:'left' }} >
+             <Option  value="undefined">全部</Option>
                 {categoryOption}
              </Select>
             )}
             </FormItem>
            </Col>
-           <Col  span={6} className={styles.ant_col_center}>
+           <Col  span={7} className={styles.ant_col_center}>
 
              <FormItem
             label="年份"
             >
             {getFieldDecorator('yearCode', {
-              
+              initialValue:'undefined'
             })(
              <Select size="small" placeholder="请选择年份" style={{ width: 150,height:22,textAlign:'left' }} >
+              <Option  value="undefined">全部</Option>
                   {yearOption}
              </Select>
             )}
             </FormItem>
             </Col>
-             <Col  span={6} className={styles.ant_col_center}>
+             <Col  span={3} className={styles.ant_col_center}>
             <FormItem>
               <Button type="primary" size="default" onClick={handleSearch}>查询</Button>
             </FormItem>
