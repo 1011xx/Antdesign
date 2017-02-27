@@ -38,76 +38,69 @@ function handOk(){
 
 
 	return(
-         <Modal title="提交"
-          visible={commitvis}
-          onOk={handOk}
-          onCancel={Cancel}
-          closable={false}
-          maskClosable={false}
-        >
-				<div className={styles.titletop}>
-				<Row gutter={16}>
-		      <Col className="gutter-row" span={8}>
-		        <div className="gutter-box">
-							<span>单&nbsp;&nbsp;据&nbsp;&nbsp;号：</span>
-							<span>{commitdata.documentNumber}</span>
-						</div>
-		      </Col>
-		      <Col className="gutter-row" span={8}>
-		        <div className="gutter-box">
-							<span>调价日期：</span>
-							<span>{commitdata.createDate}</span>
-						</div>
-		      </Col>
-		      <Col className="gutter-row" span={8}>
-					<div className="gutter-box">
-						<span>调价人：</span>
-						<span>{commitdata.createEmployeeName}</span>
-					</div>
-		      </Col>
-    	</Row>
-			<Row gutter={16} className={styles.rowspace}>
-				<Col className="gutter-row" span={8} style={{marginLeft:1}}>
-					<div className="gutter-box">
-						<span>当前状态：</span>
-						<span>{commitdata.stateName}</span>
-					</div>
-				</Col>
-				<Col className="gutter-row" span={8}>
+    <Modal title="提交"
+     visible={commitvis}
+     onOk={handOk}
+     onCancel={Cancel}
+     closable={false}
+     maskClosable={false}
+     className={styles.modal}
+   >
+   <div className={styles.titletop}>
+   <Row gutter={16}>
+     <Col className="gutter-row" span={6}>
+       <div className="gutter-box">
+         <span>单据号：</span>
+         <span>{commitdata.documentNumber}</span>
+       </div>
+     </Col>
+     <Col className="gutter-row" span={6}>
+       <div className="gutter-box">
+         <span>调价日期：</span>
+         <span>{commitdata.createDate}</span>
+       </div>
+     </Col>
+     <Col className="gutter-row" span={6}>
+     <div className="gutter-box">
+       <span>调价人：</span>
+       <span>{commitdata.createEmployeeName}</span>
+     </div>
+     </Col>
+     <Col className="gutter-row" span={6}>
+     <div className="gutter-box">
+       <span>当前状态：</span>
+       <span>{commitdata.stateName}</span>
+     </div>
+     </Col>
+ </Row>
 
-				</Col>
-				<Col className="gutter-row" span={8}>
+<Row className={styles.rowspace}>
+<Col span={24} >
+<div className="gutter-box">
+ <span style={{letterSpacing:3}}>备 注：</span>
+ <span>{commitdata.remarks}</span>
+</div>
+</Col>
+</Row>
+ </div>
+ <div className={styles.padtop}>
+ <Form
+ inline
+ >
+       <FormItem
+           label="说明："
+           >
+             {getFieldDecorator('description', {
+             initialValue:initvalue,
+             })(
+               <Input type="textarea" rows={3} style={{width:580}} />
+             )}
+           </FormItem>
+ </Form>
 
-				</Col>
-		</Row>
-    <Row className={styles.rowspace}>
-    <Col span={24} style={{marginLeft:2}}>
-    <div className="gutter-box">
-      <span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
-      <span>{commitdata.remarks}</span>
-    </div>
-    </Col>
-    </Row>
+   </div>
 
-			</div>
-      <div className={styles.padtop}>
-      <Form
-      inline
-      >
-            <FormItem
-                label="说明："
-                >
-                  {getFieldDecorator('description', {
-                  initialValue:initvalue,
-                  })(
-                    <Input type="textarea" rows={3} style={{width:380}} />
-                  )}
-                </FormItem>
-      </Form>
-
-        </div>
-
-        </Modal>
+   </Modal>
 
 
 		);

@@ -134,7 +134,7 @@ const LookupModal = ({
 				<Row gutter={16}>
 		      <Col className="gutter-row" span={6}>
 		        <div className="gutter-box">
-							<span>单&nbsp;&nbsp;据&nbsp;&nbsp;号：</span>
+							<span>单据号：</span>
 							<span>{auditdetaildata.documentNumber}</span>
 						</div>
 		      </Col>
@@ -159,9 +159,9 @@ const LookupModal = ({
     	</Row>
 
 		<Row className={styles.rowspace}>
-		<Col span={24} style={{marginLeft:2}}>
+		<Col span={24} >
 		<div className="gutter-box">
-			<span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+			<span style={{letterSpacing:3}}>备 注：</span>
 			<span>{auditdetaildata.remarks}</span>
 		</div>
 		</Col>

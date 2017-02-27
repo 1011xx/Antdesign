@@ -460,10 +460,11 @@ return (
             <Row className={styles.ant_row_style}>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
-                label="&nbsp;&nbsp;所在城市"
+                label="所在城市"
                 >
                   {getFieldDecorator('cityCode', {
-                    initialValue:parseArray(item.cityCode)
+                    initialValue:parseArray(item.cityCode),
+                    rules: [{ required: true, message: '请选择所在城市!' }]
               })(
                    <Cascader
                    size="small"
@@ -480,7 +481,7 @@ return (
                 >
                   {getFieldDecorator('telephoneNumber', {
                     initialValue:item.telephoneNumber,
-                    rules: [{validator:shopphone}]
+                    rules: [{ required: true, message: '请输入店仓电话!' },{validator:shopphone}]
                   })(
                     <Input size="small" placeholder="请输入店仓电话" />
                   )}
@@ -488,12 +489,12 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
-                label="&nbsp;联&nbsp;系&nbsp;人"
+                label="联&nbsp;系&nbsp;人"
                 required
                 >
                   {getFieldDecorator('contracts', {
                    initialValue:item.contracts,
-                   rules: [{validator:contect}]
+                   rules: [{ required: true, message: '请输入联系人名!' },{validator:contect}]
                   })(
                     <Input size="small" placeholder="请输入联系人名" />
                   )}
@@ -505,10 +506,10 @@ return (
 
                 <Col span={8} className={styles.ant_col_center}>
                  <FormItem
-                label="&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
+                label="手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机"
                 >
                   {getFieldDecorator('mobileNumber', {
-                    rules: [{validator:mobile}],
+                    rules: [{ required: true, message: '请输入手机号码!' },{validator:mobile}],
                   initialValue:item.mobileNumber
                   })(
                     <Input size="small" placeholder="请输入手机号码" />
@@ -517,7 +518,7 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center}>
                 <FormItem
-                label="传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
+                label="&nbsp;&nbsp;&nbsp;传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真"
                 >
                   {getFieldDecorator('faxNumber', {
                   initialValue:item.faxNumber,
@@ -529,7 +530,7 @@ return (
                 </Col>
                 <Col span={8} className={styles.ant_col_center} style={{paddingLeft: 55}}>
                  <FormItem
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址"
                 >
                   {getFieldDecorator('address', {
                   initialValue:item.address,

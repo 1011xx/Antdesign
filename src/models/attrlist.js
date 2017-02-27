@@ -14,6 +14,7 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
+      confirmLoading:false,
     },
     effects: {
         *enter({ payload }, { call, put,select }){
@@ -96,7 +97,8 @@ export default {
                       payload:{
                         modalVisible:false,
                          current:1,
-                         loadings:true
+                         loadings:true,
+                         confirmLoading:false
                       }
                     });
                    //方案二：再次请求数据
@@ -126,7 +128,8 @@ export default {
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loadings:true
+                         loadings:true,
+                         confirmLoading:false
                       }
                     });
                     //方案二：再次请求数据

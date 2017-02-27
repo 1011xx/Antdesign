@@ -20,7 +20,7 @@ class EditableCell extends React.Component {
     }
   }
 componentWillMount(){
-  console.log('will');
+  
 
 }
   render() {
@@ -40,14 +40,13 @@ componentWillMount(){
     );
   }
   componentWillReceiveProps(){
-    console.log('wewewe');
+    
     this.setState({ value:this.props.value });
-    console.log('this.props.setFieldsValue',this.props.value);
-    console.log('this.state.value',this.state.value);
+   
   }
   shouldComponentUpdate(){
-    console.log('update');
-  console.log('this.props.setFieldsValue',this.props.value);
+   
+  
   return true;
   }
 

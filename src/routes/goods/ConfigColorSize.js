@@ -17,6 +17,12 @@ const configProps={
 	listarry,
 	configlist,
 	saveSpin,
+	picturnchange(index,key){
+		console.log(index,key);
+		return (value)=>{
+			console.info('value:',value);
+		}
+	},
 	getadddata(value,retback){
 		dispatch({
 			type:'moudelnum/publicDate',
@@ -130,53 +136,56 @@ dispatch({type:'moudelnum/saveconfigs',
 		});
 
 	},
- onDelete(text,item){
+ onDelete(text,item,index){
 	//   要删除的数据格式
 	// 		deleteImage:[{
 	// 		  colorCode:"456"
 	// 		  imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
 	// 		  StyleCode:"Y0223911B0333"
 	// 		}]
-	console.log('configlist:',configlist);
-	console.log(item);
-	if(configlist){
-		let tempdelobj={};
-		//找到要删除的数据
-		for(let j=0;j<configlist.length;j++){
-			if(configlist[j].colorCode==item.colorCode){
-				//首先组装要删除的json
-				tempdelobj.colorCode=item.colorCode;
-				tempdelobj.styleCode=item.styleCode;
-				if(configlist[j].image){
-					tempdelobj.imageName=configlist[j].image.imageName;
-				}
-				console.log('tempdelobj:',tempdelobj);
-				deleteimgdata.push(tempdelobj);
-				//删除相应的列表条目
-					configlist.splice(j,1);
-			}
-		}
-	}
 
 
+//这里是组装要删除的图片json，保留
+		// let tempdelobj={};
+		// //找到要删除的数据
+		// for(let j=0;j<configlist.length;j++){
+		// 	if(configlist[j].colorCode==item.colorCode){
+		// 		//首先组装要删除的json
+		// 		tempdelobj.colorCode=item.colorCode;
+		// 		tempdelobj.styleCode=item.styleCode;
+		// 		if(configlist[j].image){
+		// 			tempdelobj.imageName=configlist[j].image.imageName;
+		// 		}
+		//
+		// 		deleteimgdata.push(tempdelobj);
+		// 		//通过index来删除相应的列表条目
+		// 			configlist.splice(index,1);
+		// 	}
+		// }
 
+//删除点击按钮的表格的一行
+configlist.splice(index,1);
 
+//当删除条目后，这里来把删除的颜色数据给穿梭匡
 		 var temparr=transfordata.concat();
 	 for(let i=0;i<exitcolor.length;i++){
 		 if(exitcolor[i].colorCode==item.colorCode){
-			 //找到要删除的colorCode对象
-			//  console.log('exitcolor[i]',exitcolor[i]);
+			 //找到要删除的colorCode对象,将要删除的对象push到复制的穿梭匡数据
 			 temparr.push(exitcolor[i]);
+			 //通过key值的大小来给穿梭匡数据排序
+			var itsnewarr=temparr.sort(function(a,b){
+				return a.key-b.key;
+			})
 		 }
 	 }
 	 //将删除后的颜色发送给transfordata
 	 dispatch({
 		 type:'moudelnum/publicDate',
 		 payload:{
-			 transfordata:temparr
+			 transfordata:itsnewarr
 		 }
 	 });
-	 console.log('transfordata',transfordata);
+
  },
  backurl(){
 	 dispatch(routerRedux.push('/modelnumber'));

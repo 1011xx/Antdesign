@@ -10,13 +10,14 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 var deleteid=null;//转存删除ID号码
 
 function MaintainColor({dispatch,attrlist}){
-
-	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
+    let conform=false;
+	const {total,current,confirmLoading,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
 
 	const colorModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
     modalVisible,
+    confirmLoading,
     onOk(data) {
       // dispatch({
       //     type:'attrlist/tableLoading'
@@ -24,6 +25,15 @@ function MaintainColor({dispatch,attrlist}){
       if(modalType==='create'){
         //如果是创建
         console.log('创建');
+        //使按钮呈不能点击加载状态
+        dispatch({
+        type: 'attrlist/publicDate',
+        payload: {
+          confirmLoading:true
+        },
+      });
+      
+     
 
         //这里与后台数据交流
         dispatch({
@@ -35,6 +45,15 @@ function MaintainColor({dispatch,attrlist}){
         //如果是修改
         console.log('修改');
 
+         //使按钮呈不能点击加载状态
+        dispatch({
+        type: 'attrlist/publicDate',
+        payload: {
+          confirmLoading:true
+        },
+      });
+      
+     
         //这里与后台数据交流
         dispatch({
         type: 'attrlist/edit',

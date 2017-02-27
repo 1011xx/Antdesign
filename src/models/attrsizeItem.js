@@ -153,7 +153,7 @@ export default {
                       }
                     });
                     //方案二：再次请求数据
-                    yield put({type:'gettablelist'});
+                     yield put({type:'querypage'});
             }else{
                // message.warning(data.msg);
                Modal.error({
@@ -173,14 +173,15 @@ export default {
             if(data.code=="0"){
               // message.success(data.msg);
                 console.log(data);
-                //方案二：再次请求数据
-                yield put({type:'gettablelist'});
+
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
                       }
                     });
+                    //方案二：再次请求数据
+                     yield put({type:'querypage'});
             }else{
                // message.warning(data.msg);
                Modal.error({

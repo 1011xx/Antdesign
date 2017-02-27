@@ -72,6 +72,7 @@ export default {
 
 
       transfordata:[],//颜色穿梭框数据
+      exitcolor:[],//拷贝穿梭匡数据
       targetKeys:[],//选中的数据
       config:{},//配置页面信息的获取
       detaildata:{},//获取商品详情json数据
@@ -81,7 +82,7 @@ export default {
       currentsizegrop:'',//尺寸组代码
       sizeoption:[],//尺寸选择数据源
       listarry:[],//选择颜色后的表格数组
-      exitcolor:[],
+
       saveFlag:false,
 
 
@@ -302,9 +303,9 @@ export default {
       let str3=JSON.stringify(temidstyle);
       var exitcolorCode=[];//已存在的颜色
       const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});//获取已有列表的数据
-      const size=yield call(queryStyleSize,{jsonparam:str3});
+      // const size=yield call(queryStyleSize,{jsonparam:str3});//获取尺寸下拉选框的数据
       const {data}=yield call(queryStyleColor);//获取颜色列表
-      const details=yield call(getStyleInfoById,{jsonparam:str1});
+      const details=yield call(getStyleInfoById,{jsonparam:str1});//通过id获取款号信息
 
 
       if(styleConfigList.data.code==0){
@@ -349,22 +350,24 @@ export default {
         }
       };
       if(data.code==0){
-        // console.error(data);
-        //复制原数组；
-        const temparr=data.dataList.concat();
+        //获取到的颜色列表
+
 
         for(let i=0;i<data.dataList.length;i++){
           data.dataList[i].key=i+1;
-          temparr[i].key=i+1;
         }
-
+        //复制原数组；
+        const temparr=data.dataList.concat();
+        console.info('data.dataList:',data.dataList);
+        //保存备份的颜色，之后要通过这个数据找到它的可以值
         yield put({
           type:'publicDate',
           payload:{
               exitcolor:temparr
           }
         });
-            // console.log(exitcolorCode);
+
+            console.log('exitcolorCode:',exitcolorCode);
             //找出列表中已经有的数据，并排除掉给穿梭框
             for(let i=0;i<exitcolorCode.length;i++){
               for(let j=0;j<data.dataList.length;j++){
@@ -376,7 +379,7 @@ export default {
                 }
               }
             }
-              console.log(data);
+
         yield put({
           type:'publicDate',
           payload:{
@@ -401,15 +404,15 @@ export default {
         })
       };
 
-      if(size.data.code==0){
-        console.log(size.data);
-        yield put({
-          type:'publicDate',
-          payload:{
-            sizeoption:size.data.dataList
-          }
-        });
-      }
+      // if(size.data.code==0){
+      //   console.log(size.data);
+      //   yield put({
+      //     type:'publicDate',
+      //     payload:{
+      //       sizeoption:size.data.dataList
+      //     }
+      //   });
+      // }
     },
     *querybyid({ payload }, { call, put}){
       //根据id来获取商品的详情

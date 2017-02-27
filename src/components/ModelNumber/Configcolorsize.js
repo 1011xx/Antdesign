@@ -8,41 +8,7 @@ import Upload from 'rc-upload';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-// class EditableCell extends React.Component {
-//   state = {
-//     value: this.props.value,
-//     editable: false,
-//   }
-//   handleChange = (value) => {
-//     console.log(value);
-//     this.setState({ value });
-//   }
-//   check = () => {
-//     this.setState({ editable: false });
-//     if (this.props.onChange) {
-//       this.props.onChange(this.state.value);
-//     }
-//   }
-//   edit = () => {
-//     this.setState({ editable: true });
-//   }
-//   render() {
-//     const { value, editable } = this.state;
-//     return (<Select
-//         multiple
-//         style={{ width: 300,height:70 }}
-//         className={styles.select}
-//         placeholder="点击输入框选择尺寸"
-//         onChange={this.handleChange}
-//         onSelect={this.check}
-//
-//       >
-//      <Option  value={'010'}>010</Option>
-//      <Option  value={'020'}>020</Option>
-//
-//      </Select>);
-//   }
-// }
+
 
 
 
@@ -89,6 +55,11 @@ class PicturesWall extends React.Component {
       getBase64(file, imageUrl => this.setState({ imagesrc:imageUrl }));
     };
     success=(ret)=>{
+      console.info('this.props.onChange',this.props.onChange,ret);
+      if (this.props.onChange) {
+     this.props.onChange(ret);
+   }
+
       let str=JSON.parse("["+this.props.name+"]")[0];
       // console.log('str',str);
       let temp={};
@@ -208,6 +179,7 @@ const Configcolorsize=({
     backurl,
     configlist,
     saveSpin,
+    picturnchange,
 
   })=> {
 
@@ -267,16 +239,16 @@ const Configcolorsize=({
       title: '图片',
       dataIndex: 'img',
       key: 'img',
-      render:(text,record)=>(
+      render:(text,record,index)=>(
         <div className={styles.picturewall} onClick={() => onUpload(record)}>
-        <PicturesWall name={record.json} text={record.proimage}/>
+        <PicturesWall name={record.json} text={record.proimage} onChange={picturnchange(index,'img')}/>
         </div>
       ),
     }, {
       title: '操作',
       key: 'operation',
-      render:(text,record)=>(
-        <a onClick={() => onDelete(text,record)}>删除</a>
+      render:(text,record,index)=>(
+        <a onClick={() => onDelete(text,record,index)}>删除</a>
       ),
     }];
     const data=[{
