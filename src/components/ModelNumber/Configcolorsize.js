@@ -311,6 +311,7 @@ const Configcolorsize=({
             columns={columns}
             loading={false}
             dataSource={configlist}
+            rowKey={record => record.colorCode}
             pagination={false}
             bordered
           />

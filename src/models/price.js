@@ -93,11 +93,13 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                          // data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        // data.dataList[j-size].key=j+1;
                       }
                     }
             yield put({type:'publicDate',
@@ -139,11 +141,13 @@ export default {
                   if(setpagecurrentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                        // data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(setpagecurrentpage-1)*setpagepagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        // data.dataList[j-size].key=j+1;
                       }
                     }
             yield put({type:'publicDate',
@@ -196,11 +200,14 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                          // data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        // data.dataList[j-size].key=j+1;
+
                       }
                     }
                     //添加页面序号结束
@@ -242,11 +249,13 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                        // data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                          // data.dataList[j-size].key=j+1;
                       }
                     }
                     //添加页面序号结束
@@ -358,7 +367,7 @@ export default {
                 if(data.tagPriceConfig.dataList){
                     for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                     data.tagPriceConfig.dataList[i].num=i+1;
-                    data.tagPriceConfig.dataList[i].key=i+1;
+                    // data.tagPriceConfig.dataList[i].key=i+1;
                     //给已经存在的数据加上标记
                 data.tagPriceConfig.dataList[i].priceFlag=`configTagprice${i+1}`;
                 data.tagPriceConfig.dataList[i].remarkFlag=`remarks${i+1}`;
@@ -390,6 +399,7 @@ export default {
                 // 给table数据添加序号
                 for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                   data.tagPriceConfig.dataList[i].num=i+1;
+                  // data.tagPriceConfig.dataList[i].key=i+1;
                 }
               //将获取到的数据给审核详情弹框
                   yield put({type:'publicDate',
@@ -406,7 +416,7 @@ export default {
 
             if(data.code=="0"){
 
-                
+
                   yield put({type:'publicDate',
                       payload:{
                         commitvis:false,
@@ -533,7 +543,8 @@ export default {
           if(data.code==0){
              yield put({type:'publicDate',
                          payload:{
-                           commitdone:true
+                           commitdone:true,
+                           addeditloading:false
                          }
                        });
 
@@ -588,16 +599,27 @@ export default {
                   yield put({type:'publicDate',
                          payload:{
                            commitdone:true,
-                           commitvis:false
+                           commitvis:false,
+                           addeditloading:false
                          }
                        });
 
           }else if(data.code==1){
+            yield put({type:'publicDate',
+                         payload:{
+                           addeditloading:false
+                         }
+                       });
               Modal.error({
                  title: '提示',
                  content: `下列款号重复${data.msg}`,
                });
           }else{
+            yield put({type:'publicDate',
+                         payload:{
+                           addeditloading:false
+                         }
+                       });
              Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -664,7 +686,8 @@ export default {
                   yield put({type:'publicDate',
                       payload:{
                         detaildatasource:data.tagPriceConfig,
-                        pending_spin:false
+                        pending_spin:false,
+                        addeditloading:false
                       }
                     });
             };
@@ -762,6 +785,27 @@ export default {
           };
 
       },
+      *setAudit({payload},{put,call,select}){
+        console.log('payload',payload);
+        let strarr=JSON.stringify(payload);
+        //获取页面的详情数据
+         const {data}= yield call(auditTagPriceConfig,{jsonParam:strarr});
+         if(data.code==0){
+           yield put({
+             type:'publicDate',
+             payload:{
+               pending_visible:true,
+               pending_spin:false
+             }
+
+           });
+         }else{
+           Modal.error({
+               title: '提示',
+               content: data.msg,
+             });
+         }
+      },
 
 
     },
@@ -853,7 +897,12 @@ export default {
 
             }else if(strs[1]==='Edit'){
               //修改页面需要去请求数据，和详情页面请求的数据一样
-
+              dispatch({
+                   type: 'publicDate',
+                   payload:{
+                     addeditloading:true
+                   }
+                 });
               //款号和详情合并在一个文件function里面
                 if(strs[2]){
                    dispatch({
@@ -863,7 +912,7 @@ export default {
                 }
 
             }else if(strs[1]==='Add'){
-             
+
                dispatch({
                     type: 'publicDate',
                     payload:{
@@ -872,8 +921,8 @@ export default {
                       }
                     }
                   });
-              
-             
+
+
                //首先请求款号列表
                dispatch({
                   type:'getselectdata'

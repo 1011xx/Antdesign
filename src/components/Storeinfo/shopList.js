@@ -106,6 +106,7 @@ function ShopList({
 		        columns={columns}
 		        dataSource={dataSource}
 		        pagination={false}
+            rowKey={record => record.code}
             loading={loading}
             scroll={{y: 'calc(100vh - 420px)' ,x:1366}}
 		        bordered

@@ -58,6 +58,26 @@ const handleEnter=({params})=>{
 	console.log('handleEnter:',params);
 }
 
+
+
+//使用这样的方式可以按需加载，不用将一个js打包的很大，可以分好多打包。
+// const Set = (location, cb) => {
+//     require.ensure([], require => {
+//         cb(null, require('./routes/price/Set').default)
+//     },'Set')
+// }
+//
+//
+// const Basicplantform = (location, cb) => {
+//     require.ensure([], require => {
+//         cb(null, require('./routes/basicplantform').default)
+//     },'Basicplantform')
+// }
+
+
+
+
+
 export default function({ history }) {
 
   return (
@@ -96,7 +116,8 @@ export default function({ history }) {
 
 
 
-        <Route path="/set" component={Set} />
+        // <Route path="/set" component={Set} />
+				  <Route path="/set" component={Set} />
          <Route path="/set/pending/:id" component={Pendingprice} />
 
        </Route>

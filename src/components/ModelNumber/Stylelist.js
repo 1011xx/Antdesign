@@ -217,6 +217,7 @@ function Stylelist({
 		        columns={columns}
             loading={loading}
 		        dataSource={dataSource}
+            rowKey={record => record.code}
 		        pagination={false}
             scroll={{y: 'calc(100vh - 380px)' }}
 		        bordered

@@ -19,7 +19,7 @@ function Pendingprice({dispatch,price}){
       }
     })
       dispatch({
-        type:'price/tagpriceconfig',
+        type:'price/setAudit',
         payload:data
       });
     },

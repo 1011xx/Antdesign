@@ -23,7 +23,7 @@ module.exports = {
   // Forward 到另一个服务器，不指定来源服务器
   'POST /fmss/*': 'http://localhost:8081/',
   // 'POST /fmss/*': 'http://192.168.10.159:9081/',
-    // 'POST /fmss/*': 'http://192.168.68.100:8081/',
+    // 'POST /fmss/*': 'http://192.168.68.101:8081/',
 
   // 'POST /fmss/*': 'http://192.168.10.146:5001/',
   // 'POST /fmss/*': 'http://dz14571854.imwork.net:30782/',

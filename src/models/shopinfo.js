@@ -117,18 +117,18 @@ export default {
   	//当进入的时出发的事件
   	*enter({ payload}, { call, put ,select}) {
       const PageSize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
-  		yield put({type:'publicdate',
-          payload:{
-            loading:true
-          }
-        });
-  	 
+  		// yield put({type:'publicdate',
+      //     payload:{
+      //       loading:true
+      //     }
+      //   });
+
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
       const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"'+PageSize+'"}'});
-     
+
       if(province.data){
         console.log(province.data.provincecity);
         let tempobj={};
@@ -175,6 +175,7 @@ export default {
           // console.log(shoplist.data);
           for(let i=1;i<=shoplist.data.dataList.length;i++){
             shoplist.data.dataList[i-1].num=i;
+            // shoplist.data.dataList[i-1].key=i;
           }
           yield put({type:'ShopList',
           payload:{
@@ -183,7 +184,7 @@ export default {
           }
         });
       };
-       
+
 
     },
     *enteraddpage({ payload}, { call, put }) {
@@ -261,11 +262,13 @@ export default {
       if(currentpage<2){
         for(let i=1;i<=long;i++){
             resultlist.data.dataList[i-1].num=i;
+            // resultlist.data.dataList[i-1].key=i;
           }
         }else{
           let size=(currentpage-1)*pagesize;
           for(let j=size;j<long+size;j++){
             resultlist.data.dataList[j-size].num=j+1;
+            // resultlist.data.dataList[j-size].key=j+1;
           }
         }
        		//添加页面序号结束
@@ -337,7 +340,7 @@ export default {
   subscriptions: {
   	setup({ dispatch, history }){
   		 history.listen(location => {
-        if (location.pathname === '/shopinfo'||location.pathname === '/') {
+        if (location.pathname === '/shopinfo') {
         	// console.log(location.pathname);
             dispatch({type: 'publicdate',
                       payload:{

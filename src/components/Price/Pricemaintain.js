@@ -88,7 +88,7 @@ loading
     }
 
 
-   
+
   }];
   const data=[{
     num:1,
@@ -182,6 +182,7 @@ loading
             columns={columns}
             loading={loading}
             dataSource={dataSource}
+            rowKey={record => record.documentNumber}
             pagination={false}
             scroll={{y: 'calc(100vh - 350px)' }}
             bordered

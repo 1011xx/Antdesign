@@ -83,7 +83,7 @@ function boolTovalue(isUniqueCodeManagement){
     });
     }
   return (
-    <Spin spinning={pending_spin} size="large">
+    <Spin spinning={pending_spin} >
       <Wrap
        num="2"
        url="/audit"
@@ -116,6 +116,7 @@ function boolTovalue(isUniqueCodeManagement){
          columns={columns}
          loading={false}
          dataSource={detaildatasource.dataList}
+         rowKey={record => record.styleNo}
          pagination={false}
          showHeader={true}
          bordered

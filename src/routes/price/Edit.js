@@ -52,7 +52,6 @@ function Edit({dispatch,price}) {
     modalstyle,//穿梭框数据
     copymodalstyle,//拷贝穿梭框数据
     newData,//新增吊牌价时候存储的数据
-    saveState,//暂存tempsave，提交审核commit
     commitvis,
     commitdata,
     textareavalue,
@@ -96,29 +95,27 @@ function Edit({dispatch,price}) {
       //当点击删除的时候，删除newDate.dsataList数组里面的数据，同时要把穿梭框里面的数据复原
           let copyCreatejson=Object.assign({}, detaildatasource);
           let temptransf=modalstyle.concat();
-          // console.log('modalstyle:',modalstyle);
           for(let index in copyCreatejson.dataList){
-            if(copyCreatejson.dataList[index].key==item.key){
-              // console.log(item.key,copyCreatejson.dataList[index].styleNo);
+            if(copyCreatejson.dataList[index].num==item.num){
               copyCreatejson.dataList.splice(index,1);
               //把删除的数据删除后，重新给dataList.key排序
+              console.log('copyCreatejson.dataList',copyCreatejson.dataList);
               let rowkey=1;
               for(let index_k in copyCreatejson.dataList){
-                copyCreatejson.dataList[index_k].key=rowkey++;
+                copyCreatejson.dataList[index_k].num=rowkey;
+                copyCreatejson.dataList[index_k].priceFlag=`configTagprice${rowkey}`;
+                copyCreatejson.dataList[index_k].remarkFlag=`remarks${rowkey}`;
+                rowkey++;
               }
             }
           };
           //从以前备份的穿梭框中找出删除的code对应的key
           for(let value of copymodalstyle){
-            // console.log(value);
             if(value.code==item.styleNo){
-              // console.error(value.code,item.styleNo);
-              // console.info(value.code,value.key);
               let tempobj={};
               tempobj.key=value.key;
               tempobj.code=value.code;
               temptransf.unshift(tempobj);
-              // console.log('modalstyle:',temptransf);
             }
           }
           dispatch({
@@ -145,15 +142,23 @@ function Edit({dispatch,price}) {
             let copyCreatejson=Object.assign({}, detaildatasource);
             let createDatalength=0;
             //这里没有做导入的数据重复的判断
-
-            if(detaildatasource&&detaildatasource.dataList){
+            //当没有数据的时候这里后端一定要返回detaildatasource.dataList为空数组
+            if(detaildatasource.dataList.length>0){
               // console.error('存在');
               var transFormdata=modalstyle.concat();
               //如果存在dataList，说明之前已经添加数据
               createDatalength=copyCreatejson.dataList.length;
-
+              //在这个for玄幻里判断是否和绵绵有重复的款号，如果有则删除，以页面上原有的为准
+              for(let j in ret.data){
+                for(let i in detaildatasource.dataList){
+                  if(ret.data[j].styleNo==detaildatasource.dataList[i].styleNo){
+                    console.log(ret.data[j].styleNo,detaildatasource.dataList[i].styleNo);
+                    ret.data.splice(j,1);
+                  }
+                }
+              }
+                //这里将批量导入的数据导入到页面中
               for (let value of ret.data) {
-                // console.log(value);
                 value.key=++createDatalength;
                 //在json中天加标记用于去获取表单
                 value.priceFlag=`configTagprice${createDatalength}`;
@@ -162,10 +167,8 @@ function Edit({dispatch,price}) {
 
                 // 从穿梭框中去掉导入数据中有的款号
                 for(let index in transFormdata){
-                  // console.log(transFormdata[index].code,value.styleNo);
                   if(transFormdata[index].code==value.styleNo){
                     transFormdata.splice(index,1);
-                    // console.log(transFormdata);
                   }
                 }
               }
@@ -173,7 +176,6 @@ function Edit({dispatch,price}) {
               // console.error('不存在');
               //如果之前没有添加数据
               let tempCreatearr=[];
-              // var transFormdata=Object.assign({}, modalstyle);
               var transFormdata=modalstyle.concat();
               for (let value of ret.data) {
 
@@ -203,34 +205,15 @@ function Edit({dispatch,price}) {
                 modalstyle:transFormdata
               }
             });
-  // modalstyle:transFormdata
+
       }
 
     },
     getdata(values){
 
               // console.log('新建吊牌价');
-              if(saveState=='commit'){
+
                 console.log('修改提交审核');
-                // console.log(values);
-                //这里将表单中获取的数据组装好
-                detaildatasource.expectEffectiveDate=values.expectEffectiveDate;
-                detaildatasource.remarks=values.remarks;
-                //遍历object对象，找除相应的key对应的value,并更改detaildatasource中的值准备提交用
-                for (let key of Object.keys(values)) {
-                  for (let index in detaildatasource.dataList) {
-                    // console.log(detaildatasource.dataList[index]);
-                    if(key==detaildatasource.dataList[index].priceFlag){
-                      detaildatasource.dataList[index].configTagprice=values[key];
-                    }
-                    if(key==detaildatasource.dataList[index].remarkFlag){
-                      detaildatasource.dataList[index].remarks=values[key];
-                    }
-                  }
-                      console.log(key + ": " + values[key]);
-                  }
-
-
 
 
                 dispatch({
@@ -241,34 +224,7 @@ function Edit({dispatch,price}) {
                   }
                 });
 
-              }else{
-                console.log('修改暂存');
-                // console.log(values);
-                //这里将表单中获取的数据组装好
-                detaildatasource.expectEffectiveDate=values.expectEffectiveDate;
-                detaildatasource.remarks=values.remarks;
-                //遍历object对象，找除相应的key对应的value,并更改detaildatasource中的值准备提交用
-                for (let key of Object.keys(values)) {
-                  for (let index in detaildatasource.dataList) {
-                    // console.log(detaildatasource.dataList[index]);
-                    if(key==detaildatasource.dataList[index].priceFlag){
-                      detaildatasource.dataList[index].configTagprice=values[key];
-                    }
-                    if(key==detaildatasource.dataList[index].remarkFlag){
-                      detaildatasource.dataList[index].remarks=values[key];
-                    }
-                  }
-                      // console.log(key + ": " + values[key]);
-                  }
-                  detaildatasource.tagpriceConfigDetailDto=detaildatasource.dataList;
-                  // delete detaildatasource.dataList;
-                  // console.log('detaildatasource',detaildatasource);
-                  //修改暂存接口
-                  dispatch({
-                    type:'price/audittempsave',
-                    payload:detaildatasource
-                  });
-                }
+
 
 
 
@@ -277,24 +233,59 @@ function Edit({dispatch,price}) {
     backurl(){
       dispatch(routerRedux.push('/audit'));
     },
-    Submitted (){
-      //提交审核
+    tagPrice(value, index,key){
+      //设置吊牌价
+      // console.log(value, index,key);
+    detaildatasource.dataList[index][key] = value;
+    dispatch({
+      type:'price/publicDate',
+      payload:{
+        detaildatasource:detaildatasource
+      }
+    });
+
+    },
+    tagremarks(value, index,key){
+      //table中的备注
+      detaildatasource.dataList[index][key] = value;
       dispatch({
         type:'price/publicDate',
         payload:{
-          saveState:'commit'
+          detaildatasource:detaildatasource
         }
       });
+    },
+    datechanger( value,key){
+      //日期选择器
+      // console.log( value.format('YYYY-MM-DD'),key);
+      if(value){
+        detaildatasource[key]=value.format('YYYY-MM-DD');
+      }else{
+        detaildatasource[key]=value;
+      }
 
+      // console.log(newData);
+    },
+    remarkschange(value,key){
+      //总体价格信息下的备注
+      detaildatasource[key]=value;
+      // console.log(newData);
     },
     temporaryStorage(){
       //暂存
+      console.log('暂存');
+      detaildatasource.tagpriceConfigDetailDto=detaildatasource.dataList;
+      console.log(detaildatasource);
       dispatch({
         type:'price/publicDate',
         payload:{
-          saveState:'tempsave',
           addeditloading:true
         }
+      });
+      //通过接口提交数据
+      dispatch({
+        type:'price/tempsave',
+        payload:detaildatasource
       });
 
     }
@@ -340,16 +331,18 @@ function Edit({dispatch,price}) {
 
                 lengthList=lengthList+1;
                 temp.key=lengthList;
+                temp.configTagprice=undefined;
+                temp.remarks=undefined;
                 temp.styleNo=modalstyle[index_i].code;
-                console.log(modalstyle[index_i].code);
-                temp.styleNocode=modalstyle[index_i].key;
+                // console.log(modalstyle[index_i].code);
+                // temp.styleNocode=modalstyle[index_i].key;
                 temp.priceFlag='configTagprice'+lengthList;
                 temp.remarkFlag='remarks'+lengthList;
                 //删除已经选中的穿梭框数据
 
                 // console.log('transftempdata:',modalstyle[index_i].code,);
                 modalstyle.splice(index_i,1)
-                console.log(transftempdata);
+                // console.log(transftempdata);
                 if(copyDetaildatasource.dataList){
                   copyDetaildatasource.dataList.push(temp);
                 }else{
@@ -406,10 +399,6 @@ function Edit({dispatch,price}) {
       const commitdata={brandCode,categoryCode,seasonCode,styleNo,yearCode};
       console.log(commitdata);
       console.log(JSON.stringify(commitdata));
-
-
-
-
       dispatch({
         type:'price/getstyle',
         payload:commitdata
@@ -436,9 +425,9 @@ function Edit({dispatch,price}) {
        // detaildatasource是获取到的详情数据，需要从获取到的详情数据中提取数据发送给后台
 
       //修改提交
-      detaildatasource.description=Value.description;
+      // detaildatasource.description=Value.description;
       detaildatasource.tagpriceConfigDetailDto=detaildatasource.dataList;
-      delete detaildatasource.dataList;
+      // delete detaildatasource.dataList;
       console.log('detaildatasource:',detaildatasource);
       dispatch({
         type:'price/updatecommitsave',

@@ -127,6 +127,7 @@ function BarCode({dispatch,moudelnum}) {
 		 columns={columns}
      loading={false}
 		 dataSource={barcodeSource}
+     rowKey={record => record.barcode}
 		 pagination={false}
      scroll={{y: 'calc(100vh - 335px)' }}
 		 bordered

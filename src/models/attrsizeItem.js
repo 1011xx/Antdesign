@@ -39,6 +39,7 @@ export default {
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
+                    data.dataList[i-1].key=i;
                   }
             yield put({type:'publicDate',
                       payload:{
@@ -61,7 +62,10 @@ export default {
         *querypage({ payload }, { call, put,select }){
           const currentpage = yield select(({ attrsizeItem }) => attrsizeItem.current);
           const pagesize = yield select(({ attrsizeItem }) => attrsizeItem.defaultPageSize);
-            let strarr=JSON.stringify(payload);
+          let tempobj={};
+          tempobj.page=currentpage;
+          tempobj.rows=pagesize;
+            let strarr=JSON.stringify(tempobj);
             console.log(strarr)
             const {data}= yield call(queryAllSizeGroup,{jsonParam:strarr});
             if(data){
@@ -76,11 +80,13 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                        data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*10;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        data.dataList[j-size].key=j+1;
                       }
                     }
                     //添加页面序号结束
@@ -107,17 +113,16 @@ export default {
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loadings:true
+                         loading:true
                       }
                     });
                     //方案二：再次请求数据
-                     yield put({type:'gettablelist'});
+                     yield put({type:'querypage'});
 
             }else{
 
@@ -144,7 +149,7 @@ export default {
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loadings:true
+                         loading:true
                       }
                     });
                     //方案二：再次请求数据

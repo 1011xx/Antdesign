@@ -19,7 +19,7 @@ export default {
       defaultPageSize:10,
       name:'',
       confirmLoading:false,
-      
+
 
 
       details:{},
@@ -33,6 +33,7 @@ export default {
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
+                    data.dataList[i-1].key=i;
                   }
             yield put({type:'publicDate',
                       payload:{
@@ -56,6 +57,7 @@ export default {
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
+                    data.dataList[i-1].key=i;
                   }
             yield put({type:'publicDate',
                       payload:{
@@ -92,6 +94,7 @@ export default {
             // console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
+                    data.dataList[i-1].key=i;
                   }
             yield put({type:'publicDate',
                       payload:{
@@ -117,11 +120,13 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                        data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*pagesize;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        data.dataList[j-size].key=j+1;
                       }
                     }
                     //添加页面序号结束
@@ -186,7 +191,7 @@ export default {
                     });
                  //再次请求数据
                  yield put({type:'queryAttributeClassId'});
-                  
+
             }else{
 
               Modal.error({

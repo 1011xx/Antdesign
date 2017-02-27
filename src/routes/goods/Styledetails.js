@@ -69,6 +69,7 @@ function Styledetails({moudelnum}) {
          columns={columns}
         loading={false}
          dataSource={configlist}
+         rowKey={record => record.colorSize}
          pagination={false}
          showHeader={false}
          bordered

@@ -71,6 +71,7 @@ function AuditPricedetails({price}) {
         className={styles.table}
          columns={columns}
          loading={false}
+         rowKey={record => record.styleNo}
          dataSource={detaildatasource.dataList}
          pagination={false}
          showHeader={true}

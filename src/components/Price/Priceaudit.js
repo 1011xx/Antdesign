@@ -220,6 +220,7 @@ loading,
             columns={columns}
             loading={loading}
             dataSource={dataSource}
+            rowKey={record => record.documentNumber}
             pagination={false}
             scroll={{y: 'calc(100vh - 378px)' }}
             bordered

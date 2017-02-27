@@ -42,7 +42,7 @@ function SetPricedetails({price}) {
     <Spin spinning={pending_spin} size="large">
       <Wrap
        num="2"
-       url="/audit"
+       url="/set"
        last="价格审核"
        next="查看详情"
        >

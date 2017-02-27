@@ -29,6 +29,7 @@ export default {
             console.log(data);
              for(let i=1;i<=data.dataList.length;i++){
                     data.dataList[i-1].num=i;
+                    data.dataList[i-1].key=i;
                   }
             yield put({type:'publicDate',
                       payload:{
@@ -57,11 +58,13 @@ export default {
                   if(currentpage<2){
                     for(let i=1;i<=long;i++){
                         data.dataList[i-1].num=i;
+                        data.dataList[i-1].key=i;
                       }
                     }else{
                       let size=(currentpage-1)*10;
                       for(let j=size;j<long+size;j++){
                         data.dataList[j-size].num=j+1;
+                        data.dataList[j-size].key=j+1;
                       }
                     }
                     //添加页面序号结束

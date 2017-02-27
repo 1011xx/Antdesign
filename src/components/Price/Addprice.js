@@ -10,7 +10,6 @@ const FormItem = Form.Item;
 
 
 
-
 const Addprice = ({
   form: {
     getFieldDecorator,
@@ -27,7 +26,6 @@ const Addprice = ({
     setType,
     getdata,
     backurl,
-    Submitted,
     temporaryStorage,
     selecteonChange,
     datechanger,
@@ -42,8 +40,8 @@ const Addprice = ({
 
   const columns = [{
      title: '序号',
-     dataIndex: 'key',
-     key: 'key',
+     dataIndex: 'num',
+     key: 'num',
      width:'5%'
    }, {
      title: '款号',
@@ -62,11 +60,11 @@ const Addprice = ({
      width:'20%',
      render:(text,record,index) => (
        <FormItem>
-                 {getFieldDecorator(`configTagprice${record.key}`, {
-                     initialValue:record.configTagprice,
+                 {getFieldDecorator(`configTagprice${record.num}`, {
+                     initialValue:text,
                      rules: [{ required: true, message: '设置吊牌价必须填写!' }]
                    })(
-                   <Input size="small"  style={{ width: 186}}  onBlur={tagPrice}/>
+                   <Input size="small"  style={{ width: 186}}   onBlur={(e)=>{tagPrice(e.target.value,index,'configTagprice')}}/>
                  )}
         </FormItem>
      )
@@ -75,12 +73,12 @@ const Addprice = ({
      dataIndex: 'remarks',
      key: 'remarks',
      width:'20%',
-     render:(text,record) => (
+     render:(text,record,index) => (
        <FormItem>
-                 {getFieldDecorator(`remarks${record.key}`, {
-                     initialValue:record.remarks
+                 {getFieldDecorator(`remarks${record.num}`, {
+                     initialValue:text
                    })(
-                    <Input size="small" style={{ width: 186}} onBlur={tagremarks}/>
+                    <Input size="small" style={{ width: 186}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
                  )}
         </FormItem>
      )
@@ -108,7 +106,9 @@ const Addprice = ({
 function handleSubmit(e){
     e.preventDefault();
        validateFields((err, fieldsValue) => {
+
          if (!err) {
+
            if(fieldsValue.expectEffectiveDate){
              const data={
                ...fieldsValue,
@@ -125,7 +125,7 @@ function handleSubmit(e){
 
 
 	return(
-    <Spin tip="保存中,请稍后..." spinning={addeditloading}>
+    <Spin tip="请稍后..." spinning={addeditloading}>
       <Form inline  onSubmit={handleSubmit}>
           <Plate title="基础信息">
 				<div className={styles.titletop}>
@@ -143,7 +143,7 @@ function handleSubmit(e){
               {getFieldDecorator('expectEffectiveDate', {
                 rules: [{ required: true, message: '请选择预计生效日期!' }]
               })(
-                <DatePicker size="small"  onChange={datechanger}/>
+                <DatePicker size="small"  onChange={(value)=>{datechanger(value,'expectEffectiveDate')}}/>
               )}
             </FormItem>
 
@@ -165,7 +165,7 @@ function handleSubmit(e){
                 >
                   {getFieldDecorator('remarks', {
                   })(
-                    <Input type="textarea" rows={3} style={{width:650}} onBlur={remarkschange}/>
+                    <Input type="textarea" rows={3} style={{width:650}} onBlur={(e)=>{remarkschange(e.target.value,'remarks')}}/>
                   )}
                 </FormItem>
         </div>
@@ -191,6 +191,7 @@ function handleSubmit(e){
 		        columns={columns}
             rowSelection={rowSelection}
             dataSource={detaildatasource.dataList}
+            rowKey={record => record.styleNo}
 		        pagination={false}
             loading={false}
 		        bordered
@@ -199,8 +200,8 @@ function handleSubmit(e){
     </TablePlate>
     <div className={styles.formbtn}>
     <FormItem>
-       <Button type="primary" htmlType="submit" className={styles.marginbtn} size="large" onClick={temporaryStorage}>暂存</Button>
-       <Button type="primary" htmlType="submit" className={styles.marginbtn} size="large" onClick={Submitted }>提交审核</Button>
+       <Button type="primary"  className={styles.marginbtn} size="large" onClick={temporaryStorage} ghost>暂存</Button>
+       <Button type="primary" htmlType="submit" className={styles.marginbtn} size="large" >提交审核</Button>
        <Button type="ghost" size="large"  onClick={backurl}>取消</Button>
      </FormItem>
      </div>

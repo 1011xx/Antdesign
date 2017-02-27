@@ -2,7 +2,7 @@ const webpack = require('atool-build/lib/webpack');
 
 module.exports = function(webpackConfig, env) {
   webpackConfig.babel.plugins.push('transform-runtime');
-
+// webpackConfig.output.chunkFilename='[name].[chunkhash:5].min.js';
   // Support hmr
   if (env === 'development') {
     webpackConfig.devtool = '#eval';
@@ -15,7 +15,15 @@ module.exports = function(webpackConfig, env) {
   webpackConfig.plugins = webpackConfig.plugins.filter(function(plugin) {
     return !(plugin instanceof webpack.optimize.CommonsChunkPlugin);
   });
-
+//   webpackConfig.plugins.push(
+//   new webpack.optimize.CommonsChunkPlugin({
+//     name: 'vendor',
+//     filename: 'vendor.[chunkhash:8].js',
+//     minChunks: function (module, count) {
+//       return module.resource && module.resource.indexOf(path.resolve(__dirname, 'src')) === -1;
+//     }
+//   })
+// );
   // Support CSS Modules
   // Parse all less files as css module.
   webpackConfig.module.loaders.forEach(function(loader, index) {
