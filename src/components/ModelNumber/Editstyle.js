@@ -91,38 +91,55 @@ function checkserialCode(rule, value, callback){
     callback();
   }
 }
+//函数，如果不是必填选框，则需要校验是否是undefined
+
+function isundefinedbkey(a){
+  if(a){
+    return a.key;
+  }else{
+    return "";
+  }
+}
+function isundefinedblabel(a){
+  if(a){
+    return a.label
+  }else{
+    return "";
+  }
+}
+
 
   function handleSubmit(e){
    e.preventDefault();
       validateFields((err, fieldsValue) => {
         if (!err) {
           //格式化上传数据
-          console.log(fieldsValue);
+          console.info(fieldsValue);
            const values = {
           ...fieldsValue,
          brandCode:fieldsValue.brandCode.key,
          brandName:fieldsValue.brandCode.label,
-         bigCategoryCode:fieldsValue.bigCategoryCode.key,
-         bigCategoryName:fieldsValue.bigCategoryCode.label,
+         bigCategoryCode:isundefinedbkey(fieldsValue.bigCategoryCode),
+         bigCategoryName:isundefinedblabel(fieldsValue.bigCategoryCode),
          categoryCode:fieldsValue.categoryCode.key,
          categoryName:fieldsValue.categoryCode.label,
-         seriesCode:fieldsValue.seriesCode.key,
-         saleTypeCode:fieldsValue.saleTypeCode.key,
+         seriesCode:isundefinedbkey(fieldsValue.seriesCode),
+         seriesName:isundefinedblabel(fieldsValue.seriesCode),
+         saleTypeCode:isundefinedbkey(fieldsValue.saleTypeCode),
+         saleTypeName:isundefinedblabel(fieldsValue.saleTypeCode),
          yearCode:fieldsValue.yearCode.key,
          categoryCode:fieldsValue.categoryCode.key,
          seasonCode:fieldsValue.seasonCode.key,
          materialsCode:fieldsValue.materialsCode.key,
-         smallCategoryCode:fieldsValue.smallCategoryCode.key,
+         smallCategoryCode:isundefinedbkey(fieldsValue.smallCategoryCode),
+         smallCategoryName:isundefinedblabel(fieldsValue.smallCategoryCode),
          sizeGroupCode:fieldsValue.sizeGroupCode.key,
          SizeGroupName:fieldsValue.sizeGroupCode.label,
          unitCode:fieldsValue.unitCode.key,
          SerialNoName:fieldsValue.serialNoCode,
-         seriesName:fieldsValue.seriesCode.label,
-         saleTypeName:fieldsValue.saleTypeCode.label,
          yearName:fieldsValue.yearCode.label,
          seasonName:fieldsValue.seasonCode.label,
          materialsName:fieldsValue.materialsCode.label,
-         smallCategoryName:fieldsValue.smallCategoryCode.label,
          unitName:fieldsValue.unitCode.label,
          isUniqueCodeManagement:boolTovalue(fieldsValue.isUniqueCodeManagement),
         }
@@ -213,7 +230,7 @@ const seriesnumOption=seriesnum.map((item,key)=>{
   return (
 
 
-<Spin tip="保存中,请稍后..." spinning={saveFlag}>
+<Spin tip="请稍后..." spinning={saveFlag}>
      <Form
      inline
      onSubmit={handleSubmit}

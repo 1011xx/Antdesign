@@ -13,22 +13,27 @@ function SetPricedetails({price}) {
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+     width:'5%'
   },{
     title: '款号',
     dataIndex: 'styleNo',
     key: 'styleNo',
+    width:'20%'
   },{
     title: '当前吊牌价',
     dataIndex: 'currentTagprice',
     key: 'currentTagprice',
+    width:'12%'
   }, {
     title: '设置吊牌价',
     dataIndex: 'configTagprice',
     key: 'configTagprice',
+    width:'12%'
   },{
     title: '备注',
     dataIndex: 'remarks',
     key: 'remarks',
+    width:'51%'
   }];
 		  const data = [{
 		  num: '1',
@@ -39,7 +44,7 @@ function SetPricedetails({price}) {
       remark:'testtesttesttest'
 		}];
   return (
-    <Spin spinning={pending_spin} size="large">
+    <Spin spinning={pending_spin} >
       <Wrap
        num="2"
        url="/set"
@@ -68,10 +73,11 @@ function SetPricedetails({price}) {
 
      <TablePlate title="价格信息">
       <Table size="small"
-        className={styles.table}
+        className={styles.setpricetable}
          columns={columns}
          loading={false}
          dataSource={detaildatasource.dataList}
+         rowKey={record => record.styleNo}
          pagination={false}
          showHeader={true}
          bordered

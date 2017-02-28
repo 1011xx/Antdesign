@@ -214,22 +214,7 @@ function Add({dispatch,price}) {
 
           console.log('新建提交审核');
           console.log(values);
-          //这里将表单中获取的数据组装好
-          // newData.expectEffectiveDate=values.expectEffectiveDate;
-          // newData.remarks=values.remarks;
-          //遍历object对象，找除相应的key对应的value,并更改newData中的值准备提交用
-          // for (let key of Object.keys(values)) {
-          //   for (let index in newData.dataList) {
-          //     // console.log(newData.dataList[index]);
-          //     if(key==newData.dataList[index].priceFlag){
-          //       newData.dataList[index].configTagprice=values[key];
-          //     }
-          //     if(key==newData.dataList[index].remarkFlag){
-          //       newData.dataList[index].remarks=values[key];
-          //     }
-          //   }
-          //       console.log(key + ": " + values[key]);
-          //   }
+
 
           dispatch({
             type:'price/publicDate',
@@ -248,7 +233,7 @@ function Add({dispatch,price}) {
     },
     tagPrice(value, index,key){
       //设置吊牌价
-      // console.log(value, index,key);
+      console.log(value, index,key);
     newData.dataList[index][key] = value;
     dispatch({
       type:'price/publicDate',
@@ -288,7 +273,10 @@ function Add({dispatch,price}) {
       //点击暂存的时候
       console.log('暂存');
       newData.tagpriceConfigDetailDto=newData.dataList;
-      console.log(newData);
+      //复制零时对象，删除dataList，发送给后台
+      let temp=Object.assign({},newData);
+      delete temp.dataList;
+      console.log(temp);
       //让页面呈加载状态
       dispatch({
         type:'price/publicDate',
@@ -299,7 +287,7 @@ function Add({dispatch,price}) {
       //通过接口提交数据
       dispatch({
         type:'price/tempsave',
-        payload:newData
+        payload:temp
       });
 
     }
@@ -440,10 +428,12 @@ function Add({dispatch,price}) {
       newData.tagpriceConfigDetailDto=newData.dataList;
       //不删除dataList的原因是因为如果保存出错，可以继续更改页面
       // delete newData.dataList;
-      console.log('newData:',newData);
+      let temp=Object.assign({},newData);
+      delete temp.dataList;
+      console.log('temp:',temp);
       dispatch({
         type:'price/commitsave',
-        payload:newData
+        payload:temp
       });
 
 

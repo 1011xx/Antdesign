@@ -146,6 +146,7 @@ function boolTovalue(isUniqueCodeManagement){
                                    <Radio value="3">不通过</Radio>
                            </RadioGroup>*/}
             </Row>
+            <div style={{height:10}}></div>
             <Row>
             <FormItem
                  label="说明"
@@ -155,7 +156,7 @@ function boolTovalue(isUniqueCodeManagement){
                     validator:checkexp
                   }]
                  })(
-                   <Input size="small" style={{width:650}} />
+                   <Input type="textarea" rows={3}  style={{width:550}} />
                  )}
             </FormItem>
             </Row>

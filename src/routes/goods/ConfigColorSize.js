@@ -17,13 +17,26 @@ const configProps={
 	listarry,
 	configlist,
 	saveSpin,
+	selectonChange(value,index,key){
+		console.log(configlist);
+		console.log('value,index,key:',value,index,key);
+		configlist[index][key]=value;
+		dispatch({
+			type:'moudelnum/publicDate',
+			payload:{
+				configlist:configlist
+			}
+		});
+		console.log(configlist);
+	},
 	picturnchange(index,key){
-		console.log(index,key);
+		// console.log(index,key);
 		return (value)=>{
-			console.info('value:',value);
+			// console.info('value:',value);
 		}
 	},
 	getadddata(value,retback){
+		console.log(retback);
 		dispatch({
 			type:'moudelnum/publicDate',
 			payload:{
@@ -44,36 +57,49 @@ const configProps={
 		}
 // console.log('configlist1:',configlist);
 /*******************数据格式****************************/
-		// {
-		//   styleId:"FF0CAE08FE8D4D70B61BCDD6524C5B14",
-		//   styleCode:"Y0223911B0333",
-		//   styleName:"ROYAL RAYE2002年初夏3911背心纯棉",
-		//   configs:[{
-		//     colorCode:"456",
-		//     colorName:"亮蓝色",
-		//     sizes:"010,012,013",
-		//     image:{
-		//       imageOriginalName:"S61231-11513314.jpg",
-		//       imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg",
-		//       imageDirectory:"/images/FF0CAE08FE8D4D70B61BCDD6524C5B14/456/ed852558d8f04a86bd46ffc5d8894228.jpg",
-		//       imageType:"jpg"
-		//     }，
-		// 		deleteImage:[{
-		// 		  colorCode:"456"
-		// 		  imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
-		// 		  StyleCode:"Y0223911B0333"
-		// 		}]
-		//   }]
-		//
-		// };
+	// 	{
+	// 	  styleId:"FF0CAE08FE8D4D70B61BCDD6524C5B14",
+	// 	  styleCode:"Y0223911B0333",
+	// 	  styleName:"ROYAL RAYE2002年初夏3911背心纯棉",
+	// 	  configs:[
+	// 	  {
+	// 	    colorCode:"456",
+	// 	    colorName:"亮蓝色",
+	// 	    sizes:"010,012,013",
+	// 	    image:{
+	// 	      imageOriginalName:"S61231-11513314.jpg",
+	// 	      imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg",
+	// 	      imageDirectory:"/images/FF0CAE08FE8D4D70B61BCDD6524C5B14/456/ed852558d8f04a86bd46ffc5d8894228.jpg",
+	// 	      imageType:"jpg"
+	// 	    }
+	// 	  },
+	// 		{
+	// 	    colorCode:"456",
+	// 	    colorName:"亮蓝色",
+	// 	    sizes:"010,012,013",
+	// 	    image:{
+	// 	      imageOriginalName:"S61231-11513314.jpg",
+	// 	      imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg",
+	// 	      imageDirectory:"/images/FF0CAE08FE8D4D70B61BCDD6524C5B14/456/ed852558d8f04a86bd46ffc5d8894228.jpg",
+	// 	      imageType:"jpg"
+	// 	    }
+	// 	  }
+	// ],
+	// deleteImage:[{
+	// 	colorCode:"456"
+	// 	imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
+	// 	StyleCode:"Y0223911B0333"
+	// }]
+	//
+	// 	};
 		/********************这儿为获取的sizes***************************/
-		let temparr=[];
-		for (let key in value) {
-			if(value[key]){
-				temparr.push(value[key].join(','));
-			}
-		}
-		console.log(temparr);
+		// let temparr=[];
+		// for (let key in value) {
+		// 	if(value[key]){
+		// 		temparr.push(value[key].join(','));
+		// 	}
+		// }
+		// console.log(temparr);
 /**********************组装deleteimage*************************/
 
 		if(retback.length>0){
@@ -93,8 +119,10 @@ console.log('deleteimgdata:',deleteimgdata);
 		let tempobj={};
 		tempobj.colorCode=configlist[i].colorCode;
 		tempobj.colorName=configlist[i].colorName;
-		tempobj.sizes=temparr[i];
-		tempobj.image=configlist[i].image;
+		//在提交的时候，这里将sizes数组转换成字符串形式发送给后端
+		tempobj.sizes=configlist[i].sizes.join(',');
+		// tempobj.image=configlist[i].image;
+		tempobj.image={};
 		tempobj.deleteImage=deleteimgdata;
 		temparr2.push(tempobj)
 	}

@@ -62,6 +62,7 @@ const AttrModel = ({
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
+          maskClosable={false}
           confirmLoading={confirmLoading}
         >
         <Form  inline style={{ width: 264 ,margin:'0 auto'}}>

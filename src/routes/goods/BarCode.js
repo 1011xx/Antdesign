@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table,Row,Col } from 'antd';
+import { Table,Row,Col,Spin } from 'antd';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
@@ -9,7 +9,7 @@ import styles from './Barcode.less';
 
 
 function BarCode({dispatch,moudelnum}) {
-   const {barcodeSource,barcodeTotal,barcodecurrent,barcodepagesize}=moudelnum;
+   const {barcodeSource,barcodeTotal,barcodecurrent,barcodepagesize,spinflag}=moudelnum;
    const columns = [{
     title: '序号',
     dataIndex: 'num',
@@ -108,7 +108,7 @@ function BarCode({dispatch,moudelnum}) {
 
 
   return (
-
+<Spin tip="请稍后..." spinning={spinflag}>
       <Wrap
        num="2"
        url="/modelnumber"
@@ -136,7 +136,7 @@ function BarCode({dispatch,moudelnum}) {
     </TablePlate>
      <Paginations {...pageProps}/>
  </Wrap>
-
+</Spin>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table,Row,Col } from 'antd';
+import { Table,Row,Col,Spin } from 'antd';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Plate from '../../commonComponents/plate/plate';
@@ -8,7 +8,7 @@ import styles from './Styledetails.less';
 
 
 function Styledetails({moudelnum}) {
-  const { detaildata,configlist }=moudelnum;
+  const { detaildata,configlist,spinflag }=moudelnum;
   const columns=[{
     title:'颜色和尺寸',
     dataIndex:'colorSize',
@@ -30,6 +30,7 @@ function Styledetails({moudelnum}) {
     )
   }];
   return (
+    <Spin tip="请稍后..." spinning={spinflag}>
       <Wrap
        num="2"
        url="/modelnumber"
@@ -64,12 +65,13 @@ function Styledetails({moudelnum}) {
       <div className={styles.add_plate}>
         <p className={styles.add_btn}>尺寸组：{`${detaildata.sizegroupName} ${detaildata.brandName}`}</p>
       </div>
+      {console.log(configlist)}
       <Table size="small"
         className={styles.table}
          columns={columns}
-        loading={false}
+         loading={false}
          dataSource={configlist}
-         rowKey={record => record.colorSize}
+         rowKey={record => record.id}
          pagination={false}
          showHeader={false}
          bordered
@@ -87,6 +89,7 @@ function Styledetails({moudelnum}) {
         </Row>
      </Plate>
  </Wrap>
+ </Spin>
   );
 }
 

@@ -11,6 +11,7 @@ const Paginations = ({
 		onShowSizeChange,
 		onPageChange
 	}) => {
+  const pageSizeOptions=['10', '30', '50'];
 	return(
         <div className={styles.Pagination_wrap}>
            <Pagination
@@ -18,7 +19,8 @@ const Paginations = ({
              size="small"
              total={total}
              current={current}
-             defaultPageSize={10}
+             pageSizeOptions={pageSizeOptions}
+             defaultPageSize={defaultPageSize}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
              showQuickJumper

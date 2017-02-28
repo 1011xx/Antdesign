@@ -16,6 +16,7 @@ const SureModel = ({
           onOk={makeSure}
           onCancel={handleCancel}
           closable={false}
+          maskClosable={false}
           className={styles.modal}
         >
          <p className={styles.titlecenter}><b><i className={styles.scimg}></i>是否确认删除本条数据？</b></p>

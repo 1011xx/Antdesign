@@ -70,6 +70,7 @@ const selectopt=selectSource.map((item, key) => {
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
+          maskClosable={false}
           closable={false}
 
         >

@@ -41,6 +41,7 @@ function handleOk() {
           onOk={handleOk}
           onCancel={handleCancel}
           closable={false}
+          maskClosable={false}
         >
         <Form  inline style={{ width: 244 ,margin:'0 auto'}}>
         <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>

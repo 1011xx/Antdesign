@@ -17,3 +17,39 @@
       text-align:center;
   }
 }
+
+
+.setpricetable{
+  td{
+      text-align:center;
+  }
+  td:nth-child(5),td:nth-child(2){
+  text-align:left;
+  }
+  td:nth-child(3),td:nth-child(4){
+    text-align:right;
+  }
+  :global{
+    .ant-table-bordered .ant-table-tbody > tr > td:last-child {
+      padding-left:10px
+    }
+  }
+ 
+}
+
+.auditpricetable{
+  td{
+      text-align:center;
+  }
+  td:nth-child(5),td:nth-child(2){
+  text-align:left;
+  }
+  td:nth-child(3),td:nth-child(4){
+    text-align:right;
+  }
+   :global{
+    .ant-table-bordered .ant-table-tbody > tr > td:last-child {
+      padding-left:10px
+    }
+  }
+}

@@ -37,6 +37,46 @@ const Addprice = ({
 
 }) => {
 
+ function remarksrules(rule, value, callback){
+   if(value){
+    if(value.length>1000){
+      callback("备注太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+ }
+
+  function itemremarksrules(rule, value, callback){
+   if(value){
+    if(value.length>200){
+      callback("备注太长");
+    }else{
+      callback();
+    }
+  }else{
+    callback();
+  }
+ }
+
+function pricerules(rule, value, callback){
+  // console.log('value:',value);
+  // console.log(typeof(value));
+  // if(value==""){
+  //   console.log(1231);
+  // }
+   if(value){
+    if (/^[1-9][0-9]{0,5}$|^0\.[0-9][1-9]$|^0\.[1-9][0-9]$|^[1-9]\.[0-9][0-9]$|^[1-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$/.test(value)!=true) {
+        callback('请输入正确的价格!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+}
 
   const columns = [{
      title: '序号',
@@ -62,11 +102,11 @@ const Addprice = ({
        <FormItem>
                  {getFieldDecorator(`configTagprice${record.num}`, {
                      initialValue:text,
-                     rules: [{ required: true, message: '设置吊牌价必须填写!' }]
+                     rules: [{ required: true, message: '设置吊牌价必须填写!' },{ validator:pricerules}]
                    })(
                    <Input size="small"  style={{ width: 186}}   onBlur={(e)=>{tagPrice(e.target.value,index,'configTagprice')}}/>
                  )}
-        </FormItem>
+       </FormItem>
      )
    }, {
      title: '备注',
@@ -76,7 +116,8 @@ const Addprice = ({
      render:(text,record,index) => (
        <FormItem>
                  {getFieldDecorator(`remarks${record.num}`, {
-                     initialValue:text
+                     initialValue:text,
+                      rules: [{ validator:itemremarksrules}]
                    })(
                     <Input size="small" style={{ width: 186}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
                  )}
@@ -164,8 +205,11 @@ function handleSubmit(e){
                 label="备注："
                 >
                   {getFieldDecorator('remarks', {
+                    rules: [{
+                  validator:remarksrules
+                }]
                   })(
-                    <Input type="textarea" rows={3} style={{width:650}} onBlur={(e)=>{remarkschange(e.target.value,'remarks')}}/>
+                    <Input type="textarea" rows={3} style={{width:550}} onBlur={(e)=>{remarkschange(e.target.value,'remarks')}}/>
                   )}
                 </FormItem>
         </div>

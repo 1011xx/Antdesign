@@ -275,7 +275,9 @@ function Edit({dispatch,price}) {
       //暂存
       console.log('暂存');
       detaildatasource.tagpriceConfigDetailDto=detaildatasource.dataList;
-      console.log(detaildatasource);
+       let temp=Object.assign({},detaildatasource);
+      delete temp.dataList;
+      console.log(temp);
       dispatch({
         type:'price/publicDate',
         payload:{
@@ -284,8 +286,8 @@ function Edit({dispatch,price}) {
       });
       //通过接口提交数据
       dispatch({
-        type:'price/tempsave',
-        payload:detaildatasource
+        type:'price/audittempsave',
+        payload:temp
       });
 
     }
@@ -330,7 +332,7 @@ function Edit({dispatch,price}) {
                 console.info(modalstyle[index_i].key,targetKeys[j],index_i,j);
 
                 lengthList=lengthList+1;
-                temp.key=lengthList;
+                temp.num=lengthList;
                 temp.configTagprice=undefined;
                 temp.remarks=undefined;
                 temp.styleNo=modalstyle[index_i].code;
@@ -428,10 +430,12 @@ function Edit({dispatch,price}) {
       // detaildatasource.description=Value.description;
       detaildatasource.tagpriceConfigDetailDto=detaildatasource.dataList;
       // delete detaildatasource.dataList;
-      console.log('detaildatasource:',detaildatasource);
+      let temp=Object.assign({},detaildatasource);
+      delete temp.dataList;
+      console.log('temp:',temp);
       dispatch({
         type:'price/updatecommitsave',
-        payload:detaildatasource
+        payload:temp
       });
 
 

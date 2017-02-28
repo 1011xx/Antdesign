@@ -84,6 +84,7 @@ export default {
       listarry:[],//选择颜色后的表格数组
 
       saveFlag:false,
+      spinflag:true,
 
 
 
@@ -223,6 +224,7 @@ export default {
                 payload:{
                   styleNumbrules:rules.data.dataList[0].arrrules,
                   styleNamerules:rules.data.dataList[1].arrrules,
+                  saveFlag:false
                 }
               });
             }
@@ -303,7 +305,7 @@ export default {
       let str3=JSON.stringify(temidstyle);
       var exitcolorCode=[];//已存在的颜色
       const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});//获取已有列表的数据
-      // const size=yield call(queryStyleSize,{jsonparam:str3});//获取尺寸下拉选框的数据
+      const size=yield call(queryStyleSize,{jsonparam:str3});//获取尺寸下拉选框的数据
       const {data}=yield call(queryStyleColor);//获取颜色列表
       const details=yield call(getStyleInfoById,{jsonparam:str1});//通过id获取款号信息
 
@@ -334,6 +336,7 @@ export default {
              styleConfigList.data.dataList[i].json=JSON.stringify(temp);
              styleConfigList.data.dataList[i].image=tempdata;
           }
+          console.info(styleConfigList.data);
           yield put({
             type:'publicDate',
             payload:{
@@ -358,7 +361,7 @@ export default {
         }
         //复制原数组；
         const temparr=data.dataList.concat();
-        console.info('data.dataList:',data.dataList);
+        // console.info('data.dataList:',data.dataList);
         //保存备份的颜色，之后要通过这个数据找到它的可以值
         yield put({
           type:'publicDate',
@@ -389,7 +392,7 @@ export default {
         });
       };
       if(details.data.code){
-        console.log("details",details);
+        // console.info("details",details);
         yield put({
           type:'publicDate',
           payload:{
@@ -404,15 +407,15 @@ export default {
         })
       };
 
-      // if(size.data.code==0){
-      //   console.log(size.data);
-      //   yield put({
-      //     type:'publicDate',
-      //     payload:{
-      //       sizeoption:size.data.dataList
-      //     }
-      //   });
-      // }
+      if(size.data.code==0){
+        // console.log(size.data);
+        yield put({
+          type:'publicDate',
+          payload:{
+            sizeoption:size.data.dataList
+          }
+        });
+      }
     },
     *querybyid({ payload }, { call, put}){
       //根据id来获取商品的详情
@@ -450,11 +453,12 @@ export default {
               styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
           }
         }
-        console.log(styleConfigList.data);
+        console.error('styleConfigList.data:',styleConfigList.data);
         yield put({
           type:'publicDate',
           payload:{
-            configlist:styleConfigList.data.dataList
+            configlist:styleConfigList.data.dataList,
+            spinflag:false
           }
         });
       }
@@ -494,7 +498,8 @@ export default {
           type:'publicDate',
           payload:{
             barcodeSource:data.dataList,
-            barcodeTotal:data.total
+            barcodeTotal:data.total,
+            spinflag:false
           }
         });
       };
@@ -717,15 +722,18 @@ export default {
               }
             });
           if(strs[1]==='editstyle'){
-            //当进入新增款号页面时候请求下拉框数据
-            dispatch({type:'styleAttribute'});
-            dispatch({
+
+             dispatch({
               type: 'publicDate',
               payload:{
+                saveFlag:true,
                 stylename:'',
                 stylenum:''
               }
             });
+            //当进入新增款号页面时候请求下拉框数据
+            dispatch({type:'styleAttribute'});
+
             // //请求表格数据和款号类数据
             //  dispatch({
             //   type: 'enterstyleattr',
@@ -734,6 +742,12 @@ export default {
 
           }else if(strs[1]==='addstyle'){
             //当进入新增款号页面时候请求下拉框数据
+             dispatch({
+              type: 'publicDate',
+              payload:{
+                saveFlag:true
+              }
+            });
             dispatch({type:'styleAttribute'});
             dispatch({
               type:'queryinfo',
@@ -757,13 +771,24 @@ export default {
             });
           }else if(strs[1]==='styledetails'){
             //如果是查看页面详情
-            console.log('details')
+            dispatch({
+                type: 'publicDate',
+                payload:{
+                spinflag:true
+                }
+              });
             dispatch({
               type:'querybyid',
               payload:strs[2]
             });
 
           }else if(strs[1]==='barcode'){
+            dispatch({
+                type: 'publicDate',
+                payload:{
+                spinflag:true
+                }
+              });
             //如果是条码页面
             dispatch({
               type:'querybarcode'

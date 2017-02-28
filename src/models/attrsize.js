@@ -31,12 +31,13 @@ export default {
                     data.dataList[i-1].num=i;
                     data.dataList[i-1].key=i;
                   }
+
+
             yield put({type:'publicDate',
                       payload:{
                         dataSource:data.dataList,
                         total:data.total,
                         loading:false,
-                         current:1,
                       }
                     });
             }
@@ -141,6 +142,9 @@ export default {
             }
         },
         *delete({ payload }, { call, put,select }){
+          const currentpage = yield select(({ attrsize }) => attrsize.current);
+          const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
+          const total = yield select(({ attrsize }) => attrsize.total);
             console.log('payload:'+payload);
             let newId={};
             newId.id=payload;
@@ -149,14 +153,18 @@ export default {
             if(data.code=="0"){
                // message.success(data.msg);
                 console.log(data);
-                //方案二：再次请求数据
-                yield put({type:'enter'});
-                 //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1
-                      }
-                    });
+                //这里判断total的值，total<currentpage*pagesize(10<10*2)
+                if(total<currentpage*pagesize){
+                  //将页码设为默认
+                   yield put({type:'publicDate',
+                       payload:{
+                          current:currentpage-1
+                       }
+                     });
+                }
+
+                    //方案二：再次请求数据
+                    yield put({type:'enter'});
             }else{
 
                Modal.error({

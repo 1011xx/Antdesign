@@ -33,6 +33,18 @@ function handOk(){
   resetFields();
 }
 
+//对输入的价格正则验证
+function pricerules(rule, value, callback){
+   if(value){
+    if (/^[1-9][0-9]{0,5}$|^0\.[0-9][1-9]$|^0\.[1-9][0-9]$|^[1-9]\.[0-9][0-9]$|^[1-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$/.test(value)!=true) {
+        callback('请输入正确的价格!');
+      } else {
+        callback();
+      }
+  }else{
+    callback();
+  }
+}
 
 	return(
          <Modal title="批量设置价格"
@@ -51,7 +63,7 @@ function handOk(){
                 label="调整后的吊牌价："
                 >
                   {getFieldDecorator('ALLprice', {
-
+                    rules: [{ validator:pricerules}]
                   })(
                     <Input style={{width:200}} />
                   )}

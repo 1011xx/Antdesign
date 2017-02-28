@@ -6,7 +6,7 @@ import { queryTagPriceConfig,
           updateAuditTagPriceConfig,//修改页面提交审核
           updateSaveTagPriceConfig,//修改页面暂存
           saveTagPriceConfig,//新增页面暂存
-           toAuditTagPriceConfig,//新增页面提交审核
+          toAuditTagPriceConfig,//新增页面提交审核
           queryTagPriceConfigStyleYear,
           queryTagPriceConfigStyleSeason,
           queryTagPriceConfigStyleBrand,

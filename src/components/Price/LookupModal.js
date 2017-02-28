@@ -125,10 +125,11 @@ const LookupModal = ({
           visible={lookupvis}
           onOk={onOk}
           onCancel={handleCancel}
-          closable={false}
-					width={700}
-					maskClosable={false}
-					className={styles.modal}
+          closable={true}
+          footer={null}
+		  width={700}
+		  maskClosable={false}
+		  className={styles.modal}
         >
 				<div className={styles.titletop}>
 				<Row gutter={16}>

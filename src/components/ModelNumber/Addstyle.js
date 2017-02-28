@@ -124,6 +124,22 @@ function test(){
     return boolTovalue(currentItem.isUniqCodemanagementCode);
   }
 }
+//函数，如果不是必填选框，则需要校验是否是undefined
+
+function isundefinedbkey(a){
+  if(a){
+    return a.key;
+  }else{
+    return "";
+  }
+}
+function isundefinedblabel(a){
+  if(a){
+    return a.label
+  }else{
+    return "";
+  }
+}
 //当提交的时候
   function handleSubmit(e){
       e.preventDefault();
@@ -135,27 +151,27 @@ function test(){
           ...fieldsValue,
           brandCode:fieldsValue.brandCode.key,
           brandName:fieldsValue.brandCode.label,
-          bigCategoryCode:fieldsValue.bigCategoryCode.key,
-          bigCategoryName:fieldsValue.bigCategoryCode.label,
+          bigCategoryCode:isundefinedbkey(fieldsValue.bigCategoryCode),
+          bigCategoryName:isundefinedblabel(fieldsValue.bigCategoryCode),
           categoryCode:fieldsValue.categoryCode.key,
           categoryName:fieldsValue.categoryCode.label,
-          seriesCode:fieldsValue.seriesCode.key,
-          saleTypeCode:fieldsValue.saleTypeCode.key,
+          seriesCode:isundefinedbkey(fieldsValue.seriesCode),
+          saleTypeCode:isundefinedbkey(fieldsValue.saleTypeCode),
           yearCode:fieldsValue.yearCode.key,
           categoryCode:fieldsValue.categoryCode.key,
           seasonCode:fieldsValue.seasonCode.key,
           materialsCode:fieldsValue.materialsCode.key,
-          smallCategoryCode:fieldsValue.smallCategoryCode.key,
+          smallCategoryCode:isundefinedbkey(fieldsValue.smallCategoryCode),
           sizeGroupCode:fieldsValue.sizeGroupCode.key,
           SizeGroupName:fieldsValue.sizeGroupCode.label,
           unitCode:fieldsValue.unitCode.key,
           SerialNoName:fieldsValue.serialNoCode,
-          seriesName:fieldsValue.seriesCode.label,
-          saleTypeName:fieldsValue.saleTypeCode.label,
+          seriesName:isundefinedblabel(fieldsValue.seriesCode),
+          saleTypeName:isundefinedblabel(fieldsValue.saleTypeCode),
           yearName:fieldsValue.yearCode.label,
           seasonName:fieldsValue.seasonCode.label,
           materialsName:fieldsValue.materialsCode.label,
-          smallCategoryName:fieldsValue.smallCategoryCode.label,
+          smallCategoryName:isundefinedblabel(fieldsValue.smallCategoryCode),
           unitName:fieldsValue.unitCode.label,
          isUniqueCodeManagement:test(),
         }
@@ -170,7 +186,6 @@ function test(){
 
 
   const brandOption=brand.map((item,key)=>{
-    console.log("item:",item);
         return(
          <Option key={key} value={item.value}>{item.label}</Option>
        );
@@ -235,7 +250,7 @@ function test(){
 
   return (
 
-<Spin tip="保存中,请稍后..." spinning={saveFlag}>
+<Spin tip="请稍后..." spinning={saveFlag}>
 
      <Form
      inline

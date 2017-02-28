@@ -154,14 +154,15 @@ export default {
             if(data.code=="0"){
               // message.success(data.msg);
                 console.log(data);
-                //方案二：再次请求数据
-                yield put({type:'enter'});
+
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
                          current:1
                       }
                     });
+                    //方案二：再次请求数据
+                    yield put({type:'enter'});
             }else{
               Modal.error({
                 title: '提示',

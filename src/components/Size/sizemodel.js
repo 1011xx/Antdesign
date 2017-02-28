@@ -18,8 +18,8 @@ const SizeModel = ({
 //正则验证尺寸编号
 	function checkSize(rule, value, callback){
 		if(value){
-    if (/^[A-Z0-9]{1,3}$/.test(value)!=true) {
-        callback('请输入正确的尺寸代码!');
+    if (/^[A-Za-z0-9]{1,3}$/.test(value)!=true) {
+        callback('请输入正确的尺寸代码,支持大写，小写和数字！');
       } else {
         callback();
       }
@@ -60,6 +60,7 @@ function handleOk() {
           visible={modalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
+          maskClosable={false}
           closable={false}
         >
         <Form  inline style={{ width: 264 ,margin:'0 auto'}}>

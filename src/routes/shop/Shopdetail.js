@@ -11,7 +11,7 @@ function Shopdetail({shopinfo}) {
   const image=function(){
     // console.log(location.host);
     // let imgurl='http://'+location.host+'/fmss';
-    let imgurl='http://192.168.10.146:5001/fmss';
+    let imgurl='http://127.0.0.1:8081/fmss';
     // let imgurl='/proxyDir/fmss';
     console.log(imgurl);
     if(detailItem.images){
@@ -26,7 +26,7 @@ function Shopdetail({shopinfo}) {
         return false;
       }
     }
-    
+
   };
   return (
     <Wrap
@@ -34,11 +34,11 @@ function Shopdetail({shopinfo}) {
        url="/shopinfo"
        last="店仓维护"
        next="查看详情"
-       
+
        >
 
         <Plate title="基本信息">
-       
+
              <Row  className={styles.ant_row_style}>
                   <Col span={4} className={styles.ant_col_right}>
                     <span>店仓名称：</span>
@@ -46,14 +46,14 @@ function Shopdetail({shopinfo}) {
                   <Col span={4} className={styles.ant_col_left}>
                     <span>{detailItem.fullName}</span>
                   </Col>
-              
+
                  <Col span={4} className={styles.ant_col_right}>
                    <span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
                  </Col>
                  <Col span={4} className={styles.ant_col_left}>
                    <span>{detailItem.shortName}</span>
                  </Col>
-              
+
                   <Col span={4} className={styles.ant_col_right}>
                    <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
                   </Col>
@@ -61,7 +61,7 @@ function Shopdetail({shopinfo}) {
                    <span>{detailItem.typeName}</span>
                   </Col>
             </Row>
-            
+
             <Row >
               <Col span={4} className={styles.ant_col_right}>
                 <span>开店日期：</span>
@@ -76,12 +76,12 @@ function Shopdetail({shopinfo}) {
                 <span>{detailItem.saleAreaName}</span>
               </Col>
             </Row>
-            
-         
+
+
         </Plate>
 
         <Plate title="联系方式">
-           
+
             <Row className={styles.ant_row_style}>
                 <Col span={4} className={styles.ant_col_right}>
                 <span>所在城市：</span>
@@ -101,8 +101,8 @@ function Shopdetail({shopinfo}) {
                  <Col span={4} className={styles.ant_col_left}>
                 <span>{detailItem.telephoneNumber}</span>
                 </Col>
-          </Row>     
-          <Row>     
+          </Row>
+          <Row>
                 <Col span={4} className={styles.ant_col_right}>
                 <span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span>
                 </Col>
@@ -122,7 +122,7 @@ function Shopdetail({shopinfo}) {
                 <span>{detailItem.faxNumber}</span>
                 </Col>
              </Row>
-         
+
         </Plate>
 
          <Plate title="照片">
@@ -132,10 +132,10 @@ function Shopdetail({shopinfo}) {
          </Plate>
           <Plate title="其他信息" style={{'margin-bottom':0}}>
          <span>备注：{detailItem.remarks}</span>
-         
+
          </Plate>
          <div style={{'clear':'both','height':1}}></div>
-   
+
        </Wrap>
   );
 }
@@ -145,4 +145,3 @@ function mapStateToProps({ shopinfo }) {
 }
 
 export default connect(mapStateToProps)(Shopdetail);
-

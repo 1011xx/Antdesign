@@ -10,8 +10,6 @@ const Option = Select.Option;
 
 
 
-
-
 //以下是图片上传组件
 var retback=[];
 function getBase64(img, callback) {
@@ -55,11 +53,7 @@ class PicturesWall extends React.Component {
       getBase64(file, imageUrl => this.setState({ imagesrc:imageUrl }));
     };
     success=(ret)=>{
-      console.info('this.props.onChange',this.props.onChange,ret);
-      if (this.props.onChange) {
-     this.props.onChange(ret);
-   }
-
+      console.info('onSuccessret:',ret);
       let str=JSON.parse("["+this.props.name+"]")[0];
       // console.log('str',str);
       let temp={};
@@ -180,6 +174,7 @@ const Configcolorsize=({
     configlist,
     saveSpin,
     picturnchange,
+    selectonChange
 
   })=> {
 
@@ -226,6 +221,7 @@ const Configcolorsize=({
                        multiple
                        style={{ width: 300,height:70 }}
                        className={styles.select}
+                       onBlur={(value)=>{selectonChange(value,index,'sizes')}}
                        placeholder="点击输入框选择尺寸"
                      >
                     {selectopt}
@@ -233,7 +229,6 @@ const Configcolorsize=({
                     </Select>
                  )}
         </FormItem>
-
       ),
     }, {
       title: '图片',
@@ -241,7 +236,7 @@ const Configcolorsize=({
       key: 'img',
       render:(text,record,index)=>(
         <div className={styles.picturewall} onClick={() => onUpload(record)}>
-        <PicturesWall name={record.json} text={record.proimage} onChange={picturnchange(index,'img')}/>
+        <PicturesWall name={record.json} text={record.proimage} />
         </div>
       ),
     }, {
@@ -254,12 +249,10 @@ const Configcolorsize=({
     const data=[{
       color:'101',
       colorName:'黑色'
-
     },
     {
       color:'102',
       colorName:'绿色'
-
     }];
 
 

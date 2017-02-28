@@ -18,7 +18,7 @@ function ShopList({
   gotoclick
   }) {
 
-
+  const pageSizeOptions=['10', '30', '50'];
   const columns = [{
     title: '序号',
     dataIndex: 'num',
@@ -118,6 +118,7 @@ function ShopList({
              total={total}
              current={current}
              defaultPageSize={defaultPageSize}
+             pageSizeOptions={pageSizeOptions}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}
              showQuickJumper

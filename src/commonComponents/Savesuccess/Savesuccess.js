@@ -15,6 +15,7 @@ const Savesuccess = ({
         <Modal title={'提示'}
           visible={visibleSave}
           onOk={handleOk}
+          
           footer={[
             <Button key="submit" type="primary" size="large"  onClick={() => handleOk()}>
               确定

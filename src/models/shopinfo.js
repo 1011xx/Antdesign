@@ -227,7 +227,7 @@ export default {
             for(let i=0;i<imagearr.length;i++){
               imagearr[i].uid=-i;
               // imagearr[i].url='http://192.168.10.146:5001/fmss'+imagearr[i].imageDirectory;
-              imagearr[i].url='http://localhost:8081/fmss'+imagearr[i].imageDirectory;
+              imagearr[i].url='http://127.0.0.1:8081/fmss'+imagearr[i].imageDirectory;
               //如果发布后使用下面的代码取得服务器ip，如果使用的是代理的话就用上面的地址
               // imagearr[i].url='http://'+location.host+'/fmss'+imagearr[i].imageDirectory;
             }
@@ -347,6 +347,8 @@ export default {
                       payload:{
                       current:1,
                       defaultPageSize:10,
+                      fileListlength:0,
+                      oFile:[],
                       // searchForm:{
                       //   cityCode:undefined,
                       //   fullName:undefined,

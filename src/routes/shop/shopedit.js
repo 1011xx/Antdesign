@@ -63,6 +63,7 @@ const {   previewVisible,
 		  var oMyForm = new FormData();
 		  oMyForm.append("jsonparam", upinfo);
 		  for (var i=0;i<oFile.length;i++) {
+        // console.log('oFile中的文件：',oFile[i]);
 		    oMyForm.append("userfile"+i, oFile[i]);
 		  }
 		  //将form表单发送出去
@@ -126,7 +127,7 @@ const {   previewVisible,
       },
 		 handleChange ( {fileList,file} ) {
 		 	let filelength=fileList.length;
-		 	// console.log(filelength);
+
 		    file.status = 'done';//选择图片后，让图片显示出来
 		     dispatch({
               type: 'shopinfo/FileListlength',
@@ -170,13 +171,17 @@ const {   previewVisible,
 		},
 		onRemove(file){
 			//遍历oFile，将取消上传的图片从上传数据中删除
-			if(file.name){
-				for (let i = 0; i < fileListlength; i++) {
-				if(oFile[i].name==file.name){
-					oFile.splice(i,1);
-					}
+
+				for (let i = 0; i < oFile.length; i++) {
+          // console.log(oFile[i]);
+
+            if(oFile[i].name==file.name){
+    					oFile.splice(i,1);
+    					}
+
+
 				}
-			}
+        // console.log('oFile中的文件：',oFile);
 
 			// console.log(file);
 			//首先组装filelist对象，如果页面进入修改页面，则需要从onremove中读取要删除的文件，保存到新对象中
@@ -185,7 +190,7 @@ const {   previewVisible,
 				delimg.imageName=file.imageName;
 				deleteImg.push(delimg);
 				//打印要删除的对象
-				// console.log(deleteImg);
+				console.log(deleteImg);
 			}
 		}
 	};
