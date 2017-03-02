@@ -217,9 +217,13 @@ const {   previewVisible,
       dispatch(routerRedux.push('/shopinfo'));
       dispatch({type:'shopinfo/publicdate',
       payload:{
-        addvisibleSave:false
+        addvisibleSave:false,
+        loading:true,
+        current:1
       }
-    })
+    });
+      //
+      dispatch({type:'shopinfo/enter'});
     }
   }
 	return(

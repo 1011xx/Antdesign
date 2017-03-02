@@ -78,7 +78,8 @@ export default {
       set_styleCode:'',
       set_start:undefined,
       set_end:undefined,
-      set_state:''
+      set_state:'',
+      confirmLoading:false,
 
 
     },
@@ -427,7 +428,8 @@ export default {
                   yield put({type:'publicDate',
                       payload:{
                         commitvis:false,
-                        loading:true
+                        loading:true,
+                        confirmLoading:false
                       }
                     });
                    yield put({type: 'enter'});
@@ -551,7 +553,8 @@ export default {
              yield put({type:'publicDate',
                          payload:{
                            commitdone:true,
-                           addeditloading:false
+                           addeditloading:false,
+                            confirmLoading:false
                          }
                        });
 

@@ -60,6 +60,7 @@ function Add({dispatch,price}) {
     selectedRows,
     commitdone,
     addeditloading,
+    confirmLoading
 
 
    }=price;
@@ -413,6 +414,7 @@ function Add({dispatch,price}) {
   const commitProps={
      commitvis,
      commitdata,
+     confirmLoading,
      initvalue:"",
      handleCancel(e){
        //取消提交关闭弹窗
@@ -427,7 +429,8 @@ function Add({dispatch,price}) {
        dispatch({
          type:'price/publicDate',
          payload:{
-           addeditloading:true
+           addeditloading:true,
+           confirmLoading:true
          }
        });
 
@@ -509,6 +512,10 @@ function Add({dispatch,price}) {
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页
        dispatch(routerRedux.push('/audit'));
+       //新增成功后需要重新请求数据
+       dispatch({
+         type:'price/enter'
+       });
      }
  };
 

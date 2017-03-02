@@ -112,15 +112,13 @@ const LookupModal = ({
 	  dataIndex: 'resultState',
 	  key: 'resultState',
 		width:'16%',
-		render:(text)=>{
-			if(text==1){
-				return '未提交';
-			}else if(text==2){
-				return '已提交';
+    render:(text)=>{
+			if(text==2){
+				return '待审核';
 			}else if(text==3){
 				return '未通过';
 			}else if(text==4){
-				return '已通过';
+				return '已审核';
 			}
 		}
 	}, {

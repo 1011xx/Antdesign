@@ -148,8 +148,6 @@ function isundefinedblabel(a){
         };
 
 
-
-
       });
   }
 
@@ -468,7 +466,7 @@ const seriesnumOption=seriesnum.map((item,key)=>{
        <FormItem
          label="&nbsp;&nbsp;&nbsp;备&nbsp;&nbsp;&nbsp;&nbsp;注"
          >
-          {getFieldDecorator('remark', {
+          {getFieldDecorator('remarks', {
        })(
        <Input  type="textarea" rows={4} style={{width:500}}/>
        )}

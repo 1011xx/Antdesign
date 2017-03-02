@@ -180,6 +180,7 @@ function handleSubmit(e){
                 label="备注："
                 >
                   {getFieldDecorator('remarks', {
+                    initialValue:detaildatasource.remarks
                   })(
                     <Input type="textarea" rows={3} style={{width:650}} onBlur={(e)=>{remarkschange(e.target.value,'remarks')}}/>
                   )}

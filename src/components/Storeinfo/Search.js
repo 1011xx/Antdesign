@@ -131,6 +131,7 @@ return (
               size="small"
               options={options}
               placeholder="请选择所在城市"
+              changeOnSelect 
               />
             )}
 

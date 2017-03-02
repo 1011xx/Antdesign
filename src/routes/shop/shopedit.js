@@ -37,6 +37,8 @@ const {   previewVisible,
 		  updating,
 		  deleteImg,
 		  editloading,
+		  searchForm,
+		  changePage,
       visibleSave,
       uploading,
 	}=shopinfo;
@@ -201,9 +203,17 @@ const saveProps={
     dispatch(routerRedux.push('/shopinfo'));
     dispatch({type:'shopinfo/publicdate',
     payload:{
-      visibleSave:false
+      visibleSave:false,
+      loading:true
     }
-  })
+  });
+    let str=JSON.stringify({...searchForm,...changePage});
+    console.info(str);
+    //当修改完毕后，还是按条件查询一次
+    dispatch({type:'shopinfo/queryShop',
+    		payload:str
+	});
+
   }
 }
 

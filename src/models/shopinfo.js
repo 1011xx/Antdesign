@@ -117,6 +117,7 @@ export default {
   	//当进入的时出发的事件
   	*enter({ payload}, { call, put ,select}) {
       const PageSize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
+      const currentpage = yield select(({ shopinfo }) => shopinfo.current);
   		// yield put({type:'publicdate',
       //     payload:{
       //       loading:true
@@ -127,7 +128,7 @@ export default {
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
-      const shoplist=yield call(queryShop,{jsonparam:'{"page":"1","rows":"'+PageSize+'"}'});
+      const shoplist=yield call(queryShop,{jsonparam:'{"page":"'+currentpage+'","rows":"'+PageSize+'"}'});
 
       if(province.data){
         console.log(province.data.provincecity);
@@ -283,8 +284,10 @@ export default {
       };
    },
    *upload({payload},{call,put}){
+    //新增店仓
     const resultupload=yield call(addShop,payload);
-    if(resultupload.data){
+    if(resultupload.data.code==0){
+      //如果新增成功
       console.info(resultupload.data.msg);
       yield put({type:'publicdate',
           payload:{
@@ -310,8 +313,10 @@ export default {
 
    },
    *update({payload},{call,put}){
+    //修改店仓
     const resultupdate=yield call(updateShop,payload);
-    if(resultupdate.data){
+    if(resultupdate.data.code==0){
+      //如果修改成功
      console.log(resultupdate.data.msg);
       yield put({type:'publicdate',
           payload:{

@@ -8,7 +8,7 @@ var arr=[];
 var arrlabel=[];
 var result='';
 var result2='';
-
+//新增款号页面
 function Editstyleroute({dispatch,moudelnum}) {
   const {
     brand,//品牌
@@ -164,11 +164,16 @@ function Editstyleroute({dispatch,moudelnum}) {
         dispatch({
           type:'moudelnum/publicDate',
           payload:{
-            savedone:false
+            savedone:false,
+            loading:true
           }
         });
          //当保存成功后，点击弹出确定按钮后，跳转到列表页
         dispatch(routerRedux.push('/modelnumber'));
+        //当新增页面成功后，刷星列表
+        dispatch({
+          type:'moudelnum/enter'
+        })
       }
 
   };

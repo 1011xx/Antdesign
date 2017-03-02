@@ -17,7 +17,8 @@ const AttrModel = ({
     },
     confirmLoading,//模态框确认之后是否显示加载状态
     explain,
-    checkAttrcode
+    checkAttrcode,
+
 
 }) => {
 
@@ -42,6 +43,7 @@ function handleOk() {
           onCancel={handleCancel}
           closable={false}
           maskClosable={false}
+					
         >
         <Form  inline style={{ width: 244 ,margin:'0 auto'}}>
         <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
@@ -82,7 +84,7 @@ function handleOk() {
          </Row>
       </Form>
 
-      
+
         </Modal>
 
 

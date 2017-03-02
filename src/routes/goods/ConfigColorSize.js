@@ -11,7 +11,23 @@ var deleteimgdata=[];
 
 function ConfigColorSize({dispatch,moudelnum}){
 
-const {moveKey,chosecolorModal,exitcolor,saveSpin,savevisibleSave,transfordata,targetKeys,config,currentid,sizeoption,listarry,configlist }=moudelnum;
+const {
+	moveKey,
+	chosecolorModal,
+	exitcolor,
+	saveSpin,
+	savevisibleSave,
+	transfordata,
+	targetKeys,
+	config,
+	currentid,
+	sizeoption,
+	listarry,
+	configlist,
+	styleCode,
+	categoryCode,
+	yearCode
+ }=moudelnum;
 const configProps={
 	config,
 	sizeoption,
@@ -326,7 +342,16 @@ const saveProps={
 			savevisibleSave:false,
 			saveSpin:false
 		}
-	})
+	});
+	//当颜色，尺寸配置成功后，需要刷新页面，重新请求数据
+	let queryobj={styleCode,categoryCode,yearCode};
+	queryobj=setProps(queryobj);
+	// console.error(queryobj);
+	dispatch({
+		type:'moudelnum/querypage',
+		payload:queryobj
+	});
+
 	}
 };
 

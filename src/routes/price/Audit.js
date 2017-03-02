@@ -17,7 +17,7 @@ var exp;
 // var end;
 // var state;
 function Audit({dispatch,price}) {
-  const {styleCode,start,end,state,dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
+  const {confirmLoading,styleCode,start,end,state,dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
   const auditProps={
     dataSource,
     loading,
@@ -39,7 +39,7 @@ function Audit({dispatch,price}) {
        }
      });
 
-     
+
      dispatch({type:'price/tableLoading'});
      dispatch({
        type:'price/publicDate',
@@ -155,6 +155,7 @@ function Audit({dispatch,price}) {
   const commitProps={
      commitvis,
      commitdata,
+     confirmLoading,
      initvalue:textareavalue,
      handleCancel(e){
        //取消提交关闭弹窗
@@ -199,12 +200,12 @@ function Audit({dispatch,price}) {
 
 
        //确定提交后要执行操作,关闭弹窗，然后执行提交操作
-      //  dispatch({
-      //    type:'price/publicDate',
-      //    payload:{
-      //      commitvis:false
-      //    }
-      //  });
+       dispatch({
+         type:'price/publicDate',
+         payload:{
+           confirmLoading:true
+         }
+       });
        dispatch({
          type:'price/commit',
          payload:tempcommitobj

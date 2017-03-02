@@ -31,12 +31,16 @@ function Pendingprice({dispatch,price}){
     content:'审核成功！',
   	visibleSave:pending_visible,
     handleOk(){
+      //跳转到set页面
       dispatch(routerRedux.push('/set'));
       dispatch({type:'price/publicDate',
       payload:{
-        pending_visible:false
+        pending_visible:false,
+        loading:true
       }
     });
+    //当审核成功后，点击确认，需要根据当前的查询情况和页数去重新请求数据
+    dispatch({type:'price/querysetpage'});
     }
   };
   return (

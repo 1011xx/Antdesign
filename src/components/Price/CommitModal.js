@@ -16,6 +16,7 @@ const CommitModal = ({
   handleCancel,
   explain,
   initvalue,
+  confirmLoading,
 
 }) => {
   //当点击取消的时候执行的函数，并清空textarea数据
@@ -44,6 +45,7 @@ function handOk(){
      onCancel={Cancel}
      closable={false}
      maskClosable={false}
+     confirmLoading={confirmLoading}
      className={styles.modal}
    >
    <div className={styles.titletop}>

@@ -60,7 +60,8 @@ function Edit({dispatch,price}) {
     allpriceModal,
     selectedRows,
     commitdone,
-    addeditloading
+    addeditloading,
+    confirmLoading
 
    }=price;
   const editProps={
@@ -411,6 +412,7 @@ function Edit({dispatch,price}) {
   const commitProps={
      commitvis,
      commitdata,
+     confirmLoading,
      initvalue:"",
      handleCancel(e){
        //取消提交关闭弹窗
@@ -422,6 +424,14 @@ function Edit({dispatch,price}) {
        });
      },
      makeSure(Value){
+
+//点击确定按钮后，让按钮呈加载状态，并且不可以重复点击
+       dispatch({
+         type:'price/publicDate',
+         payload:{
+           confirmLoading:true
+         }
+       });
        //组装要发给后台的数据，点击提交的时候发送的数据
 
        // detaildatasource是获取到的详情数据，需要从获取到的详情数据中提取数据发送给后台

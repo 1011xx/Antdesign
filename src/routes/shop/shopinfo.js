@@ -60,19 +60,21 @@ function Shopinfo({dispatch,shopinfo}){
 		fullName,
 		passdata(value){
 			console.log('value:',value);
-			let data=setProps(value);
+
+			console.log('data:',data);
 			//获取文本框
 			dispatch({
 				type:'shopinfo/publicdate',
 				payload:{
 					current:1,
-					fullName:data.shopname,
-					shopType:data.shopType,
-					saleAreaCode:data.saleAreaCode,
-					shopStatus:data.shopStatus,
+					fullName:value.shopname,
+					shopType:value.shopType,
+					saleAreaCode:value.saleAreaCode,
+					shopStatus:value.shopStatus,
 					loading:true
 				}
 			});
+			let data=setProps(value);
 			searchForm.fullName=data.shopname;
 			// fullName=data.shopname;
 			searchForm.shopType=data.shopType;
@@ -230,7 +232,7 @@ function Shopinfo({dispatch,shopinfo}){
               type: 'shopinfo/publicdate',
               payload: {
               	current:pageNumber,
-								loading:true
+				loading:true
               }
             });
 
@@ -252,7 +254,7 @@ function Shopinfo({dispatch,shopinfo}){
 
 			changePage.page=current;
 			changePage.rows=pageSize;
-			let condit=JSON.stringify(changePage);
+			let condit=JSON.stringify({...searchForm,...changePage});
 			// console.log(condit);
 
 		 dispatch({

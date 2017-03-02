@@ -32,8 +32,8 @@ function BarCode({dispatch,moudelnum}) {
     width:'20%'
   }, {
     title: '尺寸名称',
-    dataIndex: 'sizeName',
-    key: 'sizeName',
+    dataIndex: 'size',
+    key: 'size',
     width:'20%'
   }];
 		//   const data = [{

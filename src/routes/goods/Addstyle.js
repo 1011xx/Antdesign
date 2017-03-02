@@ -4,6 +4,7 @@ import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Addstyle from '../../components/ModelNumber/Addstyle';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
+import {setProps} from '../../utils/common';
 var result='';
 var result2='';
 
@@ -32,6 +33,10 @@ function Addstyleroute({dispatch,moudelnum}) {
     savedtwo,//修改成功
     switchstatus,
     saveFlag,
+    styleCode,
+    categoryCode,
+    yearCode,
+
   }=moudelnum;
   //通过从后台获取的规则来计算款号和品名
     const getname=function(){
@@ -181,6 +186,14 @@ function Addstyleroute({dispatch,moudelnum}) {
         });
         //当修改成功后，点击弹出确定按钮后，跳转到列表页
         dispatch(routerRedux.push('/modelnumber'));
+        //当跳转到列表页面后，根据当前页面的搜索条件包括页数，重新请求数据
+        let queryobj={styleCode,categoryCode,yearCode};
+        queryobj=setProps(queryobj);
+        // console.error(queryobj);
+        dispatch({
+          type:'moudelnum/querypage',
+          payload:queryobj
+        });
       }
   };
   return (

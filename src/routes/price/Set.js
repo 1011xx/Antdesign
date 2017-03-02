@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import Wrap from '../../commonComponents/wrap/wrap';
-import LookupModal from '../../components/Price/LookupModal';
+import LookupModal from '../../components/Price/SetLookupModal';
 import Pricemaintain from '../../components/Price/Pricemaintain';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 
@@ -110,16 +110,16 @@ function Set({dispatch,price}) {
   			// console.log(currentpage,pagesize);
   			 let tempobj={};
   			 if(set_styleCode){
-  				 tempobj.styleNo=styleCode;
+  				 tempobj.styleNo=set_styleCode;
   			 }
   			if(set_state){
-  				tempobj.resultState=state;
+  				tempobj.resultState=set_state;
   			}
         if(set_start){
-          tempobj.expectEffectiveDate=start;
+          tempobj.expectEffectiveDate=set_start;
         }
         if(set_end){
-          tempobj.expectEffectiveEndDate=end;
+          tempobj.expectEffectiveEndDate=set_end;
         }
 
 
@@ -141,16 +141,16 @@ function Set({dispatch,price}) {
   		onPageChange(currentpage){
         let tempobj={};
         if(set_styleCode){
-          tempobj.styleNo=styleCode;
+          tempobj.styleNo=set_styleCode;
         }
        if(set_state){
-         tempobj.resultState=state;
+         tempobj.resultState=set_state;
        }
        if(set_start){
-         tempobj.expectEffectiveDate=start;
+         tempobj.expectEffectiveDate=set_start;
        }
        if(set_end){
-         tempobj.expectEffectiveEndDate=end;
+         tempobj.expectEffectiveEndDate=set_end;
        }
 
   			dispatch({type:'price/tableLoading'});
