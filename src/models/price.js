@@ -434,7 +434,11 @@ export default {
                     });
                    yield put({type: 'enter'});
             }else{
-
+                  yield put({type:'publicDate',
+                      payload:{
+                        confirmLoading:false
+                      }
+                    });
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -562,7 +566,8 @@ export default {
 
              yield put({type:'publicDate',
                          payload:{
-                           addeditloading:false
+                           addeditloading:false,
+                           confirmLoading:false
                          }
                        });
             Modal.error({

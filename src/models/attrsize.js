@@ -14,18 +14,22 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
+      Modalkey:'',
+      confirmLoading:false
     },
     effects: {
         *enter({ payload }, { call, put, select }){
           //若后期保留停留的页面，开启注释
            const currentpage = yield select(({ attrsize }) => attrsize.current);
+           console.log('currentpage:',currentpage);
            const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
            let tempobj={};
            tempobj.page=currentpage;
            tempobj.rows=pagesize;
            let strarr=JSON.stringify(tempobj);
+           console.info('enter:',strarr)
             const {data}= yield call(querySize,{jsonParam:strarr});
-            if(data){
+            if(data.code==0){
             console.log(data);
              // 开始添加页面序号
                  let long=data.dataList.length;
@@ -52,6 +56,12 @@ export default {
                         loading:false,
                       }
                     });
+            }else{
+              Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+               yield put({type:'tableLoadingClose'});
             }
         },
         *querypage({ payload }, { call, put, select }){
@@ -61,7 +71,7 @@ export default {
           // const currentpage = payload.page;
           // const pagesize = payload.rows;
             let strarr=JSON.stringify(payload);
-            console.log(strarr)
+            console.log('querypage:',strarr)
             const {data}= yield call(querySize,{jsonParam:strarr});
             if(data){
             console.log(data);
@@ -113,11 +123,16 @@ export default {
                         modalVisible:false,
                         loading:true,
                          current:1,
+                         confirmLoading:false
                       }
                     });
 
             }else{
-
+                yield put({type:'publicDate',
+                      payload:{
+                        confirmLoading:false
+                      }
+                    });
                 Modal.error({
                 title: '提示',
                 content: data.msg,
@@ -141,11 +156,16 @@ export default {
                       payload:{
                         modalVisible:false,
                         loadings:true,
-                        current:1
+                        current:1,
+                        confirmLoading:false
                       }
                     });
             }else{
-
+                yield put({type:'publicDate',
+                      payload:{
+                        confirmLoading:false
+                      }
+                    });
                 Modal.error({
                 title: '提示',
                 content: data.msg,
@@ -166,14 +186,14 @@ export default {
                // message.success(data.msg);
                 console.log(data);
                 //这里判断total的值，total<currentpage*pagesize(10<10*2)
-                if(total<currentpage*pagesize){
-                  //将页码设为默认
-                   yield put({type:'publicDate',
-                       payload:{
-                          current:currentpage-1
-                       }
-                     });
-                }
+                // if(total<currentpage*pagesize){
+                //   //将页码设为默认
+                //    yield put({type:'publicDate',
+                //        payload:{
+                //           current:currentpage-1
+                //        }
+                //      });
+                // }
 
                     //方案二：再次请求数据
                     yield put({type:'enter'});

@@ -12,12 +12,78 @@ var locationid=null;
 var deleteid=null;
 function StyleAttr({dispatch,attributeClass}){
 
-	const {name,spinloading,total,current,defaultPageSize,visibleSure,details,title,dataSources,loadings,modalVisible,modalType,currentItem,confirmLoading,backMsg,backvalidateStatus}=attributeClass;
-	
+	const {
+		name,
+		spinloading,
+		total,
+		current,
+		defaultPageSize,
+		visibleSure,
+		details,
+		title,
+		dataSources,
+		loadings,
+		modalVisible,
+		modalType,
+		currentItem,
+		confirmLoading,
+		backMsg,
+		backvalidateStatus,
+		Modalkey
+	}=attributeClass;
+
+	const attrListProps = {
+		modalVisible,
+		dataSources,
+		loadings,
+		details,
+		spinloading,
+		onDeleteItem(item) {
+			//点击删除要执行的操作
+			dispatch({type:'attributeClass/sureModalshow'});
+
+			console.log(item);
+			deleteid=item.id;
+		},
+		onEditItem(item) {
+			console.log('修改条目');
+			//获取Id数据,为了修改数据用
+			console.log(item);
+			locationid=item.id;//修改要用到的Id
+			let timestamps=Date.parse(new Date());
+			dispatch({
+				type: 'attributeClass/showEditModal',
+				payload:{
+					modalType:'update',
+					Modalkey:timestamps,
+					currentItem:item
+				}
+			});
+			console.log('modalType:',modalType);
+		},
+		additem(){
+			console.log('增加条目');
+			//显示增加条目模态框
+			let timestamps=Date.parse(new Date());
+			dispatch({
+				type: 'attributeClass/showAddModal',
+				payload:{
+					  Modalkey:timestamps,
+						modalType:'create'
+
+				}
+			});
+			console.log('modalType:',modalType);
+		}
+	};
+
+
+
 	const attrModalProps = {
 
 	item:modalType==='create'?{}:currentItem,
     title,
+		key:Modalkey,
     details,
     confirmLoading,
     backMsg,
@@ -27,13 +93,13 @@ function StyleAttr({dispatch,attributeClass}){
       //当点击修改的时候我们可以获取clsId，但是如果，直接点击新增
       // 就会出现获取不到的状况，那么在创建的时候，直接从地址栏获取，
       // 为了保持统一，直接从地址栏获取。
-      // dispatch({
-      //     type:'attributeClass/publicDate',
-      //     payload:{
-      //       confirmLoading:true
-      //     }
-      //   });
-      
+      dispatch({
+          type:'attributeClass/publicDate',
+          payload:{
+            confirmLoading:true
+          }
+        });
+
 
     //让表格显示加载状态
       // dispatch({
@@ -48,7 +114,7 @@ function StyleAttr({dispatch,attributeClass}){
           type: 'attributeClass/create',
           payload: data,
          });
-       
+
       }else{
          //如果是修改
         console.log('修改');
@@ -59,9 +125,9 @@ function StyleAttr({dispatch,attributeClass}){
         type: 'attributeClass/edit',
         payload: data,
         });
-        
+
       }
-   
+
     },
     handleCancel() {
       dispatch({
@@ -133,43 +199,7 @@ function StyleAttr({dispatch,attributeClass}){
 
 
 
-  const attrListProps = {
-    modalVisible,
-    dataSources,
-    loadings,
-    details,
-    spinloading,
-    onDeleteItem(item) {
-      //点击删除要执行的操作
-      dispatch({type:'attributeClass/sureModalshow'});
-     
-      console.log(item);
-      deleteid=item.id;
-    },
-    onEditItem(item) {
-      //获取Id数据,为了修改数据用
-      console.log(item);
-      locationid=item.id;//修改要用到的Id
-      dispatch({
-        type: 'attributeClass/showEditModal',
-        payload:{
-        	modalType:'update',
-        	currentItem:item,
-        }
-      });
-      console.log(modalType);
-    },
-    additem(){
-    	console.log('增加条目');
-      //显示增加条目模态框
-    	dispatch({
-        type: 'attributeClass/showAddModal',
-        payload:{
-        	  modalType: 'create',
-        }
-      });
-    }
-  };
+
 
   const sureModalProps = {
     visibleSure,
@@ -239,9 +269,6 @@ function StyleAttr({dispatch,attributeClass}){
 
 
 
-  const UserModalGen = () =>
-    <AttrModel {...attrModalProps} />;
-
 
 	return(
 		<Wrap
@@ -250,10 +277,10 @@ function StyleAttr({dispatch,attributeClass}){
        last="属性维护"
 		   next={`编辑${name}`}
 		   >
-		  
+
 		  <AttrList {...attrListProps}/>
       <Paginations {...pageProps}/>
-		  <UserModalGen />
+		  <AttrModel {...attrModalProps} />
       <SureModel {...sureModalProps}/>
 	  </Wrap>
 

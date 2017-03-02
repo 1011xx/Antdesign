@@ -12,6 +12,8 @@ const ItemModel = ({
 	onOk,
 	handleCancel,
   selectSource,
+  key,
+  confirmLoading,
 	item={},
 	form: {
     getFieldDecorator,
@@ -72,6 +74,8 @@ const selectopt=selectSource.map((item, key) => {
           onCancel={handleCancel}
           maskClosable={false}
           closable={false}
+          key={key}
+          confirmLoading={confirmLoading}
 
         >
         <Form  inline style={{ width: 340 ,marginLeft:100}}>

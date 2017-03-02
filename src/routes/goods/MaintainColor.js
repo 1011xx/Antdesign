@@ -11,12 +11,13 @@ var deleteid=null;//转存删除ID号码
 
 function MaintainColor({dispatch,attrlist}){
     let conform=false;
-	const {total,current,confirmLoading,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
+	const {Modalkey,total,current,confirmLoading,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrlist;
 
 	const colorModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
     modalVisible,
+    key:Modalkey,
     confirmLoading,
     onOk(data) {
       // dispatch({
@@ -102,6 +103,7 @@ function MaintainColor({dispatch,attrlist}){
         type: 'attrlist/showEditModal',
         payload:{
           modalType:'update',
+          Modalkey:Date.parse(new Date()),
           currentItem:item,
         }
       });
@@ -112,6 +114,7 @@ function MaintainColor({dispatch,attrlist}){
         type: 'attrlist/showAddModal',
         payload:{
         	  modalType: 'create',
+            Modalkey:Date.parse(new Date())
         }
       });
     }

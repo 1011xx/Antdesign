@@ -15,6 +15,7 @@ export default {
       current:1,
       defaultPageSize:10,
       confirmLoading:false,
+      Modalkey:''
     },
     effects: {
         *enter({ payload }, { call, put,select }){
@@ -116,6 +117,11 @@ export default {
                  yield put({type:'enter'});
 
             }else{
+               yield put({type:'publicDate',
+                      payload:{
+                         confirmLoading:false
+                      }
+                    });
               Modal.error({
                 title: '提示',
                 content: data.msg,
@@ -147,6 +153,11 @@ export default {
                     yield put({type:'enter'});
 
             }else{
+               yield put({type:'publicDate',
+                      payload:{
+                         confirmLoading:false
+                      }
+                    });
               Modal.error({
                 title: '提示',
                 content: data.msg,

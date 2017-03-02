@@ -54,13 +54,13 @@ function ShopList({
     title: '所在城市',
     dataIndex: 'cityName',
     key: 'cityName',
-    width:'5%'
+    width:'10%'
   },
   {
     title: '店仓电话',
     dataIndex: 'mobileNumber',
     key: 'mobileNumber',
-    width:'20%'
+    width:'15%'
   },{
     title: '店长',
     dataIndex: 'shopkeeper',

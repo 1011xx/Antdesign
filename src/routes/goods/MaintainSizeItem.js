@@ -10,15 +10,24 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 var deleteid=null;//转存删除ID号码
 function MaintainSizeItem({dispatch,attrsizeItem}){
 
-	const {total,current,defaultPageSize,loading,visibleSure,dataSource,selectSource,title,modalVisible,modalType,currentItem}=attrsizeItem;
+	const {confirmLoading,Modalkey,total,current,defaultPageSize,loading,visibleSure,dataSource,selectSource,title,modalVisible,modalType,currentItem}=attrsizeItem;
 
 	const itemModalProps = {
-
-	item:modalType==='create'?{}:currentItem,
+	 item:modalType==='create'?{}:currentItem,
     title,
     visible:modalVisible,
+    key:Modalkey,
+    confirmLoading,
     selectSource,
     onOk(data) {
+
+      dispatch({
+        type:'attrsizeItem/publicDate',
+        payload:{
+         confirmLoading:true
+        }
+      });
+
       let tempstr=data.sizes.join(",");
       let newarr={...data,'sizes':tempstr};
       // console.log(newarr);
@@ -59,7 +68,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
 
 
   const itemListProps = {
-   dataSource,
+    dataSource,
     loading,
     onDeleteItem(item) {
      dispatch({type:'attrsizeItem/sureModalshow'});
@@ -77,6 +86,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
         type: 'attrsizeItem/showEditModal',
         payload:{
           modalType:'update',
+          Modalkey:Date.parse(new Date()),
           currentItem:item,
         }
       });
@@ -87,6 +97,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
         type: 'attrsizeItem/showAddModal',
         payload:{
             modalType: 'create',
+            Modalkey:Date.parse(new Date())
         }
       });
     }
@@ -156,8 +167,9 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
     }
   };
 
-  const UserModalGen = () =>
-    <ItemModel {...itemModalProps} />;
+  //使用函数会导致页面重新渲染
+  // const UserModalGen = () =>
+  //   <ItemModel {...itemModalProps} />;
 
 
 	return(
@@ -168,7 +180,7 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
 
 		  <SizeList {...itemListProps}/>
 		  <Paginations {...pageProps}/>
-      <UserModalGen />
+      <ItemModel {...itemModalProps} />
       <SureModel {...sureModalProps}/>
 		   </Wrap>
 

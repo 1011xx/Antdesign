@@ -24,6 +24,7 @@ export default {
 
       details:{},
       addressId:'',
+      Modalkey:''
     },
     effects: {
       //请求/mainattrlist页面的数据
@@ -156,13 +157,17 @@ export default {
                       payload:{
                          modalVisible:false,
                          current:1,
-                         loadings:true
+                         loadings:true,
+                         confirmLoading:false
                       }
                     });
                 //再次请求数据
                  yield put({type:'queryAttributeClassId'});
             }else{
-
+              yield put({type:'publicDate',
+              payload:{
+                confirmLoading:false
+              }});
                 Modal.error({
                 title: '提示',
                 content: data.msg,
@@ -186,24 +191,25 @@ export default {
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loadings:true
+                         loadings:true,
+                         confirmLoading:false
                       }
                     });
                  //再次请求数据
                  yield put({type:'queryAttributeClassId'});
 
             }else{
+              yield put({type:'publicDate',
+              payload:{
+                confirmLoading:false
+              }});
 
               Modal.error({
                 title: '提示',
                 content: data.msg,
               });
               // message.warning(data.msg);
-               // yield put({type:'publicDate',
-               // payload:{
-               //   backMsg:data.msg,
-               //   backvalidateStatus:"error"
-               // }});
+
             }
         },
         *delete({ payload }, { call, put,select }){
@@ -245,9 +251,11 @@ export default {
             };
         },
         showEditModal(state,action) {
+          let timestamp=Date.parse(new Date());
             return {...state, ...action.payload,modalVisible:true,title:"修改" };
         },
         showAddModal(state,action) {
+
             return {...state,...action.payload, modalVisible:true,title:"增加" };
         },
         hideModal(state) {

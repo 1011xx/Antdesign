@@ -6,6 +6,7 @@ const FormItem = Form.Item;
 const AttrModel = ({
 	title,
 	modalVisible,
+  key,
   confirmLoading,
 	onOk,
 	handleCancel,
@@ -64,6 +65,7 @@ const AttrModel = ({
           closable={false}
           maskClosable={false}
           confirmLoading={confirmLoading}
+          key={key}
         >
         <Form  inline style={{ width: 264 ,margin:'0 auto'}}>
         <Row style={{padding:'0 0 20px 0','textAlign':'left'}}>

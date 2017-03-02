@@ -14,6 +14,8 @@ export default {
       total:0,
       current:1,
       defaultPageSize:10,
+      confirmLoading:false,
+      Modalkey:''
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -118,14 +120,19 @@ export default {
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loading:true
+                         loading:true,
+                         confirmLoading:false
                       }
                     });
                     //方案二：再次请求数据
                      yield put({type:'querypage'});
 
             }else{
-
+               yield put({type:'publicDate',
+                      payload:{
+                         confirmLoading:false
+                      }
+                    });
                Modal.error({
                 title: '提示',
                 content: data.msg,
@@ -149,13 +156,18 @@ export default {
                       payload:{
                          current:1,
                          modalVisible:false,
-                         loading:true
+                         loading:true,
+                         confirmLoading:false
                       }
                     });
                     //方案二：再次请求数据
                      yield put({type:'querypage'});
             }else{
-               // message.warning(data.msg);
+                yield put({type:'publicDate',
+                      payload:{
+                         confirmLoading:false
+                      }
+                    });
                Modal.error({
                 title: '提示',
                 content: data.msg,

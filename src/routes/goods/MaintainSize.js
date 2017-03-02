@@ -10,16 +10,21 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 var deleteid=null;//转存删除ID号码
 function MaintainSize({dispatch,attrsize}){
 
-	const {total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrsize;
+	const {confirmLoading,Modalkey,total,current,defaultPageSize,loading,visibleSure,dataSource,title,modalVisible,modalType,currentItem}=attrsize;
 
 	const sizeModalProps = {
 	  item:modalType==='create'?{}:currentItem,
     title,
+    key:Modalkey,
     modalVisible,
+    confirmLoading,
     onOk(data) {
-    // dispatch({
-    //           type:'attrsize/tableLoading'
-    //         });
+            dispatch({
+                type:'attrsize/publicDate',
+                payload:{
+                  confirmLoading:true
+                }
+                    });
           if(modalType==='create'){
             //如果是创建
             console.log('创建');
@@ -84,6 +89,7 @@ const sureModalProps = {
         type: 'attrsize/showEditModal',
         payload:{
           modalType:'update',
+          Modalkey:Date.parse(new Date()),
           currentItem:item,
         }
       });
@@ -94,6 +100,7 @@ const sureModalProps = {
         type: 'attrsize/showAddModal',
         payload:{
             modalType: 'create',
+            Modalkey:Date.parse(new Date())
         }
       });
     }
@@ -143,8 +150,7 @@ const sureModalProps = {
     }
   };
 
-  const UserModalGen = () =>
-    <SizeModel {...sizeModalProps} />;
+
 
 
 	return(
@@ -155,7 +161,7 @@ const sureModalProps = {
 
 		  <SizeList {...sizeListProps}/>
       <Paginations {...pageProps}/>
-		  <UserModalGen />
+		  <SizeModel {...sizeModalProps} />
       <SureModel {...sureModalProps}/>
 		   </Wrap>
 

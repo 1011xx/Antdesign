@@ -8,6 +8,8 @@ const SizeModel = ({
 	modalVisible,
 	onOk,
 	handleCancel,
+  key,
+  confirmLoading,
 	item={},
 	form: {
     getFieldDecorator,
@@ -62,6 +64,8 @@ function handleOk() {
           onCancel={handleCancel}
           maskClosable={false}
           closable={false}
+          confirmLoading={confirmLoading}
+          key={key}
         >
         <Form  inline style={{ width: 264 ,margin:'0 auto'}}>
         <Row style={{padding:'0 0 20px 0','textAlign':'left'}}>

@@ -9,7 +9,8 @@ const AttrModel = ({
 	onOk,
 	handleCancel,
 	details,
-	item={},
+	item,
+	key,
 	form: {
     getFieldDecorator,
     validateFields,
@@ -43,7 +44,8 @@ function handleOk() {
           onCancel={handleCancel}
           closable={false}
           maskClosable={false}
-					
+					confirmLoading={confirmLoading}
+					key={key}
         >
         <Form  inline style={{ width: 244 ,margin:'0 auto'}}>
         <Row style={{padding:'0 0 20px 0','textAlign':'right'}}>
