@@ -18,6 +18,9 @@ const Searchinfo = ({
     validateFields,
     getFieldsValue
     },
+    styleCode,
+		categoryCode,
+		yearCode,
 }) =>{
 
 
@@ -58,7 +61,7 @@ return (
             label="款号"
             >
               {getFieldDecorator('styleCode', {
-
+                  initialValue:styleCode
               })(
                 <Input size="small" placeholder="请输入" />
               )}
@@ -69,10 +72,10 @@ return (
             label="类别"
             >
             {getFieldDecorator('categoryCode', {
-              initialValue:'undefined'
+              initialValue:categoryCode
             })(
              <Select size="small" placeholder="请选择类别" style={{ width: 150,height:22,textAlign:'left' }} >
-             <Option  value="undefined">全部</Option>
+             <Option  value="">全部</Option>
                 {categoryOption}
              </Select>
             )}
@@ -84,10 +87,10 @@ return (
             label="年份"
             >
             {getFieldDecorator('yearCode', {
-              initialValue:'undefined'
+              initialValue:yearCode
             })(
              <Select size="small" placeholder="请选择年份" style={{ width: 150,height:22,textAlign:'left' }} >
-              <Option  value="undefined">全部</Option>
+              <Option  value="">全部</Option>
                   {yearOption}
              </Select>
             )}

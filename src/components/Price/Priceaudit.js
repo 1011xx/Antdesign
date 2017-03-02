@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import {Link} from 'dva/router';
+import moment from 'moment';
 import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,DatePicker } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
@@ -23,6 +24,10 @@ onEditItem,
 onLook,
 dataSource,
 loading,
+styleCode,
+   start,
+   end,
+   state
 
 })=> {
   // 使用map函数生成option选项
@@ -107,40 +112,49 @@ loading,
 
     },
   }];
-  const data=[{
-    num:1,
-    id:1,
-    documentNumber:'P201610020001',
-    ExpectEffectiveDate:'2016-10-12',
-    CreateEmployeeName:'林明',
-    CreateDate:'2016-10-12 13:00:35',
-    StateName:'审核不通过',
-    status:0
-  },{
-    num:2,
-    id:2,
-    documentNumber:'P201610020011',
-    ExpectEffectiveDate:'2016-10-15',
-    CreateEmployeeName:'安媛媛',
-    CreateDate:'2016-10-15 13:00:55',
-    StateName:'审核通过',
-    status:1
-  },{
-    num:3,
-    id:3,
-    documentNumber:'P201611210011',
-    ExpectEffectiveDate:'2016-11-15',
-    CreateEmployeeName:'黎明',
-    CreateDate:'2016-11-15 13:00:00',
-    StateName:'审核不通过',
-    status:0
-  }];
+  // const data=[{
+  //   num:1,
+  //   id:1,
+  //   documentNumber:'P201610020001',
+  //   ExpectEffectiveDate:'2016-10-12',
+  //   CreateEmployeeName:'林明',
+  //   CreateDate:'2016-10-12 13:00:35',
+  //   StateName:'审核不通过',
+  //   status:0
+  // },{
+  //   num:2,
+  //   id:2,
+  //   documentNumber:'P201610020011',
+  //   ExpectEffectiveDate:'2016-10-15',
+  //   CreateEmployeeName:'安媛媛',
+  //   CreateDate:'2016-10-15 13:00:55',
+  //   StateName:'审核通过',
+  //   status:1
+  // },{
+  //   num:3,
+  //   id:3,
+  //   documentNumber:'P201611210011',
+  //   ExpectEffectiveDate:'2016-11-15',
+  //   CreateEmployeeName:'黎明',
+  //   CreateDate:'2016-11-15 13:00:00',
+  //   StateName:'审核不通过',
+  //   status:0
+  // }];
 
    function transform(a){
      if(a){
        return a.format('YYYY-MM-DD');
      }
    }
+
+function momdate(b){
+  if(b){
+    return moment(b, 'YYYY-MM-DD');
+  }else{
+    return undefined;
+  }
+}
+
 
   function handleSubmit(e){
      e.preventDefault();
@@ -178,6 +192,7 @@ loading,
     label="款号"
     >
     {getFieldDecorator('styleCode', {
+      initialValue:styleCode
     })(
       <Input size="small" placeholder="请输入款号"/>
     )}
@@ -188,6 +203,7 @@ loading,
     className={styles.marginLeft}
     >
     {getFieldDecorator('date', {
+      initialValue:[momdate(start),momdate(end)]
     })(
        <RangePicker size="small" />
     )}
@@ -198,9 +214,10 @@ loading,
       className={styles.marginLeft}
     >
     {getFieldDecorator('status', {
-      initialValue:"",
+      initialValue:state,
     })(
       <Select  style={{ width: 150,height:22 }} className={styles.selectstyle}>
+      <Option  value="">全部</Option>
       {selectopt}
       </Select>
     )}

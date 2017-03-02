@@ -32,8 +32,8 @@ function MaintainColor({dispatch,attrlist}){
           confirmLoading:true
         },
       });
-      
-     
+
+
 
         //这里与后台数据交流
         dispatch({
@@ -52,8 +52,8 @@ function MaintainColor({dispatch,attrlist}){
           confirmLoading:true
         },
       });
-      
-     
+
+
         //这里与后台数据交流
         dispatch({
         type: 'attrlist/edit',
@@ -161,10 +161,6 @@ function MaintainColor({dispatch,attrlist}){
     }
   };
 
-  const UserModalGen = () =>
-    <AttrModel {...colorModalProps} />;
-
-
 	return(
 		<Wrap
        num="1"
@@ -173,7 +169,7 @@ function MaintainColor({dispatch,attrlist}){
 
 		  <ColorList {...colorListProps}/>
       <Paginations {...pageProps}/>
-		  <UserModalGen />
+		  <AttrModel {...colorModalProps} />
       <SureModel {...sureModalProps}/>
 		   </Wrap>
 

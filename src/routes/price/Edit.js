@@ -11,7 +11,7 @@ import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var brandCode;
 var categoryCode;
 var seasonCode;
-var styleNo;
+var styleCode;
 var yearCode;
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
@@ -396,9 +396,9 @@ function Edit({dispatch,price}) {
       brandCode=datas.brandCode;
       categoryCode=datas.categoryCode;
       seasonCode=datas.seasonCode;
-      styleNo=datas.styleNo;
+      styleCode=datas.styleNo;
       yearCode=datas.yearCode;
-      const commitdata={brandCode,categoryCode,seasonCode,styleNo,yearCode};
+      const commitdata={brandCode,categoryCode,seasonCode,styleCode,yearCode};
       console.log(commitdata);
       console.log(JSON.stringify(commitdata));
       dispatch({

@@ -27,10 +27,21 @@ export default {
             const {data}= yield call(queryColor,{jsonParam:strarr});
             if(data){
             console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                    data.dataList[i-1].key=i;
-                  }
+              // 开始添加页面序号
+                 let long=data.dataList.length;
+                  if(currentpage<2){
+                    for(let i=1;i<=long;i++){
+                        data.dataList[i-1].num=i;
+                        data.dataList[i-1].key=i;
+                      }
+                    }else{
+                      let size=(currentpage-1)*10;
+                      for(let j=size;j<long+size;j++){
+                        data.dataList[j-size].num=j+1;
+                        data.dataList[j-size].key=j+1;
+                      }
+                    }
+                    //添加页面序号结束
             yield put({type:'publicDate',
                       payload:{
                         dataSource:data.dataList,
@@ -126,7 +137,7 @@ export default {
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
-                         current:1,
+                         // current:1,
                          modalVisible:false,
                          loadings:true,
                          confirmLoading:false

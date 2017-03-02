@@ -52,6 +52,12 @@ function Shopinfo({dispatch,shopinfo}){
 		region,
 		status,
 		types,
+		shopType,
+		saleAreaCode,
+		provinceCode,
+		cityCode,
+		shopStatus,
+		fullName,
 		passdata(value){
 			console.log('value:',value);
 			let data=setProps(value);
@@ -59,6 +65,7 @@ function Shopinfo({dispatch,shopinfo}){
 			dispatch({
 				type:'shopinfo/publicdate',
 				payload:{
+					current:1,
 					fullName:data.shopname,
 					shopType:data.shopType,
 					saleAreaCode:data.saleAreaCode,
@@ -135,7 +142,6 @@ function Shopinfo({dispatch,shopinfo}){
 	//点击修改的时候
 		onEditItem( record){
 
-			//如果需要进入修改页面或者详情页面你点击刷新的话，需要吧ID存到cookies，点击刷新后通过读取cookie。
 			// console.log(record.id);
 			if(record.images){
 				console.log('record.images',record.images);

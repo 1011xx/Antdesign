@@ -12,6 +12,12 @@ const Queryinfo = ({
   status,
   types,
   passdata,
+  shopType,
+  saleAreaCode,
+  provinceCode,
+  cityCode,
+  shopStatus,
+  fullName,
   form: {
     getFieldDecorator,
     validateFields,
@@ -75,7 +81,7 @@ return (
             label="仓店名称"
             >
               {getFieldDecorator('shopname', {
-
+                initialValue:fullName
               })(
                 <Input size="small" placeholder="请输入" />
               )}
@@ -86,10 +92,10 @@ return (
             label="类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别"
             >
             {getFieldDecorator('shopType', {
-              initialValue:'undefined'
+              initialValue:shopType
             })(
               <Select size="small" placeholder="请选择类别" style={{ width: 153,textAlign:'left' }} >
-                 <Option  value="undefined">全部</Option>
+                 <Option  value="">全部</Option>
                  {typesOption}
               </Select>
             )}
@@ -100,10 +106,10 @@ return (
             label="销售区域"
             >
             {getFieldDecorator('saleAreaCode', {
-                initialValue:'undefined'
+                initialValue:saleAreaCode
             })(
               <Select size="small" placeholder="请选择销售区域" style={{ width: 153,textAlign:'left' }} >
-                <Option  value="undefined">全部</Option>
+                <Option  value="">全部</Option>
                  {regionOption}
               </Select>
             )}
@@ -119,7 +125,7 @@ return (
             label="所在城市"
             >
             {getFieldDecorator('provincecitys', {
-                initialValue:['undefined','undefined']
+                initialValue:[provinceCode,cityCode]
             })(
               <Cascader
               size="small"
@@ -136,10 +142,10 @@ return (
             label="店仓状态"
             >
             {getFieldDecorator('shopStatus', {
-                initialValue:'undefined'
+                initialValue:shopStatus
             })(
               <Select size="small" placeholder="请选择销售区域" style={{ width: 153,textAlign:'left' }} >
-                <Option  value="undefined">全部</Option>
+                <Option  value="">全部</Option>
                  {statusOption}
               </Select>
             )}

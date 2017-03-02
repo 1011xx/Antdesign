@@ -143,9 +143,9 @@ const {   previewVisible,
 
       },
 		 handleChange ( {fileList,file} ) {
-		 	console.log('fileList:',fileList);
+		 	// console.log('fileList:',fileList);
 		 	let filelength=fileList.length;
-		 	console.log(filelength);
+		 	// console.log(filelength);
 		    file.status = 'done';
 		     dispatch({
               type: 'shopinfo/FileListlength',
@@ -175,7 +175,7 @@ const {   previewVisible,
 		// console.log(123);
 
 		  oFile.push(file.file);
-		  console.log(oFile);
+		  // console.log(oFile);
 		  // var oMyForm = new FormData();
 		  // oMyForm.append("username", "Groucho");
 		  // oMyForm.append("accountnum", 123456); // 数字123456被立即转换成字符串"123456"
@@ -198,7 +198,7 @@ const {   previewVisible,
 
 		},
 		onRemove(file){
-			for (let i = 0; i < fileListlength; i++) {
+			for (let i = 0; i < oFile.length; i++) {
 				if(oFile[i].name==file.name){
 					oFile.splice(i,1);
 				}
@@ -223,7 +223,7 @@ const {   previewVisible,
     }
   }
 	return(
-	<Spin size="large" tip="保存信息中,请稍后..." spinning={saving}>
+	<Spin size="large" tip="请稍后..." spinning={saving}>
 
 		<Wrap
 		   num="2"

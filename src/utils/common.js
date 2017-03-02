@@ -19,8 +19,19 @@ export function setProp(obj) {
     }
     return obj;
 }
-//将json对象中为undefined字符串的值转化为undefined
+//将json对象中为""字符串的值转化为undefined
 export function setProps(obj) {
+    for (var p in obj) {
+        switch (obj[p]) {
+            case '':
+                obj[p] = undefined;
+                break;
+        }
+    }
+    return obj;
+}
+//将json对象中为""字符串的值转化为undefined
+export function setPropundefined(obj) {
     for (var p in obj) {
         switch (obj[p]) {
             case 'undefined':

@@ -1,35 +1,25 @@
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal,Spin } from 'antd';
+import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import {styleConfigDeleteImage} from '../../services/attribute';
 import styles from './Configcolorsize.less';
 import Upload from 'rc-upload';
+import request from '../../utils/request';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 
-
-//以下是图片上传组件
-var retback=[];
+// var retback=[];
+//选择图片后，将文件转换成base64格式的
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
 
-function beforeUpload(file) {
-  const isJPG = file.type === 'image/jpeg';
-  if (!isJPG) {
-    message.error('You can only upload JPG file!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJPG && isLt2M;
-}
 
+/***********************************图片上传组件***********************************/
 class PicturesWall extends React.Component {
   state = {
     previewVisible: false,
@@ -38,85 +28,66 @@ class PicturesWall extends React.Component {
     imagesrc:this.props.text,
     imageName:''
   };
-  handleCancel = () => this.setState({ previewVisible: false })
 
+    handleChange = (file) => {
+      console.log('onStart');
+      //当选择图片上传后，显示上传的图片
+      getBase64(file, imageUrl => this.setState({ imagesrc:imageUrl }));
+    };
+    onSuccess=(ret)=>{
+      //当上传成功后返回的数据
+      console.log(ret);
+    }
+
+
+
+
+
+
+
+    handleCancel = () => {
+      this.setState({ previewVisible: false })
+    }
     handlePreview = (file) => {
       this.setState({
         previewImage: file.url || file.thumbUrl,
         previewVisible: true,
+
       });
     }
-
-    handleChange = (file) => {
-      console.log('onStart', file, file.name);
-
-      getBase64(file, imageUrl => this.setState({ imagesrc:imageUrl }));
-    };
-    success=(ret)=>{
-      console.info('onSuccessret:',ret);
+    look=()=>{
+      this.setState({ previewVisible: true });
+    }
+    deleteImage=()=>{
+      console.log("deleteImage");
+      this.setState({ imagesrc: '' })
       let str=JSON.parse("["+this.props.name+"]")[0];
-      // console.log('str',str);
-      let temp={};
-      temp.colorCode=str.colorCode;
-      temp.reg=ret;
-      // console.log(temp);
-      //组装上传图片返回的列表
-      if(retback.length>0){
-
-        let flag=true;
-        for(let i=0;i<retback.length;i++){
-          if(retback[i].colorCode==str.colorCode){
-            console.log('retback[i].colorCode:',retback[i].colorCode);
-            console.log('str.colorCode:',str.colorCode);
-            retback.splice(i,1,temp);
-            console.log(retback);
-            flag=false;
-          }
-        }
-        if(flag){
-          retback.push(temp);
-        }
-
-      }else{
-          retback.push(temp);
-      }
-      console.log('retback',retback);
+      let temdelobj={};
+      temdelobj.styleId=str.styleId;
+      temdelobj.colorCode=str.colorCode;
+      // if(str.imageName){
+      //   temdelobj.imageName=str.imageName;
+      //   // console.info(str.imageName);
+      // }else{
+      //   for(let i=0;i<retback.length;i++){
+      //     if(retback[i].colorCode==str.colorCode){
+      //       // console.log('retback[i].imageName:',retback[i].reg[0].imageName);
+      //       // console.log('str.imageName:',str.imageName);
+      //       // console.log(retback);
+      //       temdelobj.imageName=retback[i].reg[0].imageName;
+      //     }
+      //   }
+      // }
+      // console.log('temdelobj:',temdelobj);
+      let result=styleConfigDeleteImage({jsonparam:JSON.stringify(temdelobj)});
+      console.log(result);
     }
 
-
-      look=()=>{
-        this.setState({ previewVisible: true });
-      }
-      deleteImage=()=>{
-          this.setState({ imagesrc: '' })
-          let str=JSON.parse("["+this.props.name+"]")[0];
-          let temdelobj={};
-          temdelobj.styleId=str.styleId;
-          temdelobj.colorCode=str.colorCode;
-          if(str.imageName){
-            temdelobj.imageName=str.imageName;
-            // console.info(str.imageName);
-          }else{
-            for(let i=0;i<retback.length;i++){
-              if(retback[i].colorCode==str.colorCode){
-                // console.log('retback[i].imageName:',retback[i].reg[0].imageName);
-                // console.log('str.imageName:',str.imageName);
-                // console.log(retback);
-                temdelobj.imageName=retback[i].reg[0].imageName;
-              }
-            }
-          }
-          // console.log('temdelobj:',temdelobj);
-          let result=styleConfigDeleteImage({jsonparam:JSON.stringify(temdelobj)});
-          console.log(result);
-      }
 
   render() {
     const imageUrl = this.state.imageUrl;
     const { previewVisible, imagesrc } = this.state;
     const {name,text}=this.props;
-
-
     const imgshow=(
       <div>
       <div className="imageborder">
@@ -132,28 +103,34 @@ class PicturesWall extends React.Component {
     );
 
     return (
-<div>
-{imagesrc ? imgshow :
-      <Upload
-        data={{jsonparam:name}}
-        action="/fmss/styleController/styleConfigUploadImage"
-        onSuccess={this.success}
-        onStart={this.handleChange}
-      >
-      <div className="uploadstyle">
-        <Icon type="plus" className="upload-icon"/>
-        <div className="ant-upload-text">上传图片</div>
-      </div>
-     </Upload>
-   }
-     <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="suit" style={{ width: '100%' }} src={imagesrc} />
-     </Modal>
-</div>
+      <div>
+      {imagesrc ? imgshow :
+              <Upload
+                data={{jsonparam:name}}
+                action="/fmss/styleController/styleConfigUploadImage"
+                onSuccess={this.onSuccess}
+                onStart={this.handleChange}
+              >
+              <div className="uploadstyle">
+                <Icon type="plus" className="upload-icon"/>
+                <div className="ant-upload-text">上传图片</div>
+              </div>
+             </Upload>
+           }
+             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                  <img alt="suit" style={{ width: '100%' }} src={imagesrc} />
+             </Modal>
+        </div>
+
     );
   }
 }
-//图片上传组件结束
+
+/**********************************************************************/
+
+
+
+
 
 
 const Configcolorsize=({
@@ -172,9 +149,8 @@ const Configcolorsize=({
     listarry,
     backurl,
     configlist,
-    saveSpin,
-    picturnchange,
-    selectonChange
+    selectonChange,
+    saveSpin
 
   })=> {
 
@@ -184,7 +160,7 @@ const Configcolorsize=({
           if (!err) {
 
 
-           getadddata(fieldsValue,retback);
+           getadddata(fieldsValue);
 
 
           }
@@ -229,35 +205,38 @@ const Configcolorsize=({
                     </Select>
                  )}
         </FormItem>
+
       ),
     }, {
       title: '图片',
       dataIndex: 'img',
       key: 'img',
-      render:(text,record,index)=>(
+      render:(text,record)=>(
         <div className={styles.picturewall} onClick={() => onUpload(record)}>
-        <PicturesWall name={record.json} text={record.proimage} />
+        <PicturesWall name={record.json} text={record.proimage}/>
         </div>
       ),
     }, {
       title: '操作',
       key: 'operation',
-      render:(text,record,index)=>(
-        <a onClick={() => onDelete(text,record,index)}>删除</a>
+      render:(text,record)=>(
+        <a onClick={() => onDelete(text,record)}>删除</a>
       ),
     }];
     const data=[{
       color:'101',
       colorName:'黑色'
+
     },
     {
       color:'102',
       colorName:'绿色'
+
     }];
 
 
   return (
-    <Spin spinning={saveSpin} tip="保存中...">
+    <div>
     <Form
       inline
       onSubmit={handleSubmit}
@@ -290,7 +269,7 @@ const Configcolorsize=({
     </div>
     </Form>
     <div style={{height:30}}/>
-    </Spin>
+    </div>
   );
 }
 Configcolorsize.propTypes = {

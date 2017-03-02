@@ -19,22 +19,22 @@ function BarCode({dispatch,moudelnum}) {
     title: '条码',
     dataIndex: 'barcode',
     key: 'barcode',
-    width:'35%'
+    width:'25%'
   }, {
     title: '款号',
     dataIndex: 'styleCode',
     key: 'styleCode',
-    width:'35%'
+    width:'25%'
   },{
-    title: '颜色',
+    title: '颜色名称',
     dataIndex: 'colorName',
     key: 'colorName',
-    width:'10%'
+    width:'20%'
   }, {
-    title: '尺寸',
+    title: '尺寸名称',
     dataIndex: 'sizeName',
     key: 'sizeName',
-    width:'10%'
+    width:'20%'
   }];
 		//   const data = [{
 		//   num: '1',

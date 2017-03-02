@@ -11,11 +11,15 @@ import Paginations from '../../commonComponents/Pagination/Paginations';
 // var state;
 
 function Set({dispatch,price}) {
-  const {styleCode,start,end,state,dataSource, statedata,loading,lookupvis,auditdetaildata,setpagetotal,setpagecurrent,setpagedefaultPageSize }=price;
+  const {set_styleCode,set_start,set_end,set_state,set_dataSource, set_statedata,loading,lookupvis,auditdetaildata,setpagetotal,setpagecurrent,setpagedefaultPageSize }=price;
   const setProps={
-    dataSource,
-    statedata,
+    set_dataSource,
+    set_statedata,
     loading,
+    set_styleCode,
+    set_start,
+    set_end,
+    set_state,
     onLook(item){
       //当点击详情的时候
       dispatch({
@@ -36,10 +40,10 @@ function Set({dispatch,price}) {
  dispatch({
        type:'price/publicDate',
        payload:{
-          styleCode:data.styleCode,
-          start:data.start,
-          end:data.end,
-          state:data.status
+          set_styleCode:data.styleCode,
+          set_start:data.start,
+          set_end:data.end,
+          set_state:data.status
        }
      });
       // styleCode=data.styleCode;
@@ -105,16 +109,16 @@ function Set({dispatch,price}) {
   		onShowSizeChange(currentpage,pagesize){
   			// console.log(currentpage,pagesize);
   			 let tempobj={};
-  			 if(styleCode){
+  			 if(set_styleCode){
   				 tempobj.styleNo=styleCode;
   			 }
-  			if(state){
+  			if(set_state){
   				tempobj.resultState=state;
   			}
-        if(start){
+        if(set_start){
           tempobj.expectEffectiveDate=start;
         }
-        if(end){
+        if(set_end){
           tempobj.expectEffectiveEndDate=end;
         }
 
@@ -136,16 +140,16 @@ function Set({dispatch,price}) {
   		},
   		onPageChange(currentpage){
         let tempobj={};
-        if(styleCode){
+        if(set_styleCode){
           tempobj.styleNo=styleCode;
         }
-       if(state){
+       if(set_state){
          tempobj.resultState=state;
        }
-       if(start){
+       if(set_start){
          tempobj.expectEffectiveDate=start;
        }
-       if(end){
+       if(set_end){
          tempobj.expectEffectiveEndDate=end;
        }
 

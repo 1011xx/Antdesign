@@ -19,26 +19,30 @@ function Moudelnumber({dispatch,moudelnum}) {
 		styleCategory,
 		styleYear,
 		loading,
+		styleCode,
+		categoryCode,
+		yearCode,
 		passdata(value){
-			let data=setProps(value);
-			console.log("data",data);
+			console.log('value:',value);
 			//分别赋值，保存状态
 			//创建查询数据newarr
 			dispatch({
 				type:'moudelnum/publicDate',
 				payload:{
-				  styleCode:data.styleCode,
-				  categoryCode:data.categoryCode,
-			      yearCode:data.yearCode
+					current:1,
+				  styleCode:value.styleCode,
+				  categoryCode:value.categoryCode,
+			    yearCode:value.yearCode
 				}
 			});
-			
+			let data=setProps(value);
+			console.log("data",data);
 				let newarr={...data,
-					    styleCode:data.styleCode,
+					  styleCode:data.styleCode,
 						yearCode:data.yearCode,
 						categoryCode:data.categoryCode
 				};
-			
+
 			dispatch({type:'moudelnum/querypage',payload:newarr});
 		}
 	};

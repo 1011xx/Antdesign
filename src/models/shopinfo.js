@@ -135,9 +135,9 @@ export default {
         let childobj={};
         let childarr=[];
         tempobj.label="全部";
-        tempobj.value="undefined";
+        tempobj.value="";
         childobj.label="全部";
-        childobj.value="undefined";
+        childobj.value="";
         childarr.push(childobj);
         tempobj.children=childarr;
         province.data.provincecity.unshift(tempobj);
@@ -226,8 +226,8 @@ export default {
             // images=[{"imageDirectory":"\\images\\shop\\d17446cb5afe45f692def5ebfdcb7473.png","imageName":"12ebb50ce49a485882b316351c75ca01.png","imageOrginalName":"i6pg.png","imageType":"png"}]
             for(let i=0;i<imagearr.length;i++){
               imagearr[i].uid=-i;
-              // imagearr[i].url='http://192.168.10.146:5001/fmss'+imagearr[i].imageDirectory;
-              imagearr[i].url='http://127.0.0.1:8081/fmss'+imagearr[i].imageDirectory;
+              imagearr[i].url='http://192.168.10.146:5001/fmss'+imagearr[i].imageDirectory;
+              // imagearr[i].url='http://127.0.0.1:8081/fmss'+imagearr[i].imageDirectory;
               //如果发布后使用下面的代码取得服务器ip，如果使用的是代理的话就用上面的地址
               // imagearr[i].url='http://'+location.host+'/fmss'+imagearr[i].imageDirectory;
             }
@@ -253,8 +253,8 @@ export default {
     },
     *queryShop({payload},{select,call,put}){
    	 // console.log(payload);
-    const currentpage = yield select(({ shopinfo }) => shopinfo.changePage.page);
-    const pagesize = yield select(({ shopinfo }) => shopinfo.changePage.rows);
+    const currentpage = yield select(({ shopinfo }) => shopinfo.current);
+    const pagesize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
     // console.info('pagesize--currentpage:',currentpage,pagesize);
    	 const resultlist=yield call(queryShop,{jsonparam:payload});
    	 if(resultlist.data){
@@ -340,12 +340,15 @@ export default {
 },
   subscriptions: {
   	setup({ dispatch, history }){
+      //这个状态是为了让页面打开的第一次加载
+       let state=true;
   		 history.listen(location => {
         if (location.pathname === '/shopinfo') {
         	// console.log(location.pathname);
+         
             dispatch({type: 'publicdate',
                       payload:{
-                      current:1,
+                      // current:1,
                       defaultPageSize:10,
                       fileListlength:0,
                       oFile:[],
@@ -369,16 +372,20 @@ export default {
                       //   shopStatus:undefined,
                       //   shopType:undefined
                       // },
-                      fullName:undefined,
-                      shopType:undefined,
-                      saleAreaCode:undefined,
-                      shopStatus:undefined,
-                      provinceCode:undefined,
-                      cityCode:undefined
+                      // fullName:undefined,
+                      // shopType:undefined,
+                      // saleAreaCode:undefined,
+                      // shopStatus:undefined,
+                      // provinceCode:undefined,
+                      // cityCode:undefined
 
                     }
                   });
-          dispatch({type: 'enter'});
+            if(state){
+              dispatch({type: 'enter'});
+              state=false;
+            }
+          // dispatch({type: 'enter'});
 
         }else if (location.pathname === '/shopinfo/shopadd') {
           // console.log(location.pathname);
@@ -388,7 +395,8 @@ export default {
                       payload:{
                       fileList:[],
                       fileListlength:0,
-                      oFile:[]
+                      oFile:[],
+                      
                     }
                   });
 
@@ -411,7 +419,8 @@ export default {
           }else if(strs[1]==='shopedit'){
              dispatch({type: 'publicdate',
                       payload:{
-                     behavier:'update'
+                     behavier:'update',
+                     editloading:true
                     }
                   });
 

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
+import {styleConfigDeleteImage} from '../../services/attribute';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
@@ -35,8 +36,8 @@ const configProps={
 			// console.info('value:',value);
 		}
 	},
-	getadddata(value,retback){
-		console.log(retback);
+	getadddata(value){
+		// console.log(retback);
 		dispatch({
 			type:'moudelnum/publicDate',
 			payload:{
@@ -45,16 +46,25 @@ const configProps={
 		});
 		// console.log('retback:',retback);
 		// console.log('configlist:',configlist);
+
+
+
+
 		//给表格数据添加image对象
-		if(retback.length>0){
-			for(let j=0;j<configlist.length;j++){
-				for(let k=0;k<retback.length;k++){
-					if(configlist[j].colorCode==retback[k].colorCode){
-						configlist[j].image=retback[k].reg[0];
-					}
-				}
-			}
-		}
+		// if(retback.length>0){
+		// 	for(let j=0;j<configlist.length;j++){
+		// 		for(let k=0;k<retback.length;k++){
+		// 			if(configlist[j].colorCode==retback[k].colorCode){
+		// 				configlist[j].image=retback[k].reg[0];
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+
+
+
+
 // console.log('configlist1:',configlist);
 /*******************数据格式****************************/
 	// 	{
@@ -102,16 +112,16 @@ const configProps={
 		// console.log(temparr);
 /**********************组装deleteimage*************************/
 
-		if(retback.length>0){
-			for(let j=0;j<deleteimgdata.length;j++){
-				for(let k=0;k<retback.length;k++){
-					if(deleteimgdata[j].colorCode==retback[k].colorCode){
-						deleteimgdata[j].imageName=retback[k].reg[0].imageName;
-					}
-				}
-			}
-		}
-console.log('deleteimgdata:',deleteimgdata);
+// 		if(retback.length>0){
+// 			for(let j=0;j<deleteimgdata.length;j++){
+// 				for(let k=0;k<retback.length;k++){
+// 					if(deleteimgdata[j].colorCode==retback[k].colorCode){
+// 						deleteimgdata[j].imageName=retback[k].reg[0].imageName;
+// 					}
+// 				}
+// 			}
+// 		}
+// console.log('deleteimgdata:',deleteimgdata);
 /************************组装configs***********************/
 //这里组装configs
 	let temparr2=[];
@@ -122,8 +132,8 @@ console.log('deleteimgdata:',deleteimgdata);
 		//在提交的时候，这里将sizes数组转换成字符串形式发送给后端
 		tempobj.sizes=configlist[i].sizes.join(',');
 		// tempobj.image=configlist[i].image;
-		tempobj.image={};
-		tempobj.deleteImage=deleteimgdata;
+		// tempobj.image={};
+		// tempobj.deleteImage=deleteimgdata;
 		temparr2.push(tempobj)
 	}
 	// console.log('temparr2:',temparr2);
@@ -165,6 +175,25 @@ dispatch({type:'moudelnum/saveconfigs',
 
 	},
  onDelete(text,item,index){
+
+ //这里点击删除后还需要执行删除图片操作
+	if(item.id){
+		//当有id的时候，不能删除图片，因为都是远程数据，可能用户还需要
+	}else{
+		console.log('hasnotid');
+		//当没有id的时候，我们删除图片，说明是在本地添加的零时数据
+		//还需要判断下是否上传了图片，有图片再删除，没有图片就不用删除
+		let tempobj={};
+		tempobj.styleId=item.styleId;
+		tempobj.colorCode=item.colorCode;
+		console.error(tempobj);
+		// let result=styleConfigDeleteImage({jsonparam:JSON.stringify(temdelobj)});
+		// console.log(result);
+
+	}
+
+
+
 	//   要删除的数据格式
 	// 		deleteImage:[{
 	// 		  colorCode:"456"

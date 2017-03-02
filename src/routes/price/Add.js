@@ -12,7 +12,7 @@ import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 var brandCode;
 var categoryCode;
 var seasonCode;
-var styleNo;
+var styleCode;
 var yearCode;
 //将json对象中为undefined的值转化为空字符串
 function setProp(obj) {
@@ -385,15 +385,22 @@ function Add({dispatch,price}) {
     },
     passdata(data){
       //按条件查询
-      console.log(setProps(data));
+      // console.log(setProps(data));
+      //当点击查询后，清除穿梭匡里面选中的数据，需要重新选择
+      dispatch({
+      type:'price/publicDate',
+      payload:{
+        targetKeys:[]
+      }
+    });
       //将所有的为undefined的字符串转化为undefined类型
       let datas=setProps(data);
       brandCode=datas.brandCode;
       categoryCode=datas.categoryCode;
       seasonCode=datas.seasonCode;
-      styleNo=datas.styleNo;
+      styleCode=datas.styleNo;
       yearCode=datas.yearCode;
-      const commitdata={brandCode,categoryCode,seasonCode,styleNo,yearCode};
+      const commitdata={brandCode,categoryCode,seasonCode,styleCode,yearCode};
       console.log(commitdata);
       console.log(JSON.stringify(commitdata));
       dispatch({

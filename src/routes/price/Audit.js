@@ -22,7 +22,12 @@ function Audit({dispatch,price}) {
     dataSource,
     loading,
     statedata,
+    styleCode,
+    start,
+    end,
+    state,
     passdata(data){
+      console.log('data:',data);
       //当点击提交按钮的时候,
       dispatch({
        type:'price/publicDate',

@@ -90,9 +90,9 @@ export default {
 
 
 
-      styleCode:undefined,
-      categoryCode:undefined,
-      yearCode:undefined
+      styleCode:'',
+      categoryCode:'',
+      yearCode:'',
     },
     effects: {
         *enter({ payload }, { call, put, select }){
@@ -331,10 +331,24 @@ export default {
               //当不使用代理的时候取消这条注释
               // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+temp.imageDirectory;
               //当使用代理的时候取消这条注释
-            styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
-             temp.imageName=tempdata.imageName;
-             styleConfigList.data.dataList[i].json=JSON.stringify(temp);
-             styleConfigList.data.dataList[i].image=tempdata;
+              console.log(tempdata);
+               // styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
+               //     temp.imageName=tempdata.imageName;
+               //     styleConfigList.data.dataList[i].json=JSON.stringify(temp);
+               //     styleConfigList.data.dataList[i].image=tempdata;
+              if(tempdata.imageDirectory){
+                   // styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
+                    styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+tempdata.imageDirectory;
+                   // temp.imageName=tempdata.imageName;
+                   styleConfigList.data.dataList[i].json=JSON.stringify(temp);
+                   styleConfigList.data.dataList[i].image=tempdata;
+              }else{
+                  styleConfigList.data.dataList[i].proimage='';
+                   // temp.imageName=tempdata.imageName;
+                   styleConfigList.data.dataList[i].json=JSON.stringify(temp);
+                   styleConfigList.data.dataList[i].image=tempdata;
+              }
+             
           }
           console.info(styleConfigList.data);
           yield put({
@@ -450,10 +464,11 @@ export default {
               //当不使用代理的时候取消这条注释
               // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+temp.imageDirectory;
               //当使用代理的时候取消这条注释
-              styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
+              // styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
+              styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+temp.imageDirectory;
           }
         }
-        console.error('styleConfigList.data:',styleConfigList.data);
+        // console.error('styleConfigList.data:',styleConfigList.data);
         yield put({
           type:'publicDate',
           payload:{
@@ -630,6 +645,11 @@ export default {
                       }
                     });
             }else{
+               yield put({type:'publicDate',
+                      payload:{
+                         loading:false
+                      }
+                    });
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -689,23 +709,23 @@ export default {
     },
      subscriptions: {
         setup({ dispatch, history }){
+          let state=true;
          history.listen(location => {
         if (location.pathname === '/modelnumber') {
-            console.log(location.pathname);
-          dispatch({type: 'enter'});
-          //刷新页面使得页码恢复到默认值
+            if(state){
+                 //刷新页面使得页码恢复到默认值
            dispatch({
             type: 'publicDate',
             payload:{
-               current:1,
                defaultPageSize:10,
-               loading:true,
-               styleCode:undefined,
-               categoryCode:undefined,
-               yearCode:undefined
-
+               loading:true
             }
           });
+               dispatch({type: 'enter'});
+               state=false;
+            }
+         
+         
         }else{
           let str=location.pathname;
           let strs = str.split("/");

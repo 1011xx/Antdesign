@@ -24,11 +24,13 @@ export default {
     state: {
       lookupvis:false,
       statedata:[],
+      set_statedata:[],
       visibleSure:false,
       commitvis:false,
       explaintext:'',
       textareavalue:'',
       dataSource:[],
+      set_dataSource:[],
       loading:true,
       detaildatasource:{},
       auditdetaildata:{},
@@ -68,10 +70,15 @@ export default {
       pending_spin:true,
       commitdone:false,//审核提交完成，弹框的状态
       addeditloading:false,
-      styleCode:undefined,
+      styleCode:'',
       start:undefined,
       end:undefined,
-      state:undefined
+      state:'',
+
+      set_styleCode:'',
+      set_start:undefined,
+      set_end:undefined,
+      set_state:''
 
 
     },
@@ -111,10 +118,10 @@ export default {
                     });
             };
             if(status.data.code==0){
-              let tempobj={};
-              tempobj.label="全部";
-              tempobj.value="";
-              status.data.dataList.unshift(tempobj);
+              // let tempobj={};
+              // tempobj.label="全部";
+              // tempobj.value="";
+              // status.data.dataList.unshift(tempobj);
               console.log(status.data.dataList);
               yield put({type:'publicDate',
                         payload:{
@@ -152,7 +159,7 @@ export default {
                     }
             yield put({type:'publicDate',
                       payload:{
-                        dataSource:data.dataList,
+                        set_dataSource:data.dataList,
                         setpagetotal:data.total,
                         loading:false
                       }
@@ -160,14 +167,14 @@ export default {
             };
             if(status.data.code==0){
               console.log(status);
-              let tempobj={};
-              tempobj.label="全部";
-              tempobj.value="";
-              status.data.state.unshift(tempobj);
+              // let tempobj={};
+              // tempobj.label="全部";
+              // tempobj.value="";
+              // status.data.state.unshift(tempobj);
               console.log(status.data.state);
               yield put({type:'publicDate',
                         payload:{
-                          statedata:status.data.state,
+                          set_statedata:status.data.state,
                         }
                       });
             }
@@ -175,10 +182,10 @@ export default {
         *querysetpage({ payload }, { call, put, select }){
           const currentpage = yield select(({ price }) =>  price.setpagecurrent);
           const pagesize = yield select(({ price }) => price.setpagedefaultPageSize);
-          const styleCode = yield select(({ price }) => price.styleCode);
-          const state = yield select(({ price }) => price.state);
-          const start = yield select(({ price }) => price.start);
-          const end = yield select(({ price }) => price.end);
+          const styleCode = yield select(({ price }) => price.set_styleCode);
+          const state = yield select(({ price }) => price.set_state);
+          const start = yield select(({ price }) => price.set_start);
+          const end = yield select(({ price }) => price.set_end);
           // console.log(payload);
           //使用传递过来的参数
            let tempobj={};
@@ -194,7 +201,7 @@ export default {
             const {data}= yield call(queryTagPriceAuditResult,{jsonParam:strarr});
 
             if(data){
-              console.log(data);
+              console.log('set_dataSourcedata',data);
                // 开始添加页面序号
                  let long=data.dataList.length;
                   if(currentpage<2){
@@ -213,7 +220,7 @@ export default {
                     //添加页面序号结束
             yield put({type:'publicDate',
                       payload:{
-                        dataSource:data.dataList,
+                        set_dataSource:data.dataList,
                         setpagetotal:data.total,
                         loading:false
                       }
@@ -844,38 +851,56 @@ export default {
     },
      subscriptions: {
         setup({ dispatch, history }){
+          let auditstate=true;
+          let setstate=true;
          history.listen(location => {
         if (location.pathname === '/audit') {
+          if(auditstate){
+            dispatch({
+            type: 'publicDate',
+            payload:{
+               loading:true,
+            }
+          });
+            //当页面第一次进入的时候，去请求数据初始化
+            dispatch({type: 'enter'});
+            auditstate=false;
+          }
 
            dispatch({
             type: 'publicDate',
             payload:{
-               current:1,
-              defaultPageSize:10,
-               loading:true,
                newData:{},
-               styleCode:undefined,
-               start:undefined,
-                end:undefined,
-                state:undefined
             }
           });
-           dispatch({type: 'enter'});
+          
            }else if(location.pathname === '/set'){
 
+            if(setstate){
+
+
+              dispatch({
+            type: 'publicDate',
+            payload:{
+               loading:true,
+            }
+          });
+              dispatch({type: 'enterset'});
+              setstate=false;
+            }
             dispatch({
             type: 'publicDate',
             payload:{
-               styleCode:undefined,
-               start:undefined,
-               end:undefined,
-               state:undefined,
-               loading:true,
-               current:1,
+               // styleCode:undefined,
+               // start:undefined,
+               // end:undefined,
+               // state:undefined,
+               // loading:true,
+               // current:1,
               defaultPageSize:10
             }
           });
-             dispatch({type: 'enterset'});
+             
 
            }else{
             let str=location.pathname;

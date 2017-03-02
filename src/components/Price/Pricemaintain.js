@@ -4,26 +4,30 @@ import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,DatePicker } f
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import styles from './Priceaudit.less';
+import moment from 'moment';
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 const Pricemaintain=({
 passdata,
-statedata,
+set_statedata,
 form: {
   getFieldDecorator,
   validateFields,
   getFieldsValue
 },
 onLook,
-dataSource,
-loading
+set_dataSource,
+loading,
+set_styleCode,
+set_start,
+set_end,
+set_state,
 
 })=> {
   // 使用map函数生成option选项
- const selectopt=statedata.map((item, key) => {
-
+ const selectopt=set_statedata.map((item, key) => {
    return(
      <Option key={key} value={item.value}>{item.label}</Option>
      );
@@ -90,14 +94,14 @@ loading
 
 
   }];
-  const data=[{
-    num:1,
-    documentNumber:'P201610020001',
-    ExpectEffectiveDate:'2016-10-12',
-    CreateEmployeeName:'林明',
-    CreateDate:'2016-10-12 13:00:35',
-    StateName:'审核不通过'
-  }];
+  // const data=[{
+  //   num:1,
+  //   documentNumber:'P201610020001',
+  //   ExpectEffectiveDate:'2016-10-12',
+  //   CreateEmployeeName:'林明',
+  //   CreateDate:'2016-10-12 13:00:35',
+  //   StateName:'审核不通过'
+  // }];
 
    function transform(a){
      if(a){
@@ -105,6 +109,14 @@ loading
      }
    }
 
+
+   function momdate(b){
+     if(b){
+       return moment(b, 'YYYY-MM-DD');
+     }else{
+       return undefined;
+     }
+   }
 
   function handleSubmit(e){
      e.preventDefault();
@@ -142,6 +154,7 @@ loading
     label="款号"
     >
     {getFieldDecorator('styleCode', {
+      initialValue:set_styleCode
     })(
       <Input size="small" placeholder="请输入款号"/>
     )}
@@ -152,6 +165,7 @@ loading
     className={styles.marginLeft}
     >
     {getFieldDecorator('date', {
+        initialValue:[momdate(set_start),momdate(set_end)]
     })(
        <RangePicker size="small" />
     )}
@@ -162,9 +176,10 @@ loading
       className={styles.marginLeft}
     >
     {getFieldDecorator('status', {
-      initialValue:"",
+    initialValue:set_state
     })(
-      <Select  style={{ width: 150,height:22 }} className={styles.selectstyle}>
+      <Select style={{ width: 150,height:22 }} className={styles.selectstyle}>
+      <Option value="">全部</Option>
       {selectopt}
       </Select>
     )}
@@ -181,7 +196,7 @@ loading
             className={styles.table}
             columns={columns}
             loading={loading}
-            dataSource={dataSource}
+            dataSource={set_dataSource}
             rowKey={record => record.documentNumber}
             pagination={false}
             scroll={{y: 'calc(100vh - 350px)' }}

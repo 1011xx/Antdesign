@@ -12,7 +12,7 @@ import MaintainSize from './routes/goods/MaintainSize';
 import MaintainSizeItem from './routes/goods/MaintainSizeItem';
 import Shopadd from './routes/shop/shopadd';
 import Shopedit from './routes/shop/shopedit';
-import Text from './routes/upload';
+import Test from './routes/upload';
 
 
 
@@ -54,8 +54,8 @@ import PicturesWall from "./routes/price/upload.js";
 
 
 
-const handleEnter=({params})=>{
-	console.log('handleEnter:',params);
+const handleEnter=()=>{
+	console.info('shopinfo enter!');
 }
 
 
@@ -86,8 +86,8 @@ export default function({ history }) {
      	 <IndexRoute  component={Basicplantform}></IndexRoute>
      	 <Route path="/basicplantform" component={Basicplantform} />
 
-     	 <Route path="/shopinfo" component={Shopinfo} />
-       <Route path="/shopinfo/shopdetail/:id" onEnter={handleEnter} component={Shopdetail} />
+     	 <Route path="/shopinfo" component={Shopinfo} onEnter={handleEnter}/>
+       <Route path="/shopinfo/shopdetail/:id"  component={Shopdetail} />
        <Route path="/shopinfo/shopadd" component={Shopadd} />
        <Route path="/shopinfo/shopedit/:id" component={Shopedit} />
 
@@ -107,7 +107,7 @@ export default function({ history }) {
 			 <Route path="/modelnumber/configcolorsize/:id" component={ConfigColorSize} />
 			 <Route path="/modelnumber/styledetails/:id" component={Styledetails} />//查看详情页面
 
-			  <Route path="/test" component={Modalchosecolor} />
+			  <Route path="/test" component={Test} />
 				<Route path="/audit" component={Audit} />
         <Route path="/audit/auditpricedetails/:id" component={AuditPricedetails} />
 				<Route path="/set/setpricedetails/:id" component={SetPricedetails} />

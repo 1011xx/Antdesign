@@ -87,7 +87,7 @@ function pricerules(rule, value, callback){
      title: '款号',
      dataIndex: 'styleNo',
      key: 'styleNo',
-     width:'30%'
+     width:'20%'
    }, {
      title: '当前吊牌价',
      dataIndex: 'currentTagprice',
@@ -112,14 +112,14 @@ function pricerules(rule, value, callback){
      title: '备注',
      dataIndex: 'remarks',
      key: 'remarks',
-     width:'20%',
+     width:'30%',
      render:(text,record,index) => (
        <FormItem>
                  {getFieldDecorator(`remarks${record.num}`, {
                      initialValue:text,
                       rules: [{ validator:itemremarksrules}]
                    })(
-                    <Input size="small" style={{ width: 186}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
+                    <Input size="small" style={{ width: 300}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
                  )}
         </FormItem>
      )
@@ -171,14 +171,8 @@ function handleSubmit(e){
           <Plate title="基础信息">
 				<div className={styles.titletop}>
 				<Row gutter={16}>
-		      <Col className="gutter-row" span={6}>
-		        <div className={styles.gutterbox}>
-							<span>单据号：</span>
-							<span>{detaildatasource.documentNumber}</span>
-						</div>
-		      </Col>
 		      <Col className="gutter-row" span={8}>
-            <FormItem
+		         <FormItem
             label="预计生效日期："
             >
               {getFieldDecorator('expectEffectiveDate', {
@@ -187,13 +181,13 @@ function handleSubmit(e){
                 <DatePicker size="small"  onChange={(value)=>{datechanger(value,'expectEffectiveDate')}}/>
               )}
             </FormItem>
+		      </Col>
+		      <Col className="gutter-row" span={6}>
+           
 
 		      </Col>
 		      <Col className="gutter-row" span={6}>
-					<div className={styles.gutterbox}>
-						<span>状态：</span>
-						<span>{detaildatasource.stateName}</span>
-					</div>
+					
 		      </Col>
           <Col className="gutter-row" span={4}>
 		      </Col>

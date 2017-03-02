@@ -70,7 +70,7 @@ function handleSubmit(e){
 
 	return(
          <BigModal
-		  		title="查看审核过程"
+		  title="选择款号"
           visible={visible}
           handleOk={onOk}
           handleCancel={handleCancel}

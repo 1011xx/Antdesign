@@ -210,7 +210,7 @@ const saveProps={
 
 	return(
 
-	<Spin size="large" tip="修改信息中，请稍后..." spinning={updating}>
+	<Spin size="large" tip="请稍后..." spinning={updating}>
 		<Wrap
 		   num="2"
 		   url="/shopinfo"
