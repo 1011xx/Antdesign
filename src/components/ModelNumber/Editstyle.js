@@ -468,7 +468,7 @@ const seriesnumOption=seriesnum.map((item,key)=>{
          >
           {getFieldDecorator('remarks', {
        })(
-       <Input  type="textarea" rows={4} style={{width:500}}/>
+       <Input  type="textarea" rows={3} style={{width:550}}/>
        )}
        </FormItem>
        </Row>

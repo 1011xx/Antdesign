@@ -236,15 +236,18 @@ function Edit({dispatch,price}) {
     },
     tagPrice(value, index,key){
       //设置吊牌价
-      // console.log(value, index,key);
-    detaildatasource.dataList[index][key] = value;
+      let num=parseFloat(value).toFixed(3);
+      let numvalue=num.substring(0,num.lastIndexOf('.')+3)
+      console.log('toFixed:',numvalue);
+
+    detaildatasource.dataList[index][key] = numvalue;
     dispatch({
       type:'price/publicDate',
       payload:{
         detaildatasource:detaildatasource
       }
     });
-
+// console.log(detaildatasource);
     },
     tagremarks(value, index,key){
       //table中的备注

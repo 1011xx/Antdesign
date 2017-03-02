@@ -556,7 +556,7 @@ return (
                   initialValue:item.remarks,
                   rules: [{validator:remark}]
                   })(
-                    <Input  type="textarea" rows={6} style={{width:420}}/>
+                    <Input  type="textarea" rows={3} style={{width:550}}/>
                   )}
                 </FormItem>
 
