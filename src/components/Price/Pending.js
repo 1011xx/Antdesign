@@ -23,31 +23,36 @@ const Pending=({
     title: '序号',
     dataIndex: 'num',
     key: 'num',
+     width:'5%'
   },{
     title: '款号',
     dataIndex: 'styleNo',
     key: 'styleNo',
+    width:'20%'
   },{
     title: '当前吊牌价',
     dataIndex: 'currentTagprice',
     key: 'currentTagprice',
+    width:'12%'
   }, {
     title: '设置吊牌价',
     dataIndex: 'configTagprice',
     key: 'configTagprice',
+    width:'12%'
   },{
     title: '备注',
     dataIndex: 'remarks',
     key: 'remarks',
+    width:'51%'
   }];
-		  const data = [{
-		  num: '1',
-      id:'344433443',
-		  styleCode: '011',
-		  currentprice: '2980.00',
-      setprice: '5890.00',
-      remark:'testtesttesttest'
-		}];
+		//   const data = [{
+		//   num: '1',
+  //     id:'344433443',
+		//   styleCode: '011',
+		//   currentprice: '2980.00',
+  //     setprice: '5890.00',
+  //     remark:'testtesttesttest'
+		// }];
     function checkexp(rule, value, callback){
       if(value){
         if(value.length>100){

@@ -60,7 +60,8 @@ function Add({dispatch,price}) {
     selectedRows,
     commitdone,
     addeditloading,
-    confirmLoading
+    confirmLoading,
+    tiptitle
 
 
    }=price;
@@ -221,7 +222,8 @@ function Add({dispatch,price}) {
             type:'price/publicDate',
             payload:{
               commitdata:newData,
-              commitvis:true
+              commitvis:true,
+              tiptitle:'提交审核'
             }
           });
 
@@ -282,7 +284,8 @@ function Add({dispatch,price}) {
       dispatch({
         type:'price/publicDate',
         payload:{
-          addeditloading:true
+          addeditloading:true,
+          tiptitle:'暂存'
         }
       });
       //通过接口提交数据
@@ -500,7 +503,7 @@ function Add({dispatch,price}) {
     }
   };
   const saveProps={
-   content:'保存成功',
+   content:`${tiptitle}成功`,
    visibleSave:commitdone,
      handleOk(){
        dispatch({

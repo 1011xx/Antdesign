@@ -132,7 +132,11 @@ function Shopdetail({shopinfo}) {
          }
          </Plate>
           <Plate title="其他信息" style={{'margin-bottom':0}}>
-         <span>备注：{detailItem.remarks}</span>
+          <div style={{position:'relative',paddingLeft:34}}>
+          <span style={{position:'absolute',left:0,top:0,}}>备注:</span>
+          <span dangerouslySetInnerHTML={{__html: detailItem.remarks}}></span>
+          </div>
+
 
          </Plate>
          <div style={{'clear':'both','height':1}}></div>
@@ -141,7 +145,7 @@ function Shopdetail({shopinfo}) {
   );
 }
 
-function mapStateToProps({ shopinfo }) {
+function mapStateToProps({ shopinfo}) {
   return { shopinfo };
 }
 

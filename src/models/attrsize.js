@@ -115,8 +115,7 @@ export default {
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-                //方案二：再次请求数据
-                 yield put({type:'enter'});
+               
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
@@ -126,6 +125,8 @@ export default {
                          confirmLoading:false
                       }
                     });
+                   //方案二：再次请求数据
+                 yield put({type:'enter'});
 
             }else{
                 yield put({type:'publicDate',
@@ -149,8 +150,7 @@ export default {
             if(data.code=="0"){
                // message.success(data.msg);
                 console.log(data);
-                 //方案二：再次请求数据
-                 yield put({type:'enter'});
+                
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
@@ -160,6 +160,8 @@ export default {
                         confirmLoading:false
                       }
                     });
+                   //方案二：再次请求数据
+                 yield put({type:'enter'});
             }else{
                 yield put({type:'publicDate',
                       payload:{

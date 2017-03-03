@@ -6,6 +6,7 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
+import {setProps} from '../../utils/common';
 var deleteimgdata=[];
 
 

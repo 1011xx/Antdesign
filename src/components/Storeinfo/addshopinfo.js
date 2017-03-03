@@ -32,6 +32,21 @@ const AddShopinfo = ({
 
 }) =>{
 
+function checkifundefined(a,b){
+  if(a){
+    if(b=='key'){
+      return a.key;
+    }else if(b=='label'){
+      return a.label;
+    }
+  }else{
+    if(b=='key'){
+      return undefined;
+    }else if(b=='label'){
+      return undefined;
+    }
+  }
+}
 
 function handleSubmit(e){
  e.preventDefault();
@@ -40,7 +55,6 @@ function handleSubmit(e){
            console.log('fieldsValue:',fieldsValue);
      if(fieldsValue.cityCode){
        //如果city数组的值存在的话
-       if(fieldsValue.saleAreaCode){
          let tempobj=citychange(fieldsValue.cityCode);
           const values = {
          ...fieldsValue,
@@ -48,61 +62,12 @@ function handleSubmit(e){
          'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
          'provinceCode':fieldsValue.cityCode[0],
          'cityCode':fieldsValue.cityCode[1],
-         'typeCode':fieldsValue.typeCode.key,
-         'saleAreaCode':fieldsValue.saleAreaCode.key,
-         'saleAreaName':fieldsValue.saleAreaCode.label,
+         'typeCode':checkifundefined(fieldsValue.typeCode,'key'),
+         'saleAreaCode':checkifundefined(fieldsValue.saleAreaCode,'key'),
+         'saleAreaName':checkifundefined(fieldsValue.saleAreaCode,'label'),
 
        };
-      //  console.log('values:',values);
         getadddata(values);
-       }else{
-         let tempobj=citychange(fieldsValue.cityCode);
-          const values = {
-         ...fieldsValue,
-         ...tempobj,
-         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-         'provinceCode':fieldsValue.cityCode[0],
-         'cityCode':fieldsValue.cityCode[1],
-         'typeCode':fieldsValue.typeCode.key,
-         'saleAreaCode':undefined,
-         'saleAreaName':undefined,
-
-       };
-      //  console.log('values:',values);
-        getadddata(values);
-       }
-
-     }else{
-       //如果city数组的值不存在
-       if(fieldsValue.saleAreaCode){
-         const values = {
-         ...fieldsValue,
-         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-         'provinceCode':undefined,
-         'cityCode':undefined,
-         'cityName':undefined,
-         'provinceName':undefined,
-         'typeCode':fieldsValue.typeCode.key,
-         'saleAreaCode':fieldsValue.saleAreaCode.key,
-         'saleAreaName':fieldsValue.saleAreaCode.label
-       };
-      //  console.log('values:',values);
-        getadddata(values);
-       }else{
-         const values = {
-         ...fieldsValue,
-         'establishDate': fieldsValue['establishDate'].format('YYYY-MM-DD'),
-         'provinceCode':undefined,
-         'cityCode':undefined,
-         'cityName':undefined,
-         'provinceName':undefined,
-         'typeCode':fieldsValue.typeCode.key,
-         'saleAreaCode':undefined,
-         'saleAreaName':undefined
-       };
-      //  console.log('values:',values);
-        getadddata(values);
-       }
 
      }
       }
@@ -440,7 +405,7 @@ return (
                   initialValue:item.remarks,
                   rules: [{validator:remark}]
                   })(
-                    <Input type="textarea" rows={3} style={{width:550}}/>
+                    <Input type="textarea" rows={3} style={{width:550}} />
                   )}
                 </FormItem>
 
@@ -460,6 +425,7 @@ return (
 
   );
 };
+
 
 AddShopinfo.propTypes = {
   form: PropTypes.object,

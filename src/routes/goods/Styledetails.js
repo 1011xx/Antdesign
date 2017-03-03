@@ -85,7 +85,12 @@ function Styledetails({moudelnum}) {
 
         </Row>
          <Row className={styles.margintop}>
-           <Col>备&nbsp;&nbsp;&nbsp;&nbsp;注：{detaildata.remarks}</Col>
+           <Col>
+           <div style={{position:'relative',paddingLeft:50,minHeight:20}}>
+          <span style={{position:'absolute',left:0,top:0,}}>备&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+          <span dangerouslySetInnerHTML={{__html: detaildata.remarks}}></span>
+          </div>
+           </Col>
         </Row>
      </Plate>
  </Wrap>

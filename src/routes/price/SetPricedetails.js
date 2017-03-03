@@ -9,6 +9,13 @@ import styles from './Pricedetails.less';
 
 function SetPricedetails({price}) {
   const { detaildatasource,pending_spin }=price;
+   const ret=function(){
+      if(detaildatasource.remarks){
+          return detaildatasource.remarks.replace(/\n/g, '<br/>');
+        }else{
+          return '';
+        }
+  };
   const columns = [{
     title: '序号',
     dataIndex: 'num',
@@ -67,7 +74,13 @@ function SetPricedetails({price}) {
          </Col>
         </Row>
         <Row style={{paddingTop:5}}>
-        <span >备&nbsp;&nbsp;&nbsp;&nbsp;注：{detaildatasource.remarks}</span>
+        <Col>
+           <div style={{position:'relative',paddingLeft:50,minHeight:20}}>
+          <span style={{position:'absolute',left:0,top:0,}}>备&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+          <span dangerouslySetInnerHTML={{__html: ret()}}></span>
+          </div>
+           </Col>
+          
         </Row>
      </Plate>
 

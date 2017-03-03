@@ -60,7 +60,7 @@ export default {
       moveKeys:[],//移动的数据
       allpriceModal:false,
       selectedRows:[],
-
+      tiptitle:'',
 
 
 
@@ -429,7 +429,8 @@ export default {
                       payload:{
                         commitvis:false,
                         loading:true,
-                        confirmLoading:false
+                        confirmLoading:false,
+                        commitdone:true
                       }
                     });
                    yield put({type: 'enter'});
@@ -682,7 +683,7 @@ export default {
          const styleCategory= yield call(queryTagPriceConfigStyleCategory);
          //在这里对获取到的详情数据做处理
          if(data.code=="0"){
-                console.log(data);
+
                 data.tagPriceConfig.createDate=data.tagPriceConfig.createDate.split(" ")[0];
                 if(data.tagPriceConfig.dataList){
                     for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
@@ -691,12 +692,15 @@ export default {
                     //给已经存在的数据加上标记
                 data.tagPriceConfig.dataList[i].priceFlag=`configTagprice${i+1}`;
                 data.tagPriceConfig.dataList[i].remarkFlag=`remarks${i+1}`;
+                let num=parseFloat(data.tagPriceConfig.dataList[i].configTagprice).toFixed(3);
+                let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+                data.tagPriceConfig.dataList[i].configTagprice=numvalue;
 
                   }
                 }else{
                   data.tagPriceConfig.dataList=[];
                 }
-
+// console.log(typeof(data.tagPriceConfig.dataList[1].configTagprice));
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
                       payload:{
@@ -881,7 +885,7 @@ export default {
                newData:{},
             }
           });
-          
+
            }else if(location.pathname === '/set'){
 
             if(setstate){
@@ -908,7 +912,7 @@ export default {
               defaultPageSize:10
             }
           });
-             
+
 
            }else{
             let str=location.pathname;
@@ -949,6 +953,7 @@ export default {
                dispatch({
                     type: 'publicDate',
                     payload:{
+                      chosestylemodal:true,
                       newData:{
                         dataList:[]
                       }

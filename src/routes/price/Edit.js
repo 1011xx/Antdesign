@@ -61,7 +61,8 @@ function Edit({dispatch,price}) {
     selectedRows,
     commitdone,
     addeditloading,
-    confirmLoading
+    confirmLoading,
+    tiptitle
 
    }=price;
   const editProps={
@@ -221,7 +222,8 @@ function Edit({dispatch,price}) {
                   type:'price/publicDate',
                   payload:{
                     commitdata:detaildatasource,
-                    commitvis:true
+                    commitvis:true,
+                    tiptitle:'提交审核'
                   }
                 });
 
@@ -236,18 +238,19 @@ function Edit({dispatch,price}) {
     },
     tagPrice(value, index,key){
       //设置吊牌价
+      let tempobj=Object.assign({},detaildatasource);
       let num=parseFloat(value).toFixed(3);
       let numvalue=num.substring(0,num.lastIndexOf('.')+3)
       console.log('toFixed:',numvalue);
 
-    detaildatasource.dataList[index][key] = numvalue;
+      tempobj.dataList[index][key] = numvalue;
     dispatch({
       type:'price/publicDate',
       payload:{
-        detaildatasource:detaildatasource
+        detaildatasource:tempobj
       }
     });
-// console.log(detaildatasource);
+console.log(typeof(detaildatasource.dataList[index][key]));
     },
     tagremarks(value, index,key){
       //table中的备注
@@ -285,7 +288,8 @@ function Edit({dispatch,price}) {
       dispatch({
         type:'price/publicDate',
         payload:{
-          addeditloading:true
+          addeditloading:true,
+          tiptitle:'暂存'
         }
       });
       //通过接口提交数据
@@ -508,7 +512,7 @@ function Edit({dispatch,price}) {
     }
   };
   const saveProps={
-   content:'保存成功',
+   content:`${tiptitle}成功`,
    visibleSave:commitdone,
      handleOk(){
        dispatch({

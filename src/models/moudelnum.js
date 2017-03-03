@@ -348,7 +348,7 @@ export default {
                    styleConfigList.data.dataList[i].json=JSON.stringify(temp);
                    styleConfigList.data.dataList[i].image=tempdata;
               }
-             
+
           }
           console.info(styleConfigList.data);
           yield put({
@@ -444,6 +444,10 @@ export default {
       const {data}=yield call(getStyleInfoById,{jsonparam:str1});
       const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});
       if(data.code==0){
+        if(data.styleInfo.remarks){
+          data.styleInfo.remarks=data.styleInfo.remarks.replace(/\n/g, '<br/>');
+        }
+
         console.log(data);
          yield put({
           type:'publicDate',
@@ -724,8 +728,8 @@ export default {
                dispatch({type: 'enter'});
                state=false;
             }
-         
-         
+
+
         }else{
           let str=location.pathname;
           let strs = str.split("/");

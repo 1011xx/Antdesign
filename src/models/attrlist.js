@@ -143,7 +143,7 @@ export default {
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
-                         // current:1,
+                         current:1,
                          modalVisible:false,
                          loadings:true,
                          confirmLoading:false

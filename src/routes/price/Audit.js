@@ -7,6 +7,7 @@ import LookupModal from '../../components/Price/LookupModal';
 import CommitModal from '../../components/Price/CommitModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
+import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 
 
 var exp;
@@ -17,7 +18,7 @@ var exp;
 // var end;
 // var state;
 function Audit({dispatch,price}) {
-  const {confirmLoading,styleCode,start,end,state,dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
+  const {commitdone,confirmLoading,styleCode,start,end,state,dataSource,lookupvis,loading,statedata,visibleSure,commitvis,commitdata,textareavalue,auditdetaildata,deleteid,total,current,defaultPageSize,detaildatasource,setType}=price;
   const auditProps={
     dataSource,
     loading,
@@ -309,6 +310,23 @@ function Audit({dispatch,price}) {
   	};
 
 
+    const saveProps={
+     content:'提交审核成功',
+     visibleSave:commitdone,
+       handleOk(){
+         dispatch({
+           type:'price/publicDate',
+           payload:{
+             commitdone:false,
+             addeditloading:false
+           }
+         });
+          //当保存成功后，点击弹出确定按钮后，跳转到列表页
+         dispatch(routerRedux.push('/audit'));
+       }
+   };
+
+
   return (
     <Wrap
        num="1"
@@ -319,6 +337,7 @@ function Audit({dispatch,price}) {
        <LookupModal {...lookupProps}/>
        <CommitModal {...commitProps}/>
        <SureModel {...delProps}/>
+       <Savesuccess {...saveProps}/>
 
    </Wrap>
   );

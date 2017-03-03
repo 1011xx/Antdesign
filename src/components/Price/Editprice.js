@@ -59,6 +59,7 @@ const Editprice = ({
      key: 'configTagprice',
      width:'20%',
      render:(text,record,index) => (
+
        <FormItem>
                  {getFieldDecorator(`configTagprice${record.key}`, {
                      initialValue:record.configTagprice,

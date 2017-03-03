@@ -51,10 +51,11 @@ const {   previewVisible,
 		  item:behavier==='create'?{}:currentItem,
 
 		getadddata(data){
-	// 		setInterval(function(){
-		// data.fullName=num++;
-		// data.shortName=numm++;
-		// console.log(data);
+      // if(data.remarks){
+      //   data.remarks=data.remarks.replace(/\n/g, '_@');
+      // }
+
+		  console.log(data);
 		 let upinfo=JSON.stringify(setProp(data));
 		 console.log(upinfo);
 		 // console.log( oFile);
@@ -68,6 +69,10 @@ const {   previewVisible,
 		  // var oReq = new XMLHttpRequest();
 		  // oReq.open("POST", "http://192.168.43.29:8084/fmss/shopController/newShop");
 		  // oReq.send(oMyForm);
+
+
+
+
 		   dispatch({
               type: 'shopinfo/upload',
               payload:oMyForm,
@@ -78,6 +83,13 @@ const {   previewVisible,
 	              	saving:true
 	           }
 	        });
+
+
+
+
+
+
+
 // },50);
 
 		// const timer=setInterval(function(){

@@ -220,6 +220,10 @@ export default {
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
           if(resultinfo.data){
+            if(resultinfo.data.shopInfo.remarks){
+              resultinfo.data.shopInfo.remarks=resultinfo.data.shopInfo.remarks.replace(/\n/g, '<br/>');
+            }
+            
             console.log(resultinfo.data);
               if(resultinfo.data.shopInfo.images){
             let imagearr=JSON.parse(resultinfo.data.shopInfo.images);
