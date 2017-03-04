@@ -60,8 +60,9 @@ function Shopinfo({dispatch,shopinfo}){
 		fullName,
 		passdata(value){
 			console.log('value:',value);
+			
 
-			console.log('data:',data);
+			
 			//获取文本框
 			dispatch({
 				type:'shopinfo/publicdate',
@@ -71,10 +72,15 @@ function Shopinfo({dispatch,shopinfo}){
 					shopType:value.shopType,
 					saleAreaCode:value.saleAreaCode,
 					shopStatus:value.shopStatus,
+					provinceCode:value.provinceCode,
+					cityCode:value.cityCode,
 					loading:true
 				}
 			});
-			let data=setProps(value);
+
+			let tempdata=Object.assign({},value);
+			let data=setProps(tempdata);
+			console.log('data:',data);
 			searchForm.fullName=data.shopname;
 			// fullName=data.shopname;
 			searchForm.shopType=data.shopType;
@@ -83,47 +89,9 @@ function Shopinfo({dispatch,shopinfo}){
 			// saleAreaCode=data.saleAreaCode;
 			searchForm.shopStatus=data.shopStatus;
 			// shopStatus=data.shopStatus;
-			if(data.provinceCode){
-				searchForm.provinceCode=data.provinceCode;
-				// provinceCode=data.provinceCode;
-				dispatch({
-					type:'shopinfo/publicdate',
-					payload:{
-						provinceCode:data.provinceCode
-					}
-				});
-			}else{
-				searchForm.provinceCode=undefined;
-				// provinceCode=undefined;
-				dispatch({
-					type:'shopinfo/publicdate',
-					payload:{
-						provinceCode:undefined
-					}
-				});
-			}
-			if(data.cityCode){
-				searchForm.cityCode=data.cityCode;
-				dispatch({
-					type:'shopinfo/publicdate',
-					payload:{
-						cityCode:data.cityCode
-					}
-				});
-			}else{
-				searchForm.cityCode=undefined;
-
-				dispatch({
-					type:'shopinfo/publicdate',
-					payload:{
-						cityCode:undefined
-					}
-				});
-			}
 
 			//将searchForm查询条件对象的值转换为字符串
-			// console.log('searchForm:',searchForm);
-			let condit=JSON.stringify(searchForm);
+			let condit=JSON.stringify({...searchForm,...changePage});
 			console.log(condit);
 			 dispatch({
               type: 'shopinfo/queryShop',
@@ -243,6 +211,7 @@ function Shopinfo({dispatch,shopinfo}){
 		},
 		onShowSizeChange(current, pageSize){
 			// 保留上次修改后的每页显示数量
+			console.log('pageSize:',pageSize);
 			dispatch({
               type: 'shopinfo/publicdate',
               payload: {

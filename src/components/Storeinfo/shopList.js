@@ -117,7 +117,7 @@ function ShopList({
              size="small"
              total={total}
              current={current}
-             defaultPageSize={defaultPageSize}
+             pageSize={defaultPageSize}
              pageSizeOptions={pageSizeOptions}
              onShowSizeChange={onShowSizeChange}
              onChange={onPageChange}

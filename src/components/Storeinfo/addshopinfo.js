@@ -73,6 +73,7 @@ function handleSubmit(e){
       }
     });
 }
+
 function citychange(citycode){
   // 遍历options获取citycode和cityname
   // console.log('cityCode:',cityCode);
@@ -90,20 +91,7 @@ function citychange(citycode){
 
 }
 
-// function getSalesarea(area){
-// // console.log(area[0]);
-// for(let k=0;k<region.length;k++){
-//   if(region[k].value==area[0]){
-//      saleAreaName=region[k].label;
-//   }
-// }
-//   saleAreaCode=area[0];
-//
-// }
-//
-// function typecode(code){
-//  typeCode=code[0];
-// }
+
 
 function shopname(rule, value, callback){
   if(value){

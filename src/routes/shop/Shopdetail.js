@@ -7,6 +7,11 @@ import Wrap from '../../commonComponents/wrap/wrap';
 
 function Shopdetail({shopinfo}) {
   const { detailItem }=shopinfo;
+  const ret=function(){
+     if(detailItem.remarks){
+       return detailItem.remarks.replace(/\n/g, '<br/>');
+      }
+  }
 
   const image=function(){
     // console.log(location.host);
@@ -134,7 +139,7 @@ function Shopdetail({shopinfo}) {
           <Plate title="其他信息" style={{'margin-bottom':0}}>
           <div style={{position:'relative',paddingLeft:34}}>
           <span style={{position:'absolute',left:0,top:0,}}>备注:</span>
-          <span dangerouslySetInnerHTML={{__html: detailItem.remarks}}></span>
+          <span dangerouslySetInnerHTML={{__html: ret()}}></span>
           </div>
 
 

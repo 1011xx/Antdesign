@@ -194,51 +194,29 @@ dispatch({type:'moudelnum/saveconfigs',
  onDelete(text,item,index){
 
  //这里点击删除后还需要执行删除图片操作
-	if(item.id){
-		//当有id的时候，不能删除图片，因为都是远程数据，可能用户还需要
-	}else{
-		console.log('hasnotid');
-		//当没有id的时候，我们删除图片，说明是在本地添加的零时数据
-		//还需要判断下是否上传了图片，有图片再删除，没有图片就不用删除
-		let tempobj={};
-		tempobj.styleId=item.styleId;
-		tempobj.colorCode=item.colorCode;
-		console.error(tempobj);
-		// let result=styleConfigDeleteImage({jsonparam:JSON.stringify(temdelobj)});
-		// console.log(result);
+ if(item.id){
+ 	//当有id的时候，不能删除图片，因为都是远程数据，可能用户还需要
+ }else{
+ 	console.log('hasnotid');
+ 	//当没有id的时候，我们删除图片，说明是在本地添加的零时数据
+ 	//还需要判断下是否上传了图片，有图片再删除，没有图片就不用删除
+	//找到id
+	let str=location.hash;
+	let strs = str.split("/");
+	strs.shift();
+	let strss=strs[2].split(':');
+	//组装给后台要删除的东西
+	console.log(strss[0]);
+ 	let tempobj={};
+ 	tempobj.styleId=strss[0];
+ 	tempobj.colorCode=item.colorCode;
+ 	let result=styleConfigDeleteImage({jsonparam:JSON.stringify(tempobj)});
+ }
 
-	}
-
-
-
-	//   要删除的数据格式
-	// 		deleteImage:[{
-	// 		  colorCode:"456"
-	// 		  imageName:"ed852558d8f04a86bd46ffc5d8894228.jpg"
-	// 		  StyleCode:"Y0223911B0333"
-	// 		}]
-
-
-//这里是组装要删除的图片json，保留
-		// let tempdelobj={};
-		// //找到要删除的数据
-		// for(let j=0;j<configlist.length;j++){
-		// 	if(configlist[j].colorCode==item.colorCode){
-		// 		//首先组装要删除的json
-		// 		tempdelobj.colorCode=item.colorCode;
-		// 		tempdelobj.styleCode=item.styleCode;
-		// 		if(configlist[j].image){
-		// 			tempdelobj.imageName=configlist[j].image.imageName;
-		// 		}
-		//
-		// 		deleteimgdata.push(tempdelobj);
-		// 		//通过index来删除相应的列表条目
-		// 			configlist.splice(index,1);
-		// 	}
-		// }
 
 //删除点击按钮的表格的一行
 configlist.splice(index,1);
+
 
 //当删除条目后，这里来把删除的颜色数据给穿梭匡
 		 var temparr=transfordata.concat();
@@ -256,7 +234,8 @@ configlist.splice(index,1);
 	 dispatch({
 		 type:'moudelnum/publicDate',
 		 payload:{
-			 transfordata:itsnewarr
+			 transfordata:itsnewarr,
+			 configlist:configlist
 		 }
 	 });
 

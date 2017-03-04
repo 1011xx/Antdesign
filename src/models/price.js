@@ -347,14 +347,14 @@ export default {
                 console.log(data);
 
                  //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1,
-                         defaultPageSize:10,
-
-                      }
-                    });
-                   yield put({type:'enter'});
+                  // yield put({type:'publicDate',
+                  //     payload:{
+                  //        current:1,
+                  //        defaultPageSize:10,
+                  //
+                  //     }
+                  //   });
+                   yield put({type:'querypage'});
             }else{
               Modal.error({
                  title: '提示',
@@ -589,6 +589,8 @@ export default {
                            commitdone:true
                          }
                        });
+
+                       yield put({type:'querypage'});
 
           }else{
             yield put({type:'publicDate',

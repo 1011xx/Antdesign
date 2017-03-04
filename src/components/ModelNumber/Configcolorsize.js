@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal } from 'antd';
+import { Form, Icon, Input, Button, Select,Cascader,Row,Col,Table,Modal,Spin,message } from 'antd';
 import Plate from '../../commonComponents/plate/plate';
 import TablePlate from '../../commonComponents/plate/tableplate';
 import {styleConfigDeleteImage} from '../../services/attribute';
@@ -40,7 +40,20 @@ class PicturesWall extends React.Component {
     }
 
 
-
+   beforeUpload=(file)=>{
+     console.info(file);
+     const isIMG = (file.type === 'image/jpeg'||file.type === 'image/png'||file.type === 'image/gif');
+     if (!isIMG) {
+       message.error('你只能上传图片文件!');
+    }
+     //限制图片尺寸大小
+     const isLt2M = (file.size / 1024 / 1024)*1024  < 601;
+     console.log(isLt2M);
+      if (!isLt2M) {
+        message.error('上传的图片必须小于600KB!');
+      }
+      return  isLt2M&&isIMG;
+   }
 
 
 
@@ -108,8 +121,10 @@ class PicturesWall extends React.Component {
               <Upload
                 data={{jsonparam:name}}
                 action="/fmss/styleController/styleConfigUploadImage"
+                beforeUpload={this.beforeUpload}
                 onSuccess={this.onSuccess}
                 onStart={this.handleChange}
+
               >
               <div className="uploadstyle">
                 <Icon type="plus" className="upload-icon"/>
@@ -219,8 +234,8 @@ const Configcolorsize=({
     }, {
       title: '操作',
       key: 'operation',
-      render:(text,record)=>(
-        <a onClick={() => onDelete(text,record)}>删除</a>
+      render:(text,record,index)=>(
+        <a onClick={() => onDelete(text,record,index)}>删除</a>
       ),
     }];
     const data=[{
@@ -236,7 +251,7 @@ const Configcolorsize=({
 
 
   return (
-    <div>
+    <Spin tip="请稍后..." spinning={saveSpin}>
     <Form
       inline
       onSubmit={handleSubmit}
@@ -269,7 +284,7 @@ const Configcolorsize=({
     </div>
     </Form>
     <div style={{height:30}}/>
-    </div>
+    </Spin>
   );
 }
 Configcolorsize.propTypes = {

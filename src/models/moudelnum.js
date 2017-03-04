@@ -337,8 +337,8 @@ export default {
                //     styleConfigList.data.dataList[i].json=JSON.stringify(temp);
                //     styleConfigList.data.dataList[i].image=tempdata;
               if(tempdata.imageDirectory){
-                   // styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
-                    styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+tempdata.imageDirectory;
+                   styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+tempdata.imageDirectory;
+                    // styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+tempdata.imageDirectory;
                    // temp.imageName=tempdata.imageName;
                    styleConfigList.data.dataList[i].json=JSON.stringify(temp);
                    styleConfigList.data.dataList[i].image=tempdata;
@@ -468,8 +468,8 @@ export default {
               //当不使用代理的时候取消这条注释
               // styleConfigList.data.dataList[i].proimage='http://'+location.host+'/fmss'+temp.imageDirectory;
               //当使用代理的时候取消这条注释
-              // styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
-              styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+temp.imageDirectory;
+              styleConfigList.data.dataList[i].proimage='http://192.168.10.146:5001/fmss'+temp.imageDirectory;
+              // styleConfigList.data.dataList[i].proimage='http://192.168.10.159:9081/fmss'+temp.imageDirectory;
           }
         }
         // console.error('styleConfigList.data:',styleConfigList.data);

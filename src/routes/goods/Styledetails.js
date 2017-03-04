@@ -63,7 +63,7 @@ function Styledetails({moudelnum}) {
 
      <TablePlate title="颜色,尺寸和图片">
       <div className={styles.add_plate}>
-        <p className={styles.add_btn}>尺寸组：{`${detaildata.sizegroupName} ${detaildata.brandName}`}</p>
+        <p className={styles.add_btn}>尺寸组：{`${detaildata.sizegroupName}`}</p>
       </div>
       {console.log(configlist)}
       <Table size="small"
@@ -71,7 +71,7 @@ function Styledetails({moudelnum}) {
          columns={columns}
          loading={false}
          dataSource={configlist}
-         rowKey={record => record.id}
+         rowKey={record => record.colorCode}
          pagination={false}
          showHeader={false}
          bordered

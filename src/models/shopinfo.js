@@ -220,10 +220,6 @@ export default {
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
           if(resultinfo.data){
-            if(resultinfo.data.shopInfo.remarks){
-              resultinfo.data.shopInfo.remarks=resultinfo.data.shopInfo.remarks.replace(/\n/g, '<br/>');
-            }
-            
             console.log(resultinfo.data);
               if(resultinfo.data.shopInfo.images){
             let imagearr=JSON.parse(resultinfo.data.shopInfo.images);
@@ -290,60 +286,60 @@ export default {
    *upload({payload},{call,put}){
     //新增店仓
     const resultupload=yield call(addShop,payload);
-    if(resultupload.data.code==0){
+
       //如果新增成功
-      console.info(resultupload.data.msg);
-      yield put({type:'publicdate',
-          payload:{
-            saving:false
-          }
-        });
       if(resultupload.data.code==0){
         yield put({type:'publicdate',
         payload:{
           addvisibleSave:true,
-          adduploading:false
+          adduploading:false,
+          saving:false
         }
       });
 
        }else{
+         
+         yield put({type:'publicdate',
+         payload:{
+           saving:false
+         }
+       });
          Modal.error({
            title: '提示',
            content: resultupload.data.msg,
          });
 
        };
-    }
+
 
    },
    *update({payload},{call,put}){
     //修改店仓
     const resultupdate=yield call(updateShop,payload);
-    if(resultupdate.data.code==0){
-      //如果修改成功
-     console.log(resultupdate.data.msg);
-      yield put({type:'publicdate',
-          payload:{
-            updating:false
-          }
-        });
+
         if(resultupdate.data.code==0){
           yield put({type:'publicdate',
           payload:{
             visibleSave:true,
-            uploading:false
+            uploading:false,
+            updating:false
           }
         });
 
 
        }else{
+         yield put({type:'publicdate',
+         payload:{
+           updating:false
+         }
+       });
          Modal.error({
            title: '提示',
            content: resultupdate.data.msg,
          });
 
        };
-    }
+
  }
 
 },
@@ -354,11 +350,11 @@ export default {
   		 history.listen(location => {
         if (location.pathname === '/shopinfo') {
         	// console.log(location.pathname);
-         
+
             dispatch({type: 'publicdate',
                       payload:{
                       // current:1,
-                      defaultPageSize:10,
+                      // defaultPageSize:10,
                       fileListlength:0,
                       oFile:[],
                       // searchForm:{
@@ -405,7 +401,7 @@ export default {
                       fileList:[],
                       fileListlength:0,
                       oFile:[],
-                      
+
                     }
                   });
 

@@ -51,6 +51,7 @@ const {   previewVisible,
 		  item:behavier==='create'?{}:currentItem,
 
 		getadddata(data){
+			console.log(data);
       // if(data.remarks){
       //   data.remarks=data.remarks.replace(/\n/g, '_@');
       // }

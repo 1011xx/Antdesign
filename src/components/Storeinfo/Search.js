@@ -25,22 +25,33 @@ const Queryinfo = ({
     },
 }) =>{
 
+function ifexit(a,b){
+    if(a){
+      if(b==='provinceCode'){
+        return a[0];
+      }else if(b==='cityCode'){
+        return a[1];
+      }
+      
+    }else{
+      return undefined;
+    }
+}
+
+
+
 function handleSearch(e){
   e.preventDefault();
 	validateFields((errors,fieldsValue) => {
           if (!errors) {
-            if(fieldsValue.provincecitys){
+            
               const data = {
                  ...fieldsValue,
-                 provinceCode:fieldsValue.provincecitys[0],
-                 cityCode:fieldsValue.provincecitys[1],
+                 provinceCode:ifexit(fieldsValue.provincecitys,'provinceCode'),
+                 cityCode:ifexit(fieldsValue.provincecitys,'cityCode'),
                };
-              //  console.log(data);
                passdata(data);
-            }else{
-              // console.log(fieldsValue);
-              passdata(fieldsValue);
-            }
+            
 
           }
 
