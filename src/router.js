@@ -55,7 +55,7 @@ import PicturesWall from "./routes/price/upload.js";
 
 
 const handleEnter=()=>{
-	console.info('shopinfo enter!');
+	// console.info('shopinfo enter!');
 }
 
 

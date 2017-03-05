@@ -468,7 +468,7 @@ export default {
           const styleCategory= yield call(queryTagPriceConfigStyleCategory);
           // const stylepc= yield call(pici);
            if(styleno.data.code=="0"){
-            console.log(styleno.data);
+            // console.log(styleno.data);
              //复制原数组；
                 const temparr=styleno.data.data.concat();
                 const temparr1=styleno.data.data.concat();
@@ -476,7 +476,7 @@ export default {
                 for(let i=0;i<styleno.data.data.length;i++){
                   temparr[i].key=i;
                 }
-                // console.log('temparr:',temparr);
+                console.log('temparr:',temparr,temparr1);
                  yield put({type:'publicDate',
                      payload:{
                        modalstyle:temparr,
@@ -543,18 +543,31 @@ export default {
            // };
        },
        *getstyle({ payload }, { call, put,select }){
-        //根据条件获取款号
+        //根据条件获取款号,新增页面穿梭匡数据获取
+          const newData = yield select(({ price }) => price.newData);
         let strarr=JSON.stringify(payload);
         const {data}= yield call(queryTagPriceConfigStyle,{jsonParam:strarr});
           if(data.code==0){
             //复制原数组；
                 const temparr=data.data.concat();
                 const temparr1=data.data.concat();
-
+                //依次为数据源添加key
                 for(let i=0;i<data.data.length;i++){
                   temparr[i].key=i+1;
                 }
-                 console.log('temparr:',temparr);
+                //从页面中存在的数据源中取出已存在的数据
+                if(newData.dataList){
+                  for(let index_i in temparr){
+                    for(let index_j in newData.dataList){
+                      if(temparr[index_i].code==newData.dataList[index_j].styleNo){
+                        // console.error(temparr[index_i].code);
+                        temparr.splice(index_i,1);
+                      }
+                    }
+                  }
+                }
+
+                 console.log('temparr:',temparr,temparr1);
                  yield put({type:'publicDate',
                      payload:{
                        modalstyle:temparr,
@@ -562,6 +575,58 @@ export default {
                      }
                    });
           }
+       },
+       *getstyleEdit({ payload }, { call, put,select }){
+        //根据条件获取款号,新增页面穿梭匡数据获取
+          const detaildatasource = yield select(({ price }) => price.detaildatasource);
+        let strarr=JSON.stringify(payload);
+        const {data}= yield call(queryTagPriceConfigStyle,{jsonParam:strarr});
+          if(data.code==0){
+            //复制原数组；
+                const temparr=data.data.concat();
+                const temparr1=data.data.concat();
+                //依次为数据源添加key
+                for(let i=0;i<data.data.length;i++){
+                  temparr[i].key=i+1;
+                }
+                //从页面中存在的数据源中取出已存在的数据
+                if(detaildatasource.dataList){
+                  for(let index_i in temparr){
+                    for(let index_j in detaildatasource.dataList){
+                      if(temparr[index_i].code==detaildatasource.dataList[index_j].styleNo){
+                        // console.error(temparr[index_i].code);
+                        temparr.splice(index_i,1);
+                      }
+                    }
+                  }
+                }
+
+                 console.log('temparr:',temparr,temparr1);
+                 yield put({type:'publicDate',
+                     payload:{
+                       modalstyle:temparr,
+                       copymodalstyle:temparr1
+                     }
+                   });
+          }
+       },
+       *queryPrice({ payload }, { call, put,select }){
+         let tempqueryprice={};
+         tempqueryprice.styleNo=payload;
+         let strarr=JSON.stringify(tempqueryprice);
+         const {data}= yield call(queryTagPriceConfigSetPrice,{jsonParam:strarr});
+         if(data.code==0){
+            console.log(data);
+            //这里对取到的数据做处理。
+
+         }else{
+           Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+         }
+
+
        },
        *tempsave({ payload }, { call, put,select }){
         //新增页面暂存
@@ -784,7 +849,7 @@ export default {
                for(let i=0;i<styleno.data.data.length;i++){
                  temparr[i].key=i;
                }
-               // console.log('temparr:',temparr);
+              //  console.log('temparr:',temparr,temparr1);
                 yield put({type:'publicDate',
                     payload:{
                       modalstyle:temparr,

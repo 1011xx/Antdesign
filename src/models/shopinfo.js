@@ -124,13 +124,26 @@ export default {
       //       loading:true
       //     }
       //   });
-
+      const shoplist=yield call(queryShop,{jsonparam:'{"page":"'+currentpage+'","rows":"'+PageSize+'"}'});
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
-      const shoplist=yield call(queryShop,{jsonparam:'{"page":"'+currentpage+'","rows":"'+PageSize+'"}'});
 
+      if(shoplist.data){
+         // console.log(shoplist.data);
+         for(let i=1;i<=shoplist.data.dataList.length;i++){
+           shoplist.data.dataList[i-1].num=i;
+           // shoplist.data.dataList[i-1].key=i;
+         }
+         yield put({type:'ShopList',
+         payload:{
+           dataSource:shoplist.data.dataList,
+           total:shoplist.data.total,
+           loading:false
+         }
+       });
+     };
       if(province.data){
         console.log(province.data.provincecity);
         let tempobj={};
@@ -173,19 +186,7 @@ export default {
 	      	}
 	      });
       };
-       if(shoplist.data){
-          // console.log(shoplist.data);
-          for(let i=1;i<=shoplist.data.dataList.length;i++){
-            shoplist.data.dataList[i-1].num=i;
-            // shoplist.data.dataList[i-1].key=i;
-          }
-          yield put({type:'ShopList',
-          payload:{
-            dataSource:shoplist.data.dataList,
-            total:shoplist.data.total
-          }
-        });
-      };
+
 
 
     },

@@ -318,7 +318,7 @@ console.log(typeof(detaildatasource.dataList[index][key]));
 
           //从穿梭框数据元中通过key找出选中的数据
             let tempobj={};//定义零时对象
-            // let temparr=[];//定义零时数组
+            let tempstr=[];//定义零时数组，请求款号价格的数组
             let transftempdata=modalstyle.concat();
             let copyDetaildatasource=Object.assign({}, detaildatasource);
 
@@ -337,7 +337,9 @@ console.log(typeof(detaildatasource.dataList[index][key]));
                 let temp={};
               //如果key相同说明就是需要照的数据
               if(modalstyle[index_i].key==targetKeys[j]){
-                console.info(modalstyle[index_i].key,targetKeys[j],index_i,j);
+                console.info(modalstyle[index_i].code,targetKeys[j],index_i,j);
+                //拼接要请求的字符串
+                tempstr.push(modalstyle[index_i].code);
 
                 lengthList=lengthList+1;
                 temp.num=lengthList;
@@ -367,6 +369,12 @@ console.log(typeof(detaildatasource.dataList[index][key]));
       // copyDetaildatasource.dataList=temparr;
       // console.log('tempobj:',tempobj);
 
+
+
+
+
+
+
           //完成操作后关闭弹框，并清空穿梭框中选中的数据
     		dispatch({
     			type:'price/publicDate',
@@ -377,6 +385,18 @@ console.log(typeof(detaildatasource.dataList[index][key]));
     				targetKeys:[]
     			}
     		});
+
+
+
+        //当点击确定按钮后找到选中的款号去后台请求款号对应的价格
+
+            console.info('tempstr:',tempstr.join(','));
+            dispatch({
+              type:'price/queryPrice',
+              payload:tempstr.join(',')
+            });
+            //
+            tempstr=[];
     },
     handleTransferChange(targetKey, direction, moveKeys){
       console.log('targetKey:',targetKey,direction,moveKeys);
@@ -410,7 +430,7 @@ console.log(typeof(detaildatasource.dataList[index][key]));
       console.log(commitdata);
       console.log(JSON.stringify(commitdata));
       dispatch({
-        type:'price/getstyle',
+        type:'price/getstyleEdit',
         payload:commitdata
       });
     }
@@ -520,7 +540,7 @@ console.log(typeof(detaildatasource.dataList[index][key]));
          payload:{
            commitdone:false,
            addeditloading:false,
-          
+
          }
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页
