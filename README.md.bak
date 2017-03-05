@@ -1,0 +1,10 @@
+#使用ant design搭建的后台管理系统
+
+## 截屏
+web
+
+![](src/assets/photo.jpg)
+
+##使用了dva应用框架，整个目录结构如下图
+
+![](src/assets/photo1.jpg)
