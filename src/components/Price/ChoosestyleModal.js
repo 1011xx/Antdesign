@@ -100,6 +100,7 @@ function handleSubmit(e){
 							 	initialValue:"undefined",
 							 })(
 								 <Select   style={{ width: 120 }} size="small">
+								   <Option  value="undefined">全部</Option>
 							      {selectyear}
 							    </Select>
 							 )}
@@ -113,6 +114,7 @@ function handleSubmit(e){
 							 	initialValue:"undefined",
 							 })(
 								 <Select   style={{ width: 120 }} size="small">
+								 <Option  value="undefined">全部</Option>
 									 {selectseason}
 								 </Select>
 							 )}
@@ -132,6 +134,7 @@ function handleSubmit(e){
 							 	initialValue:"undefined",
 							 })(
 								 <Select   style={{ width: 120 }} size="small">
+								 <Option  value="undefined">全部</Option>
 									 {selectbrand}
 								 </Select>
 							 )}
@@ -158,6 +161,7 @@ function handleSubmit(e){
 							 	initialValue:"undefined",
 							 })(
 								 <Select   style={{ width: 120 }} size="small">
+								 <Option  value="undefined">全部</Option>
 									 {selectcategory}
 								 </Select>
 							 )}

@@ -236,12 +236,17 @@ function Add({dispatch,price}) {
     },
     tagPrice(value, index,key){
       //设置吊牌价
-      console.log(value, index,key);
-    newData.dataList[index][key] = value;
+      // console.log(value, index,key);
+      let tempobj=Object.assign({},newData);
+      let num=parseFloat(value).toFixed(3);
+      let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+      // console.log(numvalue);
+      tempobj.dataList[index][key] = numvalue;
+
     dispatch({
       type:'price/publicDate',
       payload:{
-        newData:newData
+        newData:tempobj
       }
     });
 
@@ -515,9 +520,12 @@ function Add({dispatch,price}) {
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页
        dispatch(routerRedux.push('/audit'));
-      
+
      }
  };
+
+ //为了使得页面重绘，使用箭头函数
+ const Add=()=> <Addprice {...addProps}/>;
 
   return (
     <Wrap
@@ -526,7 +534,7 @@ function Add({dispatch,price}) {
     last="价格维护"
     next="新增调价单"
     >
-      <Addprice {...addProps}/>
+      <Add/>
       <StyleModal {...transforProps}/>
       <CommitModal {...commitProps}/>
       <Setallprice {...priceProps}/>

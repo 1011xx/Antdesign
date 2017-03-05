@@ -71,6 +71,7 @@ export default {
       pending_spin:true,
       commitdone:false,//审核提交完成，弹框的状态
       addeditloading:false,
+
       styleCode:'',
       start:undefined,
       end:undefined,
@@ -486,10 +487,10 @@ export default {
            };
            if(styleYear.data.code=="0"){
             // console.log(styleYear);
-              let tempyear={};
-              tempyear.code="undefined";
-              tempyear.name="全部";
-              styleYear.data.data.unshift(tempyear);
+              // let tempyear={};
+              // tempyear.code="undefined";
+              // tempyear.name="全部";
+              // styleYear.data.data.unshift(tempyear);
                  yield put({type:'publicDate',
                      payload:{
                        modalyear:styleYear.data.data
@@ -498,10 +499,10 @@ export default {
            };
            if(styleSeason.data.code=="0"){
             // console.log(styleSeason);
-             let tempSeason={};
-              tempSeason.code="undefined";
-              tempSeason.name="全部";
-              styleSeason.data.data.unshift(tempSeason);
+            //  let tempSeason={};
+            //   tempSeason.code="undefined";
+            //   tempSeason.name="全部";
+            //   styleSeason.data.data.unshift(tempSeason);
                  yield put({type:'publicDate',
                      payload:{
                        modalseason:styleSeason.data.data
@@ -510,10 +511,10 @@ export default {
            };
            if(styleBrand.data.code=="0"){
             // console.log(styleBrand);
-               let tempBrand={};
-              tempBrand.code="undefined";
-              tempBrand.name="全部";
-              styleBrand.data.data.unshift(tempBrand);
+              //  let tempBrand={};
+              // tempBrand.code="undefined";
+              // tempBrand.name="全部";
+              // styleBrand.data.data.unshift(tempBrand);
                  yield put({type:'publicDate',
                      payload:{
                        modalbrand:styleBrand.data.data
@@ -522,10 +523,10 @@ export default {
            };
            if(styleCategory.data.code=="0"){
             // console.log(styleCategory);
-             let tempCategory={};
-              tempCategory.code="undefined";
-              tempCategory.name="全部";
-              styleCategory.data.data.unshift(tempCategory);
+            //  let tempCategory={};
+            //   tempCategory.code="undefined";
+            //   tempCategory.name="全部";
+            //   styleCategory.data.data.unshift(tempCategory);
                  yield put({type:'publicDate',
                      payload:{
                        modalcategory:styleCategory.data.data

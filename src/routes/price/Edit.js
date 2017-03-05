@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Modal} from 'antd';
 import { routerRedux } from 'dva/router';
+import { Form} from 'antd';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Editprice from '../../components/Price/Editprice';
 import CommitModal from '../../components/Price/CommitModal';
@@ -214,10 +215,7 @@ function Edit({dispatch,price}) {
     getdata(values){
 
               // console.log('新建吊牌价');
-
                 console.log('修改提交审核');
-
-
                 dispatch({
                   type:'price/publicDate',
                   payload:{
@@ -226,12 +224,6 @@ function Edit({dispatch,price}) {
                     tiptitle:'提交审核'
                   }
                 });
-
-
-
-
-
-
     },
     backurl(){
       dispatch(routerRedux.push('/audit'));
@@ -240,17 +232,18 @@ function Edit({dispatch,price}) {
       //设置吊牌价
       let tempobj=Object.assign({},detaildatasource);
       let num=parseFloat(value).toFixed(3);
-      let numvalue=num.substring(0,num.lastIndexOf('.')+3)
-      console.log('toFixed:',numvalue);
+      let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+      // console.log('toFixed:',numvalue);
 
       tempobj.dataList[index][key] = numvalue;
+
     dispatch({
       type:'price/publicDate',
       payload:{
         detaildatasource:tempobj
       }
     });
-console.log(typeof(detaildatasource.dataList[index][key]));
+console.log(detaildatasource.dataList);
     },
     tagremarks(value, index,key){
       //table中的备注
@@ -548,6 +541,11 @@ console.log(typeof(detaildatasource.dataList[index][key]));
      }
  };
 
+
+//为了使得页面重绘，使用箭头函数
+const Edit=()=> <Editprice {...editProps}/>;
+
+
   return (
     <Wrap
     num="2"
@@ -555,7 +553,7 @@ console.log(typeof(detaildatasource.dataList[index][key]));
     last="价格维护"
     next="修改调价单"
     >
-      <Editprice {...editProps}/>
+      <Edit />
       <StyleModal {...transforProps}/>
       <CommitModal {...commitProps}/>
       <Setallprice {...priceProps}/>

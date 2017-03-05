@@ -46,8 +46,8 @@ function Stylelist({
      width:'5%',
   }, {
     title: '序号',
-    dataIndex: 'seriesName',
-    key: 'seriesName',
+    dataIndex: 'serialnoCode',
+    key: 'serialnoCode',
      width:'5%',
   }, {
     title: '类别',

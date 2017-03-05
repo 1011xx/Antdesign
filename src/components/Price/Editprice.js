@@ -38,6 +38,9 @@ const Editprice = ({
 
 }) => {
 
+
+
+
   const columns = [{
      title: '序号',
      dataIndex: 'num',
@@ -59,7 +62,6 @@ const Editprice = ({
      key: 'configTagprice',
      width:'20%',
      render:(text,record,index) => (
-
        <FormItem>
                  {getFieldDecorator(`configTagprice${record.key}`, {
                      initialValue:record.configTagprice,
