@@ -54,12 +54,7 @@ const {   previewVisible,
           uploading,
 		  item:behavier==='create'?{}:currentItem,
 		getadddata(data){
-      let str=location.hash;
-    	let strs = str.split("/");
-    	strs.shift();
-    	let strss=strs[2].split('?');
     	//组装给后台要删除的东西
-      data.id=strss[0];
 	// 		setInterval(function(){
 		// data.fullName=num++;
 		// data.shortName=numm++;

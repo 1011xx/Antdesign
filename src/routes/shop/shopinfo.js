@@ -32,6 +32,7 @@ function Shopinfo({dispatch,shopinfo}){
 		updateFileList,
 		defaultPageSize,
 		options,
+		provincecityoptions,
 		region,
 		status,
 		types,
@@ -47,8 +48,9 @@ function Shopinfo({dispatch,shopinfo}){
 		shopStatus,
 		fullName
 	}=shopinfo;
+
 	const queryProps={
-		options,
+		options:provincecityoptions,
 		region,
 		status,
 		types,
@@ -60,9 +62,9 @@ function Shopinfo({dispatch,shopinfo}){
 		fullName,
 		passdata(value){
 			console.log('value:',value);
-			
 
-			
+
+
 			//获取文本框
 			dispatch({
 				type:'shopinfo/publicdate',
@@ -82,17 +84,17 @@ function Shopinfo({dispatch,shopinfo}){
 			let data=setProps(tempdata);
 			console.log('data:',data);
 			searchForm.fullName=data.shopname;
-			// fullName=data.shopname;
 			searchForm.shopType=data.shopType;
-			// shopType=data.shopType;
 			searchForm.saleAreaCode=data.saleAreaCode;
-			// saleAreaCode=data.saleAreaCode;
 			searchForm.shopStatus=data.shopStatus;
-			// shopStatus=data.shopStatus;
+			searchForm.cityCode=data.cityCode;
+			searchForm.provinceCode=data.provinceCode;
 
-			//将searchForm查询条件对象的值转换为字符串
-			let condit=JSON.stringify({...searchForm,...changePage});
-			console.log(condit);
+			console.info('searchForm:',searchForm);
+			console.info(changePage);
+			//将searchForm查询条件对象的值转换为字符串,当点击搜索的时候，页码和页数都为初始值
+			let condit=JSON.stringify({...changePage,...searchForm});
+			console.info(condit);
 			 dispatch({
               type: 'shopinfo/queryShop',
               payload: condit,
@@ -169,32 +171,32 @@ function Shopinfo({dispatch,shopinfo}){
 		},
 		onPageChange(pageNumber){
 			// console.log('Page: ', pageNumber);
-			if(shopType!==""){
+			// if(shopType!==""){
 
 				changePage.shopType=shopType;
-			}
-			if(saleAreaCode!==""){
+			// }
+			// if(saleAreaCode!==""){
 				changePage.saleAreaCode=saleAreaCode;
-			}
-			if(provinceCode!==""){
+			// }
+			// if(provinceCode!==""){
 				changePage.provinceCode=provinceCode;
-			}
-			if(cityCode!==""){
+			// }
+			// if(cityCode!==""){
 				changePage.cityCode=cityCode;
-			}
-			if(shopStatus!==""){
+			// }
+			// if(shopStatus!==""){
 				changePage.shopStatus=shopStatus;
-			}
-			if(fullName!==""){
+			// }
+			// if(fullName!==""){
 				changePage.fullName=fullName;
-			}
+			// }
 			console.log(changePage);
 			// console.log(typeof(shopType));
 			changePage.page=pageNumber;
 			console.log('pageNumber:',pageNumber);
 			//将查询条件对象的值转换为字符串
-			let condit=JSON.stringify(changePage);
-			// console.log(condit);
+			let condit=JSON.stringify(setProps(changePage));
+			console.log(condit);
 
 			 dispatch({
               type: 'shopinfo/publicdate',
@@ -222,9 +224,12 @@ function Shopinfo({dispatch,shopinfo}){
             });
 
 			changePage.page=current;
+			searchForm.page=current;
+			searchForm.rows=pageSize;
 			changePage.rows=pageSize;
-			let condit=JSON.stringify({...searchForm,...changePage});
-			// console.log(condit);
+			console.info()
+			let condit=JSON.stringify({...changePage,...searchForm});
+			console.log('combine:',{...changePage,...searchForm});
 
 		 dispatch({
               type: 'shopinfo/queryShop',

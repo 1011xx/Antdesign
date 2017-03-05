@@ -7,7 +7,7 @@ import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
 import {setProps} from '../../utils/common';
 var result='';
 var result2='';
-
+//这是修改款号页面
 function Addstyleroute({dispatch,moudelnum}) {
   const {
     item,
@@ -184,8 +184,7 @@ function Addstyleroute({dispatch,moudelnum}) {
             savedtwo:false
           }
         });
-        //当修改成功后，点击弹出确定按钮后，跳转到列表页
-        dispatch(routerRedux.push('/modelnumber'));
+
         //当跳转到列表页面后，根据当前页面的搜索条件包括页数，重新请求数据
         let queryobj={styleCode,categoryCode,yearCode};
         queryobj=setProps(queryobj);
@@ -194,7 +193,10 @@ function Addstyleroute({dispatch,moudelnum}) {
           type:'moudelnum/querypage',
           payload:queryobj
         });
+        //当修改成功后，点击弹出确定按钮后，跳转到列表页
+        dispatch(routerRedux.push('/modelnumber'));
       }
+
   };
   return (
     <Wrap

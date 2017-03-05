@@ -8,8 +8,8 @@ export default {
       currentItem:{},
       modalVisible:false,
       modalType: 'create',
-      dataSource:[],//属性类列表数据
-      dataSources:[],//属性列表数据
+      dataSource:[],///mainattrlist列表数据
+      dataSources:[],///mainattrlist/styleattr列表数据
       visibleSure:false,
       loading:true,
       loadings:true,
@@ -93,10 +93,19 @@ export default {
           const {data}= yield call(queryAttributeByAttributeClassId,{jsonParam:tempstr});
             if(data){
             // console.log(data);
-             for(let i=1;i<=data.dataList.length;i++){
-                    data.dataList[i-1].num=i;
-                    data.dataList[i-1].key=i;
-                  }
+            let long=data.dataList.length;
+            if(currentpage<2){
+              for(let i=1;i<=long;i++){
+                  data.dataList[i-1].num=i;
+                  data.dataList[i-1].key=i;
+                }
+              }else{
+                let size=(currentpage-1)*pagesize;
+                for(let j=size;j<long+size;j++){
+                  data.dataList[j-size].num=j+1;
+                  data.dataList[j-size].key=j+1;
+                }
+              }
             yield put({type:'publicDate',
                       payload:{
                         dataSources:data.dataList,
@@ -213,7 +222,8 @@ export default {
             }
         },
         *delete({ payload }, { call, put,select }){
-            // console.log('payload:'+payload);
+          const currentpage = yield select(({ attributeClass }) => attributeClass.current);
+          const dataSources = yield select(({ attributeClass }) => attributeClass.dataSources);
             let newId={};
             newId.Id=payload;
             let strarr=JSON.stringify(newId);
@@ -221,14 +231,28 @@ export default {
             if(data.code=="0"){
                // message.success(data.msg);
                 console.log(data);
-                //再次请求数据
-                yield put({type:'queryAttributeClassId'});
-                 //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1,
-                      }
-                    });
+
+                //这里判断当页是否还有一条数据，如果还有一条数据的话，再判断页数，如果当前的页数
+                // 小于2页的话不做操作，否则页数减一
+                if(dataSources.length<2){
+                  if(currentpage<2){
+                    yield put({type:'publicDate',
+                          payload:{
+                             current:1,
+                             loadings:true
+                          }
+                        });
+                  }else{
+                    yield put({type:'publicDate',
+                         payload:{
+                            current:currentpage-1,
+                            loadings:true
+                         }
+                       });
+                  }
+                }
+                    //再次请求数据
+                    yield put({type:'queryAttributeClassId'});
             }else{
                // message.warning(data.msg);
                Modal.error({

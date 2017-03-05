@@ -5,14 +5,15 @@ import {addAll} from '../utils/common'
 export default {
   namespace: 'shopinfo',
   state: {
-  	options:[{
+  	provincecityoptions:[{
       label:'全部',
-      value:'undefined',
+      value:'',
       children:[{
         label:'全部',
-        value:'undefined'
+        value:''
       }]
     }],
+    options:[],
   	region:[],
   	status:[],
   	types:[],
@@ -144,7 +145,7 @@ export default {
         province.data.provincecity.unshift(tempobj);
 	      	yield put({type:'ProvicneAndCity',
 	      	payload:{
-	      		options:province.data.provincecity
+	      		provincecityoptions:province.data.provincecity
 	      	}
 	      });
       };
@@ -296,9 +297,26 @@ export default {
           saving:false
         }
       });
+//新增完店仓后，需要清空所有的查询数据
+    yield put({type:'publicdate',
+    payload:{
+      loading:true,
+      current:1,
+      defaultPageSize:10,
+      shopType:'',
+      saleAreaCode:'',
+      provinceCode:'',
+      cityCode:'',
+      shopStatus:'',
+      fullName:''
+    }
+    });
+
+
+        yield put({type:'enter'});
 
        }else{
-         
+
          yield put({type:'publicdate',
          payload:{
            saving:false

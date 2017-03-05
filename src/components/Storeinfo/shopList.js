@@ -58,8 +58,8 @@ function ShopList({
   },
   {
     title: '店仓电话',
-    dataIndex: 'mobileNumber',
-    key: 'mobileNumber',
+    dataIndex: 'telephoneNumber',
+    key: 'telephoneNumber',
     width:'15%'
   },{
     title: '店长',

@@ -576,16 +576,23 @@ export default {
                     // console.log(tabledata);
 
 
-                  //将页码设为默认
+                  //将页码设为默认,同时清空搜索条件
                   yield put({type:'publicDate',
                       payload:{
                          saveFlag:false,
                          current:1,
                          defaultPageSize:10,
                          savedone:true,
-
+                         styleCode:'',
+                         categoryCode:'',
+                         yearCode:'',
                       }
                     });
+
+                    //当新增页面成功后，刷星列表
+                    dispatch({
+                      type:'moudelnum/enter'
+                    })
 
             }else{
                yield put({type:'publicDate',
@@ -633,21 +640,35 @@ export default {
 
         },
         *delete({ payload }, { call, put,select }){
+          const currentpage = yield select(({ moudelnum }) => moudelnum.current);
+          const dataSource = yield select(({ attrsizeItem }) => attrsizeItem.dataSource);
             console.log('payload:'+payload);
             let strarr=JSON.stringify(payload);
             const {data}= yield call(deleteStyleById,{jsonparam:strarr});
             if(data.code=="0"){
-              // message.success(data.msg);
-                console.log(data);
+              //这里判断当页是否还有一条数据，如果还有一条数据的话，再判断页数，如果当前的页数
+              // 小于2页的话不做操作，否则页数减一
+              if(dataSource.length<2){
+                if(currentpage<2){
+                  yield put({type:'publicDate',
+                        payload:{
+                           current:1,
+                           loading:true
+                        }
+                      });
+                }else{
+                  yield put({type:'publicDate',
+                       payload:{
+                          current:currentpage-1,
+                          loading:true
+                       }
+                     });
+                }
+              }
+
                 //方案二：再次请求数据
                 yield put({type:'enter'});
-                 //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1,
-                         defaultPageSize:10
-                      }
-                    });
+
             }else{
                yield put({type:'publicDate',
                       payload:{

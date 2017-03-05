@@ -21,7 +21,6 @@ export default {
         *enter({ payload }, { call, put, select }){
           //若后期保留停留的页面，开启注释
            const currentpage = yield select(({ attrsize }) => attrsize.current);
-           console.log('currentpage:',currentpage);
            const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
            let tempobj={};
            tempobj.page=currentpage;
@@ -115,7 +114,7 @@ export default {
                     // console.log(payload);
                     // const newtabledata=tabledata.push(payload);
                     // console.log(tabledata);
-               
+
                  //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
@@ -150,7 +149,7 @@ export default {
             if(data.code=="0"){
                // message.success(data.msg);
                 console.log(data);
-                
+
                   //将页码设为默认
                   yield put({type:'publicDate',
                       payload:{
@@ -179,6 +178,7 @@ export default {
           const currentpage = yield select(({ attrsize }) => attrsize.current);
           const pagesize = yield select(({ attrsize }) => attrsize.defaultPageSize);
           const total = yield select(({ attrsize }) => attrsize.total);
+          const dataSource = yield select(({ attrsize }) => attrsize.dataSource);
             console.log('payload:'+payload);
             let newId={};
             newId.id=payload;
@@ -187,15 +187,25 @@ export default {
             if(data.code=="0"){
                // message.success(data.msg);
                 console.log(data);
-                //这里判断total的值，total<currentpage*pagesize(10<10*2)
-                // if(total<currentpage*pagesize){
-                //   //将页码设为默认
-                //    yield put({type:'publicDate',
-                //        payload:{
-                //           current:currentpage-1
-                //        }
-                //      });
-                // }
+                //这里判断当页是否还有一条数据，如果还有一条数据的话，再判断页数，如果当前的页数
+                // 小于2页的话不做操作，否则页数减一
+                if(dataSource.length<2){
+                  if(currentpage<2){
+                    yield put({type:'publicDate',
+                          payload:{
+                             current:1,
+                             loadings:true
+                          }
+                        });
+                  }else{
+                    yield put({type:'publicDate',
+                         payload:{
+                            current:currentpage-1,
+                            loadings:true
+                         }
+                       });
+                  }
+                }
 
                     //方案二：再次请求数据
                     yield put({type:'enter'});

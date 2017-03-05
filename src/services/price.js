@@ -221,3 +221,13 @@ export async function toAuditTagPriceConfig(params) {
     body: qs.stringify(params),
   });
 }
+//当添加新的价格后，需要查询当前的吊牌价
+export async function queryTagPriceConfigSetPrice(params) {
+  return request(`${ipaddress}/fmss/tagPriceController/queryTagPriceConfigSetPrice`, {
+    method: 'post',
+     headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify(params),
+  });
+}

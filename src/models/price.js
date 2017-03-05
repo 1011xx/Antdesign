@@ -15,6 +15,7 @@ import { queryTagPriceConfig,
           queryTagPriceAuditState,
           queryTagPriceAuditResult,
           auditTagPriceConfig,//价格审核-》审核
+          queryTagPriceConfigSetPrice//添加款号后，查询当前的吊牌价
 
         } from '../services/price';
 import {Modal} from 'antd';
@@ -276,67 +277,69 @@ export default {
                     });
             }
         },
-        *create({ payload }, { call, put,select }){
-            const tabledata = yield select(({ attrlist }) => attrlist.dataSource);
-            let strarr=JSON.stringify(payload);
-            console.log(strarr);
-            const {data}= yield call(newColor,{jsonParam:strarr});
-            console.log(data);
-            //data.code=="0"是成功时要执行的回调
-            if(data.code=="0"){
-               // message.success(data.msg);
-                 //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
-                    // payload.num=tabledata.length+1;
-                    // console.log(payload);
-                    // const newtabledata=tabledata.push(payload);
-                    // console.log(tabledata);
-                //方案二：再次请求数据
-                 yield put({type:'enter'});
-                  //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1,
-                         defaultPageSize:10
-                      }
-                    });
-
-            }else{
-               Modal.error({
-                 title: '提示',
-                 content: data.msg,
-               });
-               yield put({type:'publicDate',payload:{loading:false}});
-            }
-        },
-        *edit({ payload }, { call, put,select }){
-            const id = yield select(({ attrlist }) => attrlist.currentItem.id);
-            const newpayload = { ...payload, id }; // 等价于payload.id=id;
-            let strarr=JSON.stringify(newpayload);
-            console.log(strarr);
-            const {data}= yield call(updateColor,{jsonParam:strarr});
-            if(data.code=="0"){
-               // message.success(data.msg);
-                console.log(data);
-                 //方案二：再次请求数据
-                 yield put({type:'enter'});
-                  //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1,
-                         defaultPageSize:10
-                      }
-                    });
-            }else{
-               Modal.error({
-                 title: '提示',
-                 content: data.msg,
-               });
-               yield put({type:'publicDate',payload:{loading:false}});
-            }
-        },
+        // *create({ payload }, { call, put,select }){
+        //     const tabledata = yield select(({ attrlist }) => attrlist.dataSource);
+        //     let strarr=JSON.stringify(payload);
+        //     console.log(strarr);
+        //     const {data}= yield call(newColor,{jsonParam:strarr});
+        //     console.log(data);
+        //     //data.code=="0"是成功时要执行的回调
+        //     if(data.code=="0"){
+        //        // message.success(data.msg);
+        //          //方案一：修改页面数据,直接在数据源上push意条数据(可以省略，再次请求数据)
+        //             // payload.num=tabledata.length+1;
+        //             // console.log(payload);
+        //             // const newtabledata=tabledata.push(payload);
+        //             // console.log(tabledata);
+        //         //方案二：再次请求数据
+        //          yield put({type:'enter'});
+        //           //将页码设为默认
+        //           yield put({type:'publicDate',
+        //               payload:{
+        //                  current:1,
+        //                  defaultPageSize:10
+        //               }
+        //             });
+        //
+        //     }else{
+        //        Modal.error({
+        //          title: '提示',
+        //          content: data.msg,
+        //        });
+        //        yield put({type:'publicDate',payload:{loading:false}});
+        //     }
+        // },
+        // *edit({ payload }, { call, put,select }){
+        //     const id = yield select(({ attrlist }) => attrlist.currentItem.id);
+        //     const newpayload = { ...payload, id }; // 等价于payload.id=id;
+        //     let strarr=JSON.stringify(newpayload);
+        //     console.log(strarr);
+        //     const {data}= yield call(updateColor,{jsonParam:strarr});
+        //     if(data.code=="0"){
+        //        // message.success(data.msg);
+        //         console.log(data);
+        //          //方案二：再次请求数据
+        //          yield put({type:'enter'});
+        //           //将页码设为默认
+        //           yield put({type:'publicDate',
+        //               payload:{
+        //                  current:1,
+        //                  defaultPageSize:10
+        //               }
+        //             });
+        //     }else{
+        //        Modal.error({
+        //          title: '提示',
+        //          content: data.msg,
+        //        });
+        //        yield put({type:'publicDate',payload:{loading:false}});
+        //     }
+        // },
         *delete({ payload }, { call, put,select }){
           //删除价格单列表的数据
           const delid = yield select(({ price }) => price.deleteid);
+          const currentpage = yield select(({ price }) => price.current);
+          const dataSource = yield select(({ price }) => price.dataSource);
             let newId={};
             newId.id=delid;
             let strarr=JSON.stringify(newId);
@@ -345,15 +348,25 @@ export default {
             if(data.code=="0"){
               // message.success(data.msg);
                 console.log(data);
-
-                 //将页码设为默认
-                  // yield put({type:'publicDate',
-                  //     payload:{
-                  //        current:1,
-                  //        defaultPageSize:10,
-                  //
-                  //     }
-                  //   });
+                //这里判断当页是否还有一条数据，如果还有一条数据的话，再判断页数，如果当前的页数
+                // 小于2页的话不做操作，否则页数减一
+                if(dataSource.length<2){
+                  if(currentpage<2){
+                    yield put({type:'publicDate',
+                          payload:{
+                             current:1,
+                             loading:true
+                          }
+                        });
+                  }else{
+                    yield put({type:'publicDate',
+                         payload:{
+                            current:currentpage-1,
+                            loading:true
+                         }
+                       });
+                  }
+                }
                    yield put({type:'querypage'});
             }else{
               Modal.error({
@@ -559,8 +572,26 @@ export default {
                          payload:{
                            commitdone:true,
                            addeditloading:false,
-                            confirmLoading:false
+                           confirmLoading:false
                          }
+                       });
+
+                       //清空所有的搜索条件
+                        yield put({
+                         type:'publicDate',
+                         payload:{
+                           loading:true,
+                           styleCode:'',
+                           start:undefined,
+                           end:undefined,
+                           state:'',
+                           current:1,
+                           defaultPageSize:10
+                         }
+                       });
+                       //新增成功后需要重新请求数据
+                        yield put({
+                         type:'enter'
                        });
 
           }else{
@@ -586,7 +617,8 @@ export default {
           if(data.code==0){
             yield put({type:'publicDate',
                          payload:{
-                           commitdone:true
+                           commitdone:true,
+                           loading:true
                          }
                        });
 
@@ -607,7 +639,6 @@ export default {
        },
        *commitsave({ payload }, { call, put,select }){
         //新增页面提交审核
-
         let strarr=JSON.stringify(payload);
          // console.log('payload:',strarr);
         const {data}= yield call(toAuditTagPriceConfig,{jsonParam:strarr});
@@ -618,24 +649,42 @@ export default {
                          payload:{
                            commitdone:true,
                            commitvis:false,
-                           addeditloading:false
+                           addeditloading:false,
+                           confirmLoading:false
                          }
+                       });
+                       //清空所有的搜索条件
+                        yield put({
+                         type:'publicDate',
+                         payload:{
+                           loading:true,
+                           styleCode:'',
+                           start:undefined,
+                           end:undefined,
+                           state:'',
+                           current:1,
+                           defaultPageSize:10
+                         }
+                       });
+                       //新增成功后需要重新请求数据
+                        yield put({
+                         type:'enter'
                        });
 
           }else if(data.code==1){
             yield put({type:'publicDate',
                          payload:{
-                           addeditloading:false
+                           confirmLoading:false
                          }
                        });
               Modal.error({
                  title: '提示',
-                 content: `下列款号重复${data.msg}`,
+                 content: `下列款号重复：${data.msg}`,
                });
           }else{
             yield put({type:'publicDate',
                          payload:{
-                           addeditloading:false
+                           confirmLoading:false
                          }
                        });
              Modal.error({
@@ -655,16 +704,29 @@ export default {
                   yield put({type:'publicDate',
                          payload:{
                            commitdone:true,
-                           commitvis:false
+                           commitvis:false,
+                           confirmLoading:false
                          }
                        });
+                       //修改成功的话，按条件继续查询一次
+                        yield put({type:'querypage'});
 
           }else if(data.code==1){
+            yield put({type:'publicDate',
+                   payload:{
+                     confirmLoading:false
+                   }
+                 });
               Modal.error({
                  title: '提示',
                  content: `下列款号重复${data.msg}`,
                });
           }else{
+            yield put({type:'publicDate',
+                   payload:{
+                     confirmLoading:false
+                   }
+                 });
              Modal.error({
                  title: '提示',
                  content: data.msg,

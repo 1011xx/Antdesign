@@ -515,10 +515,7 @@ function Add({dispatch,price}) {
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页
        dispatch(routerRedux.push('/audit'));
-       //新增成功后需要重新请求数据
-       dispatch({
-         type:'price/enter'
-       });
+      
      }
  };
 

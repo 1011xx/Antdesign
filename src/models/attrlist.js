@@ -167,7 +167,8 @@ export default {
             }
         },
         *delete({ payload }, { call, put,select }){
-            // console.log('payload:'+payload);
+          const currentpage = yield select(({ attrlist }) => attrlist.current);
+          const dataSource = yield select(({ attrlist }) => attrlist.dataSource);
             let newId={};
             newId.id=payload;
             let strarr=JSON.stringify(newId);
@@ -176,13 +177,25 @@ export default {
             if(data.code=="0"){
               // message.success(data.msg);
                 console.log(data);
-
-                 //将页码设为默认
-                  yield put({type:'publicDate',
-                      payload:{
-                         current:1
-                      }
-                    });
+                //这里判断当页是否还有一条数据，如果还有一条数据的话，再判断页数，如果当前的页数
+                // 小于2页的话不做操作，否则页数减一
+                if(dataSource.length<2){
+                  if(currentpage<2){
+                    yield put({type:'publicDate',
+                          payload:{
+                             current:1,
+                             loadings:true
+                          }
+                        });
+                  }else{
+                    yield put({type:'publicDate',
+                         payload:{
+                            current:currentpage-1,
+                            loadings:true
+                         }
+                       });
+                  }
+                }
                     //方案二：再次请求数据
                     yield put({type:'enter'});
             }else{

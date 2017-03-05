@@ -170,10 +170,7 @@ function Editstyleroute({dispatch,moudelnum}) {
         });
          //当保存成功后，点击弹出确定按钮后，跳转到列表页
         dispatch(routerRedux.push('/modelnumber'));
-        //当新增页面成功后，刷星列表
-        dispatch({
-          type:'moudelnum/enter'
-        })
+      
       }
 
   };

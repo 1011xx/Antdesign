@@ -519,7 +519,8 @@ console.log(typeof(detaildatasource.dataList[index][key]));
          type:'price/publicDate',
          payload:{
            commitdone:false,
-           addeditloading:false
+           addeditloading:false,
+          
          }
        });
         //当保存成功后，点击弹出确定按钮后，跳转到列表页

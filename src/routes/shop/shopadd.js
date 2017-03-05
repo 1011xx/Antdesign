@@ -231,12 +231,10 @@ const {   previewVisible,
       dispatch({type:'shopinfo/publicdate',
       payload:{
         addvisibleSave:false,
-        loading:true,
-        current:1
       }
     });
-      //
-      dispatch({type:'shopinfo/enter'});
+    
+
     }
   }
 	return(
