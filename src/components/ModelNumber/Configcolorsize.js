@@ -241,12 +241,10 @@ const Configcolorsize=({
     const data=[{
       color:'101',
       colorName:'黑色'
-
     },
     {
       color:'102',
       colorName:'绿色'
-
     }];
 
 

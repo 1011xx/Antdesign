@@ -138,8 +138,13 @@ export default {
            loading:false
          }
        });
+     }else{
+       Modal.error({
+         title: '提示',
+         content: resultupload.data.msg,
+       });
      };
-      if(province.data){
+      if(province.data.code==0){
         console.log(province.data.provincecity);
         let tempobj={};
         let childobj={};
@@ -157,7 +162,7 @@ export default {
 	      	}
 	      });
       };
-       if(salesarea.data){
+       if(salesarea.data.code==0){
           // salesarea.data.salesArea.unshift(addAll());
 	       	 yield put({type:'SaleArea',
 	      	payload:{
@@ -165,7 +170,7 @@ export default {
 	      	}
 	      });
        };
-       if(shopstatus.data){
+       if(shopstatus.data.code==0){
         // shopstatus.data.shopStatus.unshift(addAll());
 	      	yield put({type:'ShopStatus',
 	      	payload:{
@@ -173,7 +178,7 @@ export default {
 	      	}
 	      });
       };
-      if(shoptype.data){
+      if(shoptype.data.code==0){
           // shoptype.data.shopType.unshift(addAll());
 	      	yield put({type:'ShopType',
 	      	payload:{
@@ -191,21 +196,21 @@ export default {
       const salesarea=yield call(querySaleArea);
       const shoptype=yield call(queryShopType);
 
-      if(province.data){
+      if(province.data.code==0){
           yield put({type:'ProvicneAndCity',
           payload:{
             options:province.data.provincecity
           }
         });
       };
-       if(salesarea.data){
+       if(salesarea.data.code==0){
            yield put({type:'SaleArea',
           payload:{
             region:salesarea.data.salesArea
           }
         });
        };
-       if(shoptype.data){
+       if(shoptype.data.code==0){
           yield put({type:'ShopType',
           payload:{
             types:shoptype.data.shopType
@@ -216,7 +221,7 @@ export default {
     },
     *queryinfo({ payload}, { call, put }){
       const resultinfo=yield call(queryShopInfo,{jsonparam:payload});
-          if(resultinfo.data){
+          if(resultinfo.data.code==0){
             console.log(resultinfo.data);
               if(resultinfo.data.shopInfo.images){
             let imagearr=JSON.parse(resultinfo.data.shopInfo.images);
@@ -255,7 +260,7 @@ export default {
     const pagesize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
     // console.info('pagesize--currentpage:',currentpage,pagesize);
    	 const resultlist=yield call(queryShop,{jsonparam:payload});
-   	 if(resultlist.data){
+   	 if(resultlist.data.code==0){
       // 开始添加页面序号
       let long=resultlist.data.dataList.length;
       if(currentpage<2){

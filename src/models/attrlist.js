@@ -245,7 +245,7 @@ export default {
         setup({ dispatch, history }){
          history.listen(location => {
         if (location.pathname === '/maintaincolor') {
-          dispatch({type: 'enter'});
+
            dispatch({
             type: 'publicDate',
             payload:{
@@ -254,6 +254,7 @@ export default {
                loading:true
             }
           });
+            dispatch({type: 'enter'});
            }
          });
        }

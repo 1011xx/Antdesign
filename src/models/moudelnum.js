@@ -307,9 +307,10 @@ export default {
       let str3=JSON.stringify(temidstyle);
       var exitcolorCode=[];//已存在的颜色
       const styleConfigList=yield call(queryStyleConfigList,{jsonparam:str2});//获取已有列表的数据
+      const details=yield call(getStyleInfoById,{jsonparam:str1});//通过id获取款号信息
       const size=yield call(queryStyleSize,{jsonparam:str3});//获取尺寸下拉选框的数据
       const {data}=yield call(queryStyleColor);//获取颜色列表
-      const details=yield call(getStyleInfoById,{jsonparam:str1});//通过id获取款号信息
+
 
 
       if(styleConfigList.data.code==0){
@@ -368,6 +369,22 @@ export default {
           });
         }
       };
+      if(details.data.code){
+        // console.info("details",details);
+        yield put({
+          type:'publicDate',
+          payload:{
+            config:details.data.styleInfo,
+            saveSpin:false,
+            saveConfig:{
+              //拼装保存配置的数据头，根据进入不同的页面，去获取不同的信息
+              styleId:details.data.styleInfo.id,
+              styleCode:details.data.styleInfo.code,
+              styleName:details.data.styleInfo.name,
+            }
+          }
+        })
+      };
       if(data.code==0){
         //获取到的颜色列表
 
@@ -407,21 +424,7 @@ export default {
           }
         });
       };
-      if(details.data.code){
-        // console.info("details",details);
-        yield put({
-          type:'publicDate',
-          payload:{
-            config:details.data.styleInfo,
-            saveConfig:{
-              //拼装保存配置的数据头，根据进入不同的页面，去获取不同的信息
-              styleId:details.data.styleInfo.id,
-              styleCode:details.data.styleInfo.code,
-              styleName:details.data.styleInfo.name,
-            }
-          }
-        })
-      };
+
 
       if(size.data.code==0){
         // console.log(size.data);
@@ -814,7 +817,8 @@ export default {
                 type: 'publicDate',
                 payload:{
                 currentid:newarr[0],
-                currentsizegrop:newarr[1]
+                currentsizegrop:newarr[1],
+                saveSpin:true
                 }
               });
             dispatch({

@@ -206,7 +206,7 @@ export default {
                        });
                   }
                 }
-                
+
                     //方案二：再次请求数据
                      yield put({type:'querypage'});
             }else{
@@ -258,7 +258,7 @@ export default {
          history.listen(location => {
         if (location.pathname === '/maintainsizeitem') {
             // console.log(location.pathname);
-          dispatch({type: 'enter'});
+
           //刷新页面使得页码恢复到默认值
            dispatch({
             type: 'publicDate',
@@ -268,6 +268,7 @@ export default {
                loading:true
             }
           });
+            dispatch({type: 'enter'});
            }
          });
        }
