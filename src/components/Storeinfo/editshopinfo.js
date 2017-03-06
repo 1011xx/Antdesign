@@ -75,7 +75,9 @@ function handleSubmit(e){
          'saleAreaCode':checkifundefined(fieldsValue.saleAreaCode,'key'),
          'saleAreaName':checkifundefined(fieldsValue.saleAreaCode,'label'),
          'id':item.id,
-         'status':item.status
+         'status':item.status,
+         'images':item.images,
+         'deleteImages':deleteImg,
        };
         getadddata(values);
 

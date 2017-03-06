@@ -579,7 +579,7 @@ export default {
        },
        *getstyleEdit({ payload }, { call, put,select }){
         //根据条件获取款号,新增页面穿梭匡数据获取
-          const detaildatasource = yield select(({ price }) => price.detaildatasource);
+         const detaildatasource = yield select(({ price }) => price.detaildatasource);
         let strarr=JSON.stringify(payload);
         const {data}= yield call(queryTagPriceConfigStyle,{jsonParam:strarr});
           if(data.code==0){
@@ -611,7 +611,9 @@ export default {
                    });
           }
        },
-       *queryPrice({ payload }, { call, put,select }){
+       *queryaddPrice({ payload }, { call, put,select }){
+       	const newData = yield select(({ price }) => price.newData);
+       	console.log('newData:',newData);
          let tempqueryprice={};
          tempqueryprice.styleNo=payload;
          let strarr=JSON.stringify(tempqueryprice);
@@ -619,6 +621,51 @@ export default {
          if(data.code==0){
             console.log(data);
             //这里对取到的数据做处理。
+            for(let i in data.dataList){
+            	for(let j in newData.dataList){
+            		if(data.dataList[i].styleNo==newData.dataList[j].styleNo){
+            			// console.error(data.dataList[i].price);
+            			newData.dataList[j].currentTagprice=data.dataList[i].price;
+            		}
+            	}
+            }
+            yield put({type:'publicDate',
+                     payload:{
+                       newData:newData
+                     }
+                   });
+
+         }else{
+           Modal.error({
+                title: '提示',
+                content: data.msg,
+              });
+         }
+
+
+       },
+       *queryeditPrice({ payload }, { call, put,select }){
+       	const detaildatasource = yield select(({ price }) => price.detaildatasource);
+         let tempqueryprice={};
+         tempqueryprice.styleNo=payload;
+         let strarr=JSON.stringify(tempqueryprice);
+         const {data}= yield call(queryTagPriceConfigSetPrice,{jsonParam:strarr});
+         if(data.code==0){
+            console.log(data);
+            //这里对取到的数据做处理。
+             for(let i in data.dataList){
+            	for(let j in detaildatasource.dataList){
+            		if(data.dataList[i].styleNo==detaildatasource.dataList[j].styleNo){
+            			// console.error(data.dataList[i].price);
+            			detaildatasource.dataList[j].currentTagprice=data.dataList[i].price;
+            		}
+            	}
+            }
+            yield put({type:'publicDate',
+                     payload:{
+                       detaildatasource:detaildatasource
+                     }
+                   });
 
          }else{
            Modal.error({
@@ -813,24 +860,41 @@ export default {
          const styleCategory= yield call(queryTagPriceConfigStyleCategory);
          //在这里对获取到的详情数据做处理
          if(data.code=="0"){
-
+         	console.info('123456',data);
                 data.tagPriceConfig.createDate=data.tagPriceConfig.createDate.split(" ")[0];
                 if(data.tagPriceConfig.dataList){
                     for(let i=0;i<data.tagPriceConfig.dataList.length;i++){
                     data.tagPriceConfig.dataList[i].num=i+1;
                     data.tagPriceConfig.dataList[i].key=i+1;
+                    // if(data.tagPriceConfig.dataList[i].configTagprice){
+                    // 	data.tagPriceConfig.dataList[i].configTagprice="";
+                    // }
+                    // if(data.tagPriceConfig.dataList[i].currentTagprice){
+                    // 	data.tagPriceConfig.dataList[i].currentTagprice="";
+                    // }
+                    // if(data.tagPriceConfig.dataList[i].configTagprice){
+                    // 	data.tagPriceConfig.dataList[i].configTagprice=data.tagPriceConfig.dataList[i].configTagprice+'';
+                    // }else{
+                    // 	console.log('null');
+                    // 	data.tagPriceConfig.dataList[i].configTagprice="";
+                    // }
+
                     //给已经存在的数据加上标记
                 data.tagPriceConfig.dataList[i].priceFlag=`configTagprice${i+1}`;
                 data.tagPriceConfig.dataList[i].remarkFlag=`remarks${i+1}`;
-                let num=parseFloat(data.tagPriceConfig.dataList[i].configTagprice).toFixed(3);
-                let numvalue=num.substring(0,num.lastIndexOf('.')+3);
-                data.tagPriceConfig.dataList[i].configTagprice=numvalue;
+                // if(!tmp && typeof(tmp)!="undefined" && tmp!=0)
+                if(data.tagPriceConfig.dataList[i].configTagprice){
+                	let num=parseFloat(data.tagPriceConfig.dataList[i].configTagprice).toFixed(3);
+                	let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+                	data.tagPriceConfig.dataList[i].configTagprice=numvalue;
+                }
+                
 
                   }
                 }else{
                   data.tagPriceConfig.dataList=[];
                 }
-// console.log(typeof(data.tagPriceConfig.dataList[1].configTagprice));
+console.log(data.tagPriceConfig.dataList);
               //将获取到的数据给详情页面的表格
                   yield put({type:'publicDate',
                       payload:{

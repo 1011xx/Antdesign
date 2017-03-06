@@ -147,7 +147,11 @@ const configProps={
 		tempobj.colorCode=configlist[i].colorCode;
 		tempobj.colorName=configlist[i].colorName;
 		//在提交的时候，这里将sizes数组转换成字符串形式发送给后端
-		tempobj.sizes=configlist[i].sizes.join(',');
+		console.log(configlist[i].sizes);
+		if(configlist[i].sizes){
+			tempobj.sizes=configlist[i].sizes.join(',');
+		}
+
 		// tempobj.image=configlist[i].image;
 		// tempobj.image={};
 		// tempobj.deleteImage=deleteimgdata;

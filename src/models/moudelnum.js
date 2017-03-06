@@ -85,6 +85,8 @@ export default {
 
       saveFlag:false,
       spinflag:true,
+      labelarr:[],
+      keyarr:[],
 
 
 
@@ -586,12 +588,13 @@ export default {
                          styleCode:'',
                          categoryCode:'',
                          yearCode:'',
+                         loading:true
                       }
                     });
 
                     //当新增页面成功后，刷星列表
-                    dispatch({
-                      type:'moudelnum/enter'
+                    yield put({
+                      type:'enter'
                     })
 
             }else{
@@ -690,6 +693,7 @@ export default {
                 console.log(data);
                  yield put({type:'publicDate',payload:{savevisibleSave:true}});
             }else {
+               yield put({type:'publicDate',payload:{saveSpin:false}});
               Modal.error({
                  title: '提示',
                  content: data.msg,
@@ -773,7 +777,9 @@ export default {
               payload:{
                 saveFlag:true,
                 stylename:'',
-                stylenum:''
+                stylenum:'',
+                labelarr:[],
+                keyarr:[]
               }
             });
             //当进入新增款号页面时候请求下拉框数据

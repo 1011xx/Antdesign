@@ -19,6 +19,15 @@ const Pending=({
   backurl,
  })=> {
 
+   function detailstatus(a){
+     if(a==2){
+       return '待审核'
+     }else if(a==3){
+       return '未通过'
+     }else if(a==4){
+       return '已通过'
+     }
+   };
   const columns = [{
     title: '序号',
     dataIndex: 'num',
@@ -104,7 +113,7 @@ function boolTovalue(isUniqueCodeManagement){
            <span >预计生效日期：{detaildatasource.expectEffectiveDate}</span>
          </Col>
          <Col span={6}>
-           <span >状&nbsp;&nbsp;&nbsp;&nbsp;态：{detaildatasource.stateName}</span>
+           <span >状&nbsp;&nbsp;&nbsp;&nbsp;态：{detailstatus(detaildatasource.state)}</span>
          </Col>
          <Col span={6}>
 

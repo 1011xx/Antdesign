@@ -4,8 +4,8 @@ import { routerRedux } from 'dva/router';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Editstyle from '../../components/ModelNumber/Editstyle';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
-var arr=[];
-var arrlabel=[];
+// var arr=[];
+// var arrlabel=[];
 var result='';
 var result2='';
 //新增款号页面
@@ -29,22 +29,48 @@ function Editstyleroute({dispatch,moudelnum}) {
     stylenum,//款号
     savedone,//保存成功
     saveFlag,//保存状态
+    labelarr,
+    keyarr
   }=moudelnum;
 
 //通过从后台获取的规则来计算款号和品名
+  // const getname=function(){
+  //   result="";
+  //   result2="";
+  //   for(let i=0;i<styleNumbrules.length;i++){
+  //     if(arr[styleNumbrules[i]]){
+  //       console.log(arr[styleNumbrules[i]]);
+  //       result+=arr[styleNumbrules[i]];
+  //     }
+  //   }
+  //   for(let i=0;i<styleNamerules.length;i++){
+  //     if(arrlabel[styleNamerules[i]]){
+  //       console.log(arrlabel[styleNamerules[i]]);
+  //       result2+=arrlabel[styleNamerules[i]];
+  //     }
+  //   }
+  //   dispatch({
+  //     type:'moudelnum/publicDate',
+  //     payload:{
+  //       stylename:result2,
+  //       stylenum:result
+  //     }
+  //   });
+  //
+  // }
   const getname=function(){
     result="";
     result2="";
     for(let i=0;i<styleNumbrules.length;i++){
-      if(arr[styleNumbrules[i]]){
-        console.log(arr[styleNumbrules[i]]);
-        result+=arr[styleNumbrules[i]];
+      if(keyarr[styleNumbrules[i]]){
+        console.log(keyarr[styleNumbrules[i]]);
+        result+=keyarr[styleNumbrules[i]];
       }
     }
     for(let i=0;i<styleNamerules.length;i++){
-      if(arrlabel[styleNamerules[i]]){
-        console.log(arrlabel[styleNamerules[i]]);
-        result2+=arrlabel[styleNamerules[i]];
+      if(labelarr[styleNamerules[i]]){
+        console.log(labelarr[styleNamerules[i]]);
+        result2+=labelarr[styleNamerules[i]];
       }
     }
     dispatch({
@@ -105,55 +131,85 @@ function Editstyleroute({dispatch,moudelnum}) {
         dispatch(routerRedux.push('/modelnumber'));
       },
     onChange1(value){
-      arrlabel[1]=value.label;
-      arr[1]=value.key;
+      labelarr[1]=value.label;
+      keyarr[1]=value.key;
+      // arrlabel[1]=value.label;
+      // arr[1]=value.key;
+      console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange2(value){
-       arr[2]=value.key;
-       arrlabel[2]=value.label;
+      labelarr[2]=value.label;
+      keyarr[2]=value.key;
+      //  arr[2]=value.key;
+      //  arrlabel[2]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
        getname();
 
     },
     onChange3(value){
-      arr[3]=value.key;
-       arrlabel[3]=value.label;
+      labelarr[3]=value.label;
+      keyarr[3]=value.key;
+      // arr[3]=value.key;
+      //  arrlabel[3]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
        getname();
 
     },
     onChange4(e){
-      arr[4]=e.target.value;
-       arrlabel[4]=e.target.value;
+      labelarr[4]=e.target.value;
+      keyarr[4]=e.target.value;
+      // arr[4]=e.target.value;
+      //  arrlabel[4]=e.target.value;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange5(value){
-        arr[5]=value.key;
-       arrlabel[5]=value.label;
+      labelarr[5]=value.label;
+      keyarr[5]=value.key;
+      //   arr[5]=value.key;
+      //  arrlabel[5]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
        getname();
     },
     onChange6(value){
-      arr[6]=value.key;
-       arrlabel[6]=value.label;
+      labelarr[6]=value.label;
+      keyarr[6]=value.key;
+      // arr[6]=value.key;
+      //  arrlabel[6]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange7(value){
-       arr[7]=value.key;
-       arrlabel[7]=value.label;
+      labelarr[7]=value.label;
+      keyarr[7]=value.key;
+      //  arr[7]=value.key;
+      //  arrlabel[7]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange8(value){
-        arr[8]=value.key;
-       arrlabel[8]=value.label;
+      labelarr[8]=value.label;
+      keyarr[8]=value.key;
+      //   arr[8]=value.key;
+      //  arrlabel[8]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange9(value){
-       arr[9]=value.key;
-       arrlabel[9]=value.label;
+      labelarr[9]=value.label;
+      keyarr[9]=value.key;
+      //  arr[9]=value.key;
+      //  arrlabel[9]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     onChange10(value){
-       arr[10]=value.key;
-       arrlabel[10]=value.label;
+      labelarr[10]=value.label;
+      keyarr[10]=value.key;
+      //  arr[10]=value.key;
+      //  arrlabel[10]=value.label;
+       console.log('labelarr:',labelarr,'keyarr:',keyarr);
       getname();
     },
     };
@@ -165,12 +221,11 @@ function Editstyleroute({dispatch,moudelnum}) {
           type:'moudelnum/publicDate',
           payload:{
             savedone:false,
-            loading:true
           }
         });
          //当保存成功后，点击弹出确定按钮后，跳转到列表页
         dispatch(routerRedux.push('/modelnumber'));
-      
+
       }
 
   };

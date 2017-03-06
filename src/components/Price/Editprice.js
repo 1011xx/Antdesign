@@ -38,7 +38,46 @@ const Editprice = ({
 
 }) => {
 
+  function remarksrules(rule, value, callback){
+    if(value){
+     if(value.length>1000){
+       callback("备注太长");
+     }else{
+       callback();
+     }
+   }else{
+     callback();
+   }
+  }
 
+   function itemremarksrules(rule, value, callback){
+    if(value){
+     if(value.length>200){
+       callback("备注太长");
+     }else{
+       callback();
+     }
+   }else{
+     callback();
+   }
+  }
+
+ function pricerules(rule, value, callback){
+   // console.log('value:',value);
+   // console.log(typeof(value));
+   // if(value==""){
+   //   console.log(1231);
+   // }
+    if(value){
+     if (/^[1-9][0-9]{0,5}$|^0\.[0-9][1-9]$|^0\.[1-9][0-9]$|^[1-9]\.[0-9][0-9]$|^[1-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^0\.[0-9]$|^0\.[0-9]$|^[1-9]\.[0-9]$|^[1-9][0-9]\.[0-9]$|^[1-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9]$/.test(value)!=true) {
+         callback('请输入正确的价格!');
+       } else {
+         callback();
+       }
+   }else{
+     callback();
+   }
+ }
 
 
   const columns = [{
@@ -50,7 +89,7 @@ const Editprice = ({
      title: '款号',
      dataIndex: 'styleNo',
      key: 'styleNo',
-     width:'30%'
+     width:'20%'
    }, {
      title: '当前吊牌价',
      dataIndex: 'currentTagprice',
@@ -65,7 +104,7 @@ const Editprice = ({
        <FormItem>
                  {getFieldDecorator(`configTagprice${record.key}`, {
                      initialValue:record.configTagprice,
-                     rules: [{ required: true, message: '设置吊牌价必须填写!' }]
+                     rules: [{ required: true, message: '设置吊牌价必须填写!' },{ validator:pricerules}]
                    })(
                    <Input size="small" style={{ width: 186}} onBlur={(e)=>{tagPrice(e.target.value,index,'configTagprice')}}/>
                  )}
@@ -75,13 +114,14 @@ const Editprice = ({
      title: '备注',
      dataIndex: 'remarks',
      key: 'remarks',
-     width:'20%',
+     width:'30%',
      render:(text,record,index) => (
        <FormItem>
                  {getFieldDecorator(`remarks${record.key}`, {
-                     initialValue:record.remarks
+                     initialValue:record.remarks,
+                       rules: [{ validator:itemremarksrules}]
                    })(
-                    <Input size="small" style={{ width: 186}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
+                    <Input size="small" style={{ width: 300}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
                  )}
         </FormItem>
      )

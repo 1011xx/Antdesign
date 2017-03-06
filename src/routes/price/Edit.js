@@ -231,11 +231,14 @@ function Edit({dispatch,price}) {
     tagPrice(value, index,key){
       //设置吊牌价
       let tempobj=Object.assign({},detaildatasource);
-      let num=parseFloat(value).toFixed(3);
-      let numvalue=num.substring(0,num.lastIndexOf('.')+3);
-      // console.log('toFixed:',numvalue);
+      if(value){
+        let num=parseFloat(value).toFixed(3);
+        let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+        tempobj.dataList[index][key] = numvalue;
+      }else{
+          tempobj.dataList[index][key] = "";
+      }
 
-      tempobj.dataList[index][key] = numvalue;
 
     dispatch({
       type:'price/publicDate',
@@ -336,8 +339,8 @@ console.log(detaildatasource.dataList);
 
                 lengthList=lengthList+1;
                 temp.num=lengthList;
-                temp.configTagprice=undefined;
-                temp.remarks=undefined;
+                temp.configTagprice="";
+                temp.remarks="";
                 temp.styleNo=modalstyle[index_i].code;
                 // console.log(modalstyle[index_i].code);
                 // temp.styleNocode=modalstyle[index_i].key;
@@ -362,12 +365,6 @@ console.log(detaildatasource.dataList);
       // copyDetaildatasource.dataList=temparr;
       // console.log('tempobj:',tempobj);
 
-
-
-
-
-
-
           //完成操作后关闭弹框，并清空穿梭框中选中的数据
     		dispatch({
     			type:'price/publicDate',
@@ -385,7 +382,7 @@ console.log(detaildatasource.dataList);
 
             console.info('tempstr:',tempstr.join(','));
             dispatch({
-              type:'price/queryPrice',
+              type:'price/queryeditPrice',
               payload:tempstr.join(',')
             });
             //

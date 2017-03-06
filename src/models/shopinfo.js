@@ -119,27 +119,22 @@ export default {
   	*enter({ payload}, { call, put ,select}) {
       const PageSize = yield select(({ shopinfo }) => shopinfo.defaultPageSize);
       const currentpage = yield select(({ shopinfo }) => shopinfo.current);
-  		// yield put({type:'publicdate',
-      //     payload:{
-      //       loading:true
-      //     }
-      //   });
-      const shoplist=yield call(queryShop,{jsonparam:'{"page":"'+currentpage+'","rows":"'+PageSize+'"}'});
+      const {data}=yield call(queryShop,{jsonparam:'{"page":"'+currentpage+'","rows":"'+PageSize+'"}'});
       const province=yield call(queryProvicneAndCity);
       const salesarea=yield call(querySaleArea);
       const shopstatus=yield call(queryShopStatus);
       const shoptype=yield call(queryShopType);
 
-      if(shoplist.data){
-         // console.log(shoplist.data);
-         for(let i=1;i<=shoplist.data.dataList.length;i++){
-           shoplist.data.dataList[i-1].num=i;
+      if(data.code==0){
+         console.log('data:',data);
+         for(let i=1;i<=data.dataList.length;i++){
+           data.dataList[i-1].num=i;
            // shoplist.data.dataList[i-1].key=i;
          }
          yield put({type:'ShopList',
          payload:{
-           dataSource:shoplist.data.dataList,
-           total:shoplist.data.total,
+           dataSource:data.dataList,
+           total:data.total,
            loading:false
          }
        });

@@ -237,11 +237,16 @@ function Add({dispatch,price}) {
     tagPrice(value, index,key){
       //设置吊牌价
       // console.log(value, index,key);
-      let tempobj=Object.assign({},newData);
-      let num=parseFloat(value).toFixed(3);
-      let numvalue=num.substring(0,num.lastIndexOf('.')+3);
-      // console.log(numvalue);
-      tempobj.dataList[index][key] = numvalue;
+        let tempobj=Object.assign({},newData);
+      if(value){
+        let num=parseFloat(value).toFixed(3);
+        let numvalue=num.substring(0,num.lastIndexOf('.')+3);
+        tempobj.dataList[index][key] = numvalue;
+        console.log(numvalue);
+      }else{
+        tempobj.dataList[index][key] = "";
+      }
+
 
     dispatch({
       type:'price/publicDate',
@@ -317,6 +322,7 @@ function Add({dispatch,price}) {
 
       //从穿梭框数据元中通过key找出选中的数据
         let tempobj={};//定义零时对象
+        let tempstr=[];//定义零时数组，请求款号价格的数组
         let transftempdata=modalstyle.concat();
         let copyDetaildatasource=Object.assign({}, newData);
 
@@ -336,11 +342,11 @@ function Add({dispatch,price}) {
           //如果key相同说明就是需要照的数据
           if(modalstyle[index_i].key==targetKeys[j]){
             console.info(modalstyle[index_i].key,targetKeys[j],index_i,j);
-
+            tempstr.push(modalstyle[index_i].code);
             lengthList=lengthList+1;
             temp.num=lengthList;
-            temp.configTagprice=undefined;
-            temp.remarks=undefined;
+            temp.configTagprice="";
+            temp.remarks="";
             temp.styleNo=modalstyle[index_i].code;
             // temp.styleNocode=modalstyle[index_i].key;
             //这里是为了批量修改数据而做的标记
@@ -371,6 +377,17 @@ function Add({dispatch,price}) {
 				targetKeys:[]
 			}
 		});
+
+
+    //当点击确定按钮后找到选中的款号去后台请求款号对应的价格
+
+        console.info('tempstr:',tempstr.join(','));
+        dispatch({
+          type:'price/queryaddPrice',
+          payload:tempstr.join(',')
+        });
+        //
+        tempstr=[];
 
 
     },
@@ -525,7 +542,7 @@ function Add({dispatch,price}) {
  };
 
  //为了使得页面重绘，使用箭头函数
- const Add=()=> <Addprice {...addProps}/>;
+ // const Add=()=> <Addprice {...addProps}/>;
 
   return (
     <Wrap
@@ -534,7 +551,8 @@ function Add({dispatch,price}) {
     last="价格维护"
     next="新增调价单"
     >
-      <Add/>
+
+      <Addprice {...addProps}/>
       <StyleModal {...transforProps}/>
       <CommitModal {...commitProps}/>
       <Setallprice {...priceProps}/>

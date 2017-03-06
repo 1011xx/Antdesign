@@ -8,8 +8,6 @@ import EditableCell from './Edittable';
 import styles from './Editprice.less';
 const FormItem = Form.Item;
 
-
-
 const Addprice = ({
   form: {
     getFieldDecorator,
@@ -36,6 +34,7 @@ const Addprice = ({
 
 
 }) => {
+
 
  function remarksrules(rule, value, callback){
    if(value){
@@ -68,7 +67,7 @@ function pricerules(rule, value, callback){
   //   console.log(1231);
   // }
    if(value){
-    if (/^[1-9][0-9]{0,5}$|^0\.[0-9][1-9]$|^0\.[1-9][0-9]$|^[1-9]\.[0-9][0-9]$|^[1-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$/.test(value)!=true) {
+    if (/^[1-9][0-9]{0,5}$|^0\.[0-9][1-9]$|^0\.[1-9][0-9]$|^[1-9]\.[0-9][0-9]$|^[1-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9][0-9]$|^0\.[0-9]$|^0\.[0-9]$|^[1-9]\.[0-9]$|^[1-9][0-9]\.[0-9]$|^[1-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9][0-9]\.[0-9]$|^[1-9][0-9][0-9][0-9][0-9][0-9]\.[0-9]$/.test(value)!=true) {
         callback('请输入正确的价格!');
       } else {
         callback();
@@ -99,29 +98,34 @@ function pricerules(rule, value, callback){
      key: 'configTagprice',
      width:'20%',
      render:(text,record,index) => (
-       <FormItem>
-                 {getFieldDecorator(`configTagprice${record.num}`, {
-                     initialValue:text,
-                     rules: [{ required: true, message: '设置吊牌价必须填写!' },{ validator:pricerules}]
-                   })(
-                   <Input size="small"  style={{ width: 186}}   onBlur={(e)=>{tagPrice(e.target.value,index,'configTagprice')}}/>
-                 )}
-       </FormItem>
+         <FormItem>
+                   {getFieldDecorator(`configTagprice${record.num}`, {
+                       initialValue:text,
+                       rules: [{ required: true, message: '设置吊牌价必须填写!' },{ validator:pricerules}]
+                     })(
+                     <Input size="small"  style={{ width: 186}}   onBlur={(e)=>{tagPrice(e.target.value,index,'configTagprice')}}/>
+                   )}
+         </FormItem>
      )
+
+
    }, {
      title: '备注',
      dataIndex: 'remarks',
      key: 'remarks',
      width:'30%',
      render:(text,record,index) => (
-       <FormItem>
-                 {getFieldDecorator(`remarks${record.num}`, {
-                     initialValue:text,
-                      rules: [{ validator:itemremarksrules}]
-                   })(
-                    <Input size="small" style={{ width: 300}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
-                 )}
-        </FormItem>
+
+         <FormItem>
+                   {getFieldDecorator(`remarks${record.num}`, {
+                       initialValue:text,
+                        rules: [{ validator:itemremarksrules}]
+                     })(
+                      <Input size="small" style={{ width: 300}} onBlur={(e)=>{tagremarks(e.target.value,index,'remarks')}}/>
+                   )}
+          </FormItem>
+
+
      )
    },{
      title: '操作',
