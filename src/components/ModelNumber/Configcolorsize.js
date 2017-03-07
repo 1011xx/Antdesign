@@ -42,14 +42,15 @@ class PicturesWall extends React.Component {
 
    beforeUpload=(file)=>{
      console.info(file);
+     //限制图片格式
      const isIMG = (file.type === 'image/jpeg'||file.type === 'image/png'||file.type === 'image/gif');
-     if (!isIMG) {
-       message.error('你只能上传图片文件!');
-    }
+
      //限制图片尺寸大小
      const isLt2M = (file.size / 1024 / 1024)*1024  < 601;
-     console.log(isLt2M);
-      if (!isLt2M) {
+
+     if (!isIMG) {
+       message.error('你只能上传图片文件!');
+    }else if (!isLt2M) {
         message.error('上传的图片必须小于600KB!');
       }
       return  isLt2M&&isIMG;
@@ -117,6 +118,7 @@ class PicturesWall extends React.Component {
 
     return (
       <div>
+
       {imagesrc ? imgshow :
               <Upload
                 data={{jsonparam:name}}
