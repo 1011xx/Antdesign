@@ -540,7 +540,7 @@ console.log(detaildatasource.dataList);
 
 
 //为了使得页面重绘，使用箭头函数
-const Edit=()=> <Editprice {...editProps}/>;
+// const Edit=()=> <Editprice {...editProps}/>;
 
 
   return (
@@ -550,7 +550,7 @@ const Edit=()=> <Editprice {...editProps}/>;
     last="价格维护"
     next="修改调价单"
     >
-      <Edit />
+      <Editprice {...editProps}/>
       <StyleModal {...transforProps}/>
       <CommitModal {...commitProps}/>
       <Setallprice {...priceProps}/>

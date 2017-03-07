@@ -20,7 +20,10 @@ const AttrModel = ({
 	//正则验证颜色编号
 	function checkColor(rule, value, callback){
 		if(value){
-    if (/^[0-9]{1,3}$/.test(value)!=true) {
+			let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+			if(temp.length==0){
+				callback('请输入正确的颜色代码!');
+			}else if (/^[0-9]{1,3}$/.test(value)!=true) {
         callback('请输入正确的颜色代码!');
       } else {
         callback();
@@ -32,9 +35,13 @@ const AttrModel = ({
 	//验证颜色名称长度
 	function checkcolorName(rule, value, callback){
   		if(value){
-  		if (value.length>30) {
+				let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+				console.log('temp:',temp.length);
+  		if (temp.length>30) {
   				callback('输入的颜色名称过长!');
-  			} else {
+  			} else if(temp.length==0){
+					callback('请输入正确的颜色名称');
+				}else {
   				callback();
   			}
   	}else{

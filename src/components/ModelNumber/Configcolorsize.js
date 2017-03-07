@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 
-// var retback=[];
+
 //选择图片后，将文件转换成base64格式的
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -19,7 +19,7 @@ function getBase64(img, callback) {
 }
 
 
-/***********************************图片上传组件***********************************/
+// /***********************************图片上传组件***********************************/
 class PicturesWall extends React.Component {
   state = {
     previewVisible: false,
@@ -143,6 +143,59 @@ class PicturesWall extends React.Component {
 
 /**********************************************************************/
 
+//上传控件2
+// class PicturesWall extends React.Component {
+//   state = {
+//     previewVisible: false,
+//     previewImage:this.props.text,
+//     fileList: [
+//
+//     ],
+//   };
+//
+//   handleCancel = () => this.setState({ previewVisible: false })
+//
+//   handlePreview = (file) => {
+//     this.setState({
+//       previewImage: file.url || file.thumbUrl,
+//       previewVisible: true,
+//     });
+//   }
+//
+//   handleChange = ({ fileList }) => this.setState({ fileList })
+//
+//   render() {
+//     const { previewVisible, previewImage, fileList } = this.state;
+//      const {name,text}=this.props;
+//     const uploadButton = (
+//       <div>
+//         <Icon type="plus" />
+//         <div className="ant-upload-text">Upload</div>
+//       </div>
+//     );
+//     return (
+//       <div className="clearfix">
+//         <Upload
+//           data={{jsonparam:name}}
+//           action="/fmss/styleController/styleConfigUploadImage"
+//           listType="picture-card"
+//           fileList={fileList}
+//           onPreview={this.handlePreview}
+//           onChange={this.handleChange}
+//         >
+//           {this.props.text ? null : uploadButton}
+//         </Upload>
+//         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+//           <img alt="example" style={{ width: '100%' }} src={previewImage} />
+//         </Modal>
+//       </div>
+//     );
+//   }
+// }
+
+
+
+
 
 
 
@@ -173,18 +226,13 @@ const Configcolorsize=({
      e.preventDefault();
         validateFields((err, fieldsValue) => {
           if (!err) {
-
-
            getadddata(fieldsValue);
-
-
           }
         });
     }
 
     // 使用map函数生成option选项
   const selectopt=sizeoption.map((item, key) => {
-
     return(
       <Option key={key} value={item.value}>{item.label}</Option>
       );
@@ -228,8 +276,8 @@ const Configcolorsize=({
       key: 'img',
       render:(text,record)=>(
         <div className={styles.picturewall} onClick={() => onUpload(record)}>
-        <PicturesWall name={record.json} text={record.proimage}/>
-        </div>
+          <PicturesWall name={record.json} text={record.proimage}/>
+          </div>
       ),
     }, {
       title: '操作',

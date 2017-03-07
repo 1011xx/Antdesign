@@ -6,6 +6,7 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
+import SureModel from '../../commonComponents/SureModal/SureModal';
 import {setProps} from '../../utils/common';
 var deleteimgdata=[];
 
@@ -27,7 +28,8 @@ const {
 	configlist,
 	styleCode,
 	categoryCode,
-	yearCode
+	yearCode,
+	deletevis
  }=moudelnum;
 const configProps={
 	config,
@@ -338,6 +340,19 @@ const saveProps={
 
 	}
 };
+const deleteProps={
+	visibleSure:deletevis,
+  handleCancel(){
+		dispatch({type:'moudelnum/publicDate',
+		payload:{
+			deletevis:false
+		}
+	});
+	},
+  makeSure(){
+ //这里需要做删除的操作（删除图片和删除整条条目需要进行的删除操作）
+	},
+};
 
 	return(
 		<Wrap
@@ -348,6 +363,7 @@ const saveProps={
 		<Configcolorsize {...configProps}/>
 		<Modalchosecolor {...modalProps}/>
 		<Savesuccess {...saveProps}/>
+		<SureModel {...deleteProps}/>
 		</Wrap>
 
 		);

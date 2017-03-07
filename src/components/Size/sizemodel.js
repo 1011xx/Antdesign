@@ -20,7 +20,10 @@ const SizeModel = ({
 //正则验证尺寸编号
 	function checkSize(rule, value, callback){
 		if(value){
-    if (/^[A-Za-z0-9]{1,3}$/.test(value)!=true) {
+			let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+			if(temp.length==0){
+				callback('请输入正确的尺寸代码！');
+			}else if (/^[A-Za-z0-9]{1,3}$/.test(value)!=true) {
         callback('请输入正确的尺寸代码,支持大写，小写和数字！');
       } else {
         callback();
@@ -32,7 +35,10 @@ const SizeModel = ({
 	//验证尺寸名称长度
 	function checksizeName(rule, value, callback){
 		if(value){
-		if (value.length>30) {
+			let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+			if(temp.length==0){
+				callback('请输入正确的尺寸名称!');
+			}else if (value.length>30) {
 				callback('输入的尺寸名称过长!');
 			} else {
 				callback();

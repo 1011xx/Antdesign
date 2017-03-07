@@ -24,7 +24,10 @@ const ItemModel = ({
 	//正则验证尺寸组编号
 		function checkSizeitem(rule, value, callback){
 				if(value){
-		    if (/^\d{2}$/.test(value)!=true) {
+					let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+					if(temp.length==0){
+						callback('请输入正确的尺寸组号!');
+					}else if (/^\d{2}$/.test(value)!=true) {
 		        callback('请输入正确的尺寸组号!');
 		      } else {
 		        callback();
@@ -36,7 +39,10 @@ const ItemModel = ({
 		//验证尺寸组名长度
 		function checksizeGroupName(rule, value, callback){
 			if(value){
-			if (value.length>30) {
+				let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+				if(temp.length==0){
+					callback('请输入正确的尺寸组名称!');
+				}else if (value.length>30) {
 					callback('输入的尺寸组名称过长!');
 				} else {
 					callback();

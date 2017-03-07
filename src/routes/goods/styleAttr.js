@@ -145,15 +145,11 @@ function StyleAttr({dispatch,attributeClass}){
     // console.log(typeof(details.codeLength));
 
     if(value){
+			let temp=value.replace(/(^\s*)|(\s*$)/g, '');
       //年份只能存在两位数字的形式01-99
-      if (/^[0][1-9]$|^[1-9][0-9]$/.test(value)!=true) {
-         //  dispatch({
-         //    type:'attributeClass/publicDate',
-         //    payload:{
-         //      backvalidateStatus:'error',
-         //      backMsg:'输入的属性代码有误!'
-         //    }
-         // });
+			if(temp.length==0){
+				callback('请输入正确的属性代码');
+			}else if (/^[0][1-9]$|^[1-9][0-9]$/.test(value)!=true) {
           callback('输入的属性代码有误!');
         } else {
           callback();
@@ -165,10 +161,13 @@ function StyleAttr({dispatch,attributeClass}){
   }else{
     //如果不是年份
     if(value){
+			let temp=value.replace(/(^\s*)|(\s*$)/g, '');
       //\w特殊字符校验
-      if(/^[A-Za-z0-9]$/.test(value)!=true){
+			if(temp.length==0){
+			 callback('请输入正确的属性代码！');
+		 }else if(/^[A-Za-z0-9]$/.test(value)!=true){
         if(value.length>details.codeLength){
-          callback('属性代码长度过长!');
+          callback('输入的属性代码有误!');
         }else{
           callback();
         }
@@ -186,7 +185,10 @@ function StyleAttr({dispatch,attributeClass}){
  explain(rule, value, callback){
   //属性描述正则校验
   if(value){
-    if (value.length>50) {
+		let temp=value.replace(/(^\s*)|(\s*$)/g, '');
+		if(temp.length==0){
+			callback('请输入正确的属性描述!');
+		}else if (temp.length>50) {
         callback('属性描述过长!');
       } else {
         callback();

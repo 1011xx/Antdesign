@@ -65,7 +65,6 @@ function Styledetails({moudelnum}) {
       <div className={styles.add_plate}>
         <p className={styles.add_btn}>尺寸组：{`${detaildata.sizegroupName}`}</p>
       </div>
-      {console.log(configlist)}
       <Table size="small"
         className={styles.table}
          columns={columns}
