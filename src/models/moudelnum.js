@@ -87,15 +87,16 @@ export default {
       spinflag:true,
       labelarr:[],
       keyarr:[],
-      deletevis:false,
+      deletevis:false,//删除显示状态
 
+      styleCode:'',//搜索查询状态
+      categoryCode:'',//搜索查询状态
+      yearCode:'',//搜索查询状态
 
+      //当点击删除的时候，需要保存的数据
+      item:{},//要删除的条目对象
+      index:'',//删除第几行
 
-
-
-      styleCode:'',
-      categoryCode:'',
-      yearCode:'',
     },
     effects: {
         *enter({ payload }, { call, put, select }){

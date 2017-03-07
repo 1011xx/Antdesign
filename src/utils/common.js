@@ -41,3 +41,22 @@ export function setPropundefined(obj) {
     }
     return obj;
 }
+//将json对象中两端有空格的字符串去电两端的空格
+export function Objtrim(obj) {
+    for (var p in obj) {
+        if (obj[p]) {
+           obj[p]=obj[p].replace(/(^\s*)|(\s*$)/g, "");
+        }
+    }
+    return obj;
+}
+
+//去掉输入框前后两端的空格
+export function trim(str){
+  if(str){
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+  }else{
+    return str;
+  }
+　　
+}

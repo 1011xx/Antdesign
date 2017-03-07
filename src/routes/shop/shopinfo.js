@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { routerRedux,browserHistory,History    } from 'dva/router';
 import { connect } from 'dva';
-import {setProps} from '../../utils/common';
+import {setProps,trim} from '../../utils/common';
 import Wrap from '../../commonComponents/wrap/wrap';
 import Queryinfo from '../../components/Storeinfo/Search';
 import ShopList from '../../components/Storeinfo/shopList';
@@ -70,7 +70,7 @@ function Shopinfo({dispatch,shopinfo}){
 				type:'shopinfo/publicdate',
 				payload:{
 					current:1,
-					fullName:value.shopname,
+					fullName:trim(value.shopname),
 					shopType:value.shopType,
 					saleAreaCode:value.saleAreaCode,
 					shopStatus:value.shopStatus,
@@ -83,7 +83,7 @@ function Shopinfo({dispatch,shopinfo}){
 			let tempdata=Object.assign({},value);
 			let data=setProps(tempdata);
 			console.log('data:',data);
-			searchForm.fullName=data.shopname;
+			searchForm.fullName=trim(data.shopname);
 			searchForm.shopType=data.shopType;
 			searchForm.saleAreaCode=data.saleAreaCode;
 			searchForm.shopStatus=data.shopStatus;

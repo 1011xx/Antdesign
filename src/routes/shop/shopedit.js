@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import {  Spin ,message} from 'antd';
+import {Objtrim} from '../../utils/common';
 import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import EditShopinfo from '../../components/Storeinfo/editshopinfo';
@@ -53,12 +54,14 @@ const {   previewVisible,
 		  editloading,
           uploading,
 		  item:behavier==='create'?{}:currentItem,
-		getadddata(data){
+		getadddata(value){
+        let data=Objtrim(value);
+        data.deleteImages=deleteImg;
     	//组装给后台要删除的东西
 	// 		setInterval(function(){
 		// data.fullName=num++;
 		// data.shortName=numm++;
-		  console.log(data);
+		  console.log('data:',data);
 		 let upinfo=JSON.stringify(setProp(data));
 		 console.log(upinfo);
 		 // console.log( oFile);

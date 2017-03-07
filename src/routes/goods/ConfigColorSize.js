@@ -6,7 +6,7 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import Configcolorsize from '../../components/ModelNumber/Configcolorsize';
 import Modalchosecolor from '../../components/ModelNumber/Modalchosecolor';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
-import SureModel from '../../commonComponents/SureModal/SureModal';
+// import SureModel from '../../commonComponents/SureModal/SureModal';
 import {setProps} from '../../utils/common';
 var deleteimgdata=[];
 
@@ -29,7 +29,9 @@ const {
 	styleCode,
 	categoryCode,
 	yearCode,
-	deletevis
+	deletevis,
+	item,
+	index
  }=moudelnum;
 const configProps={
 	config,
@@ -198,6 +200,14 @@ dispatch({type:'moudelnum/saveconfigs',
 
 	},
  onDelete(text,item,index){
+	 dispatch({
+		 type:'moudelnum/publicDate',
+		 payload:{
+			 item:item,
+			 index:index,
+			 deletevis:true
+		 }
+	 });
 
  //这里点击删除后还需要执行删除图片操作
  if(item.id){
@@ -340,19 +350,70 @@ const saveProps={
 
 	}
 };
-const deleteProps={
-	visibleSure:deletevis,
-  handleCancel(){
-		dispatch({type:'moudelnum/publicDate',
-		payload:{
-			deletevis:false
-		}
-	});
-	},
-  makeSure(){
- //这里需要做删除的操作（删除图片和删除整条条目需要进行的删除操作）
-	},
-};
+// const deleteProps={
+// 	visibleSure:deletevis,
+//   handleCancel(){
+// 		dispatch({type:'moudelnum/publicDate',
+// 		payload:{
+// 			deletevis:false
+// 		}
+// 	});
+// 	},
+//   makeSure(){
+// 		dispatch({type:'moudelnum/publicDate',
+// 		payload:{
+// 			deletevis:false
+// 		}
+// 	});
+//  //这里需要做删除的操作（删除图片和删除整条条目需要进行的删除操作）
+//  //这里点击删除后还需要执行删除图片操作
+//  if(item.id){
+//  	//当有id的时候，不能删除图片，因为都是远程数据，可能用户还需要
+//  }else{
+//  	console.log('hasnotid');
+//  	//当没有id的时候，我们删除图片，说明是在本地添加的零时数据
+//  	//还需要判断下是否上传了图片，有图片再删除，没有图片就不用删除
+// 	//找到id
+// 	let str=location.hash;
+// 	let strs = str.split("/");
+// 	strs.shift();
+// 	let strss=strs[2].split(':');
+// 	//组装给后台要删除的东西
+// 	console.log(strss[0]);
+//  	let tempobj={};
+//  	tempobj.styleId=strss[0];
+//  	tempobj.colorCode=item.colorCode;
+//  	let result=styleConfigDeleteImage({jsonparam:JSON.stringify(tempobj)});
+//  }
+//
+//
+// //删除点击按钮的表格的一行
+// configlist.splice(index,1);
+//
+//
+// //当删除条目后，这里来把删除的颜色数据给穿梭匡
+// 		 var temparr=transfordata.concat();
+// 	 for(let i=0;i<exitcolor.length;i++){
+// 		 if(exitcolor[i].colorCode==item.colorCode){
+// 			 //找到要删除的colorCode对象,将要删除的对象push到复制的穿梭匡数据
+// 			 temparr.push(exitcolor[i]);
+// 			 //通过key值的大小来给穿梭匡数据排序
+// 			var itsnewarr=temparr.sort(function(a,b){
+// 				return a.key-b.key;
+// 			})
+// 		 }
+// 	 }
+// 	 //将删除后的颜色发送给transfordata
+// 	 dispatch({
+// 		 type:'moudelnum/publicDate',
+// 		 payload:{
+// 			 transfordata:itsnewarr,
+// 			 configlist:configlist
+// 		 }
+// 	 });
+// <SureModel {...deleteProps}/>
+// 	},
+// };
 
 	return(
 		<Wrap
@@ -363,7 +424,6 @@ const deleteProps={
 		<Configcolorsize {...configProps}/>
 		<Modalchosecolor {...modalProps}/>
 		<Savesuccess {...saveProps}/>
-		<SureModel {...deleteProps}/>
 		</Wrap>
 
 		);

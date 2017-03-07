@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import {  Spin ,message} from 'antd';
+import {Objtrim} from '../../utils/common';
 import Wrap from '../../commonComponents/wrap/wrap';
 import PicturesWall from '../../components/Storeinfo/uploadimg';
 import AddShopinfo from '../../components/Storeinfo/addshopinfo';
@@ -50,8 +51,9 @@ const {   previewVisible,
 
 		  item:behavier==='create'?{}:currentItem,
 
-		getadddata(data){
-			console.log(data);
+		getadddata(value){
+      let data=Objtrim(value);
+			console.log('addshop:',data);
       // if(data.remarks){
       //   data.remarks=data.remarks.replace(/\n/g, '_@');
       // }
@@ -233,7 +235,7 @@ const {   previewVisible,
         addvisibleSave:false,
       }
     });
-    
+
 
     }
   }
