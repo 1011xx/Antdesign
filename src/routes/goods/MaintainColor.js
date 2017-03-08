@@ -6,6 +6,7 @@ import ColorList from '../../components/Color/colorList';
 import AttrModel from '../../components/Color/colormodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
+import {Objtrim} from '../../utils/common';
 //服装属性/维护颜色
 var deleteid=null;//转存删除ID号码
 
@@ -19,7 +20,8 @@ function MaintainColor({dispatch,attrlist}){
     modalVisible,
     key:Modalkey,
     confirmLoading,
-    onOk(data) {
+    onOk(value) {
+      let data=Objtrim(value);
       // dispatch({
       //     type:'attrlist/tableLoading'
       //   });

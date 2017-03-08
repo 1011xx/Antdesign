@@ -6,6 +6,7 @@ import SizeList from '../../components/Size/sizeList';
 import SizeModel from '../../components/Size/sizemodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
+import {Objtrim} from '../../utils/common';
 //服装属性/维护尺寸
 var deleteid=null;//转存删除ID号码
 function MaintainSize({dispatch,attrsize}){
@@ -18,7 +19,8 @@ function MaintainSize({dispatch,attrsize}){
     key:Modalkey,
     modalVisible,
     confirmLoading,
-    onOk(data) {
+    onOk(value) {
+			  let data=Objtrim(value);
             dispatch({
                 type:'attrsize/publicDate',
                 payload:{

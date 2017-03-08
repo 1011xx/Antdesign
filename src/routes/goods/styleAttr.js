@@ -7,6 +7,7 @@ import AttrList from '../../components/AttrList/attrlist';
 import AttrModel from '../../components/AttrList/attrmodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
+import {Objtrim} from '../../utils/common';
 //服装属性/款号属性维护/品牌
 var locationid=null;
 var deleteid=null;
@@ -89,7 +90,9 @@ function StyleAttr({dispatch,attributeClass}){
     backMsg,
     backvalidateStatus,
     modalVisible,
-    onOk(data) {
+    onOk(value) {
+			let data=Objtrim(value);
+			// console.log('data:',data);
       //当点击修改的时候我们可以获取clsId，但是如果，直接点击新增
       // 就会出现获取不到的状况，那么在创建的时候，直接从地址栏获取，
       // 为了保持统一，直接从地址栏获取。

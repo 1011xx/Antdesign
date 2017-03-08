@@ -8,7 +8,7 @@ import CommitModal from '../../components/Price/CommitModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Savesuccess from '../../commonComponents/Savesuccess/Savesuccess';
-
+import {Objtrim} from '../../utils/common';
 
 var exp;
 
@@ -27,7 +27,8 @@ function Audit({dispatch,price}) {
     start,
     end,
     state,
-    passdata(data){
+    passdata(value){
+      let data=Objtrim(value);
       console.log('data:',data);
       //当点击提交按钮的时候,
       dispatch({

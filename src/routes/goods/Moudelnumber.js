@@ -6,7 +6,7 @@ import Searchinfo from '../../components/ModelNumber/Searchinfo';
 import Stylelist from '../../components/ModelNumber/Stylelist';
 import Paginations from '../../commonComponents/Pagination/Paginations';
 import SureModel from '../../commonComponents/SureModal/SureModal';
-
+import {Objtrim} from '../../utils/common';
 
 // var styleCode;
 // var categoryCode;
@@ -22,8 +22,9 @@ function Moudelnumber({dispatch,moudelnum}) {
 		styleCode,
 		categoryCode,
 		yearCode,
-		passdata(value){
-			console.log('value:',value);
+		passdata(values){
+			let value=Objtrim(values);
+			// console.log('value:',value);
 			//分别赋值，保存状态
 			//创建查询数据newarr
 			dispatch({

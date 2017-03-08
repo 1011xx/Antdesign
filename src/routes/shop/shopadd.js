@@ -151,10 +151,23 @@ const {   previewVisible,
       beforeUpload(file){
         for(let key of Object.keys(fileList)){
           if(file.name==fileList[key].name){
-            message.error('两次上传的文件名相同！');
+            message.error('两次上传的文件名不能相同！');
             return false;
           }
         }
+        //限制图片格式
+        const isIMG = (file.type === 'image/jpeg'||file.type === 'image/png'||file.type === 'image/gif');
+
+        //限制图片尺寸大小
+        const isLt2M = (file.size / 1024 / 1024)*1024  < 601;
+
+        if (!isIMG) {
+          message.error('你只能上传图片文件!');
+       }else if (!isLt2M) {
+           message.error('上传的图片必须小于600KB!');
+         }
+         return  isLt2M&&isIMG;
+
 
       },
 		 handleChange ( {fileList,file} ) {

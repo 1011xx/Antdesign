@@ -4,7 +4,7 @@ import Wrap from '../../commonComponents/wrap/wrap';
 import LookupModal from '../../components/Price/SetLookupModal';
 import Pricemaintain from '../../components/Price/Pricemaintain';
 import Paginations from '../../commonComponents/Pagination/Paginations';
-
+import {Objtrim} from '../../utils/common';
 // var styleCode;
 // var start;
 // var end;
@@ -34,7 +34,8 @@ function Set({dispatch,price}) {
       });
     },
 
-    passdata(data){
+    passdata(value){
+      let data=Objtrim(value);
        //当点击提交按钮的时候,
 // console.log(data);
  dispatch({

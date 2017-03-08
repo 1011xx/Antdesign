@@ -11,6 +11,7 @@ const Paginations = ({
 		onShowSizeChange,
 		onPageChange
 	}) => {
+		//这里是对页面的页数进行设置
   const pageSizeOptions=['10', '30', '50'];
 	return(
         <div className={styles.Pagination_wrap}>

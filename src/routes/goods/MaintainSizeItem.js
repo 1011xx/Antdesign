@@ -6,6 +6,7 @@ import SizeList from '../../components/Sizeitem/sizeList';
 import ItemModel from '../../components/Sizeitem/sizeItemmodel';
 import SureModel from '../../commonComponents/SureModal/SureModal';
 import Paginations from '../../commonComponents/Pagination/Paginations';
+import {trim} from '../../utils/common';
 //服装属性/维护尺寸组
 var deleteid=null;//转存删除ID号码
 function MaintainSizeItem({dispatch,attrsizeItem}){
@@ -20,7 +21,8 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
     confirmLoading,
     selectSource,
     onOk(data) {
-
+			data.sizeGroupCode=trim(data.sizeGroupCode);
+			data.sizeGroupName=trim(data.sizeGroupName);
       dispatch({
         type:'attrsizeItem/publicDate',
         payload:{
@@ -30,8 +32,6 @@ function MaintainSizeItem({dispatch,attrsizeItem}){
 
       let tempstr=data.sizes.join(",");
       let newarr={...data,'sizes':tempstr};
-      // console.log(newarr);
-      // console.log(data);
 
       if(modalType==='create'){
         //如果是创建
