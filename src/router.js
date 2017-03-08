@@ -12,24 +12,8 @@ import MaintainSize from './routes/goods/MaintainSize';
 import MaintainSizeItem from './routes/goods/MaintainSizeItem';
 import Shopadd from './routes/shop/shopadd';
 import Shopedit from './routes/shop/shopedit';
-import Test from './routes/upload';
-
-
-
-
-
-
 import AddShopinfo from './components/Storeinfo/addshopinfo';
-
-
-
-
-
 import Shopdetail from "./routes/shop/Shopdetail.js";
-
-
-
-
 
 import Moudelnumber from "./routes/goods/Moudelnumber.js";
 import BarCode from "./routes/goods/BarCode.js";
@@ -38,10 +22,6 @@ import Editstyleroute from "./routes/goods/Editstyle.js";
 import Styledetails from "./routes/goods/Styledetails.js";
 import ConfigColorSize from "./routes/goods/ConfigColorSize.js";
 import Modalchosecolor from "./components/ModelNumber/Modalchosecolor.js";
-
-
-
-
 
 import Audit from "./routes/price/Audit.js";
 import Set from "./routes/price/Set.js";
@@ -107,7 +87,6 @@ export default function({ history }) {
 			 <Route path="/modelnumber/configcolorsize/:id" component={ConfigColorSize} />
 			 <Route path="/modelnumber/styledetails/:id" component={Styledetails} />//查看详情页面
 
-			  <Route path="/test" component={Test} />
 				<Route path="/audit" component={Audit} />
         <Route path="/audit/auditpricedetails/:id" component={AuditPricedetails} />
 				<Route path="/set/setpricedetails/:id" component={SetPricedetails} />
